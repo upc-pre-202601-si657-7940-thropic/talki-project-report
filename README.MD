@@ -8,15 +8,15 @@
 
 <h4 style="text-align: center"> Periodo: 202610 </h4>
 
-<h4 style="text-align: center"> [COMPLETAR: Código del curso] | Fundamentos de Arquitectura de Software </h4>
+<h4 style="text-align: center"> SI657 | Fundamentos de Arquitectura de Software </h4>
 
-<h4 style="text-align: center"> Sección: [COMPLETAR] </h4>
+<h4 style="text-align: center"> Sección: 7940 </h4>
 
-<h4 style="text-align: center"> Docente: [COMPLETAR: Nombre del profesor] </h4>
+<h4 style="text-align: center"> Docente: Daniel Enrique Mori Yzaguirre </h4>
 
 <h3 style="text-align: center;"> Informe de Trabajo Final </h3>
 
-<h4 style="text-align: center"> Startup: Talki </h4>
+<h4 style="text-align: center"> Startup: Thropic </h4>
 
 <h4 style="text-align: center"> Producto: Talki </h4>
 
@@ -29,24 +29,16 @@
          <th>Apellidos y Nombres</th>
       </tr>
       <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
+         <td>U202313397</td>
+         <td>Oroncoy Almeyda, Alejandro Daniel</td>
       </tr>
       <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
+         <td>U202312222</td>
+         <td>Rivera Sosa, Eduardo Gael</td>
       </tr>
       <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
-      </tr>
-      <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
-      </tr>
-      <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
+         <td>U20241C134</td>
+         <td>Tumi Oliden, Manuel Ignacio</td>
       </tr>
    </table>
 </div>
@@ -61,7 +53,7 @@
 
 | Version | Fecha | Autor | Descripción de modificación |
 |---------|-------|-------|-----------------------------|
-|         |       |       |                             |
+| 1.0 | 09/04/2026 | Oroncoy Almeyda, Alejandro Daniel | Creación del documento |
 
 <hr class="page-break">
 
@@ -237,7 +229,13 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ### 1.1.1. Descripción de la Startup
 
+Thropic es una startup de tecnología educativa fundada por estudiantes de Ingeniería de Software de la Universidad Peruana de Ciencias Aplicadas (UPC). Nuestra misión es democratizar el acceso a herramientas de desarrollo personal mediante inteligencia artificial.
 
+**Misión:** Empoderar a los estudiantes universitarios a desarrollar habilidades de comunicación oral efectiva a través de tecnología accesible e inteligente.
+
+**Visión:** Ser la plataforma líder en Latinoamérica para el desarrollo de habilidades de comunicación oral en el ámbito académico y profesional para 2030.
+
+Talki es nuestra solución principal: una aplicación móvil que utiliza IA para analizar, evaluar y retroalimentar la comunicación oral de estudiantes universitarios en tiempo real, ayudándoles a mejorar su fluidez, pronunciación, estructura del discurso y confianza al hablar en público.
 
 ### 1.1.2. Perfiles de integrantes del equipo
 
@@ -250,24 +248,16 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </thead>
   <tbody>
     <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong> — U202313397<br>Estudiante de Ingeniería de Software. Apasionado por el desarrollo backend y la arquitectura de software. Conocimientos en Java, Spring Boot, Python y servicios cloud.</td>
+      <td><img src="assets/images/photos/alejandro-oroncoy.jpg" alt="Alejandro Oroncoy" width="200"></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong> — U202312222<br>Estudiante de Ingeniería de Software. Interesado en el desarrollo frontend y la experiencia de usuario. Conocimientos en React, TypeScript y diseño UX/UI.</td>
+      <td><img src="assets/images/photos/eduardo-rivera.jpg" alt="Eduardo Rivera" width="200"></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong> — U20241C134<br>Estudiante de Ingeniería de Software. Enfocado en desarrollo full-stack y bases de datos. Conocimientos en Java, SQL y metodologías ágiles.</td>
+      <td><img src="assets/images/photos/manuel-tumi.jpg" alt="Manuel Tumi" width="200"></td>
     </tr>
   </tbody>
 </table>
@@ -278,57 +268,84 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ### 1.2.1. Nombre del producto
 
-
+**Talki** es el nombre de nuestra aplicación. El nombre proviene de la combinación de "Talk" (hablar en inglés) con el sufijo "-i" que evoca inteligencia e innovación. Talki representa la idea de tener un compañero inteligente que te ayuda a mejorar tu forma de comunicarte oralmente.
 
 ### 1.2.2. Antecedentes y problemática
 
 #### WHAT (Qué)
 
-
+Las deficiencias en comunicación oral afectan el desempeño académico y profesional de los universitarios peruanos.
 
 #### WHEN (Cuándo)
 
-
+Se manifiesta principalmente al momento de realizar exposiciones, sustentaciones, entrevistas de trabajo y presentaciones profesionales.
 
 #### WHERE (Dónde)
 
-
+En aulas universitarias, plataformas virtuales y entornos laborales/prácticas.
 
 #### WHO (Quién)
 
-
+Estudiantes de educación superior peruanos (ciclos 1-10), especialmente aquellos sin acceso a coaching personalizado.
 
 #### WHY (Por qué)
 
-
+La educación tradicional no brinda suficientes espacios de práctica oral con feedback personalizado. El acceso a coaches es costoso y limitado.
 
 #### HOW (Cómo)
 
-
+Talki usa IA para grabar, analizar y retroalimentar la comunicación oral del usuario en tiempo real, con ejercicios progresivos y personalizados.
 
 #### HOW MUCH (Cuánto)
 
-
+Según MINEDU (2023), más de 1.5 millones de estudiantes universitarios en Perú. Estudios indican que el 73% siente inseguridad al hablar en público.
 
 ### 1.2.3. Lean UX Process
 
 #### 1.2.3.1. Lean UX Problem Statement
 
+**Segmento 1:** Hemos observado que los estudiantes de ciclos 1-5 carecen de espacios seguros y accesibles para practicar la comunicación oral con feedback real. El impacto es bajo desempeño en exposiciones y pérdida de oportunidades académicas. ¿Cómo podríamos brindarles práctica guiada con IA para que ganen confianza progresivamente?
 
+**Segmento 2:** Hemos observado que los estudiantes de ciclos 6-10 no tienen herramientas asequibles para prepararse para entrevistas laborales y presentaciones profesionales. El impacto es dificultad para insertarse en el mercado laboral. ¿Cómo podríamos simular entornos reales de comunicación profesional para que estén listos al graduarse?
 
 #### 1.2.3.2. Lean UX Assumptions
 
 ##### Business Assumptions
 
-
+1. Creemos que los usuarios pagarán una suscripción mensual de S/. 15-25 por acceso premium.
+2. Creemos que el mayor canal de adquisición serán las redes sociales universitarias (Instagram, TikTok).
+3. Creemos que los usuarios necesitan al menos 3 sesiones semanales para notar mejora en 30 días.
+4. Creemos que las universidades adoptarán Talki como herramienta complementaria en cursos de comunicación.
+5. Creemos que el NPS (Net Promoter Score) alcanzará 40+ en los primeros 6 meses.
+6. Creemos que el costo de adquisición por usuario será menor a S/. 10 mediante estrategias de referidos.
+7. Creemos que el 60% de usuarios retendrá la app más de 3 meses con gamificación efectiva.
+8. Creemos que las alianzas con institutos y universidades serán nuestro principal canal B2B.
+9. Creemos que los usuarios en ciclos 6-10 están dispuestos a pagar más por features de simulación de entrevistas.
+10. Creemos que el mercado latinoamericano de edtech móvil crecerá 25% anual los próximos 3 años.
+11. Creemos que la diferenciación por idioma español y contexto peruano/latinoamericano será una ventaja competitiva sostenible.
 
 ##### User Assumptions
 
-
+1. **¿Quién es el usuario?** Estudiantes universitarios peruanos de ciclos 1-10, de 17 a 26 años, nativos digitales con smartphone.
+2. **¿Dónde encaja nuestro producto en su vida?** En los momentos previos a exposiciones, durante el estudio en casa, y en transporte público.
+3. **¿Qué problemas resuelve nuestro producto?** La falta de espacios seguros para practicar oralidad con feedback inmediato y personalizado.
+4. **¿Cuándo y cómo es usado nuestro producto?** Sesiones de 10-20 minutos, principalmente en las noches, desde el smartphone.
+5. **¿Qué características son importantes?** Feedback en tiempo real, ejercicios progresivos, historial de progreso, modo simulación de entrevistas.
+6. **¿Cómo debe verse y comportarse el producto?** Intuitivo, motivador, con elementos de gamificación, lenguaje cercano y sin tecnicismos.
 
 #### 1.2.3.3. Lean UX Hypothesis
 
+1. Creemos que aumentaremos la retención de usuarios si los estudiantes de ciclos 1-5 logran completar al menos 3 sesiones semanales de práctica con la feature de "ejercicios guiados con IA".
 
+2. Creemos que mejoraremos la satisfacción si los estudiantes de ciclos 6-10 logran reducir su ansiedad en entrevistas con la feature de "simulador de entrevistas con feedback en tiempo real".
+
+3. Creemos que mejoraremos la retención si los usuarios gamifican su progreso con la feature de "streaks y logros" durante 4 semanas consecutivas.
+
+4. Creemos que aumentaremos el engagement si los estudiantes pueden ver su análisis de progreso detallado con la feature de "dashboard de métricas personales".
+
+5. Creemos que aumentaremos el word-of-mouth si los usuarios pueden compartir sus logros con la feature de "comunidad y retos entre amigos".
+
+6. Creemos que reduciremos el churn si los usuarios reciben un plan de práctica personalizado con la feature de "ruta de aprendizaje adaptativa con IA".
 
 #### 1.2.3.4. Lean UX Canvas
 
@@ -338,7 +355,17 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ## 1.3. Segmentos objetivo
 
+**Segmento 1: Estudiantes universitarios de ciclos 1 al 5**
+- Edad: 17-21 años
+- Perfil: Recién ingresados, con poca experiencia en comunicación formal
+- Pain points: Nerviosismo, falta de estructura, vocabulario limitado, miedo escénico
+- Necesidad: Práctica básica guiada desde cero, ejercicios progresivos
 
+**Segmento 2: Estudiantes universitarios de ciclos 6 al 10**
+- Edad: 21-26 años
+- Perfil: Próximos a egresar, buscando prácticas o primer empleo
+- Pain points: Falta de fluidez profesional, dificultad en entrevistas técnicas
+- Necesidad: Simulación de entornos profesionales, feedback avanzado y detallado
 
 <hr class="page-break">
 
@@ -352,89 +379,89 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </tr>
   <tr>
     <td colspan="2" align="center"><b>¿Por qué llevar a cabo este análisis?</b></td>
-    <td colspan="3">[COMPLETAR]</td>
+    <td colspan="3">Para identificar las fortalezas, debilidades y estrategias de nuestros competidores directos e indirectos, con el fin de definir la propuesta de valor diferenciada de Talki y detectar oportunidades de mercado no atendidas.</td>
   </tr>
   <tr>
     <th colspan="2">Nombre</th>
-    <th>[Startup Talki]</th>
-    <th>[Competidor 1]</th>
-    <th>[Competidor 2]</th>
+    <th>Talki (Thropic)</th>
+    <th>ELSA Speak</th>
+    <th>Speeko</th>
   </tr>
   <tr>
     <td colspan="2" align="center"><b>Logo</b></td>
     <td align="center"><img src="assets/images/logos/talki-logo.png" alt="Talki logo" width="100"></td>
-    <td align="center"><img src="assets/images/logos/[competidor1].png" alt="[Competidor 1]" width="100"></td>
-    <td align="center"><img src="assets/images/logos/[competidor2].png" alt="[Competidor 2]" width="100"></td>
+    <td align="center"><img src="assets/images/logos/elsa-speak-logo.png" alt="ELSA Speak" width="100"></td>
+    <td align="center"><img src="assets/images/logos/speeko-logo.png" alt="Speeko" width="100"></td>
   </tr>
   <tr>
     <td rowspan="2"><b>Perfil</b></td>
     <td><b>Overview</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>App móvil con IA que analiza y retroalimenta la comunicación oral de estudiantes universitarios peruanos en tiempo real, en español.</td>
+    <td>App de pronunciación en inglés con IA que evalúa y corrige la pronunciación del usuario en tiempo real mediante reconocimiento de voz avanzado.</td>
+    <td>App de coaching para hablar en público con lecciones estructuradas impartidas por coaches reales y ejercicios de práctica.</td>
   </tr>
   <tr>
     <td><b>Ventaja competitiva ¿Qué valor ofrece a los clientes?</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Feedback en tiempo real en español con contexto académico peruano; enfocado en universitarios latinoamericanos.</td>
+    <td>Motor de IA especializado en detección de errores fonéticos del inglés; más de 50M usuarios globales.</td>
+    <td>Contenido creado por coaches profesionales de oratoria; estructura de cursos progresivos y micro-lecciones de 5 minutos.</td>
   </tr>
   <tr>
     <td rowspan="2"><b>Perfil de Marketing</b></td>
     <td><b>Mercado objetivo</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Estudiantes universitarios peruanos/latinoamericanos de ciclos 1-10.</td>
+    <td>Hablantes no nativos de inglés que desean mejorar su pronunciación, principalmente en Asia y Latinoamérica.</td>
+    <td>Profesionales y estudiantes angloparlantes que quieren mejorar su oratoria y liderazgo comunicacional.</td>
   </tr>
   <tr>
     <td><b>Estrategias de Marketing</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Freemium, marketing universitario, referidos entre compañeros.</td>
+    <td>Freemium, referidos, partnerships con instituciones educativas.</td>
+    <td>Freemium, publicidad en LinkedIn y redes, membresías corporativas.</td>
   </tr>
   <tr>
     <td rowspan="3"><b>Perfil de Producto</b></td>
     <td><b>Productos &amp; Servicios</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>App móvil con análisis de voz, ejercicios guiados, simulador de entrevistas y dashboard de progreso.</td>
+    <td>App móvil (iOS/Android) con lecciones de pronunciación, conversación simulada y análisis fonético detallado.</td>
+    <td>App móvil con cursos de oratoria, ejercicios diarios de 5 minutos y biblioteca de habilidades comunicacionales.</td>
   </tr>
   <tr>
     <td><b>Precios y Costos</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Freemium; plan premium S/. 15-25/mes.</td>
+    <td>Gratis con funciones limitadas; premium desde $6.99/mes.</td>
+    <td>Gratis con funciones básicas; premium desde $9.99/mes.</td>
   </tr>
   <tr>
     <td><b>Canales de distribución</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>App Store, Google Play, web.</td>
+    <td>App Store, Google Play, web.</td>
+    <td>App Store, Google Play.</td>
   </tr>
   <tr>
     <td rowspan="4"><b>Análisis SWOT</b></td>
     <td><b>Fortalezas</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Español nativo, contexto universitario peruano, IA personalizada, gamificación.</td>
+    <td>IA muy precisa, gran base de usuarios global, contenido extenso y probado.</td>
+    <td>Contenido de alta calidad creado por expertos, formato de micro-lecciones atractivo.</td>
   </tr>
   <tr>
     <td><b>Oportunidades</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Mercado latinoamericano poco atendido, alianzas con universidades, expansión a otros países.</td>
+    <td>Expansión a otros idiomas, mercado B2B con instituciones educativas.</td>
+    <td>Mercado B2B corporativo, expansión a español y otros idiomas.</td>
   </tr>
   <tr>
     <td><b>Debilidades</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Startup nueva sin track record, recursos limitados, marca poco conocida.</td>
+    <td>Enfocado solo en pronunciación del inglés, no cubre comunicación oral en español.</td>
+    <td>Sin IA para feedback en tiempo real, contenido exclusivamente en inglés.</td>
   </tr>
   <tr>
     <td><b>Amenazas</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Entry de apps internacionales al mercado hispanohablante, competidores con mayor financiamiento.</td>
+    <td>Competidores con IA generativa más avanzada, apps multiidioma con mayor alcance.</td>
+    <td>Apps con IA generativa que ofrecen feedback personalizado, saturación del mercado edtech.</td>
   </tr>
 </table>
 
@@ -699,11 +726,9 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 | Integrantes | Nombre en GitHub |
 |-------------|------------------|
-|             |                  |
-|             |                  |
-|             |                  |
-|             |                  |
-|             |                  |
+| Oroncoy Almeyda, Alejandro Daniel | alejooroncoy |
+| Rivera Sosa, Eduardo Gael | gael-rs |
+| Tumi Oliden, Manuel Ignacio | ManuelTumi2224 |
 
 ### 5.2.3. Source Code Style Guide & Conventions
 
