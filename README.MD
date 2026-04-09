@@ -186,8 +186,8 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   <tbody>
     <tr>
       <td rowspan="3"><strong>Criterio 1: ABET – EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b></td>
-      <td rowspan="3"><b>TB1:</b></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Redactó la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definió la propuesta de nombre del producto (1.2.1) y elaboró los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.</td>
+      <td rowspan="3"><b>TB1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki mediante la redacción del Capítulo I del informe, abarcando el perfil de la startup, la solución propuesta y los segmentos objetivo. Cada integrante contribuyó a transmitir el problema y la solución con claridad para una audiencia académica.</td>
     </tr>
     <tr>
       <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b></td>
@@ -197,8 +197,8 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
     </tr>
     <tr>
       <td rowspan="3"><strong>Criterio 2: ABET – EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b></td>
-      <td rowspan="3"><b>TB1:</b></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Aplicó el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado. Realizó el análisis competitivo comparando Talki con ELSA Speak y Speeko mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación (2.1.2).</td>
+      <td rowspan="3"><b>TB1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.</td>
     </tr>
     <tr>
       <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b></td>
@@ -236,11 +236,11 @@ Talki es nuestra solución principal: una aplicación móvil que utiliza IA para
   </thead>
   <tbody>
     <tr>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong> — U202313397<br>Estudiante de Ingeniería de Software. Apasionado por el desarrollo backend y la arquitectura de software. Conocimientos en Java, Spring Boot, Python y servicios cloud.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong> — U202313397<br>Mi nombre es Alejandro Oroncoy, tengo 19 años y soy estudiante de Ingeniería de Software en el quinto ciclo. Me considero una persona proactiva, autodidacta y orientada a objetivos. Disfruto aprender nuevas tecnologías por cuenta propia y busco siempre entregar resultados de calidad. Tengo experiencia en desarrollo backend con Java y Spring Boot, así como en Python y servicios cloud. Me motiva construir soluciones que generen impacto real, y en Thropic asumo con entusiasmo el reto de llevar Talki al mercado universitario peruano.</td>
       <td><img src="assets/images/photos/alejandro-oroncoy.jpg" alt="Alejandro Oroncoy" width="200"></td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong> — U202312222<br>Estudiante de Ingeniería de Software. Interesado en el desarrollo frontend y la experiencia de usuario. Conocimientos en React, TypeScript y diseño UX/UI.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong> — U202312222<br>Yo soy Gael Rivera. Soy un estudiante de Ingeniería de Software comprometido con la responsabilidad en cada tarea que asumo. Poseo habilidades de liderazgo que facilitan la comunicación y el trabajo colaborativo. Siempre estoy dispuesto a abordar desafíos y encontrar soluciones en equipo.</td>
       <td><img src="assets/images/photos/eduardo-rivera.jpg" alt="Eduardo Rivera" width="200"></td>
     </tr>
     <tr>
