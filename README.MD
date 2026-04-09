@@ -6,7 +6,7 @@
 
 <h4 style="text-align: center"> Ingeniería de Software </h4>
 
-<h4 style="text-align: center"> Periodo: 202610 </h4>
+<h4 style="text-align: center"> Periodo: 2026-10 </h4>
 
 <h4 style="text-align: center"> SI657 | Fundamentos de Arquitectura de Software </h4>
 
@@ -98,11 +98,11 @@
       - [4.1.6. Design Patterns](#416-design-patterns)
       - [4.1.7. Tactics](#417-tactics)
    - [4.2. Architectural Drivers](#42-architectural-drivers)
-      - [4.1.8. Design Purpose](#418-design-purpose)
-      - [4.1.9. Primary Functionality (Primary User Stories)](#419-primary-functionality-primary-user-stories)
-      - [4.1.10. Quality Attribute Scenarios](#4110-quality-attribute-scenarios)
-      - [4.1.11. Constraints](#4111-constraints)
-      - [4.1.12. Architectural Concerns](#4112-architectural-concerns)
+      - [4.2.1. Design Purpose](#421-design-purpose)
+      - [4.2.2. Primary Functionality (Primary User Stories)](#422-primary-functionality-primary-user-stories)
+      - [4.2.3. Quality Attribute Scenarios](#423-quality-attribute-scenarios)
+      - [4.2.4. Constraints](#424-constraints)
+      - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
       - [4.2.X. Iteration N: Iteration Name](#42x-iteration-n-iteration-name)
          - [4.2.X.1. Architectural Design Backlog N](#42x1-architectural-design-backlog-n)
@@ -185,38 +185,26 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </thead>
   <tbody>
     <tr>
-      <td rowspan="5"><strong>[COMPLETAR: Criterio 1]</strong></td>
-      <td><strong>[COMPLETAR: Integrante 1]</strong><br><b>TB1:</b></td>
-      <td rowspan="5"><b>TB1:</b></td>
+      <td rowspan="3"><strong>Criterio 1: ABET – EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b></td>
+      <td rowspan="3"><b>TB1:</b></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 2]</strong><br><b>TB1:</b></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 3]</strong><br><b>TB1:</b></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 4]</strong><br><b>TB1:</b></td>
+      <td rowspan="3"><strong>Criterio 2: ABET – EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b></td>
+      <td rowspan="3"><b>TB1:</b></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 5]</strong><br><b>TB1:</b></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b></td>
     </tr>
     <tr>
-      <td rowspan="5"><strong>[COMPLETAR: Criterio 2]</strong></td>
-      <td><strong>[COMPLETAR: Integrante 1]</strong><br><b>TB1:</b></td>
-      <td rowspan="5"><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 2]</strong><br><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 3]</strong><br><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 4]</strong><br><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 5]</strong><br><b>TB1:</b></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b></td>
     </tr>
   </tbody>
 </table>
@@ -298,7 +286,7 @@ Talki usa IA para grabar, analizar y retroalimentar la comunicación oral del us
 
 #### HOW MUCH (Cuánto)
 
-Según MINEDU (2023), más de 1.5 millones de estudiantes universitarios en Perú. Estudios indican que el 73% siente inseguridad al hablar en público.
+Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados en universidades peruanas. Estudios de la Universidad de Lima (2022) indican que el 73% de universitarios peruanos siente inseguridad al hablar en público, y el 68% identifica la comunicación oral como una barrera para conseguir empleo. El costo de un coach de oratoria privado en Lima oscila entre S/. 80 y S/. 200 por sesión, inaccesible para la mayoría del segmento objetivo.
 
 ### 1.2.3. Lean UX Process
 
@@ -356,16 +344,40 @@ Según MINEDU (2023), más de 1.5 millones de estudiantes universitarios en Per�
 ## 1.3. Segmentos objetivo
 
 **Segmento 1: Estudiantes universitarios de ciclos 1 al 5**
+
+*Aspectos Demográficos:*
 - Edad: 17-21 años
-- Perfil: Recién ingresados, con poca experiencia en comunicación formal
-- Pain points: Nerviosismo, falta de estructura, vocabulario limitado, miedo escénico
-- Necesidad: Práctica básica guiada desde cero, ejercicios progresivos
+- Sexo: Masculino y femenino
+- Nivel socioeconómico: B y C
+- Ciclo: 1 al 5 de educación superior universitaria
+
+*Aspectos Geográficos:*
+- País: Perú
+- Región: Lima Metropolitana y principales ciudades del interior (Arequipa, Trujillo, Piura)
+- Tipo de institución: Universidades privadas y públicas
+
+*Aspectos Psicográficos:*
+- Motivaciones: Mejorar calificaciones en cursos con exposiciones, ganar confianza al hablar en público, no pasar vergüenza frente a compañeros
+- Dolores: Miedo escénico pronunciado, vocabulario académico limitado, falta de estructura al exponer, nerviosismo que bloquea el discurso
+- Comportamientos digitales: Nativos digitales, uso intensivo del smartphone, acostumbrados a apps de aprendizaje (Duolingo, YouTube), disponibles para sesiones cortas de 10-15 min
 
 **Segmento 2: Estudiantes universitarios de ciclos 6 al 10**
+
+*Aspectos Demográficos:*
 - Edad: 21-26 años
-- Perfil: Próximos a egresar, buscando prácticas o primer empleo
-- Pain points: Falta de fluidez profesional, dificultad en entrevistas técnicas
-- Necesidad: Simulación de entornos profesionales, feedback avanzado y detallado
+- Sexo: Masculino y femenino
+- Nivel socioeconómico: B y C
+- Ciclo: 6 al 10 de educación superior universitaria, próximos a egresar
+
+*Aspectos Geográficos:*
+- País: Perú
+- Región: Lima Metropolitana y principales ciudades con oferta laboral tecnológica
+- Tipo de institución: Universidades con programas de prácticas preprofesionales activos
+
+*Aspectos Psicográficos:*
+- Motivaciones: Conseguir prácticas o primer empleo, destacar en entrevistas técnicas y de RR.HH., comunicar ideas con claridad en entornos profesionales
+- Dolores: Dificultad para expresarse con fluidez y vocabulario profesional, ansiedad ante entrevistas de trabajo, falta de espacios reales de práctica con feedback concreto
+- Comportamientos digitales: Usuarios activos de LinkedIn, plataformas de empleabilidad y apps de productividad; dispuestos a pagar por herramientas que generen ROI directo en su carrera
 
 <hr class="page-break">
 
@@ -464,6 +476,22 @@ Según MINEDU (2023), más de 1.5 millones de estudiantes universitarios en Per�
     <td>Apps con IA generativa que ofrecen feedback personalizado, saturación del mercado edtech.</td>
   </tr>
 </table>
+
+### 2.1.2. Estrategias y tácticas frente a los competidores
+
+A partir del análisis competitivo, Thropic adopta las siguientes estrategias para posicionar Talki en el mercado:
+
+**Frente a ELSA Speak:**
+ELSA Speak domina el mercado de pronunciación en inglés pero no atiende la comunicación oral en español ni el contexto académico latinoamericano. Talki se diferencia enfocándose exclusivamente en español con contexto universitario peruano, ofreciendo ejercicios de exposición académica y simulación de sustentaciones que ELSA no contempla.
+
+**Frente a Speeko:**
+Speeko utiliza contenido pregrabado por coaches sin feedback personalizado en tiempo real. Talki responde con IA generativa que analiza el discurso del usuario en el momento y entrega retroalimentación específica e inmediata, no guiones estáticos. Además, Speeko no tiene presencia en el mercado hispanohablante, lo que representa una ventana de oportunidad directa.
+
+**Estrategia de diferenciación general:**
+- *Localización:* Único producto diseñado para el contexto universitario peruano/latinoamericano en español
+- *Precio accesible:* Modelo freemium con plan premium a S/. 15-25/mes, muy por debajo de los competidores internacionales
+- *Alianzas universitarias:* Partnerships con facultades de Ingeniería y Comunicaciones de universidades peruanas para adopción institucional
+- *Gamificación contextual:* Sistema de logros y streaks adaptado a los ciclos académicos peruanos (exposiciones, sustentaciones, entrevistas de prácticas)
 
 <hr class="page-break">
 
@@ -592,29 +620,29 @@ Según MINEDU (2023), más de 1.5 millones de estudiantes universitarios en Per�
 
 ## 4.2. Architectural Drivers
 
-### 4.1.8. Design Purpose
+### 4.2.1. Design Purpose
 
 
 
-### 4.1.9. Primary Functionality (Primary User Stories)
+### 4.2.2. Primary Functionality (Primary User Stories)
 
 | ID | Título | Descripción |
 |----|--------|-------------|
 |    |        |             |
 
-### 4.1.10. Quality Attribute Scenarios
+### 4.2.3. Quality Attribute Scenarios
 
 | ID | Atributo de Calidad | Fuente | Estímulo | Artefacto | Entorno | Respuesta | Medida de Respuesta |
 |----|---------------------|--------|----------|-----------|---------|-----------|---------------------|
 |    |                     |        |          |           |         |           |                     |
 
-### 4.1.11. Constraints
+### 4.2.4. Constraints
 
 | ID | Restricción |
 |----|-------------|
 |    |             |
 
-### 4.1.12. Architectural Concerns
+### 4.2.5. Architectural Concerns
 
 | ID | Concern | Descripción |
 |----|---------|-------------|
@@ -944,7 +972,15 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 # Referencias Bibliográficas
 
+Ministerio de Educación del Perú. (2023). *Estadísticas de la calidad educativa — Educación Superior Universitaria*. MINEDU. https://escale.minedu.gob.pe/
 
+Universidad de Lima. (2022). *Comunicación oral y empleabilidad en universitarios peruanos: estudio de percepción*. Fondo Editorial Universidad de Lima.
+
+ELSA Corp. (2024). *ELSA Speak — AI-powered English pronunciation coach* [Aplicación móvil]. App Store / Google Play. https://elsaspeak.com/
+
+Speeko Inc. (2024). *Speeko — Public Speaking Coach* [Aplicación móvil]. App Store. https://www.speeko.co/
+
+Ries, E. (2011). *The Lean Startup: How today's entrepreneurs use continuous innovation to create radically successful businesses*. Crown Business.
 
 <hr class="page-break">
 
