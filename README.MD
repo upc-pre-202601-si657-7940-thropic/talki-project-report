@@ -244,7 +244,7 @@ Talki es nuestra solución principal: una aplicación móvil que utiliza IA para
       <td><img src="assets/images/photos/eduardo-rivera.jpg" alt="Eduardo Rivera" width="200"></td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong> — U20241C134<br>Estudiante de Ingeniería de Software. Enfocado en desarrollo full-stack y bases de datos. Conocimientos en Java, SQL y metodologías ágiles.</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong> — U20241C134<br>Soy una persona relajada y que se adapta fácilmente, siempre buscando maneras de hacer las cosas bien sin complicaciones. Me adapto fácilmente al método de trabajo de los demás, prefiriendo colaborar en lugar de liderar, y suelo llevarme bien con la mayoría de las personas. En mi tiempo libre, disfruto haciendo deporte, especialmente jugando voleibol, y me divierto jugando videojuegos.</td>
       <td><img src="assets/images/photos/manuel-tumi.jpg" alt="Manuel Tumi" width="200"></td>
     </tr>
   </tbody>
