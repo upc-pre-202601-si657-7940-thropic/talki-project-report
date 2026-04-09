@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean UX Canvas — Talki</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f8f9fa;
+    padding: 32px;
+    width: 1600px;
+  }
+
+  .page {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 36px;
+    border-bottom: 2px solid #e5e7eb;
+    background: #fff;
+  }
+  .header-left { display: flex; align-items: baseline; gap: 12px; }
+  .header-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 400;
+  }
+  .header-right { text-align: right; }
+  .product-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2563eb;
+    letter-spacing: -0.3px;
+  }
+  .product-meta {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  /* ── Grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    border-top: none;
+  }
+
+  .cell {
+    padding: 24px 26px;
+    border-right: 1.5px solid #e5e7eb;
+    border-bottom: 1.5px solid #e5e7eb;
+    position: relative;
+    min-height: 240px;
+  }
+  .cell:nth-child(3n) { border-right: none; }
+  .grid .cell:nth-last-child(-n+3) { border-bottom: none; }
+
+  /* accent left bar */
+  .cell.accent::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: #2563eb;
+    border-radius: 0;
+  }
+
+  .cell-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    background: #e5e7eb;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+  .cell.accent .cell-number {
+    background: #bfdbfe;
+    color: #1d4ed8;
+  }
+
+  .cell-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #111827;
+    margin-bottom: 14px;
+  }
+  .cell.accent .cell-title { color: #1d4ed8; }
+
+  .cell-body {
+    font-size: 13.5px;
+    color: #1f2937;
+    line-height: 1.65;
+  }
+  .cell-body p { margin-bottom: 8px; }
+  .cell-body p:last-child { margin-bottom: 0; }
+  .cell-body strong { color: #030712; font-weight: 700; }
+  .cell-body ul { padding-left: 14px; }
+  .cell-body li { margin-bottom: 5px; }
+
+  .tag {
+    display: inline-block;
+    background: #f0f9ff;
+    color: #0284c7;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-bottom: 10px;
+    border: 1px solid #bae6fd;
+  }
+  .tag.green { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+  .tag.purple { background: #faf5ff; color: #7c3aed; border-color: #ddd6fe; }
+  .tag.orange { background: #fff7ed; color: #ea580c; border-color: #fed7aa; }
+
+  .h-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-right: 4px;
+  }
+  .h-label.h1 { color: #2563eb; border-color: #bfdbfe; background: #eff6ff; }
+  .h-label.h2 { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
+  .h-label.h3 { color: #7c3aed; border-color: #ddd6fe; background: #faf5ff; }
+  .h-label.h4 { color: #ea580c; border-color: #fed7aa; background: #fff7ed; }
+  .h-label.h5 { color: #0891b2; border-color: #a5f3fc; background: #ecfeff; }
+  .h-label.h6 { color: #be185d; border-color: #fbcfe8; background: #fdf2f8; }
+
+  .hyp-row { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 6px; }
+  .hyp-text { font-size: 13px; color: #1f2937; line-height: 1.55; }
+
+  .mvp-badge {
+    display: inline-block;
+    background: #111827;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .out-scope {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #d1d5db;
+    font-size: 12px;
+    color: #6b7280;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title">Lean UX Canvas</span>
+      <span class="header-sub">Diseño centrado en el usuario · Thropic</span>
+    </div>
+    <div class="header-right">
+      <div class="product-name">Talki</div>
+      <div class="product-meta">SI657 · Sección 7940 · 2026-10</div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid">
+
+    <!-- 1. Business Problem -->
+    <div class="cell accent">
+      <div class="cell-number">1</div>
+      <div class="cell-title">Business Problem</div>
+      <div class="cell-body">
+        <p>Los estudiantes universitarios peruanos de ciclos 1-10 carecen de herramientas accesibles y en español para practicar comunicación oral con feedback personalizado en tiempo real.</p>
+        <p>El coaching privado cuesta S/.80-200 por sesión, inaccesible para la mayoría. La educación tradicional no brinda espacios suficientes de práctica oral con retroalimentación.</p>
+        <p><strong>¿Cómo podemos ofrecer a universitarios peruanos una forma efectiva, autónoma y asequible de mejorar su comunicación oral, para que puedan desenvolverse con confianza en exposiciones, sustentaciones y entrevistas laborales?</strong></p>
+        <p style="color:#4b5563; font-size:12.5px; border-top:1px solid #e5e7eb; margin-top:8px; padding-top:8px;">El 73% de universitarios siente inseguridad al hablar en público y el 68% lo identifica como barrera para el empleo (U. Lima, 2022). MINEDU reporta +1.5M estudiantes universitarios en Perú (2023).</p>
+      </div>
+    </div>
+
+    <!-- 2. Solution Ideas -->
+    <div class="cell">
+      <div class="cell-number">2</div>
+      <div class="cell-title">Solution Ideas</div>
+      <div class="cell-body">
+        <ul>
+          <li>App móvil con <strong>análisis de voz por IA</strong> en tiempo real (fluidez, ritmo, estructura)</li>
+          <li><strong>Ejercicios guiados progresivos</strong> por nivel y objetivo (exposición, entrevista, sustentación)</li>
+          <li><strong>Simulador de entrevistas laborales</strong> con feedback inmediato personalizado</li>
+          <li><strong>Dashboard personal</strong> de métricas: fluidez, ritmo, progreso semanal</li>
+          <li><strong>Ruta de aprendizaje adaptativa</strong> generada por IA según el perfil del usuario</li>
+          <li>Sistema de <strong>gamificación</strong>: streaks, logros y retos entre compañeros</li>
+          <li>Modelo <strong>freemium</strong> con plan premium a S/.15-25/mes</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. Business Outcomes -->
+    <div class="cell">
+      <div class="cell-number">3</div>
+      <div class="cell-title">Business Outcomes</div>
+      <div class="cell-body">
+        <span class="tag">Cambios en comportamiento del cliente</span>
+        <ul>
+          <li><strong>10,000</strong> usuarios activos al sexto mes</li>
+          <li>Retención <strong>&gt;60%</strong> a los 90 días</li>
+          <li>NPS <strong>≥ 40</strong> al tercer mes de operación</li>
+          <li>Conversión freemium → premium <strong>≥ 8%</strong></li>
+          <li>CAC <strong>&lt; S/.10</strong> mediante referidos</li>
+          <li><strong>3 alianzas</strong> universitarias en 2026-10</li>
+          <li>MRR de <strong>S/.5,000</strong> al sexto mes</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4. Users & Customers -->
+    <div class="cell">
+      <div class="cell-number">4</div>
+      <div class="cell-title">Users &amp; Customers</div>
+      <div class="cell-body">
+        <p><span class="tag">Segmento 1 · Ciclos 1-5</span></p>
+        <p>Estudiantes de 17-21 años, NSE B/C, Lima y provincias. Recién ingresados, con poca experiencia en comunicación formal. <strong>Pain:</strong> miedo escénico, falta de estructura, vocabulario limitado. <strong>Goal:</strong> ganar confianza progresivamente y no reprobar.</p>
+        <p><span class="tag green">Segmento 2 · Ciclos 6-10</span></p>
+        <p>Estudiantes de 21-26 años, próximos a egresar. <strong>Pain:</strong> falta de fluidez profesional, dificultad en entrevistas técnicas y laborales. <strong>Goal:</strong> insertarse exitosamente en el mercado laboral.</p>
+      </div>
+    </div>
+
+    <!-- 5. User Outcomes & Benefits -->
+    <div class="cell">
+      <div class="cell-number">5</div>
+      <div class="cell-title">User Outcomes &amp; Benefits</div>
+      <div class="cell-body">
+        <span class="tag purple">Beneficios para el usuario</span>
+        <ul>
+          <li>Reducir la <strong>ansiedad y miedo escénico</strong> al hablar en público</li>
+          <li>Mejorar <strong>fluidez, ritmo y estructura</strong> del discurso oral</li>
+          <li>Practicar en <strong>cualquier momento</strong> (sesiones de 10-20 min)</li>
+          <li>Recibir <strong>feedback específico e inmediato</strong> sin juicio social</li>
+          <li>Prepararse efectivamente para <strong>entrevistas de trabajo</strong></li>
+          <li>Ver progreso <strong>cuantificado</strong> semana a semana</li>
+          <li>Acceder a práctica de calidad a <strong>precio accesible</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 6. Hypotheses Statement -->
+    <div class="cell">
+      <div class="cell-number">6</div>
+      <div class="cell-title">Hypotheses Statement</div>
+      <div class="cell-body">
+        <div class="hyp-row"><span class="h-label h1">H1</span><span class="hyp-text">Si ciclos 1-5 completan ≥3 sesiones/sem con ejercicios guiados → retención &gt;90 días.</span></div>
+        <div class="hyp-row"><span class="h-label h2">H2</span><span class="hyp-text">Si ciclos 6-10 usan el simulador de entrevistas → reducen ansiedad, NPS ≥45.</span></div>
+        <div class="hyp-row"><span class="h-label h3">H3</span><span class="hyp-text">Streaks y logros activos 4 semanas → mejora retención a 90 días en 25%.</span></div>
+        <div class="hyp-row"><span class="h-label h4">H4</span><span class="hyp-text">Dashboard de métricas personales → aumenta engagement semanal en 40%.</span></div>
+        <div class="hyp-row"><span class="h-label h5">H5</span><span class="hyp-text">Retos sociales entre compañeros → mejora word-of-mouth y CAC.</span></div>
+        <div class="hyp-row"><span class="h-label h6">H6</span><span class="hyp-text">Ruta adaptativa con IA → reduce churn mensual por debajo del 15%.</span></div>
+      </div>
+    </div>
+
+    <!-- 7. What to learn first -->
+    <div class="cell">
+      <div class="cell-number">7</div>
+      <div class="cell-title">What's the most important thing we need to learn first?</div>
+      <div class="cell-body">
+        <span class="tag orange">Riesgo principal</span>
+        <p><strong>¿Están los universitarios peruanos dispuestos a usar una app en español para practicar comunicación oral de forma autónoma al menos 3 veces por semana?</strong></p>
+        <p>¿El feedback de IA en tiempo real es percibido como útil y confiable frente a un coach humano?</p>
+        <p>¿El precio de S/.15-25/mes es aceptado como justo dado el valor percibido por el segmento objetivo?</p>
+      </div>
+    </div>
+
+    <!-- 8. Least work -->
+    <div class="cell">
+      <div class="cell-number">8</div>
+      <div class="cell-title">What's the least amount of work we need to do to learn that?</div>
+      <div class="cell-body">
+        <div class="mvp-badge">MVP · Sprint 1</div>
+        <ul>
+          <li>Grabación de voz + análisis básico de fluidez y ritmo</li>
+          <li>Score numérico simple por sesión</li>
+          <li>3 ejercicios guiados predefinidos (exposición, conversación formal, presentación)</li>
+          <li>Historial de las últimas 7 sesiones</li>
+        </ul>
+        <p style="margin-top:8px; font-size:13px; color:#111827;">Validar con <strong>20 usuarios ciclos 1-5</strong> y <strong>10 de ciclos 6-10</strong>.<br>Éxito: ≥70% regresa al día siguiente.</p>
+        <div class="out-scope">
+          <strong>Out of scope en v1:</strong> simulador de entrevistas, gamificación completa, comunidad social, ruta adaptativa.
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. branding cell -->
+    <div class="cell" style="background:#1e3a5f; display:flex; align-items:center; justify-content:center; border-right:none;">
+      <div style="text-align:center;">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:16px; display:block; margin-left:auto; margin-right:auto;">
+          <!-- microphone icon -->
+          <rect x="18" y="4" width="12" height="22" rx="6" fill="#60a5fa"/>
+          <path d="M10 24c0 7.732 6.268 14 14 14s14-6.268 14-14" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <line x1="24" y1="38" x2="24" y2="44" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="18" y1="44" x2="30" y2="44" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:22px; font-weight:800; color:#ffffff; letter-spacing:-0.5px; margin-bottom:4px;">Talki</div>
+        <div style="font-size:12px; font-weight:600; color:#93c5fd; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px;">by Thropic</div>
+        <div style="width:40px; height:2px; background:#3b82f6; margin:0 auto 12px;"></div>
+        <div style="font-size:11.5px; color:#bfdbfe; font-weight:500; line-height:1.6;">SI657 · Sección 7940<br>Fundamentos de Arquitectura<br>de Software · 2026-10</div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+</div><!-- /page -->
+</body>
+</html>
