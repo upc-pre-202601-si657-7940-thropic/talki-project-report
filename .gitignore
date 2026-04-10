@@ -13,6 +13,15 @@ desktop.ini
 *.swp
 *.swo
 
+# Preview HTML (generado localmente con pandoc)
+talki-report-preview.html
+
+# Scripts de generación local
+generate_figures.py
+
+# Archivos fuente HTML de assets (solo se sube el PNG generado)
+assets/images/screenshots/*.html
+
 # Temporales
 *.tmp
 *.log

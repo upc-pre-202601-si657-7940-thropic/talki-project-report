@@ -1,22 +1,22 @@
 <div style="text-align: center;">
-  <img src="./assets/logos/upc-logo.png" alt="UPC Logo" style="width: 250px; height: auto;">
+  <img src="./assets/images/logos/upc-logo.png" alt="UPC Logo" style="width: 250px; height: auto;">
 </div>
 
 <h2 style="text-align: center;"> Universidad Peruana de Ciencias Aplicadas </h2>
 
 <h4 style="text-align: center"> Ingeniería de Software </h4>
 
-<h4 style="text-align: center"> Periodo: 202610 </h4>
+<h4 style="text-align: center"> Periodo: 202601 </h4>
 
-<h4 style="text-align: center"> [COMPLETAR: Código del curso] | Fundamentos de Arquitectura de Software </h4>
+<h4 style="text-align: center"> SI657 | Fundamentos de Arquitectura de Software </h4>
 
-<h4 style="text-align: center"> Sección: [COMPLETAR] </h4>
+<h4 style="text-align: center"> Sección: 7940 </h4>
 
-<h4 style="text-align: center"> Docente: [COMPLETAR: Nombre del profesor] </h4>
+<h4 style="text-align: center"> Docente: Daniel Enrique Mori Yzaguirre </h4>
 
 <h3 style="text-align: center;"> Informe de Trabajo Final </h3>
 
-<h4 style="text-align: center"> Startup: Talki </h4>
+<h4 style="text-align: center"> Startup: Thropic </h4>
 
 <h4 style="text-align: center"> Producto: Talki </h4>
 
@@ -29,24 +29,16 @@
          <th>Apellidos y Nombres</th>
       </tr>
       <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
+         <td>U202313397</td>
+         <td>Oroncoy Almeyda, Alejandro Daniel</td>
       </tr>
       <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
+         <td>U202312222</td>
+         <td>Rivera Sosa, Eduardo Gael</td>
       </tr>
       <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
-      </tr>
-      <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
-      </tr>
-      <tr>
-         <td>[COMPLETAR]</td>
-         <td>[COMPLETAR]</td>
+         <td>U20241C134</td>
+         <td>Tumi Oliden, Manuel Ignacio</td>
       </tr>
    </table>
 </div>
@@ -61,7 +53,7 @@
 
 | Version | Fecha | Autor | Descripción de modificación |
 |---------|-------|-------|-----------------------------|
-|         |       |       |                             |
+| 1.0 | 09/04/2026 | Oroncoy Almeyda, Alejandro Daniel | Creación del documento |
 
 <hr class="page-break">
 
@@ -106,11 +98,11 @@
       - [4.1.6. Design Patterns](#416-design-patterns)
       - [4.1.7. Tactics](#417-tactics)
    - [4.2. Architectural Drivers](#42-architectural-drivers)
-      - [4.1.8. Design Purpose](#418-design-purpose)
-      - [4.1.9. Primary Functionality (Primary User Stories)](#419-primary-functionality-primary-user-stories)
-      - [4.1.10. Quality Attribute Scenarios](#4110-quality-attribute-scenarios)
-      - [4.1.11. Constraints](#4111-constraints)
-      - [4.1.12. Architectural Concerns](#4112-architectural-concerns)
+      - [4.2.1. Design Purpose](#421-design-purpose)
+      - [4.2.2. Primary Functionality (Primary User Stories)](#422-primary-functionality-primary-user-stories)
+      - [4.2.3. Quality Attribute Scenarios](#423-quality-attribute-scenarios)
+      - [4.2.4. Constraints](#424-constraints)
+      - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
       - [4.2.X. Iteration N: Iteration Name](#42x-iteration-n-iteration-name)
          - [4.2.X.1. Architectural Design Backlog N](#42x1-architectural-design-backlog-n)
@@ -193,38 +185,26 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </thead>
   <tbody>
     <tr>
-      <td rowspan="5"><strong>[COMPLETAR: Criterio 1]</strong></td>
-      <td><strong>[COMPLETAR: Integrante 1]</strong><br><b>TB1:</b></td>
-      <td rowspan="5"><b>TB1:</b></td>
+      <td rowspan="3"><strong>Criterio 1: ABET – EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.</td>
+      <td rowspan="3"><b>TB1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.</td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 2]</strong><br><b>TB1:</b></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.</td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 3]</strong><br><b>TB1:</b></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.</td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 4]</strong><br><b>TB1:</b></td>
+      <td rowspan="3"><strong>Criterio 2: ABET – EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).</td>
+      <td rowspan="3"><b>TB1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.</td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Integrante 5]</strong><br><b>TB1:</b></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.</td>
     </tr>
     <tr>
-      <td rowspan="5"><strong>[COMPLETAR: Criterio 2]</strong></td>
-      <td><strong>[COMPLETAR: Integrante 1]</strong><br><b>TB1:</b></td>
-      <td rowspan="5"><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 2]</strong><br><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 3]</strong><br><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 4]</strong><br><b>TB1:</b></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Integrante 5]</strong><br><b>TB1:</b></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.</td>
     </tr>
   </tbody>
 </table>
@@ -237,7 +217,13 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ### 1.1.1. Descripción de la Startup
 
+Thropic es una startup de tecnología educativa fundada por estudiantes de Ingeniería de Software de la Universidad Peruana de Ciencias Aplicadas (UPC), con la misión de democratizar el acceso a herramientas de desarrollo personal mediante inteligencia artificial.
 
+**Misión:** Empoderar a los estudiantes universitarios a desarrollar habilidades de comunicación oral efectiva a través de tecnología accesible e inteligente.
+
+**Visión:** Ser la plataforma líder en Latinoamérica para el desarrollo de habilidades de comunicación oral en el ámbito académico y profesional para 2030.
+
+Talki es la solución principal de Thropic: una aplicación móvil que utiliza IA para analizar, evaluar y retroalimentar la comunicación oral de estudiantes universitarios en tiempo real, ayudándoles a mejorar su fluidez, pronunciación, estructura del discurso y confianza al hablar en público.
 
 ### 1.1.2. Perfiles de integrantes del equipo
 
@@ -250,24 +236,16 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </thead>
   <tbody>
     <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong> — U202313397<br>Mi nombre es Alejandro Oroncoy, tengo 19 años y soy estudiante de Ingeniería de Software en el quinto ciclo. Me considero una persona proactiva, autodidacta y orientada a objetivos. Disfruto aprender nuevas tecnologías por cuenta propia y busco siempre entregar resultados de calidad. Tengo experiencia en desarrollo backend con Java y Spring Boot, así como en Python y servicios cloud. Me motiva construir soluciones que generen impacto real, y en Thropic asumo con entusiasmo el reto de llevar Talki al mercado universitario peruano.</td>
+      <td><img src="assets/images/photos/alejandro-oroncoy.jpg" alt="Alejandro Oroncoy" width="200"></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong> — U202312222<br>Mi nombre es Gael Rivera, tengo 20 años y soy estudiante de Ingeniería de Software en el quinto ciclo. Me caracterizo por ser responsable y orientado a resultados, con habilidades de liderazgo que facilitan la comunicación y el trabajo colaborativo. Tengo conocimientos en desarrollo frontend con Angular y experiencia en modelado de bases de datos relacionales. Siempre estoy dispuesto a abordar desafíos y encontrar soluciones en equipo, y en Thropic asumo la especificación de requerimientos como base técnica del producto.</td>
+      <td><img src="assets/images/photos/eduardo-rivera.jpg" alt="Eduardo Rivera" width="200"></td>
     </tr>
     <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
-    </tr>
-    <tr>
-      <td><strong>[COMPLETAR: Apellidos, Nombres]</strong><br>[COMPLETAR: descripción]</td>
-      <td><img src="assets/images/photos/[COMPLETAR].jpg" alt="[COMPLETAR]" width="200"></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong> — U20241C134<br>Mi nombre es Manuel Tumi, soy estudiante de Ingeniería de Software y me caracterizo por ser una persona colaborativa y adaptable, que se integra fácilmente a distintos métodos de trabajo. Tengo conocimientos en investigación de usuarios, diseño de entrevistas y análisis de necesidades, habilidades que aplico en la etapa de needfinding del proyecto. Prefiero apoyar al equipo desde la escucha activa y el análisis, y en mi tiempo libre disfruto del voleibol y los videojuegos.</td>
+      <td><img src="assets/images/photos/manuel-tumi.jpg" alt="Manuel Tumi" width="200"></td>
     </tr>
   </tbody>
 </table>
@@ -278,67 +256,168 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ### 1.2.1. Nombre del producto
 
-
+**Talki** es el nombre de nuestra aplicación. El nombre proviene de la combinación de "Talk" (hablar en inglés) con el sufijo "-i" que evoca inteligencia e innovación. Talki representa la idea de tener un compañero inteligente que te ayuda a mejorar tu forma de comunicarte oralmente.
 
 ### 1.2.2. Antecedentes y problemática
 
 #### WHAT (Qué)
 
-
+Las deficiencias en comunicación oral afectan el desempeño académico y profesional de los universitarios peruanos.
 
 #### WHEN (Cuándo)
 
-
+Se manifiesta principalmente al momento de realizar exposiciones, sustentaciones, entrevistas de trabajo y presentaciones profesionales.
 
 #### WHERE (Dónde)
 
-
+En aulas universitarias, plataformas virtuales y entornos laborales/prácticas.
 
 #### WHO (Quién)
 
-
+Estudiantes de educación superior peruanos (ciclos 1-10), especialmente aquellos sin acceso a coaching personalizado.
 
 #### WHY (Por qué)
 
-
+La educación tradicional no brinda suficientes espacios de práctica oral con feedback personalizado. El acceso a coaches es costoso y limitado.
 
 #### HOW (Cómo)
 
-
+Talki usa IA para grabar, analizar y retroalimentar la comunicación oral del usuario en tiempo real, con ejercicios progresivos y personalizados.
 
 #### HOW MUCH (Cuánto)
 
+Según la Superintendencia Nacional de Educación Superior Universitaria (SUNEDU, 2023), más de 1.5 millones de estudiantes se encuentran matriculados en universidades peruanas, representando un mercado potencial significativo para soluciones de desarrollo de competencias comunicativas.
 
+En el plano de la ansiedad comunicativa, la literatura científica muestra cifras consistentemente elevadas. Maldonado et al. (2022), en un estudio experimental con universitarios publicado en la *Revista Latina de Comunicación Social*, confirmaron que la ansiedad al hablar en público impacta directamente el desempeño académico y la participación activa en clases. A nivel global, investigaciones compiladas por Teleprompter.com (2024) revelan que el **75% de las personas** experimenta algún nivel de ansiedad al hablar en público, y el **61% de universitarios** la reporta como un temor significativo.
+
+_Figura 1: Prevalencia de la ansiedad al hablar en público en población universitaria_
+
+<div align="center">
+<img src="assets/images/figures/figura1_ansiedad_publica.png" alt="Figura 1: Ansiedad al hablar en público" width="680">
+</div>
+
+_Nota._ Elaboración propia basada en Teleprompter.com (2024) y Crown Counseling (2024).
+
+Respecto al impacto en la empleabilidad, un estudio descriptivo sobre competencias laborales blandas en egresados universitarios latinoamericanos (Redalyc, 2022) identificó que la **comunicación asertiva** es la segunda habilidad más demandada por empleadores (9.1%), solo detrás del trabajo en equipo (10.1%). Sin embargo, es también una de las competencias con mayores brechas en egresados.
+
+_Figura 2: Habilidades blandas más demandadas por empleadores en Latinoamérica_
+
+<div align="center">
+<img src="assets/images/figures/figura2_habilidades_demandadas.png" alt="Figura 2: Habilidades blandas más demandadas" width="680">
+</div>
+
+_Nota._ Elaboración propia basada en Redalyc (2022).
+
+Finalmente, la ansiedad comunicativa no solo afecta el desempeño académico sino también la trayectoria profesional. Datos de Crown Counseling (2024) y Teleprompter.com (2024) indican que el **70% de los empleos** requiere algún nivel de oratoria o presentaciones; el **30% de las personas** ha evitado postular a empleos o ascensos debido a esta ansiedad; y quienes la padecen tienen un **15% menos de probabilidad** de alcanzar posiciones gerenciales.
+
+_Figura 3: Impacto profesional de la ansiedad al hablar en público_
+
+<div align="center">
+<img src="assets/images/figures/figura3_impacto_profesional.png" alt="Figura 3: Impacto profesional de la ansiedad comunicativa" width="680">
+</div>
+
+_Nota._ Elaboración propia basada en Crown Counseling (2024) y Teleprompter.com (2024).
+
+Ante este escenario, el costo de un coach de oratoria privado en Lima oscila entre S/. 80 y S/. 200 por sesión (con frecuencia semanal recomendada), haciendo inaccesible el entrenamiento personalizado para la mayoría del segmento universitario. Talki aborda esta brecha mediante IA accesible desde el smartphone, a una fracción del costo.
 
 ### 1.2.3. Lean UX Process
 
+El proceso Lean UX aplicado en Thropic sigue el enfoque de validación continua de hipótesis mediante ciclos cortos de aprendizaje, construir y medir (Ries, 2011), con el objetivo de reducir el riesgo de construir un producto que el mercado no necesita.
+
 #### 1.2.3.1. Lean UX Problem Statement
 
+**Segmento 1:** Hemos observado que los estudiantes de ciclos 1-5 carecen de espacios seguros y accesibles para practicar la comunicación oral con feedback real. El impacto es bajo desempeño en exposiciones y pérdida de oportunidades académicas. ¿Cómo podríamos brindarles práctica guiada con IA para que ganen confianza progresivamente?
 
+**Segmento 2:** Hemos observado que los estudiantes de ciclos 6-10 no tienen herramientas asequibles para prepararse para entrevistas laborales y presentaciones profesionales. El impacto es dificultad para insertarse en el mercado laboral. ¿Cómo podríamos simular entornos reales de comunicación profesional para que estén listos al graduarse?
 
 #### 1.2.3.2. Lean UX Assumptions
 
 ##### Business Assumptions
 
-
+1. Creemos que los usuarios pagarán una suscripción mensual de S/. 15-25 por acceso premium.
+2. Creemos que el mayor canal de adquisición serán las redes sociales universitarias (Instagram, TikTok).
+3. Creemos que los usuarios necesitan al menos 3 sesiones semanales para notar mejora en 30 días.
+4. Creemos que las universidades adoptarán Talki como herramienta complementaria en cursos de comunicación.
+5. Creemos que el NPS (Net Promoter Score) alcanzará 40+ en los primeros 6 meses.
+6. Creemos que el costo de adquisición por usuario será menor a S/. 10 mediante estrategias de referidos.
+7. Creemos que el 60% de usuarios retendrá la app más de 3 meses con gamificación efectiva.
+8. Creemos que las alianzas con institutos y universidades serán nuestro principal canal B2B.
+9. Creemos que los usuarios en ciclos 6-10 están dispuestos a pagar más por features de simulación de entrevistas.
+10. Creemos que el mercado latinoamericano de edtech móvil crecerá 25% anual los próximos 3 años.
+11. Creemos que la diferenciación por idioma español y contexto peruano/latinoamericano será una ventaja competitiva sostenible.
 
 ##### User Assumptions
 
-
+1. **¿Quién es el usuario?** Estudiantes universitarios peruanos de ciclos 1-10, de 17 a 26 años, nativos digitales con smartphone.
+2. **¿Dónde encaja nuestro producto en su vida?** En los momentos previos a exposiciones, durante el estudio en casa, y en transporte público.
+3. **¿Qué problemas resuelve nuestro producto?** La falta de espacios seguros para practicar oralidad con feedback inmediato y personalizado.
+4. **¿Cuándo y cómo es usado nuestro producto?** Sesiones de 10-20 minutos, principalmente en las noches, desde el smartphone.
+5. **¿Qué características son importantes?** Feedback en tiempo real, ejercicios progresivos, historial de progreso, modo simulación de entrevistas.
+6. **¿Cómo debe verse y comportarse el producto?** Intuitivo, motivador, con elementos de gamificación, lenguaje cercano y sin tecnicismos.
 
 #### 1.2.3.3. Lean UX Hypothesis
 
+1. Creemos que aumentaremos la retención de usuarios si los estudiantes de ciclos 1-5 logran completar al menos 3 sesiones semanales de práctica con la feature de "ejercicios guiados con IA".
 
+2. Creemos que mejoraremos la satisfacción si los estudiantes de ciclos 6-10 logran reducir su ansiedad en entrevistas con la feature de "simulador de entrevistas con feedback en tiempo real".
+
+3. Creemos que mejoraremos la retención si los usuarios gamifican su progreso con la feature de "streaks y logros" durante 4 semanas consecutivas.
+
+4. Creemos que aumentaremos el engagement si los estudiantes pueden ver su análisis de progreso detallado con la feature de "dashboard de métricas personales".
+
+5. Creemos que aumentaremos el word-of-mouth si los usuarios pueden compartir sus logros con la feature de "comunidad y retos entre amigos".
+
+6. Creemos que reduciremos el churn si los usuarios reciben un plan de práctica personalizado con la feature de "ruta de aprendizaje adaptativa con IA".
 
 #### 1.2.3.4. Lean UX Canvas
 
-<img src="./assets/images/screenshots/lean-ux-canvas.png" alt="Lean UX Canvas">
+_Figura 4: Lean UX Canvas — Talki_
+
+<div align="center">
+<img src="./assets/images/screenshots/lean-ux-canvas.png" alt="Lean UX Canvas" width="680">
+</div>
+
+_Nota._ Elaboración propia (2026).
 
 <hr class="page-break">
 
 ## 1.3. Segmentos objetivo
 
+**Segmento 1: Estudiantes universitarios de ciclos 1 al 5**
 
+*Aspectos Demográficos:*
+- Edad: 17-21 años
+- Sexo: Masculino y femenino
+- Nivel socioeconómico: B y C
+- Ciclo: 1 al 5 de educación superior universitaria
+
+*Aspectos Geográficos:*
+- País: Perú
+- Región: Lima Metropolitana y principales ciudades del interior (Arequipa, Trujillo, Piura)
+- Tipo de institución: Universidades privadas y públicas
+
+*Aspectos Psicográficos:*
+- Motivaciones: Mejorar calificaciones en cursos con exposiciones, ganar confianza al hablar en público, no pasar vergüenza frente a compañeros
+- Dolores: Miedo escénico pronunciado, vocabulario académico limitado, falta de estructura al exponer, nerviosismo que bloquea el discurso
+- Comportamientos digitales: Nativos digitales, uso intensivo del smartphone, acostumbrados a apps de aprendizaje (Duolingo, YouTube), disponibles para sesiones cortas de 10-15 min
+
+**Segmento 2: Estudiantes universitarios de ciclos 6 al 10**
+
+*Aspectos Demográficos:*
+- Edad: 21-26 años
+- Sexo: Masculino y femenino
+- Nivel socioeconómico: B y C
+- Ciclo: 6 al 10 de educación superior universitaria, próximos a egresar
+
+*Aspectos Geográficos:*
+- País: Perú
+- Región: Lima Metropolitana y principales ciudades con oferta laboral tecnológica
+- Tipo de institución: Universidades con programas de prácticas preprofesionales activos
+
+*Aspectos Psicográficos:*
+- Motivaciones: Conseguir prácticas o primer empleo, destacar en entrevistas técnicas y de RR.HH., comunicar ideas con claridad en entornos profesionales
+- Dolores: Dificultad para expresarse con fluidez y vocabulario profesional, ansiedad ante entrevistas de trabajo, falta de espacios reales de práctica con feedback concreto
+- Comportamientos digitales: Usuarios activos de LinkedIn, plataformas de empleabilidad y apps de productividad; dispuestos a pagar por herramientas que generen ROI directo en su carrera
 
 <hr class="page-break">
 
@@ -348,95 +427,128 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 <table>
   <tr>
-    <th colspan="5">Competitive Analysis Landscape</th>
+    <th colspan="6">Competitive Analysis Landscape</th>
   </tr>
   <tr>
     <td colspan="2" align="center"><b>¿Por qué llevar a cabo este análisis?</b></td>
-    <td colspan="3">[COMPLETAR]</td>
+    <td colspan="4">Para identificar las fortalezas, debilidades y estrategias de nuestros competidores directos e indirectos, con el fin de definir la propuesta de valor diferenciada de Talki y detectar oportunidades de mercado no atendidas.</td>
   </tr>
   <tr>
     <th colspan="2">Nombre</th>
-    <th>[Startup Talki]</th>
-    <th>[Competidor 1]</th>
-    <th>[Competidor 2]</th>
+    <th>Talki (Thropic)</th>
+    <th>ELSA Speak</th>
+    <th>Speeko</th>
+    <th>Orai</th>
   </tr>
   <tr>
     <td colspan="2" align="center"><b>Logo</b></td>
     <td align="center"><img src="assets/images/logos/talki-logo.png" alt="Talki logo" width="100"></td>
-    <td align="center"><img src="assets/images/logos/[competidor1].png" alt="[Competidor 1]" width="100"></td>
-    <td align="center"><img src="assets/images/logos/[competidor2].png" alt="[Competidor 2]" width="100"></td>
+    <td align="center"><img src="assets/images/logos/elsa-speak-logo.png" alt="ELSA Speak" width="100"></td>
+    <td align="center"><img src="assets/images/logos/speeko-logo.png" alt="Speeko" width="100"></td>
+    <td align="center"><img src="assets/images/logos/orai-logo.png" alt="Orai" width="100"></td>
   </tr>
   <tr>
     <td rowspan="2"><b>Perfil</b></td>
     <td><b>Overview</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>App móvil con IA que analiza y retroalimenta la comunicación oral de estudiantes universitarios peruanos en tiempo real, en español.</td>
+    <td>App de pronunciación en inglés con IA que evalúa y corrige la pronunciación del usuario en tiempo real mediante reconocimiento de voz avanzado.</td>
+    <td>App de coaching para hablar en público con lecciones estructuradas impartidas por coaches reales y ejercicios de práctica.</td>
+    <td>App móvil con IA que analiza la oratoria del usuario (ritmo, palabras de relleno, energía, expresión facial) y entrega retroalimentación inmediata y lecciones personalizadas.</td>
   </tr>
   <tr>
     <td><b>Ventaja competitiva ¿Qué valor ofrece a los clientes?</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Feedback en tiempo real en español con contexto académico peruano; enfocado en universitarios latinoamericanos.</td>
+    <td>Motor de IA especializado en detección de errores fonéticos del inglés; más de 50M usuarios globales.</td>
+    <td>Contenido creado por coaches profesionales de oratoria; estructura de cursos progresivos y micro-lecciones de 5 minutos.</td>
+    <td>Análisis multimodal (voz + expresión facial) con plan de entrenamiento adaptativo; gamificación y seguimiento de progreso detallado.</td>
   </tr>
   <tr>
     <td rowspan="2"><b>Perfil de Marketing</b></td>
     <td><b>Mercado objetivo</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Estudiantes universitarios peruanos/latinoamericanos de ciclos 1-10.</td>
+    <td>Hablantes no nativos de inglés que desean mejorar su pronunciación, principalmente en Asia y Latinoamérica.</td>
+    <td>Profesionales y estudiantes angloparlantes que quieren mejorar su oratoria y liderazgo comunicacional.</td>
+    <td>Profesionales, estudiantes y ejecutivos angloparlantes que necesitan mejorar presentaciones y discursos.</td>
   </tr>
   <tr>
     <td><b>Estrategias de Marketing</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Freemium, marketing universitario, referidos entre compañeros.</td>
+    <td>Freemium, referidos, partnerships con instituciones educativas.</td>
+    <td>Freemium, publicidad en LinkedIn y redes, membresías corporativas.</td>
+    <td>Freemium con trial de 7 días, alianzas con instituciones educativas, plan Enterprise para equipos.</td>
   </tr>
   <tr>
     <td rowspan="3"><b>Perfil de Producto</b></td>
     <td><b>Productos &amp; Servicios</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>App móvil con análisis de voz, ejercicios guiados, simulador de entrevistas y dashboard de progreso.</td>
+    <td>App móvil (iOS/Android) con lecciones de pronunciación, conversación simulada y análisis fonético detallado.</td>
+    <td>App móvil con cursos de oratoria, ejercicios diarios de 5 minutos y biblioteca de habilidades comunicacionales.</td>
+    <td>App móvil (iOS/Android) con análisis de voz e imagen, lecciones gamificadas, historial de práctica y plan personalizado de 4 semanas.</td>
   </tr>
   <tr>
     <td><b>Precios y Costos</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Freemium; plan premium S/. 15-25/mes.</td>
+    <td>Gratis con funciones limitadas; premium desde $6.99/mes.</td>
+    <td>Gratis con funciones básicas; premium desde $9.99/mes.</td>
+    <td>Gratis con funciones básicas; premium desde $9.99/mes o $39.99/año.</td>
   </tr>
   <tr>
     <td><b>Canales de distribución</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>App Store, Google Play, web.</td>
+    <td>App Store, Google Play, web.</td>
+    <td>App Store, Google Play.</td>
+    <td>App Store, Google Play.</td>
   </tr>
   <tr>
     <td rowspan="4"><b>Análisis SWOT</b></td>
     <td><b>Fortalezas</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Español nativo, contexto universitario peruano, IA personalizada, gamificación.</td>
+    <td>IA muy precisa, gran base de usuarios global, contenido extenso y probado.</td>
+    <td>Contenido de alta calidad creado por expertos, formato de micro-lecciones atractivo.</td>
+    <td>Análisis multimodal avanzado, plan adaptativo personalizado, gamificación efectiva, disponible en iOS y Android.</td>
   </tr>
   <tr>
     <td><b>Oportunidades</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Mercado latinoamericano poco atendido, alianzas con universidades, expansión a otros países.</td>
+    <td>Expansión a otros idiomas, mercado B2B con instituciones educativas.</td>
+    <td>Mercado B2B corporativo, expansión a español y otros idiomas.</td>
+    <td>Expansión a idiomas distintos del inglés, mercado educativo universitario latinoamericano sin atender.</td>
   </tr>
   <tr>
     <td><b>Debilidades</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Startup nueva sin track record, recursos limitados, marca poco conocida.</td>
+    <td>Enfocado solo en pronunciación del inglés, no cubre comunicación oral en español.</td>
+    <td>Sin IA para feedback en tiempo real, contenido exclusivamente en inglés.</td>
+    <td>Solo disponible en inglés, sin adaptación al contexto académico ni latinoamericano.</td>
   </tr>
   <tr>
     <td><b>Amenazas</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Entrada de apps internacionales al mercado hispanohablante, competidores con mayor financiamiento.</td>
+    <td>Competidores con IA generativa más avanzada, apps multiidioma con mayor alcance.</td>
+    <td>Apps con IA generativa que ofrecen feedback personalizado, saturación del mercado edtech.</td>
+    <td>Saturación del mercado edtech en inglés, nuevos competidores con IA generativa más potente.</td>
   </tr>
 </table>
+
+### 2.1.2. Estrategias y tácticas frente a los competidores
+
+A partir del análisis competitivo, Thropic adopta las siguientes estrategias para posicionar Talki en el mercado:
+
+**Frente a ELSA Speak:**
+ELSA Speak domina el mercado de pronunciación en inglés pero no atiende la comunicación oral en español ni el contexto académico latinoamericano. Talki se diferencia enfocándose exclusivamente en español con contexto universitario peruano, ofreciendo ejercicios de exposición académica y simulación de sustentaciones que ELSA no contempla.
+
+**Frente a Speeko:**
+Speeko utiliza contenido pregrabado por coaches sin feedback personalizado en tiempo real. Talki responde con IA generativa que analiza el discurso del usuario en el momento y entrega retroalimentación específica e inmediata, no guiones estáticos. Además, Speeko no tiene presencia en el mercado hispanohablante, lo que representa una ventana de oportunidad directa.
+
+**Frente a Orai:**
+Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera exclusivamente en inglés y sin ninguna adaptación al contexto académico latinoamericano. Talki capitaliza esta brecha ofreciendo la misma profundidad de análisis (ritmo, fluidez, claridad) pero en español, con ejercicios diseñados para sustentaciones, exposiciones universitarias y entrevistas de prácticas preprofesionales típicas del sistema educativo peruano.
+
+**Estrategia de diferenciación general:**
+
+- *Localización:* Único producto diseñado para el contexto universitario peruano/latinoamericano en español
+- *Precio accesible:* Modelo freemium con plan premium a S/. 15-25/mes, muy por debajo de los competidores internacionales
+- *Alianzas universitarias:* Partnerships con facultades de Ingeniería y Comunicaciones de universidades peruanas para adopción institucional
+- *Gamificación contextual:* Sistema de logros y streaks adaptado a los ciclos académicos peruanos (exposiciones, sustentaciones, entrevistas de prácticas)
 
 <hr class="page-break">
 
@@ -1285,29 +1397,29 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ## 4.2. Architectural Drivers
 
-### 4.1.8. Design Purpose
+### 4.2.1. Design Purpose
 
 
 
-### 4.1.9. Primary Functionality (Primary User Stories)
+### 4.2.2. Primary Functionality (Primary User Stories)
 
 | ID | Título | Descripción |
 |----|--------|-------------|
 |    |        |             |
 
-### 4.1.10. Quality Attribute Scenarios
+### 4.2.3. Quality Attribute Scenarios
 
 | ID | Atributo de Calidad | Fuente | Estímulo | Artefacto | Entorno | Respuesta | Medida de Respuesta |
 |----|---------------------|--------|----------|-----------|---------|-----------|---------------------|
 |    |                     |        |          |           |         |           |                     |
 
-### 4.1.11. Constraints
+### 4.2.4. Constraints
 
 | ID | Restricción |
 |----|-------------|
 |    |             |
 
-### 4.1.12. Architectural Concerns
+### 4.2.5. Architectural Concerns
 
 | ID | Concern | Descripción |
 |----|---------|-------------|
@@ -1419,11 +1531,9 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 | Integrantes | Nombre en GitHub |
 |-------------|------------------|
-|             |                  |
-|             |                  |
-|             |                  |
-|             |                  |
-|             |                  |
+| Oroncoy Almeyda, Alejandro Daniel | alejooroncoy |
+| Rivera Sosa, Eduardo Gael | gael-rs |
+| Tumi Oliden, Manuel Ignacio | ManuelTumi2224 |
 
 ### 5.2.3. Source Code Style Guide & Conventions
 
@@ -1639,7 +1749,25 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 # Referencias Bibliográficas
 
+Crown Counseling. (2024). *30+ revealing fear of public speaking statistics for 2025*. https://crowncounseling.com/statistics/fear-of-public-speaking-statistics/
 
+ELSA Corp. (2024). *ELSA Speak — AI-powered English pronunciation coach* [Aplicación móvil]. App Store / Google Play. https://elsaspeak.com/
+
+Maldonado, M. A., García García, A., Armada Crespo, J. M., Alós, F. J., & Moreno Osella, E. M. (2022). Competencia oral y ansiedad: entrenamiento y eficacia en estudiantes universitarios. *Revista Latina de Comunicación Social*, (80). https://doi.org/10.4185/RLCS-2022-1800
+
+Ministerio de Educación del Perú. (2023). *Estadísticas de la calidad educativa — Educación Superior Universitaria*. MINEDU. https://escale.minedu.gob.pe/
+
+Orai Inc. (2024). *Orai — AI-powered public speaking coach* [Aplicación móvil]. App Store / Google Play. https://orai.com/
+
+Redalyc. (2022). Competencias laborales blandas de alto impacto en egresados universitarios. Un estudio descriptivo. *Revista de Investigación Educativa*, 194(276552011). https://www.redalyc.org/journal/1942/194276552011/html/
+
+Ries, E. (2011). *The Lean Startup: How today's entrepreneurs use continuous innovation to create radically successful businesses*. Crown Business.
+
+Speeko Inc. (2024). *Speeko — Public Speaking Coach* [Aplicación móvil]. App Store. https://www.speeko.co/
+
+Superintendencia Nacional de Educación Superior Universitaria. (2023). *Sistema de información universitaria — TUNI: Estadísticas de matrícula universitaria*. SUNEDU. https://www.sunedu.gob.pe/
+
+Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends*. https://www.teleprompter.com/blog/public-speaking-statistics
 
 <hr class="page-break">
 
