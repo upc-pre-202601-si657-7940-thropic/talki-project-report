@@ -186,25 +186,25 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   <tbody>
     <tr>
       <td rowspan="3"><strong>Criterio 1: ABET – EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Redactó la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definió la propuesta de nombre del producto (1.2.1) y elaboró los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.</td>
-      <td rowspan="3"><b>TB1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki mediante la redacción del Capítulo I del informe, abarcando el perfil de la startup, la solución propuesta y los segmentos objetivo. Cada integrante contribuyó a transmitir el problema y la solución con claridad para una audiencia académica.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.</td>
+      <td rowspan="3"><b>TB1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.</td>
     </tr>
     <tr>
       <td rowspan="3"><strong>Criterio 2: ABET – EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Aplicó el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado. Realizó el análisis competitivo comparando Talki con ELSA Speak y Speeko mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación (2.1.2).</td>
-      <td rowspan="3"><b>TB1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>TB1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).</td>
+      <td rowspan="3"><b>TB1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b></td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>TB1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b></td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>TB1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.</td>
     </tr>
   </tbody>
 </table>
