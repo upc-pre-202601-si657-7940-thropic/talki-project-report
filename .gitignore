@@ -13,6 +13,12 @@ desktop.ini
 *.swp
 *.swo
 
+# Preview HTML (generado localmente con pandoc)
+talki-report-preview.html
+
+# Scripts de generación local
+generate_figures.py
+
 # Temporales
 *.tmp
 *.log
