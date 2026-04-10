@@ -6,7 +6,7 @@
 
 <h4 style="text-align: center"> Ingeniería de Software </h4>
 
-<h4 style="text-align: center"> Periodo: 2026-10 </h4>
+<h4 style="text-align: center"> Periodo: 202601 </h4>
 
 <h4 style="text-align: center"> SI657 | Fundamentos de Arquitectura de Software </h4>
 
