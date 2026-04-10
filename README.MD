@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <img src="./assets/logos/upc-logo.png" alt="UPC Logo" style="width: 250px; height: auto;">
+  <img src="./assets/images/logos/upc-logo.png" alt="UPC Logo" style="width: 250px; height: auto;">
 </div>
 
 <h2 style="text-align: center;"> Universidad Peruana de Ciencias Aplicadas </h2>
@@ -217,13 +217,13 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
 
 ### 1.1.1. Descripción de la Startup
 
-Thropic es una startup de tecnología educativa fundada por estudiantes de Ingeniería de Software de la Universidad Peruana de Ciencias Aplicadas (UPC). Nuestra misión es democratizar el acceso a herramientas de desarrollo personal mediante inteligencia artificial.
+Thropic es una startup de tecnología educativa fundada por estudiantes de Ingeniería de Software de la Universidad Peruana de Ciencias Aplicadas (UPC), con la misión de democratizar el acceso a herramientas de desarrollo personal mediante inteligencia artificial.
 
 **Misión:** Empoderar a los estudiantes universitarios a desarrollar habilidades de comunicación oral efectiva a través de tecnología accesible e inteligente.
 
 **Visión:** Ser la plataforma líder en Latinoamérica para el desarrollo de habilidades de comunicación oral en el ámbito académico y profesional para 2030.
 
-Talki es nuestra solución principal: una aplicación móvil que utiliza IA para analizar, evaluar y retroalimentar la comunicación oral de estudiantes universitarios en tiempo real, ayudándoles a mejorar su fluidez, pronunciación, estructura del discurso y confianza al hablar en público.
+Talki es la solución principal de Thropic: una aplicación móvil que utiliza IA para analizar, evaluar y retroalimentar la comunicación oral de estudiantes universitarios en tiempo real, ayudándoles a mejorar su fluidez, pronunciación, estructura del discurso y confianza al hablar en público.
 
 ### 1.1.2. Perfiles de integrantes del equipo
 
@@ -240,11 +240,11 @@ Talki es nuestra solución principal: una aplicación móvil que utiliza IA para
       <td><img src="assets/images/photos/alejandro-oroncoy.jpg" alt="Alejandro Oroncoy" width="200"></td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong> — U202312222<br>Yo soy Gael Rivera. Soy un estudiante de Ingeniería de Software comprometido con la responsabilidad en cada tarea que asumo. Poseo habilidades de liderazgo que facilitan la comunicación y el trabajo colaborativo. Siempre estoy dispuesto a abordar desafíos y encontrar soluciones en equipo.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong> — U202312222<br>Mi nombre es Gael Rivera, tengo 20 años y soy estudiante de Ingeniería de Software en el quinto ciclo. Me caracterizo por ser responsable y orientado a resultados, con habilidades de liderazgo que facilitan la comunicación y el trabajo colaborativo. Tengo conocimientos en desarrollo frontend con Angular y experiencia en modelado de bases de datos relacionales. Siempre estoy dispuesto a abordar desafíos y encontrar soluciones en equipo, y en Thropic asumo la especificación de requerimientos como base técnica del producto.</td>
       <td><img src="assets/images/photos/eduardo-rivera.jpg" alt="Eduardo Rivera" width="200"></td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong> — U20241C134<br>Soy una persona relajada y que se adapta fácilmente, siempre buscando maneras de hacer las cosas bien sin complicaciones. Me adapto fácilmente al método de trabajo de los demás, prefiriendo colaborar en lugar de liderar, y suelo llevarme bien con la mayoría de las personas. En mi tiempo libre, disfruto haciendo deporte, especialmente jugando voleibol, y me divierto jugando videojuegos.</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong> — U20241C134<br>Mi nombre es Manuel Tumi, soy estudiante de Ingeniería de Software y me caracterizo por ser una persona colaborativa y adaptable, que se integra fácilmente a distintos métodos de trabajo. Tengo conocimientos en investigación de usuarios, diseño de entrevistas y análisis de necesidades, habilidades que aplico en la etapa de needfinding del proyecto. Prefiero apoyar al equipo desde la escucha activa y el análisis, y en mi tiempo libre disfruto del voleibol y los videojuegos.</td>
       <td><img src="assets/images/photos/manuel-tumi.jpg" alt="Manuel Tumi" width="200"></td>
     </tr>
   </tbody>
@@ -322,6 +322,8 @@ Ante este escenario, el costo de un coach de oratoria privado en Lima oscila ent
 
 ### 1.2.3. Lean UX Process
 
+El proceso Lean UX aplicado en Thropic sigue el enfoque de validación continua de hipótesis mediante ciclos cortos de aprendizaje, construir y medir (Ries, 2011), con el objetivo de reducir el riesgo de construir un producto que el mercado no necesita.
+
 #### 1.2.3.1. Lean UX Problem Statement
 
 **Segmento 1:** Hemos observado que los estudiantes de ciclos 1-5 carecen de espacios seguros y accesibles para practicar la comunicación oral con feedback real. El impacto es bajo desempeño en exposiciones y pérdida de oportunidades académicas. ¿Cómo podríamos brindarles práctica guiada con IA para que ganen confianza progresivamente?
@@ -369,7 +371,13 @@ Ante este escenario, el costo de un coach de oratoria privado en Lima oscila ent
 
 #### 1.2.3.4. Lean UX Canvas
 
-<img src="./assets/images/screenshots/lean-ux-canvas.png" alt="Lean UX Canvas">
+_Figura 4: Lean UX Canvas — Talki_
+
+<div align="center">
+<img src="./assets/images/screenshots/lean-ux-canvas.png" alt="Lean UX Canvas" width="680">
+</div>
+
+_Nota._ Elaboración propia (2026).
 
 <hr class="page-break">
 
@@ -515,7 +523,7 @@ Ante este escenario, el costo de un coach de oratoria privado en Lima oscila ent
   </tr>
   <tr>
     <td><b>Amenazas</b></td>
-    <td>Entry de apps internacionales al mercado hispanohablante, competidores con mayor financiamiento.</td>
+    <td>Entrada de apps internacionales al mercado hispanohablante, competidores con mayor financiamiento.</td>
     <td>Competidores con IA generativa más avanzada, apps multiidioma con mayor alcance.</td>
     <td>Apps con IA generativa que ofrecen feedback personalizado, saturación del mercado edtech.</td>
     <td>Saturación del mercado edtech en inglés, nuevos competidores con IA generativa más potente.</td>
@@ -1021,15 +1029,25 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 # Referencias Bibliográficas
 
-Ministerio de Educación del Perú. (2023). *Estadísticas de la calidad educativa — Educación Superior Universitaria*. MINEDU. https://escale.minedu.gob.pe/
-
-Universidad de Lima. (2022). *Comunicación oral y empleabilidad en universitarios peruanos: estudio de percepción*. Fondo Editorial Universidad de Lima.
+Crown Counseling. (2024). *30+ revealing fear of public speaking statistics for 2025*. https://crowncounseling.com/statistics/fear-of-public-speaking-statistics/
 
 ELSA Corp. (2024). *ELSA Speak — AI-powered English pronunciation coach* [Aplicación móvil]. App Store / Google Play. https://elsaspeak.com/
 
-Speeko Inc. (2024). *Speeko — Public Speaking Coach* [Aplicación móvil]. App Store. https://www.speeko.co/
+Maldonado, M. A., García García, A., Armada Crespo, J. M., Alós, F. J., & Moreno Osella, E. M. (2022). Competencia oral y ansiedad: entrenamiento y eficacia en estudiantes universitarios. *Revista Latina de Comunicación Social*, (80). https://doi.org/10.4185/RLCS-2022-1800
+
+Ministerio de Educación del Perú. (2023). *Estadísticas de la calidad educativa — Educación Superior Universitaria*. MINEDU. https://escale.minedu.gob.pe/
+
+Orai Inc. (2024). *Orai — AI-powered public speaking coach* [Aplicación móvil]. App Store / Google Play. https://orai.com/
+
+Redalyc. (2022). Competencias laborales blandas de alto impacto en egresados universitarios. Un estudio descriptivo. *Revista de Investigación Educativa*, 194(276552011). https://www.redalyc.org/journal/1942/194276552011/html/
 
 Ries, E. (2011). *The Lean Startup: How today's entrepreneurs use continuous innovation to create radically successful businesses*. Crown Business.
+
+Speeko Inc. (2024). *Speeko — Public Speaking Coach* [Aplicación móvil]. App Store. https://www.speeko.co/
+
+Superintendencia Nacional de Educación Superior Universitaria. (2023). *Sistema de información universitaria — TUNI: Estadísticas de matrícula universitaria*. SUNEDU. https://www.sunedu.gob.pe/
+
+Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends*. https://www.teleprompter.com/blog/public-speaking-statistics
 
 <hr class="page-break">
 
