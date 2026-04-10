@@ -286,7 +286,39 @@ Talki usa IA para grabar, analizar y retroalimentar la comunicación oral del us
 
 #### HOW MUCH (Cuánto)
 
-Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados en universidades peruanas. Estudios de la Universidad de Lima (2022) indican que el 73% de universitarios peruanos siente inseguridad al hablar en público, y el 68% identifica la comunicación oral como una barrera para conseguir empleo. El costo de un coach de oratoria privado en Lima oscila entre S/. 80 y S/. 200 por sesión, inaccesible para la mayoría del segmento objetivo.
+Según la Superintendencia Nacional de Educación Superior Universitaria (SUNEDU, 2023), más de 1.5 millones de estudiantes se encuentran matriculados en universidades peruanas, representando un mercado potencial significativo para soluciones de desarrollo de competencias comunicativas.
+
+En el plano de la ansiedad comunicativa, la literatura científica muestra cifras consistentemente elevadas. Maldonado et al. (2022), en un estudio experimental con universitarios publicado en la *Revista Latina de Comunicación Social*, confirmaron que la ansiedad al hablar en público impacta directamente el desempeño académico y la participación activa en clases. A nivel global, investigaciones compiladas por Teleprompter.com (2024) revelan que el **75% de las personas** experimenta algún nivel de ansiedad al hablar en público, y el **61% de universitarios** la reporta como un temor significativo.
+
+_Figura 1: Prevalencia de la ansiedad al hablar en público en población universitaria_
+
+<div align="center">
+<img src="assets/images/figures/figura1_ansiedad_publica.png" alt="Figura 1: Ansiedad al hablar en público" width="680">
+</div>
+
+_Nota._ Elaboración propia basada en Teleprompter.com (2024) y Crown Counseling (2024).
+
+Respecto al impacto en la empleabilidad, un estudio descriptivo sobre competencias laborales blandas en egresados universitarios latinoamericanos (Redalyc, 2022) identificó que la **comunicación asertiva** es la segunda habilidad más demandada por empleadores (9.1%), solo detrás del trabajo en equipo (10.1%). Sin embargo, es también una de las competencias con mayores brechas en egresados.
+
+_Figura 2: Habilidades blandas más demandadas por empleadores en Latinoamérica_
+
+<div align="center">
+<img src="assets/images/figures/figura2_habilidades_demandadas.png" alt="Figura 2: Habilidades blandas más demandadas" width="680">
+</div>
+
+_Nota._ Elaboración propia basada en Redalyc (2022).
+
+Finalmente, la ansiedad comunicativa no solo afecta el desempeño académico sino también la trayectoria profesional. Datos de Crown Counseling (2024) y Teleprompter.com (2024) indican que el **70% de los empleos** requiere algún nivel de oratoria o presentaciones; el **30% de las personas** ha evitado postular a empleos o ascensos debido a esta ansiedad; y quienes la padecen tienen un **15% menos de probabilidad** de alcanzar posiciones gerenciales.
+
+_Figura 3: Impacto profesional de la ansiedad al hablar en público_
+
+<div align="center">
+<img src="assets/images/figures/figura3_impacto_profesional.png" alt="Figura 3: Impacto profesional de la ansiedad comunicativa" width="680">
+</div>
+
+_Nota._ Elaboración propia basada en Crown Counseling (2024) y Teleprompter.com (2024).
+
+Ante este escenario, el costo de un coach de oratoria privado en Lima oscila entre S/. 80 y S/. 200 por sesión (con frecuencia semanal recomendada), haciendo inaccesible el entrenamiento personalizado para la mayoría del segmento universitario. Talki aborda esta brecha mediante IA accesible desde el smartphone, a una fracción del costo.
 
 ### 1.2.3. Lean UX Process
 
@@ -387,23 +419,25 @@ Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados
 
 <table>
   <tr>
-    <th colspan="5">Competitive Analysis Landscape</th>
+    <th colspan="6">Competitive Analysis Landscape</th>
   </tr>
   <tr>
     <td colspan="2" align="center"><b>¿Por qué llevar a cabo este análisis?</b></td>
-    <td colspan="3">Para identificar las fortalezas, debilidades y estrategias de nuestros competidores directos e indirectos, con el fin de definir la propuesta de valor diferenciada de Talki y detectar oportunidades de mercado no atendidas.</td>
+    <td colspan="4">Para identificar las fortalezas, debilidades y estrategias de nuestros competidores directos e indirectos, con el fin de definir la propuesta de valor diferenciada de Talki y detectar oportunidades de mercado no atendidas.</td>
   </tr>
   <tr>
     <th colspan="2">Nombre</th>
     <th>Talki (Thropic)</th>
     <th>ELSA Speak</th>
     <th>Speeko</th>
+    <th>Orai</th>
   </tr>
   <tr>
     <td colspan="2" align="center"><b>Logo</b></td>
     <td align="center"><img src="assets/images/logos/talki-logo.png" alt="Talki logo" width="100"></td>
     <td align="center"><img src="assets/images/logos/elsa-speak-logo.png" alt="ELSA Speak" width="100"></td>
     <td align="center"><img src="assets/images/logos/speeko-logo.png" alt="Speeko" width="100"></td>
+    <td align="center"><img src="assets/images/logos/orai-logo.png" alt="Orai" width="100"></td>
   </tr>
   <tr>
     <td rowspan="2"><b>Perfil</b></td>
@@ -411,12 +445,14 @@ Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados
     <td>App móvil con IA que analiza y retroalimenta la comunicación oral de estudiantes universitarios peruanos en tiempo real, en español.</td>
     <td>App de pronunciación en inglés con IA que evalúa y corrige la pronunciación del usuario en tiempo real mediante reconocimiento de voz avanzado.</td>
     <td>App de coaching para hablar en público con lecciones estructuradas impartidas por coaches reales y ejercicios de práctica.</td>
+    <td>App móvil con IA que analiza la oratoria del usuario (ritmo, palabras de relleno, energía, expresión facial) y entrega retroalimentación inmediata y lecciones personalizadas.</td>
   </tr>
   <tr>
     <td><b>Ventaja competitiva ¿Qué valor ofrece a los clientes?</b></td>
     <td>Feedback en tiempo real en español con contexto académico peruano; enfocado en universitarios latinoamericanos.</td>
     <td>Motor de IA especializado en detección de errores fonéticos del inglés; más de 50M usuarios globales.</td>
     <td>Contenido creado por coaches profesionales de oratoria; estructura de cursos progresivos y micro-lecciones de 5 minutos.</td>
+    <td>Análisis multimodal (voz + expresión facial) con plan de entrenamiento adaptativo; gamificación y seguimiento de progreso detallado.</td>
   </tr>
   <tr>
     <td rowspan="2"><b>Perfil de Marketing</b></td>
@@ -424,12 +460,14 @@ Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados
     <td>Estudiantes universitarios peruanos/latinoamericanos de ciclos 1-10.</td>
     <td>Hablantes no nativos de inglés que desean mejorar su pronunciación, principalmente en Asia y Latinoamérica.</td>
     <td>Profesionales y estudiantes angloparlantes que quieren mejorar su oratoria y liderazgo comunicacional.</td>
+    <td>Profesionales, estudiantes y ejecutivos angloparlantes que necesitan mejorar presentaciones y discursos.</td>
   </tr>
   <tr>
     <td><b>Estrategias de Marketing</b></td>
     <td>Freemium, marketing universitario, referidos entre compañeros.</td>
     <td>Freemium, referidos, partnerships con instituciones educativas.</td>
     <td>Freemium, publicidad en LinkedIn y redes, membresías corporativas.</td>
+    <td>Freemium con trial de 7 días, alianzas con instituciones educativas, plan Enterprise para equipos.</td>
   </tr>
   <tr>
     <td rowspan="3"><b>Perfil de Producto</b></td>
@@ -437,17 +475,20 @@ Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados
     <td>App móvil con análisis de voz, ejercicios guiados, simulador de entrevistas y dashboard de progreso.</td>
     <td>App móvil (iOS/Android) con lecciones de pronunciación, conversación simulada y análisis fonético detallado.</td>
     <td>App móvil con cursos de oratoria, ejercicios diarios de 5 minutos y biblioteca de habilidades comunicacionales.</td>
+    <td>App móvil (iOS/Android) con análisis de voz e imagen, lecciones gamificadas, historial de práctica y plan personalizado de 4 semanas.</td>
   </tr>
   <tr>
     <td><b>Precios y Costos</b></td>
     <td>Freemium; plan premium S/. 15-25/mes.</td>
     <td>Gratis con funciones limitadas; premium desde $6.99/mes.</td>
     <td>Gratis con funciones básicas; premium desde $9.99/mes.</td>
+    <td>Gratis con funciones básicas; premium desde $9.99/mes o $39.99/año.</td>
   </tr>
   <tr>
     <td><b>Canales de distribución</b></td>
     <td>App Store, Google Play, web.</td>
     <td>App Store, Google Play, web.</td>
+    <td>App Store, Google Play.</td>
     <td>App Store, Google Play.</td>
   </tr>
   <tr>
@@ -456,24 +497,28 @@ Según el MINEDU (2023), más de 1.5 millones de estudiantes están matriculados
     <td>Español nativo, contexto universitario peruano, IA personalizada, gamificación.</td>
     <td>IA muy precisa, gran base de usuarios global, contenido extenso y probado.</td>
     <td>Contenido de alta calidad creado por expertos, formato de micro-lecciones atractivo.</td>
+    <td>Análisis multimodal avanzado, plan adaptativo personalizado, gamificación efectiva, disponible en iOS y Android.</td>
   </tr>
   <tr>
     <td><b>Oportunidades</b></td>
     <td>Mercado latinoamericano poco atendido, alianzas con universidades, expansión a otros países.</td>
     <td>Expansión a otros idiomas, mercado B2B con instituciones educativas.</td>
     <td>Mercado B2B corporativo, expansión a español y otros idiomas.</td>
+    <td>Expansión a idiomas distintos del inglés, mercado educativo universitario latinoamericano sin atender.</td>
   </tr>
   <tr>
     <td><b>Debilidades</b></td>
     <td>Startup nueva sin track record, recursos limitados, marca poco conocida.</td>
     <td>Enfocado solo en pronunciación del inglés, no cubre comunicación oral en español.</td>
     <td>Sin IA para feedback en tiempo real, contenido exclusivamente en inglés.</td>
+    <td>Solo disponible en inglés, sin adaptación al contexto académico ni latinoamericano.</td>
   </tr>
   <tr>
     <td><b>Amenazas</b></td>
     <td>Entry de apps internacionales al mercado hispanohablante, competidores con mayor financiamiento.</td>
     <td>Competidores con IA generativa más avanzada, apps multiidioma con mayor alcance.</td>
     <td>Apps con IA generativa que ofrecen feedback personalizado, saturación del mercado edtech.</td>
+    <td>Saturación del mercado edtech en inglés, nuevos competidores con IA generativa más potente.</td>
   </tr>
 </table>
 
@@ -487,7 +532,11 @@ ELSA Speak domina el mercado de pronunciación en inglés pero no atiende la com
 **Frente a Speeko:**
 Speeko utiliza contenido pregrabado por coaches sin feedback personalizado en tiempo real. Talki responde con IA generativa que analiza el discurso del usuario en el momento y entrega retroalimentación específica e inmediata, no guiones estáticos. Además, Speeko no tiene presencia en el mercado hispanohablante, lo que representa una ventana de oportunidad directa.
 
+**Frente a Orai:**
+Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera exclusivamente en inglés y sin ninguna adaptación al contexto académico latinoamericano. Talki capitaliza esta brecha ofreciendo la misma profundidad de análisis (ritmo, fluidez, claridad) pero en español, con ejercicios diseñados para sustentaciones, exposiciones universitarias y entrevistas de prácticas preprofesionales típicas del sistema educativo peruano.
+
 **Estrategia de diferenciación general:**
+
 - *Localización:* Único producto diseñado para el contexto universitario peruano/latinoamericano en español
 - *Precio accesible:* Modelo freemium con plan premium a S/. 15-25/mes, muy por debajo de los competidores internacionales
 - *Alianzas universitarias:* Partnerships con facultades de Ingeniería y Comunicaciones de universidades peruanas para adopción institucional
