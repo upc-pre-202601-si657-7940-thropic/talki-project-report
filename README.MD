@@ -1,51 +1,40 @@
-<div style="text-align: center;">
-  <img src="./assets/images/logos/upc-logo.png" alt="UPC Logo" style="width: 250px; height: auto;">
+<div align="center">
+   <div>
+   <center><img src="./assets/images/logos/upc-logo.png" alt="Logo UPC" width="250"></center>
+   <br>
+   <center>Universidad Peruana de Ciencias Aplicadas</center>
+   <br>
+   <center><b>Ingeniería de Software</b></center>
+   <br>
+   <center><b>Periodo:</b> 202601</center>
+   <br>
+   <center><b>SI657 | Fundamentos de Arquitectura de Software</b></center>
+   <br>
+   <center><b>NRC:</b> 7940</center>
+   <br>
+   <center><b>Docente:</b> Mori Yzaguirre, Daniel Enrique</center>
+   <br>
+   <hr style="width: 50%; margin: 20px auto;">
+   <br>
+   <center><b>Informe de Trabajo Final</b></center>
+   <br>
+   <center><b>Startup:</b> Thropic</center>
+   <br>
+   <center><b>Producto:</b> Talki</center>
+   <br>
+   <center><b>Integrantes:</b></center>
+   <br>
+
+   | Código | Apellidos y Nombres |
+   |--------|---------------------|
+   | U202313397 | Oroncoy Almeyda, Alejandro Daniel |
+   | U202312222 | Rivera Sosa, Eduardo Gael |
+   | U20241C134 | Tumi Oliden, Manuel Ignacio |
+
+   <br>
+   <center><i>Abril 2026</i></center>
+   </div>
 </div>
-
-<h2 style="text-align: center;"> Universidad Peruana de Ciencias Aplicadas </h2>
-
-<h4 style="text-align: center"> Ingeniería de Software </h4>
-
-<h4 style="text-align: center"> Periodo: 202601 </h4>
-
-<h4 style="text-align: center"> SI657 | Fundamentos de Arquitectura de Software </h4>
-
-<h4 style="text-align: center"> Sección: 7940 </h4>
-
-<h4 style="text-align: center"> Docente: Daniel Enrique Mori Yzaguirre </h4>
-
-<h3 style="text-align: center;"> Informe de Trabajo Final </h3>
-
-<h4 style="text-align: center"> Startup: Thropic </h4>
-
-<h4 style="text-align: center"> Producto: Talki </h4>
-
-<h4 style="text-align: center">Integrantes:</h4>
-
-<div style="text-align:center; margin-top: 10px; font-size: 90%; line-height: 1.6;">
-   <table style="margin-left: auto; margin-right: auto;">
-      <tr>
-         <th>Código</th>
-         <th>Apellidos y Nombres</th>
-      </tr>
-      <tr>
-         <td>U202313397</td>
-         <td>Oroncoy Almeyda, Alejandro Daniel</td>
-      </tr>
-      <tr>
-         <td>U202312222</td>
-         <td>Rivera Sosa, Eduardo Gael</td>
-      </tr>
-      <tr>
-         <td>U20241C134</td>
-         <td>Tumi Oliden, Manuel Ignacio</td>
-      </tr>
-   </table>
-</div>
-
-<br>
-
-<h5 style="text-align: center; font-style: italic;"> Abril 2026 </h5>
 
 <hr class="page-break">
 
