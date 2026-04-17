@@ -1,39 +1,54 @@
 <div align="center">
-   <div>
-   <center><img src="./assets/images/logos/upc-logo.png" alt="Logo UPC" width="250"></center>
-   <br>
-   <center>Universidad Peruana de Ciencias Aplicadas</center>
-   <br>
-   <center><b>Ingeniería de Software</b></center>
-   <br>
-   <center><b>Periodo:</b> 202601</center>
-   <br>
-   <center><b>SI657 | Fundamentos de Arquitectura de Software</b></center>
-   <br>
-   <center><b>NRC:</b> 7940</center>
-   <br>
-   <center><b>Docente:</b> Mori Yzaguirre, Daniel Enrique</center>
-   <br>
-   <hr style="width: 50%; margin: 20px auto;">
-   <br>
-   <center><b>Informe de Trabajo Final</b></center>
-   <br>
-   <center><b>Startup:</b> Thropic</center>
-   <br>
-   <center><b>Producto:</b> Talki</center>
-   <br>
-   <center><b>Integrantes:</b></center>
-   <br>
 
-   | Código | Apellidos y Nombres |
-   |--------|---------------------|
-   | U202313397 | Oroncoy Almeyda, Alejandro Daniel |
-   | U202312222 | Rivera Sosa, Eduardo Gael |
-   | U20241C134 | Tumi Oliden, Manuel Ignacio |
+<br><br>
 
-   <br>
-   <center><i>Abril 2026</i></center>
-   </div>
+<img src="./assets/images/logos/upc-logo.png" alt="Logo UPC" width="250">
+
+<br><br>
+
+**Universidad Peruana de Ciencias Aplicadas**
+
+<br>
+
+**Ingeniería de Software**
+
+**Periodo:** 202610
+
+<br>
+
+**SI657 | Fundamentos de Arquitectura de Software**
+
+**NRC:** 7940
+
+**Docente:** Mori Yzaguirre, Daniel Enrique
+
+
+<br>
+
+### Informe de Trabajo Final
+
+<br>
+
+**Startup:** Thropic
+
+**Producto:** Talki
+
+<br><br>
+
+**Integrantes:**
+
+| Código | Apellidos y Nombres |
+|--------|---------------------|
+| U202313397 | Oroncoy Almeyda, Alejandro Daniel |
+| U202312222 | Rivera Sosa, Eduardo Gael |
+| U20241C134 | Tumi Oliden, Manuel Ignacio |
+
+<br><br>
+
+*Abril 2026-10*
+
+<br><br>
+
 </div>
 
 <hr class="page-break">
@@ -42,7 +57,17 @@
 
 | Version | Fecha | Autor | Descripción de modificación |
 |---------|-------|-------|-----------------------------|
-| 1.0 | 09/04/2026 | Oroncoy Almeyda, Alejandro Daniel | Creación del documento |
+| 1.0 | 09/04/2026 | Alejandro, Gael, Manuel | Creación del documento y estructura base del informe |
+| 1.1 | 09/04/2026 | Alejandro, Gael, Manuel | Redacción de la descripción de la startup y perfiles del equipo (1.1) |
+| 1.2 | 10/04/2026 | Alejandro, Gael, Manuel | Desarrollo de antecedentes y problemática con framework 5W+2H (1.2.2) |
+| 1.3 | 10/04/2026 | Alejandro, Gael, Manuel | Elaboración del Lean UX Process y segmentos objetivo (1.2.3, 1.3) |
+| 1.4 | 11/04/2026 | Alejandro, Gael, Manuel | Diseño y registro de entrevistas con ambos segmentos (2.2) |
+| 1.5 | 11/04/2026 | Alejandro, Gael, Manuel | Análisis competitivo y estrategias con matriz SWOT (2.1) |
+| 1.6 | 12/04/2026 | Alejandro, Gael, Manuel | Desarrollo de User Personas, User Task Matrix y Empathy Maps (2.3) |
+| 1.7 | 12/04/2026 | Alejandro, Gael, Manuel | Elaboración de As-is Scenario Mapping (2.3.4) |
+| 1.8 | 13/04/2026 | Alejandro, Gael, Manuel | Desarrollo de To-Be Scenario Mapping y User Stories (3.1, 3.2) |
+| 1.9 | 13/04/2026 | Alejandro, Gael, Manuel | Elaboración de Impact Map y Product Backlog priorizado (3.3, 3.4) |
+| 1.10 | 14/04/2026 | Alejandro, Gael, Manuel | Redacción del Student Outcome y revisión general del informe |
 
 <hr class="page-break">
 
