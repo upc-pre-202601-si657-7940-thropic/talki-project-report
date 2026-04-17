@@ -570,13 +570,191 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 
 ### 2.2.1. Diseño de entrevistas
 
+El objetivo de las entrevistas es comprender las necesidades, frustraciones y hábitos de comunicación oral de los segmentos objetivo de Talki, así como su disposición a usar herramientas digitales para mejorar sus habilidades comunicativas.
 
+---
+
+**Segmento 1 — Estudiantes universitarios de ciclos 1 al 5**
+
+*Objetivos específicos:*
+- Conocer cómo viven los primeros encuentros con exposiciones y presentaciones en la universidad.
+- Identificar las inseguridades comunicativas más frecuentes en etapas tempranas de la carrera.
+- Entender qué estrategias de práctica emplean actualmente y cuáles consideran insuficientes.
+- Evaluar su apertura a recibir retroalimentación automatizada de una IA.
+
+*Preguntas introductorias:*
+1. ¿En qué universidad estudias, qué carrera sigues y en qué ciclo te encuentras?
+2. ¿Con qué frecuencia tienes que hacer exposiciones, sustentaciones o participaciones orales en clases?
+
+*Preguntas principales:*
+
+3. ¿Cómo fue tu primera exposición en la universidad? ¿Qué recuerdas de esa experiencia?
+4. ¿Qué aspectos de tu comunicación oral sientes que más necesitas trabajar en este punto de tu carrera? (nerviosismo, muletillas, fluidez, volumen, etc.)
+5. ¿Cómo te preparas actualmente cuando tienes que exponer? ¿Cuánto tiempo le dedicas?
+6. ¿Alguna vez tu desempeño oral no reflejó lo que realmente sabías del tema? ¿Qué ocurrió?
+7. ¿Has usado alguna app o herramienta digital para mejorar tu forma de hablar o exponer? ¿Cómo fue?
+8. ¿Te grabarías en video o audio para escucharte y corregirte? ¿Por qué sí o por qué no?
+9. ¿Qué tan cómodo(a) te sentirías recibiendo retroalimentación de una IA sobre tu forma de hablar?
+10. ¿Estarías dispuesto(a) a pagar por una app así? ¿Qué precio te parecería justo?
+
+---
+
+**Segmento 2 — Estudiantes universitarios de ciclos 5 al 10**
+
+*Objetivos específicos:*
+- Entender cómo evolucionan las exigencias de comunicación oral en ciclos avanzados.
+- Identificar si la preparación para prácticas preprofesionales o entrevistas laborales genera nuevas necesidades comunicativas.
+- Conocer su nivel de autonomía para practicar y mejorar su oratoria.
+- Determinar su disposición a adoptar una herramienta de IA especializada en comunicación académica y profesional.
+
+*Preguntas introductorias:*
+1. ¿En qué universidad estudias, qué carrera sigues y en qué ciclo te encuentras?
+2. ¿Qué tipos de evaluaciones orales has tenido que enfrentar en los últimos ciclos? (sustentaciones, jurados, entrevistas de prácticas, etc.)
+
+*Preguntas principales:*
+
+3. Comparando tus primeros ciclos con ahora, ¿sientes que tu comunicación oral ha mejorado? ¿Qué crees que la cambió?
+4. ¿Cuáles son los escenarios orales que todavía te generan más estrés o inseguridad?
+5. ¿Cómo te preparas hoy para una sustentación importante o una entrevista de prácticas?
+6. ¿Has sentido que tu forma de comunicarte oralmente te ha jugado en contra en alguna evaluación o proceso de selección? Cuéntame.
+7. ¿Has probado alguna herramienta digital para practicar presentaciones o entrevistas? ¿Qué te pareció?
+8. ¿Qué tipo de análisis de tu comunicación te resultaría más valioso: fluidez, claridad de ideas, manejo de silencios, muletillas, otro?
+9. ¿Qué tan útil sería para ti una app con IA que simule sustentaciones o entrevistas de prácticas y te dé retroalimentación detallada?
+10. ¿Usarías este tipo de herramienta de forma autónoma o preferirías poder compartir los resultados con un profesor o tutor?
 
 ### 2.2.2. Registro de entrevistas
 
+### Segmento #1: Estudiantes universitarios de ciclos 1 al 5
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 1 | **Nombre:** Belén Ordoñez <br> **Universidad:** PUCP <br> **Ciclo:** 5to <br> **Carrera:** Comunicación para el Desarrollo <br><br> **Resumen:** Estudiante de quinto ciclo en la PUCP cuya carrera gira en torno a presentaciones orales: la mayoría de sus evaluaciones son exposiciones de proyectos. Recuerda haberse puesto nerviosa en su primera exposición universitaria. Su principal problema es que el volumen de su voz va disminuyendo conforme avanza en la presentación. Ha sufrido "black outs" durante exposiciones, terminando sin recordar lo que dijo. No conocía la existencia de herramientas digitales para mejorar la oratoria. Actualmente pide a amigos que la escuchen antes de exponer. Se sentiría más cómoda recibiendo retroalimentación de una IA por su mayor honestidad y franqueza. Estaría dispuesta a pagar entre 2 y 5 dólares mensuales por una app que realmente funcione. | ![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-1.jpeg) [📂 Ver entrevista](#) <br> `00:00:00 – 00:06:07` |
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 2 | **Nombre:** Isabel Rodriguez <br> **Universidad:** Universidad de Lima <br> **Ciclo:** 5to <br> **Carrera:** Arquitectura <br><br> **Resumen:** Isabel estudia Arquitectura en la Universidad de Lima y tiene exposiciones prácticamente todas las semanas, especialmente resúmenes de talleres los viernes. Su primera experiencia expositiva fue buena en general, aunque reconoce que hubiera sido mejor con más dominio del curso. Los puntos que más necesita trabajar son el nerviosismo y la ampliación de vocabulario, pues tiende a repetir siempre las mismas palabras. Se prepara con una bitácora personal y revisando sus diapositivas el día anterior. Usa ChatGPT para preparar contenido, aunque de forma general. Olvida información relevante por el apuro de terminar la exposición rápido. Le parece muy interesante recibir retroalimentación de una IA por el ahorro de tiempo. Estaría dispuesta a pagar hasta 5 dólares mensuales, aunque querría comparar precios antes de decidir. | ![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-2.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:06:13 – 00:13:22` |
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 3 | **Nombre:** Juan Alejandro Elías López <br> **Universidad:** UPC <br> **Ciclo:** 4to <br> **Carrera:** Ingeniería de Software <br><br> **Resumen:** Juan Alejandro ya tenía experiencia en exposiciones desde la secundaria, por lo que su primera presentación universitaria no le generó nerviosismo. Considera que exponer es divertido. El aspecto que más necesita mejorar es la fluidez, especialmente en exposiciones finales de alta importancia donde el nerviosismo sí lo afecta. Se prepara escribiendo su guión a mano y memorizándolo en partes a lo largo de varios días, dedicando aproximadamente 2 horas diarias. Nunca ha sentido que una exposición no reflejara lo que sabía. No ha usado herramientas digitales para mejorar su oratoria. Estaría dispuesto a grabarse como nueva forma de práctica autónoma. Estaría abierto tanto a retroalimentación de IA como de un tutor humano, y el precio que pagaría dependería de las funcionalidades concretas que ofrezca la aplicación. |![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-3.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:13:23 – 00:19:12` |
+
+### Segmento #2: Estudiantes universitarios de ciclos 5 al 10
+
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 4 | **Nombre:** Gianger <br> **Universidad:** University of the People (EE.UU., modalidad remota) <br> **Ciclo:** 6to <br> **Carrera:** Computer Science <br><br> **Resumen:** Gianger estudia de forma remota en una universidad estadounidense y tiene una trayectoria oral variada: monografías, proyectos de software, debates, simulaciones de entrevistas y entrevistas reales de trabajo. Reconoce una mejora enorme desde sus inicios, impulsada principalmente por la experiencia laboral. Antes hablaba muy rápido y usaba muletillas constantemente. Hoy la presión aparece principalmente al presentar ante jefes o personas con mayor jerarquía. Se prepara con "chuletillas", guías de oratoria y autograbaciones para identificar puntos débiles. Vivió en carne propia cómo la mala comunicación le jugó en contra en una entrevista con una empresa española en inglés. Ha probado la herramienta "Speak", pero le falta feedback de contenido y manejo de silencios. Los análisis que más le aportarían son el manejo de silencios y la variedad de vocabulario. Ve una app con IA para simular sustentaciones y entrevistas como extremadamente útil, y prefiere un modelo híbrido con checkpoints periódicos con un tutor. |![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento2-1.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:19:15 – 00:31:41` |
+
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 5 | **Nombre:** Jennifer <br> **Universidad:** Universidad Privada del Norte <br> **Ciclo:** 7mo <br> **Carrera:** Administración y Marketing <br><br> **Resumen:** Jennifer ha enfrentado sustentaciones de trabajos, exposiciones de proyectos, entrevistas y presentaciones ante jurados a lo largo de su carrera. Reconoce que su comunicación oral ha mejorado notablemente gracias a la práctica constante: en los primeros ciclos le costaba organizar sus ideas y se ponía nerviosa, hoy habla con mayor claridad y seguridad. Los escenarios que aún le generan estrés son las presentaciones ante un jurado y las entrevistas de prácticas, donde siente una evaluación más directa. Se prepara investigando el tema, organizando ideas, practicando frente al espejo o grabándose, y anticipando posibles preguntas. Ha vivido situaciones donde los nervios le hicieron olvidar ideas clave, afectando la claridad de su mensaje. No ha usado aplicaciones especializadas; solo grabaciones básicas con el celular o Zoom. El análisis que considera más valioso es el de fluidez y claridad de ideas. Ve muy útil una app con IA para practicar en un entorno realista con retroalimentación específica. Prefiere un uso híbrido: práctica autónoma combinada con orientación de un tutor o profesor. |![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento2-2.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:31:49 – 00:39:16` |
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 6 | **Nombre:** Jorge Sinyun González <br> **Universidad:** Universidad Peruana de Ciencias Aplicadas (UPC) <br> **Ciclo:** 7mo – 8vo <br> **Carrera:** Ingeniería de Software <br><br> **Resumen:** Jorge identifica las presentaciones ante audiencias o profesores como su mayor dificultad, ya que la inseguridad al cometer errores y los nervios visibles pueden afectar directamente su nota. Siente que su comunicación ha mejorado en la medida que domina mejor los temas del curso, pero como habilidad pura de oratoria el avance ha sido leve. Se prepara revisando los requerimientos, tomando notas de apoyo y usando NotebookLM para generar preguntas y practicar respuestas. Tuvo un caso negativo en el curso de Agile Frameworks, donde tuvo que mirar constantemente las diapositivas por no dominar el flujo del tema, algo que el profesor notó y comentó. Practica hablando solo frente a la presentación o usando el método del espejo, y ha buscado apps de práctica de lenguaje sin encontrar una específica para oratoria. El análisis que considera más valioso es el de claridad de ideas, porque evidencia dominio del tema ante la audiencia. Ve la app con IA como extremadamente útil, especialmente si permite cargar el material propio para detectar puntos débiles de contenido y vocalización. Prefiere el modo autónomo por privacidad y comodidad, aunque reconoce el valor del feedback docente. |![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento2-3.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:39:23 – 00:47:18` |
 
 
 ### 2.2.3. Análisis de entrevistas
+
+---
+
+### Segmento #1: Estudiantes universitarios de ciclos iniciales (1ro al 5to ciclo)
+
+---
+
+### Hallazgos:
+
+### Belén Ordoñez – PUCP, 5to ciclo
+
+Estudia Comunicación para el Desarrollo en la PUCP y se encuentra en su primer año de carrera. Las presentaciones son muy frecuentes en su carrera: la mayoría de las evaluaciones son exposiciones de proyectos, ya que hay pocos exámenes escritos. Recuerda haberse puesto nerviosa en su primera exposición universitaria. Su principal problema es que el volumen de su voz va bajando a medida que avanza la presentación, al punto de que ya no la escuchan. Se prepara intentando dominar el contenido del tema, aunque reconoce que hay cosas "fuera de su control". Ha experimentado "black outs" durante exposiciones: termina sin recordar lo que dijo, y solo después nota lo que le faltó. No conocía la existencia de aplicaciones para mejorar la oratoria. Le gustaría grabarse, aunque le cuesta escuchar su propia voz; actualmente pide a amigos que la escuchen y le den feedback. Se sentiría más cómoda recibiendo retroalimentación de una IA que de una persona, porque considera que la IA es más directa y honesta. Estaría dispuesta a usar una aplicación de pago entre 2 y 5 dólares mensuales, siempre que sea realmente buena.
+
+**Puntos clave:**
+- Exposiciones muy frecuentes (evaluación principal en su carrera).
+- Mayor problema: **volumen de voz que decrece** durante la presentación.
+- Ha sufrido **"black outs"** en exposiciones por los nervios y la adrenalina.
+- **No conocía** herramientas digitales para mejorar la oratoria.
+- Pide feedback a amigos; le cuesta escucharse o verse grabada.
+- Prefiere retroalimentación de **IA sobre personas** por mayor honestidad.
+- Dispuesta a pagar entre **2 y 5 dólares mensuales** si la app cumple.
+
+---
+
+### Isabel Rodriguez – Arquitectura, U. de Lima, 5to ciclo
+
+Estudia arquitectura en la Universidad de Lima y está en quinto ciclo. Tiene exposiciones prácticamente todas las semanas, especialmente los viernes, con resúmenes de cursos de taller. Su primera experiencia fue buena en términos generales, aunque reconoce que hubiera sido mejor con mayor conocimiento del curso. Los aspectos que más necesita trabajar son el nerviosismo y la ampliación de vocabulario, ya que tiende a usar siempre las mismas palabras. Se prepara leyendo sus diapositivas y notas de una bitácora personal el día anterior y momentos antes de la clase. Usa IA generativa (ChatGPT) para preparar su contenido, aunque con ideas muy generales. Siente que a veces olvida información relevante que no puso en las láminas por el apuro de terminar rápido. Estaría dispuesta a grabarse para autocorregirse. Le parece interesante recibir retroalimentación de una IA, especialmente porque le ahorraría tiempo, algo valioso dada su carga académica. Estaría dispuesta a pagar por la aplicación, en especial si la ayuda a prepararse para algo importante. Sugiere un precio máximo de 5 dólares mensuales, aunque querría compararlo con otras opciones antes.
+
+**Puntos clave:**
+- Exposiciones **semanales**, especialmente en talleres.
+- Necesita mejorar **nerviosismo y vocabulario** (tiende a repetir palabras).
+- Se prepara con **bitácora personal y diapositivas** el día anterior.
+- Usa **ChatGPT** para preparar contenido, pero de forma general.
+- Olvida información relevante por el **apuro de terminar** la exposición.
+- Valoraría una app de IA que **ahorre tiempo** dada su alta carga académica.
+- Precio aceptable: hasta **5 dólares mensuales**.
+
+---
+
+### Juan Alejandro Elías López – Ing. Software, UPC, 4to ciclo
+
+Estudia Ingeniería de Software en la UPC y está en cuarto ciclo. Ya venía con experiencia de exposiciones desde la secundaria, por lo que su primera presentación universitaria no fue especialmente nerviosa. Considera que sus exposiciones son divertidas. El aspecto en el que siente que más necesita mejorar es la fluidez, especialmente en exposiciones finales de alta importancia, donde el nerviosismo lo afecta. Se prepara escribiendo su guión a mano, memorizándolo en partes durante varios días, dedicando alrededor de 2 horas diarias. Nunca ha sentido que una exposición no reflejara lo que sabía, ya que siempre memorizaba sus puntos. Nunca ha usado herramientas digitales para mejorar su oratoria. Estaría dispuesto a grabarse para practicar de forma autónoma como algo nuevo a probar. Le gustaría tanto retroalimentación de una IA como de un profesor particular, sin descartar ninguna opción. El precio que pagaría dependería de las funcionalidades que ofrezca la aplicación.
+
+**Puntos clave:**
+- Experiencia previa en exposiciones desde secundaria; **no experimenta nerviosismo intenso**.
+- Principal área de mejora: **fluidez** en exposiciones de alta importancia.
+- Método de preparación: **guión escrito a mano y memorización** en partes (2 horas/día).
+- **No ha usado** herramientas digitales de práctica oral.
+- Abierto a grabarse como **método de práctica autónoma**.
+- Prefiere retroalimentación **híbrida**: IA y tutor humano.
+- El precio depende de las **funcionalidades ofrecidas**.
+
+---
+
+### Segmento #2: Estudiantes universitarios de ciclos avanzados (6to al 10mo ciclo)
+
+### Hallazgos:
+
+### Gianger – Computer Science, University of the People (EE.UU.), 6to ciclo
+
+Estudia Computer Science de forma remota en una universidad estadounidense y se encuentra en sexto ciclo. Ha tenido evaluaciones orales variadas: monografías, proyectos de software, debates y simulaciones de entrevistas, además de entrevistas reales de trabajo. Reconoce que su comunicación oral ha mejorado enormemente desde sus inicios universitarios, principalmente gracias al mundo laboral. Antes hablaba muy rápido, llenaba los silencios y usaba muletillas constantemente. Actualmente, los escenarios que aún le generan presión son las presentaciones ante jefes o personas con mayor jerarquía. Se prepara haciendo "chuletillas" (resúmenes de ideas principales), consultando guías de oratoria y grabándose para identificar sus puntos débiles. Ha reconocido que la mala comunicación le jugó en contra en sus primeras entrevistas de trabajo, especialmente una con una empresa española en inglés. Ha probado la herramienta digital "Speak", que le da feedback sobre pronunciación, entonación y relación de palabras, aunque no sobre contenido ni manejo de silencios. Considera que lo más valioso sería una app que analice silencios y variedad de vocabulario, dos de sus puntos más débiles. Ve una aplicación con IA para simular sustentaciones y entrevistas como "extremadamente útil", con feedback sobre gestos, pronunciación, muletillas y claridad de ideas. Prefiere un esquema híbrido: IA autónoma con checkpoints periódicos con un tutor humano.
+
+**Puntos clave:**
+- Experiencia amplia: debates, proyectos, simulaciones y **entrevistas reales de trabajo**.
+- Ha mejorado mucho gracias a la **práctica laboral**; antes hablaba muy rápido y usaba muchas muletillas.
+- Siente presión al presentar ante **personas con mayor jerarquía**.
+- Se prepara con **chuletillas, guías de oratoria y autograbaciones**.
+- La mala comunicación le costó oportunidades laborales, especialmente en **inglés**.
+- Ha usado **"Speak"**, pero le falta feedback de contenido y manejo de silencios.
+- Necesita mejorar **manejo de silencios y variedad de vocabulario**.
+- Ve la app con IA como **extremadamente útil**; prefiere modelo **híbrido** (IA + tutor).
+
+### Jennifer – Administración y Marketing, Universidad Privada del Norte, 7mo ciclo
+
+Estudia Administración y Marketing en la Universidad Privada del Norte y se encuentra en séptimo ciclo. Ha enfrentado sustentaciones de trabajos, exposiciones de proyectos, entrevistas y presentaciones ante jurados. Reconoce que su comunicación oral ha mejorado bastante desde los primeros ciclos, cuando le costaba organizar sus ideas y se ponía nerviosa. La práctica constante le ha dado mayor claridad y seguridad. Los escenarios que aún le generan estrés son las presentaciones ante un jurado y las entrevistas de prácticas, donde siente una presión y evaluación más directa. Se prepara investigando bien el tema, organizando ideas, practicando frente al espejo o grabándose, y anticipando posibles preguntas. Ha experimentado que los nervios le han hecho olvidar ideas en momentos clave, afectando la claridad de su mensaje. No ha usado aplicaciones especializadas; solo se ha grabado con el celular o por Zoom. El análisis que considera más valioso es el de fluidez y claridad de ideas, como aspectos clave para mejorar su comunicación. Ve muy útil una app con IA que simule sustentaciones y entrevistas con retroalimentación específica, porque le permitiría practicar en un entorno más realista. Le gustaría utilizarla tanto de forma autónoma como compartiendo resultados con un tutor o profesor para recibir orientación adicional.
+
+**Puntos clave:**
+- Ha mejorado desde los primeros ciclos gracias a la **práctica constante**.
+- Siente más presión en **jurados y entrevistas de prácticas**.
+- Se prepara con investigación, espejo, grabaciones y **anticipación de preguntas**.
+- Los nervios le han causado **olvidos** que afectaron la claridad del mensaje.
+- No ha usado **apps especializadas**; solo grabaciones básicas.
+- Análisis más valioso: **fluidez y claridad de ideas**.
+- Ve la app como muy útil para practicar en un **entorno realista**.
+- Prefiere uso **híbrido**: autónomo + compartir resultados con tutor.
+
+---
+
+### Jorge Sinyun González – Ing. Software, UPC, 7mo-8vo ciclo
+
+Estudia Ingeniería de Software en la UPC y se encuentra entre el séptimo y octavo ciclo. Lo que más le ha costado a lo largo de su carrera son las presentaciones ante una audiencia o profesor, por la inseguridad al cometer errores y porque los nervios visibles pueden afectar la nota. Siente que su comunicación ha mejorado en la medida en que ha ganado confianza y dominio de los temas del curso, aunque como habilidad pura de oratoria el avance ha sido leve. Se prepara revisando los requerimientos de la entrevista, tomando notas de apoyo, y usando herramientas como NotebookLM para generar preguntas y practicar respuestas. Ha tenido un caso negativo en el curso de Agile Frameworks, donde tuvo que mirar constantemente las diapositivas por no dominar bien el flujo del tema, lo que fue notado por el profesor. Practica hablando solo viendo la presentación, usando el método del espejo o buscando aplicaciones de práctica de lenguaje, aunque no ha encontrado una que se enfoque en oratoria específicamente. Considera que el análisis más valioso es el de claridad de ideas, porque demuestra dominio del tema ante la audiencia. Ve una app con IA para simular sustentaciones y entrevistas como "extremadamente útil", especialmente si permite cargar el material propio para detectar puntos débiles de contenido y vocalización. Prefiere una herramienta autónoma por la privacidad y comodidad, aunque reconoce que el feedback del profesor ofrece orientación más alineada al curso.
+
+**Puntos clave:**
+- Mayor dificultad: **inseguridad y nervios visibles** ante audiencias y profesores.
+- La mejora ha venido del **conocimiento del tema**, no de la habilidad oral en sí.
+- Se prepara con **notas, NotebookLM** y práctica de preguntas y respuestas.
+- Caso negativo en **Agile Frameworks** por no dominar el flujo del contenido.
+- Practica con el espejo, hablando solo o buscando apps de lenguaje, sin encontrar algo específico de **oratoria**.
+- Análisis más valioso: **claridad de ideas**.
+- App con IA sería "**extremadamente útil**", especialmente si permite cargar contenido propio.
+- Prefiere modo **autónomo** por privacidad, aunque valora el feedback docente.
 
 
 
@@ -585,8 +763,15 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 ## 2.3. Needfinding
 
 ### 2.3.1. User Personas
+Para comprender mejor las necesidades, motivaciones y comportamientos de los usuarios clave de Talki, se han desarrollado dos perfiles de usuario o personas representativas. Estos perfiles sintetizan características típicas, objetivos y retos de los segmentos principales, facilitando el diseño centrado en el usuario y la toma de decisiones estratégicas durante el desarrollo de la plataforma.
 
+- Persona 1: Valeria, la Estudiante en Formación Oral
+  Valeria representa a los estudiantes universitarios de ciclos iniciales que enfrentan con frecuencia exposiciones orales como principal forma de evaluación, pero carecen de herramientas y métodos efectivos para practicar. Este perfil valora recibir retroalimentación honesta y objetiva que le permita identificar sus errores —como la pérdida de volumen de voz o los olvidos por nervios— y mejorar progresivamente su desempeño, sin depender de terceros y a un costo accesible.
+![Evidencia](assets/images/personas/PersonaSeg1.jpg)
 
+- Persona 2: Rodrigo, el Estudiante Avanzado con Miras Profesionales
+  Rodrigo encarna a los estudiantes universitarios de ciclos avanzados que, habiendo ganado experiencia académica y laboral, reconocen que la comunicación oral es un factor decisivo en su desarrollo profesional. Con mayor dominio de herramientas digitales, busca una solución específica que le brinde análisis detallado de su oratoria —manejo de silencios, muletillas, claridad de ideas— y que le permita prepararse de forma autónoma para sustentaciones importantes y entrevistas de trabajo reales.
+![Evidencia](assets/images/personas/PersonaSeg2.jpg)
 
 ### 2.3.2. User Task Matrix
 
@@ -594,8 +779,8 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
   <thead>
     <tr>
       <th rowspan="2">Tareas</th>
-      <th colspan="2">[Segmento 1]</th>
-      <th colspan="2">[Segmento 2]</th>
+      <th colspan="2">Valeria Ríos (Ciclos iniciales)</th>
+      <th colspan="2">Rodrigo Sánchez (Ciclos avanzados)</th>
     </tr>
     <tr>
       <th>Frecuencia</th>
@@ -606,21 +791,120 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
   </thead>
   <tbody>
     <tr>
-      <td>[COMPLETAR]</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Grabarse practicando una exposición</td>
+      <td>Raramente</td>
+      <td>Alta</td>
+      <td>Casi siempre</td>
+      <td>Muy alta</td>
+    </tr>
+    <tr>
+      <td>Recibir retroalimentación sobre su oratoria</td>
+      <td>A veces</td>
+      <td>Muy alta</td>
+      <td>Casi siempre</td>
+      <td>Muy alta</td>
+    </tr>
+    <tr>
+      <td>Practicar simulaciones de exposiciones</td>
+      <td>A veces</td>
+      <td>Alta</td>
+      <td>Siempre</td>
+      <td>Muy alta</td>
+    </tr>
+    <tr>
+      <td>Practicar simulaciones de entrevistas de trabajo</td>
+      <td>Nunca</td>
+      <td>Media</td>
+      <td>Casi siempre</td>
+      <td>Muy alta</td>
+    </tr>
+    <tr>
+      <td>Identificar muletillas y palabras repetidas</td>
+      <td>Raramente</td>
+      <td>Alta</td>
+      <td>Casi siempre</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Analizar volumen y claridad de voz</td>
+      <td>A veces</td>
+      <td>Muy alta</td>
+      <td>A veces</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Revisar historial de sesiones de práctica</td>
+      <td>Raramente</td>
+      <td>Media</td>
+      <td>Casi siempre</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Compartir resultados con un tutor o profesor</td>
+      <td>A veces</td>
+      <td>Media</td>
+      <td>A veces</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Cargar material propio para practicar</td>
+      <td>Raramente</td>
+      <td>Media</td>
+      <td>Casi siempre</td>
+      <td>Muy alta</td>
+    </tr>
+    <tr>
+      <td>Consultar tips y guías de oratoria</td>
+      <td>A veces</td>
+      <td>Alta</td>
+      <td>A veces</td>
+      <td>Media</td>
     </tr>
   </tbody>
 </table>
 
-### 2.3.3. Empathy Maps
+Las tareas más frecuentes para los perfiles de usuario en Talki muestran diferencias claras según el ciclo académico y las metas de cada uno. Valeria Ríos, como estudiante de ciclos iniciales, interactúa principalmente con las funciones de grabación, análisis de volumen de voz y recepción de retroalimentación general, considerándolas cruciales para superar su inseguridad al exponer. En contraste, Rodrigo Sánchez, estudiante avanzado con experiencia laboral, utiliza la plataforma de forma más estratégica y constante, priorizando las simulaciones de entrevistas de trabajo, la carga de material propio y el seguimiento de su historial de sesiones, actividades que realiza con alta frecuencia y considera muy importantes para su desarrollo profesional. Ambos perfiles coinciden en el valor de practicar simulaciones de exposiciones y recibir retroalimentación sobre su oratoria, aunque Rodrigo las ejecuta con mayor regularidad y profundidad.
 
+Coincidencias:
+- Ambos consideran de muy alta importancia recibir retroalimentación sobre su oratoria, aunque Rodrigo lo hace con mayor frecuencia.
+
+- Comparten una actitud positiva hacia la práctica de simulaciones de exposiciones, siendo una tarea central para los dos perfiles.
+
+- Las funciones de identificación de muletillas y análisis de claridad de voz tienen importancia alta para ambos, aunque con distinta frecuencia de uso.
+
+Diferencias:
+- Valeria prioriza el análisis de volumen y claridad de voz como su necesidad más urgente, mientras que Rodrigo enfoca su atención en el manejo de silencios, la variedad de vocabulario y la preparación para entrevistas laborales.
+
+- Rodrigo utiliza con mucha mayor frecuencia la carga de material propio y el historial de sesiones, tareas que Valeria realiza raramente por encontrarse en etapas más básicas de práctica.
+
+- Las simulaciones de entrevistas de trabajo son de muy alta importancia y frecuencia para Rodrigo, mientras que para Valeria tienen una importancia media y nunca las ha practicado aún, dado que su foco está en las exposiciones académicas.
+
+### 2.3.3. Empathy Maps
+A continuación se presentan los mapas de empatía para los dos perfiles principales de usuarios de Talki: Valeria Ríos, estudiante universitaria de ciclos iniciales, y Rodrigo Sánchez, estudiante avanzado con experiencia laboral. Estos mapas permiten comprender en profundidad sus necesidades, pensamientos, sentimientos y comportamientos, facilitando un diseño centrado en el usuario.
+
+- Segmento 1:
+
+El mapa de empatía de Valeria muestra que es una estudiante que enfrenta con frecuencia exposiciones orales como principal forma de evaluación, pero carece de métodos objetivos para practicar. Se siente frustrada porque los nervios le provocan olvidos y su voz se apaga durante las presentaciones, y no encuentra herramientas digitales específicas que la ayuden a mejorar de forma autónoma y accesible.
+![alt text](assets/images/personas/Empathymap1-ValeriaRíos.jpg)
+
+- Segmento 2:
+
+El mapa de empatía de Rodrigo refleja a un estudiante avanzado con clara conciencia de que la comunicación oral es decisiva para su desarrollo profesional. Busca una solución específica que vaya más allá de la pronunciación y le ofrezca análisis profundo de su oratoria, permitiéndole prepararse de forma autónoma para entrevistas de trabajo y sustentaciones importantes con feedback real y medible.
+![alt text](assets/images/personas/Empathymap2-RodrigoSanchez.jpg)
 
 
 ### 2.3.4. As-is Scenario Mapping
+Segmento 1
 
+Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario Mapping para el primer segmento. Este escenario refleja cómo los estudiantes universitarios que enfrentan exposiciones orales frecuentes se preparan actualmente para ellas, las dificultades que experimentan al no contar con herramientas objetivas de práctica, así como las emociones de ansiedad, frustración y resignación que acompañan cada etapa de su proceso expositivo.
+
+![alt text](assets/images/As-is/To-be/As-Is_Segmento1.png)
+
+Segmento 2
+
+Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario Mapping para el segundo segmento. Este escenario describe cómo los estudiantes de ciclos superiores con experiencia laboral se preparan hoy en día para sustentaciones importantes y entrevistas de trabajo, evidenciando las limitaciones de las herramientas digitales actuales, los métodos de práctica poco objetivos a los que recurren y la incertidumbre que sienten al no poder medir su progreso de forma concreta.
+
+![alt text](assets/images/As-is/To-be/As-Is_Segmento2.png)
 
 
 <hr class="page-break">
@@ -629,7 +913,17 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 
 ## 3.1. To-Be Scenario Mapping
 
+Segmento 1
 
+Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario Mapping para el primer segmento. Este escenario proyecta cómo Talki transformará la experiencia de los estudiantes universitarios al momento de prepararse para sus exposiciones orales, brindándoles una herramienta autónoma, accesible y objetiva que les permita identificar sus errores específicos, practicar a su propio ritmo y llegar a cada presentación con mayor confianza y preparación real.
+
+![alt text](assets/images/As-is/To-be/To-be_Segmento1.png)
+
+Segmento 2
+
+Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario Mapping para el segundo segmento. Este escenario proyecta cómo Talki cubrirá el vacío que dejan las herramientas actuales, permitiendo a los estudiantes de ciclos superiores simular entrevistas de trabajo y sustentaciones en condiciones realistas, recibir análisis profundo de su oratoria —contenido, silencios, muletillas y vocabulario— y hacer seguimiento de su progreso con métricas concretas, acompañados opcionalmente por un tutor en un modelo híbrido de mejora continua.
+
+![alt text](assets/images/As-is/To-be/To-be_Segmento2.png)
 
 <hr class="page-break">
 
