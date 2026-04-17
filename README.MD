@@ -624,7 +624,7 @@ El objetivo de las entrevistas es comprender las necesidades, frustraciones y h�
 
 ### 2.2.2. Registro de entrevistas
 
-## Segmento #1: Estudiantes universitarios de ciclos iniciales (1ro al 5to ciclo)
+### Segmento #1: Estudiantes universitarios de ciclos 1 al 5
  
 | Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
 |---|---|---|
@@ -638,7 +638,7 @@ El objetivo de las entrevistas es comprender las necesidades, frustraciones y h�
 |---|---|---|
 | 3 | **Nombre:** Juan Alejandro Elías López <br> **Universidad:** UPC <br> **Ciclo:** 4to <br> **Carrera:** Ingeniería de Software <br><br> **Resumen:** Juan Alejandro ya tenía experiencia en exposiciones desde la secundaria, por lo que su primera presentación universitaria no le generó nerviosismo. Considera que exponer es divertido. El aspecto que más necesita mejorar es la fluidez, especialmente en exposiciones finales de alta importancia donde el nerviosismo sí lo afecta. Se prepara escribiendo su guión a mano y memorizándolo en partes a lo largo de varios días, dedicando aproximadamente 2 horas diarias. Nunca ha sentido que una exposición no reflejara lo que sabía. No ha usado herramientas digitales para mejorar su oratoria. Estaría dispuesto a grabarse como nueva forma de práctica autónoma. Estaría abierto tanto a retroalimentación de IA como de un tutor humano, y el precio que pagaría dependería de las funcionalidades concretas que ofrezca la aplicación. |![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-3.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:13:23 – 00:19:12` |
 
-## Segmento #2: Estudiantes universitarios de ciclos avanzados (6to al 10mo ciclo)
+### Segmento #2: Estudiantes universitarios de ciclos 5 al 10*
 
 | Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
 |---|---|---|
@@ -657,13 +657,13 @@ El objetivo de las entrevistas es comprender las necesidades, frustraciones y h�
 
 ---
 
-## Segmento #1: Estudiantes universitarios de ciclos iniciales (1ro al 5to ciclo)
+### Segmento #1: Estudiantes universitarios de ciclos iniciales (1ro al 5to ciclo)
 
 ---
 
 ### Hallazgos:
 
-## Belén Ordoñez – PUCP, 5to ciclo
+### Belén Ordoñez – PUCP, 5to ciclo
 
 Estudia Comunicación para el Desarrollo en la PUCP y se encuentra en su primer año de carrera. Las presentaciones son muy frecuentes en su carrera: la mayoría de las evaluaciones son exposiciones de proyectos, ya que hay pocos exámenes escritos. Recuerda haberse puesto nerviosa en su primera exposición universitaria. Su principal problema es que el volumen de su voz va bajando a medida que avanza la presentación, al punto de que ya no la escuchan. Se prepara intentando dominar el contenido del tema, aunque reconoce que hay cosas "fuera de su control". Ha experimentado "black outs" durante exposiciones: termina sin recordar lo que dijo, y solo después nota lo que le faltó. No conocía la existencia de aplicaciones para mejorar la oratoria. Le gustaría grabarse, aunque le cuesta escuchar su propia voz; actualmente pide a amigos que la escuchen y le den feedback. Se sentiría más cómoda recibiendo retroalimentación de una IA que de una persona, porque considera que la IA es más directa y honesta. Estaría dispuesta a usar una aplicación de pago entre 2 y 5 dólares mensuales, siempre que sea realmente buena.
 
@@ -678,7 +678,7 @@ Estudia Comunicación para el Desarrollo en la PUCP y se encuentra en su primer 
 
 ---
 
-## Isabel Rodriguez – Arquitectura, U. de Lima, 5to ciclo
+### Isabel Rodriguez – Arquitectura, U. de Lima, 5to ciclo
 
 Estudia arquitectura en la Universidad de Lima y está en quinto ciclo. Tiene exposiciones prácticamente todas las semanas, especialmente los viernes, con resúmenes de cursos de taller. Su primera experiencia fue buena en términos generales, aunque reconoce que hubiera sido mejor con mayor conocimiento del curso. Los aspectos que más necesita trabajar son el nerviosismo y la ampliación de vocabulario, ya que tiende a usar siempre las mismas palabras. Se prepara leyendo sus diapositivas y notas de una bitácora personal el día anterior y momentos antes de la clase. Usa IA generativa (ChatGPT) para preparar su contenido, aunque con ideas muy generales. Siente que a veces olvida información relevante que no puso en las láminas por el apuro de terminar rápido. Estaría dispuesta a grabarse para autocorregirse. Le parece interesante recibir retroalimentación de una IA, especialmente porque le ahorraría tiempo, algo valioso dada su carga académica. Estaría dispuesta a pagar por la aplicación, en especial si la ayuda a prepararse para algo importante. Sugiere un precio máximo de 5 dólares mensuales, aunque querría compararlo con otras opciones antes.
 
@@ -693,7 +693,7 @@ Estudia arquitectura en la Universidad de Lima y está en quinto ciclo. Tiene ex
 
 ---
 
-## Juan Alejandro Elías López – Ing. Software, UPC, 4to ciclo
+### Juan Alejandro Elías López – Ing. Software, UPC, 4to ciclo
 
 Estudia Ingeniería de Software en la UPC y está en cuarto ciclo. Ya venía con experiencia de exposiciones desde la secundaria, por lo que su primera presentación universitaria no fue especialmente nerviosa. Considera que sus exposiciones son divertidas. El aspecto en el que siente que más necesita mejorar es la fluidez, especialmente en exposiciones finales de alta importancia, donde el nerviosismo lo afecta. Se prepara escribiendo su guión a mano, memorizándolo en partes durante varios días, dedicando alrededor de 2 horas diarias. Nunca ha sentido que una exposición no reflejara lo que sabía, ya que siempre memorizaba sus puntos. Nunca ha usado herramientas digitales para mejorar su oratoria. Estaría dispuesto a grabarse para practicar de forma autónoma como algo nuevo a probar. Le gustaría tanto retroalimentación de una IA como de un profesor particular, sin descartar ninguna opción. El precio que pagaría dependería de las funcionalidades que ofrezca la aplicación.
 
@@ -708,11 +708,11 @@ Estudia Ingeniería de Software en la UPC y está en cuarto ciclo. Ya venía con
 
 ---
 
-## Segmento #2: Estudiantes universitarios de ciclos avanzados (6to al 10mo ciclo)
+### Segmento #2: Estudiantes universitarios de ciclos avanzados (6to al 10mo ciclo)
 
 ### Hallazgos:
 
-## Gianger – Computer Science, University of the People (EE.UU.), 6to ciclo
+### Gianger – Computer Science, University of the People (EE.UU.), 6to ciclo
 
 Estudia Computer Science de forma remota en una universidad estadounidense y se encuentra en sexto ciclo. Ha tenido evaluaciones orales variadas: monografías, proyectos de software, debates y simulaciones de entrevistas, además de entrevistas reales de trabajo. Reconoce que su comunicación oral ha mejorado enormemente desde sus inicios universitarios, principalmente gracias al mundo laboral. Antes hablaba muy rápido, llenaba los silencios y usaba muletillas constantemente. Actualmente, los escenarios que aún le generan presión son las presentaciones ante jefes o personas con mayor jerarquía. Se prepara haciendo "chuletillas" (resúmenes de ideas principales), consultando guías de oratoria y grabándose para identificar sus puntos débiles. Ha reconocido que la mala comunicación le jugó en contra en sus primeras entrevistas de trabajo, especialmente una con una empresa española en inglés. Ha probado la herramienta digital "Speak", que le da feedback sobre pronunciación, entonación y relación de palabras, aunque no sobre contenido ni manejo de silencios. Considera que lo más valioso sería una app que analice silencios y variedad de vocabulario, dos de sus puntos más débiles. Ve una aplicación con IA para simular sustentaciones y entrevistas como "extremadamente útil", con feedback sobre gestos, pronunciación, muletillas y claridad de ideas. Prefiere un esquema híbrido: IA autónoma con checkpoints periódicos con un tutor humano.
 
@@ -726,7 +726,7 @@ Estudia Computer Science de forma remota en una universidad estadounidense y se 
 - Necesita mejorar **manejo de silencios y variedad de vocabulario**.
 - Ve la app con IA como **extremadamente útil**; prefiere modelo **híbrido** (IA + tutor).
 
-## Jennifer – Administración y Marketing, Universidad Privada del Norte, 7mo ciclo
+### Jennifer – Administración y Marketing, Universidad Privada del Norte, 7mo ciclo
 
 Estudia Administración y Marketing en la Universidad Privada del Norte y se encuentra en séptimo ciclo. Ha enfrentado sustentaciones de trabajos, exposiciones de proyectos, entrevistas y presentaciones ante jurados. Reconoce que su comunicación oral ha mejorado bastante desde los primeros ciclos, cuando le costaba organizar sus ideas y se ponía nerviosa. La práctica constante le ha dado mayor claridad y seguridad. Los escenarios que aún le generan estrés son las presentaciones ante un jurado y las entrevistas de prácticas, donde siente una presión y evaluación más directa. Se prepara investigando bien el tema, organizando ideas, practicando frente al espejo o grabándose, y anticipando posibles preguntas. Ha experimentado que los nervios le han hecho olvidar ideas en momentos clave, afectando la claridad de su mensaje. No ha usado aplicaciones especializadas; solo se ha grabado con el celular o por Zoom. El análisis que considera más valioso es el de fluidez y claridad de ideas, como aspectos clave para mejorar su comunicación. Ve muy útil una app con IA que simule sustentaciones y entrevistas con retroalimentación específica, porque le permitiría practicar en un entorno más realista. Le gustaría utilizarla tanto de forma autónoma como compartiendo resultados con un tutor o profesor para recibir orientación adicional.
 
@@ -742,7 +742,7 @@ Estudia Administración y Marketing en la Universidad Privada del Norte y se enc
 
 ---
 
-## Jorge Sinyun González – Ing. Software, UPC, 7mo-8vo ciclo
+### Jorge Sinyun González – Ing. Software, UPC, 7mo-8vo ciclo
 
 Estudia Ingeniería de Software en la UPC y se encuentra entre el séptimo y octavo ciclo. Lo que más le ha costado a lo largo de su carrera son las presentaciones ante una audiencia o profesor, por la inseguridad al cometer errores y porque los nervios visibles pueden afectar la nota. Siente que su comunicación ha mejorado en la medida en que ha ganado confianza y dominio de los temas del curso, aunque como habilidad pura de oratoria el avance ha sido leve. Se prepara revisando los requerimientos de la entrevista, tomando notas de apoyo, y usando herramientas como NotebookLM para generar preguntas y practicar respuestas. Ha tenido un caso negativo en el curso de Agile Frameworks, donde tuvo que mirar constantemente las diapositivas por no dominar bien el flujo del tema, lo que fue notado por el profesor. Practica hablando solo viendo la presentación, usando el método del espejo o buscando aplicaciones de práctica de lenguaje, aunque no ha encontrado una que se enfoque en oratoria específicamente. Considera que el análisis más valioso es el de claridad de ideas, porque demuestra dominio del tema ante la audiencia. Ve una app con IA para simular sustentaciones y entrevistas como "extremadamente útil", especialmente si permite cargar el material propio para detectar puntos débiles de contenido y vocalización. Prefiere una herramienta autónoma por la privacidad y comodidad, aunque reconoce que el feedback del profesor ofrece orientación más alineada al curso.
 
@@ -765,7 +765,7 @@ Estudia Ingeniería de Software en la UPC y se encuentra entre el séptimo y oct
 ### 2.3.1. User Personas
 Para comprender mejor las necesidades, motivaciones y comportamientos de los usuarios clave de Talki, se han desarrollado dos perfiles de usuario o personas representativas. Estos perfiles sintetizan características típicas, objetivos y retos de los segmentos principales, facilitando el diseño centrado en el usuario y la toma de decisiones estratégicas durante el desarrollo de la plataforma.
 
-- Persona 1:  Valeria, la Estudiante en Formación Oral
+- Persona 1: Valeria, la Estudiante en Formación Oral
   Valeria representa a los estudiantes universitarios de ciclos iniciales que enfrentan con frecuencia exposiciones orales como principal forma de evaluación, pero carecen de herramientas y métodos efectivos para practicar. Este perfil valora recibir retroalimentación honesta y objetiva que le permita identificar sus errores —como la pérdida de volumen de voz o los olvidos por nervios— y mejorar progresivamente su desempeño, sin depender de terceros y a un costo accesible.
 ![Evidencia](assets/images/personas/PersonaSeg1.jpg)
 
