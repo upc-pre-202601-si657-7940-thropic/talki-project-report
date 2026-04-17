@@ -545,11 +545,73 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 
 ### 2.2.1. Diseño de entrevistas
 
+El objetivo de las entrevistas es comprender las necesidades, frustraciones y hábitos de comunicación oral de los segmentos objetivo de Talki, así como su disposición a usar herramientas digitales para mejorar sus habilidades comunicativas.
 
+---
+
+**Segmento 1 — Estudiantes universitarios de ciclos 1 al 5**
+
+*Objetivos específicos:*
+- Conocer cómo viven los primeros encuentros con exposiciones y presentaciones en la universidad.
+- Identificar las inseguridades comunicativas más frecuentes en etapas tempranas de la carrera.
+- Entender qué estrategias de práctica emplean actualmente y cuáles consideran insuficientes.
+- Evaluar su apertura a recibir retroalimentación automatizada de una IA.
+
+*Preguntas introductorias:*
+1. ¿En qué universidad estudias, qué carrera sigues y en qué ciclo te encuentras?
+2. ¿Con qué frecuencia tienes que hacer exposiciones, sustentaciones o participaciones orales en clases?
+
+*Preguntas principales:*
+
+3. ¿Cómo fue tu primera exposición en la universidad? ¿Qué recuerdas de esa experiencia?
+4. ¿Qué aspectos de tu comunicación oral sientes que más necesitas trabajar en este punto de tu carrera? (nerviosismo, muletillas, fluidez, volumen, etc.)
+5. ¿Cómo te preparas actualmente cuando tienes que exponer? ¿Cuánto tiempo le dedicas?
+6. ¿Alguna vez tu desempeño oral no reflejó lo que realmente sabías del tema? ¿Qué ocurrió?
+7. ¿Has usado alguna app o herramienta digital para mejorar tu forma de hablar o exponer? ¿Cómo fue?
+8. ¿Te grabarías en video o audio para escucharte y corregirte? ¿Por qué sí o por qué no?
+9. ¿Qué tan cómodo(a) te sentirías recibiendo retroalimentación de una IA sobre tu forma de hablar?
+10. ¿Estarías dispuesto(a) a pagar por una app así? ¿Qué precio te parecería justo?
+
+---
+
+**Segmento 2 — Estudiantes universitarios de ciclos 5 al 10**
+
+*Objetivos específicos:*
+- Entender cómo evolucionan las exigencias de comunicación oral en ciclos avanzados.
+- Identificar si la preparación para prácticas preprofesionales o entrevistas laborales genera nuevas necesidades comunicativas.
+- Conocer su nivel de autonomía para practicar y mejorar su oratoria.
+- Determinar su disposición a adoptar una herramienta de IA especializada en comunicación académica y profesional.
+
+*Preguntas introductorias:*
+1. ¿En qué universidad estudias, qué carrera sigues y en qué ciclo te encuentras?
+2. ¿Qué tipos de evaluaciones orales has tenido que enfrentar en los últimos ciclos? (sustentaciones, jurados, entrevistas de prácticas, etc.)
+
+*Preguntas principales:*
+
+3. Comparando tus primeros ciclos con ahora, ¿sientes que tu comunicación oral ha mejorado? ¿Qué crees que la cambió?
+4. ¿Cuáles son los escenarios orales que todavía te generan más estrés o inseguridad?
+5. ¿Cómo te preparas hoy para una sustentación importante o una entrevista de prácticas?
+6. ¿Has sentido que tu forma de comunicarte oralmente te ha jugado en contra en alguna evaluación o proceso de selección? Cuéntame.
+7. ¿Has probado alguna herramienta digital para practicar presentaciones o entrevistas? ¿Qué te pareció?
+8. ¿Qué tipo de análisis de tu comunicación te resultaría más valioso: fluidez, claridad de ideas, manejo de silencios, muletillas, otro?
+9. ¿Qué tan útil sería para ti una app con IA que simule sustentaciones o entrevistas de prácticas y te dé retroalimentación detallada?
+10. ¿Usarías este tipo de herramienta de forma autónoma o preferirías poder compartir los resultados con un profesor o tutor?
 
 ### 2.2.2. Registro de entrevistas
 
-
+## Segmento #1: Estudiantes universitarios de ciclos iniciales (1ro al 5to ciclo)
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 1 | **Nombre:** (No registrado — estudiante de Comunicaciones) <br> **Universidad:** PUCP <br> **Ciclo:** 5to <br> **Carrera:** Comunicación para el Desarrollo <br><br> **Resumen:** Estudiante de quinto ciclo en la PUCP cuya carrera gira en torno a presentaciones orales: la mayoría de sus evaluaciones son exposiciones de proyectos. Recuerda haberse puesto nerviosa en su primera exposición universitaria. Su principal problema es que el volumen de su voz va disminuyendo conforme avanza en la presentación. Ha sufrido "black outs" durante exposiciones, terminando sin recordar lo que dijo. No conocía la existencia de herramientas digitales para mejorar la oratoria. Actualmente pide a amigos que la escuchen antes de exponer. Se sentiría más cómoda recibiendo retroalimentación de una IA por su mayor honestidad y directness. Estaría dispuesta a pagar entre 2 y 5 dólares mensuales por una app que realmente funcione. | [📂 Ver entrevista](#) <br> `00:00:00 – 00:06:07` |
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 2 | **Nombre:** Isabel <br> **Universidad:** Universidad de Lima <br> **Ciclo:** 5to <br> **Carrera:** Arquitectura <br><br> **Resumen:** Isabel estudia Arquitectura en la Universidad de Lima y tiene exposiciones prácticamente todas las semanas, especialmente resúmenes de talleres los viernes. Su primera experiencia expositiva fue buena en general, aunque reconoce que hubiera sido mejor con más dominio del curso. Los puntos que más necesita trabajar son el nerviosismo y la ampliación de vocabulario, pues tiende a repetir siempre las mismas palabras. Se prepara con una bitácora personal y revisando sus diapositivas el día anterior. Usa ChatGPT para preparar contenido, aunque de forma general. Olvida información relevante por el apuro de terminar la exposición rápido. Le parece muy interesante recibir retroalimentación de una IA por el ahorro de tiempo. Estaría dispuesta a pagar hasta 5 dólares mensuales, aunque querría comparar precios antes de decidir. | [📂 Ver entrevista](#) <br> `00:06:13 – 00:13:22` |
+ 
+| Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
+|---|---|---|
+| 3 | **Nombre:** Juan Alejandro Elías López <br> **Universidad:** UPCY <br> **Ciclo:** 4to <br> **Carrera:** Ingeniería de Software <br><br> **Resumen:** Juan Alejandro ya tenía experiencia en exposiciones desde la secundaria, por lo que su primera presentación universitaria no le generó nerviosismo. Considera que exponer es divertido. El aspecto que más necesita mejorar es la fluidez, especialmente en exposiciones finales de alta importancia donde el nerviosismo sí lo afecta. Se prepara escribiendo su guión a mano y memorizándolo en partes a lo largo de varios días, dedicando aproximadamente 2 horas diarias. Nunca ha sentido que una exposición no reflejara lo que sabía. No ha usado herramientas digitales para mejorar su oratoria. Estaría dispuesto a grabarse como nueva forma de práctica autónoma. Estaría abierto tanto a retroalimentación de IA como de un tutor humano, y el precio que pagaría dependería de las funcionalidades concretas que ofrezca la aplicación. | [📂 Ver entrevista](#) <br> `00:13:23 – 00:19:12` |
 
 ### 2.2.3. Análisis de entrevistas
 
