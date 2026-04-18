@@ -1534,6 +1534,8 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
 
 ## 3.4. Product Backlog
 
+El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Should* / *Could* / *Won't*), basado en el valor que aporta cada User Story al MVP y la dependencia funcional entre ellas. Las User Stories *Must* son bloqueantes del MVP y cubren autenticación, sesión de práctica, grabación, feedback básico y adaptación por segmento. Las *Should* aportan valor crítico pero pueden esperar un sprint; incluyen tipos de sesión, análisis detallado, historial y progreso. Las *Could* son mejoras incrementales (landing page, exportación, metas personales) que se pueden desarrollar después del MVP sin afectar la propuesta de valor inicial.
+
 <table>
   <thead>
     <tr>
@@ -1542,6 +1544,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <th>Título</th>
       <th>Descripción</th>
       <th>Story Points</th>
+      <th>Prioridad</th>
     </tr>
   </thead>
   <tbody>
@@ -1551,6 +1554,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Registro de cuenta nueva</td>
       <td><strong>Como</strong> estudiante universitario, <strong>quiero</strong> registrarme en Talki con mi correo electrónico, <strong>para</strong> crear una cuenta y acceder a las funcionalidades de la plataforma.</td>
       <td>3</td>
+      <td>Must</td>
     </tr>
     <tr>
       <td>2</td>
@@ -1558,6 +1562,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Inicio de sesión</td>
       <td><strong>Como</strong> estudiante registrado, <strong>quiero</strong> iniciar sesión con mi correo y contraseña, <strong>para</strong> acceder a mi cuenta y sesiones de práctica.</td>
       <td>2</td>
+      <td>Must</td>
     </tr>
     <tr>
       <td>3</td>
@@ -1565,6 +1570,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Recuperación de contraseña</td>
       <td><strong>Como</strong> estudiante registrado, <strong>quiero</strong> recuperar mi contraseña mediante mi correo electrónico, <strong>para</strong> volver a acceder a mi cuenta si olvido mis credenciales.</td>
       <td>2</td>
+      <td>Must</td>
     </tr>
     <tr>
       <td>4</td>
@@ -1572,6 +1578,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Edición de perfil de usuario</td>
       <td><strong>Como</strong> estudiante registrado, <strong>quiero</strong> editar mi perfil con información como ciclo universitario, carrera y universidad, <strong>para</strong> que Talki personalice mi experiencia.</td>
       <td>3</td>
+      <td>Must</td>
     </tr>
     <tr>
       <td>5</td>
@@ -1579,111 +1586,127 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Cerrar sesión de usuario</td>
       <td><strong>Como</strong> estudiante registrado, <strong>quiero</strong> cerrar sesión de manera segura, <strong>para</strong> proteger mi cuenta cuando uso un dispositivo compartido.</td>
       <td>1</td>
+      <td>Must</td>
     </tr>
     <tr>
       <td>6</td>
+      <td>US23</td>
+      <td>Seleccionar segmento académico</td>
+      <td><strong>Como</strong> estudiante, <strong>quiero</strong> indicar mi segmento académico (ciclo 1 al 5 o ciclo 6 al 10) durante el registro o en mi perfil, <strong>para</strong> que Talki adapte el feedback a mi nivel.</td>
+      <td>2</td>
+      <td>Must</td>
+    </tr>
+    <tr>
+      <td>7</td>
       <td>US09</td>
       <td>Crear nueva sesión de práctica</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> crear una nueva sesión de práctica oral, <strong>para</strong> comenzar a ensayar mi presentación y recibir retroalimentación.</td>
       <td>3</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>US10</td>
-      <td>Seleccionar tipo de sesión</td>
-      <td><strong>Como</strong> estudiante, <strong>quiero</strong> seleccionar el tipo de presentación que voy a practicar (pitch, presentación, sustentación de tesis, charla), <strong>para</strong> que el feedback de la IA se ajuste al contexto de mi práctica.</td>
-      <td>3</td>
+      <td>Must</td>
     </tr>
     <tr>
       <td>8</td>
-      <td>US11</td>
-      <td>Configurar duración objetivo</td>
-      <td><strong>Como</strong> estudiante, <strong>quiero</strong> establecer una duración objetivo para mi sesión de práctica, <strong>para</strong> entrenar el manejo del tiempo en mis presentaciones.</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <td>9</td>
       <td>US12</td>
       <td>Iniciar grabación y transcripción en tiempo real</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> iniciar la grabación de mi presentación y ver la transcripción en tiempo real, <strong>para</strong> monitorear lo que digo mientras practico.</td>
       <td>8</td>
+      <td>Must</td>
     </tr>
     <tr>
-      <td>10</td>
-      <td>US13</td>
-      <td>Pausar y reanudar grabación</td>
-      <td><strong>Como</strong> estudiante, <strong>quiero</strong> pausar y reanudar la grabación durante mi sesión, <strong>para</strong> tomar descansos sin perder el progreso de la transcripción.</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>11</td>
+      <td>9</td>
       <td>US14</td>
       <td>Finalizar sesión y guardar transcripción</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> finalizar la sesión de grabación y que se guarde la transcripción completa, <strong>para</strong> poder revisarla posteriormente y recibir feedback.</td>
       <td>3</td>
+      <td>Must</td>
     </tr>
     <tr>
-      <td>12</td>
+      <td>10</td>
       <td>US15</td>
       <td>Recibir feedback general de la IA</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> recibir un resumen de feedback general de la IA al finalizar mi sesión, <strong>para</strong> conocer una evaluación global de mi desempeño oral.</td>
       <td>8</td>
+      <td>Must</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>US26</td>
+      <td>Recibir recomendaciones adaptadas al segmento</td>
+      <td><strong>Como</strong> estudiante de ciclo 1 al 5, <strong>quiero</strong> recibir retroalimentación adaptada a mi nivel básico de presentaciones, <strong>para</strong> desarrollar habilidades fundamentales de comunicación oral.</td>
+      <td>5</td>
+      <td>Must</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>US10</td>
+      <td>Seleccionar tipo de sesión</td>
+      <td><strong>Como</strong> estudiante, <strong>quiero</strong> seleccionar el tipo de presentación que voy a practicar (pitch, presentación, sustentación de tesis, charla), <strong>para</strong> que el feedback de la IA se ajuste al contexto de mi práctica.</td>
+      <td>3</td>
+      <td>Should</td>
     </tr>
     <tr>
       <td>13</td>
+      <td>US11</td>
+      <td>Configurar duración objetivo</td>
+      <td><strong>Como</strong> estudiante, <strong>quiero</strong> establecer una duración objetivo para mi sesión de práctica, <strong>para</strong> entrenar el manejo del tiempo en mis presentaciones.</td>
+      <td>2</td>
+      <td>Should</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>US13</td>
+      <td>Pausar y reanudar grabación</td>
+      <td><strong>Como</strong> estudiante, <strong>quiero</strong> pausar y reanudar la grabación durante mi sesión, <strong>para</strong> tomar descansos sin perder el progreso de la transcripción.</td>
+      <td>3</td>
+      <td>Should</td>
+    </tr>
+    <tr>
+      <td>15</td>
       <td>US16</td>
       <td>Análisis de muletillas</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> ver un análisis detallado de las muletillas que usé durante mi presentación, <strong>para</strong> identificar y reducir su frecuencia.</td>
       <td>5</td>
+      <td>Should</td>
     </tr>
     <tr>
-      <td>14</td>
+      <td>16</td>
       <td>US17</td>
       <td>Análisis de palabras clave</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> ver las palabras clave identificadas en mi presentación, <strong>para</strong> verificar que estoy comunicando los conceptos importantes de mi tema.</td>
       <td>5</td>
+      <td>Should</td>
     </tr>
     <tr>
-      <td>15</td>
-      <td>US18</td>
-      <td>Recomendaciones de mejora de léxico</td>
-      <td><strong>Como</strong> estudiante, <strong>quiero</strong> recibir sugerencias para mejorar mi vocabulario y léxico, <strong>para</strong> enriquecer mi expresión oral en futuras presentaciones.</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>16</td>
+      <td>17</td>
       <td>US19</td>
       <td>Sugerencias de mejora por sección</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> recibir sugerencias específicas de mejora para cada sección de mi presentación, <strong>para</strong> saber exactamente en qué partes debo trabajar más.</td>
       <td>5</td>
-    </tr>
-    <tr>
-      <td>17</td>
-      <td>US23</td>
-      <td>Seleccionar segmento académico</td>
-      <td><strong>Como</strong> estudiante, <strong>quiero</strong> indicar mi segmento académico (ciclo 1-5 o ciclo 6-10) durante el registro o en mi perfil, <strong>para</strong> que Talki adapte el feedback a mi nivel.</td>
-      <td>2</td>
+      <td>Should</td>
     </tr>
     <tr>
       <td>18</td>
-      <td>US26</td>
-      <td>Recibir recomendaciones adaptadas al segmento</td>
-      <td><strong>Como</strong> estudiante de ciclo 1-5, <strong>quiero</strong> recibir retroalimentación adaptada a mi nivel básico de presentaciones, <strong>para</strong> desarrollar habilidades fundamentales de comunicación oral.</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>19</td>
       <td>US20</td>
       <td>Consultar historial de sesiones</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> ver una lista de todas mis sesiones de práctica pasadas, <strong>para</strong> acceder a las transcripciones y feedback anteriores.</td>
       <td>3</td>
+      <td>Should</td>
     </tr>
     <tr>
-      <td>20</td>
+      <td>19</td>
       <td>US21</td>
       <td>Ver progreso a lo largo del tiempo</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> visualizar gráficos de mi progreso en el tiempo, <strong>para</strong> ver cómo han mejorado mis habilidades de comunicación oral.</td>
       <td>5</td>
+      <td>Should</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>US18</td>
+      <td>Recomendaciones de mejora de léxico</td>
+      <td><strong>Como</strong> estudiante, <strong>quiero</strong> recibir sugerencias para mejorar mi vocabulario y léxico, <strong>para</strong> enriquecer mi expresión oral en futuras presentaciones.</td>
+      <td>5</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>21</td>
@@ -1691,6 +1714,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Comparar dos sesiones</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> comparar dos sesiones de práctica lado a lado, <strong>para</strong> identificar en qué aspectos he mejorado o empeorado.</td>
       <td>5</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>22</td>
@@ -1698,6 +1722,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Establecer metas de mejora personal</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> definir metas específicas de mejora, <strong>para</strong> que Talki enfoque sus recomendaciones en mis objetivos.</td>
       <td>3</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>23</td>
@@ -1705,6 +1730,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Seleccionar áreas de enfoque para la sesión</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> elegir áreas de enfoque específicas antes de iniciar una sesión, <strong>para</strong> recibir feedback enfocado en esas competencias.</td>
       <td>3</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>24</td>
@@ -1712,6 +1738,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Exportar transcripción y feedback</td>
       <td><strong>Como</strong> estudiante, <strong>quiero</strong> exportar la transcripción y el feedback de mi sesión en formato PDF, <strong>para</strong> compartirlo con mi docente o revisarlo sin conexión.</td>
       <td>3</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>25</td>
@@ -1719,6 +1746,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Visualizar beneficios de Talki</td>
       <td><strong>Como</strong> visitante, <strong>quiero</strong> ver una sección de beneficios clave en la página de aterrizaje, <strong>para</strong> entender cómo Talki puede ayudarme a mejorar mi comunicación oral.</td>
       <td>2</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>26</td>
@@ -1726,6 +1754,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Ver planes y precios</td>
       <td><strong>Como</strong> visitante, <strong>quiero</strong> consultar los planes y precios disponibles en la landing page, <strong>para</strong> evaluar cuál se ajusta a mis necesidades y presupuesto.</td>
       <td>2</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>27</td>
@@ -1733,6 +1762,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Ver testimonios de usuarios</td>
       <td><strong>Como</strong> visitante, <strong>quiero</strong> leer testimonios de otros estudiantes que han usado Talki, <strong>para</strong> generar confianza antes de registrarme.</td>
       <td>1</td>
+      <td>Could</td>
     </tr>
     <tr>
       <td>28</td>
@@ -1740,6 +1770,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
       <td>Acceder a formulario de contacto</td>
       <td><strong>Como</strong> visitante, <strong>quiero</strong> enviar un mensaje de contacto desde la landing page, <strong>para</strong> resolver dudas antes de registrarme en Talki.</td>
       <td>2</td>
+      <td>Could</td>
     </tr>
   </tbody>
 </table>
