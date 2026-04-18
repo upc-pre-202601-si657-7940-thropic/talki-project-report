@@ -1451,9 +1451,9 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
 
 ## 3.3. Impact Map
 
-El **Impact Mapping** es una técnica de planificación estratégica que permite conectar los objetivos del negocio con los entregables del producto a través de los comportamientos esperados de los actores clave. Para Talki, se elaboró el Impact Map en la herramienta **UXpressia**, partiendo de los Business Goals definidos bajo el criterio **SMART** (específicos, medibles, alcanzables, relevantes y acotados en el tiempo) y conectándolos con los dos User Personas identificados en la sección 2.3.1 (Valeria Ramírez — Segmento 1, ciclos 1–5; y Diego Fernández — Segmento 2, ciclos 6–10). Cada rama responde la lógica: **¿quién** nos ayudará a lograr la meta? (Persona) → **¿qué** debería cambiar en su comportamiento? (Impact) → **¿qué** construiremos como negocio para provocar ese cambio? (Deliverable) → **¿cómo** se expresa ese entregable en una necesidad del usuario? (User Story).
+El **Impact Mapping** es una técnica de planificación estratégica que permite conectar los objetivos del negocio con los entregables del producto a través de los comportamientos esperados de los actores clave. Para Talki, se elaboró el Impact Map en la herramienta **UXpressia**, partiendo de los Business Goals definidos bajo el criterio **SMART** (específicos, medibles, alcanzables, relevantes y acotados en el tiempo) y conectándolos con los dos User Personas identificados en la sección 2.3.1: Valeria Ríos (Segmento 1, ciclos 1 al 5) y Rodrigo Sánchez (Segmento 2, ciclos 6 al 10). Cada rama responde la lógica: **¿quién** nos ayudará a lograr la meta? (Persona) → **¿qué** debería cambiar en su comportamiento? (Impact) → **¿qué** construiremos como negocio para provocar ese cambio? (Deliverable) → **¿cómo** se expresa ese entregable en una necesidad del usuario? (User Story).
 
-_Figura 5: Impact Map — Talki (elaborado en UXpressia)_
+_Figura 5: Impact Map de Talki (elaborado en UXpressia)_
 
 <div align="center">
 <img src="./assets/images/screenshots/impact-mapping.png" alt="Impact Map de Talki elaborado en UXpressia" width="720">
@@ -1480,39 +1480,39 @@ _Figura 5: Impact Map — Talki (elaborado en UXpressia)_
   <tbody>
     <tr>
       <td rowspan="2"><strong>BG-01</strong><br>Adopción<br>(5 000 MAU en 8 meses)</td>
-      <td>Valeria Ramírez<br><em>(Segmento 1)</em></td>
-      <td>Incorporar Talki a su rutina semanal de estudio practicando exposiciones académicas en sesiones cortas y recomendando la app a compañeros de clase.</td>
-      <td>Módulo de práctica guiada con análisis de voz en tiempo real y sesiones de 10–15 minutos.</td>
+      <td>Valeria Ríos<br><em>(Segmento 1)</em></td>
+      <td>Incorporar Talki a su rutina semanal de estudio practicando exposiciones académicas en sesiones cortas y recomendando la plataforma a compañeros de clase.</td>
+      <td>Módulo de práctica guiada con análisis de voz en tiempo real y sesiones de 10 a 15 minutos.</td>
       <td><strong>Como</strong> estudiante de los primeros ciclos, <strong>deseo</strong> grabar una simulación de mi exposición y recibir feedback inmediato sobre fluidez, muletillas y volumen, <strong>para</strong> corregir mis errores antes de presentar en clase y ganar confianza.</td>
     </tr>
     <tr>
-      <td>Diego Fernández<br><em>(Segmento 2)</em></td>
-      <td>Usar Talki de forma recurrente para ensayar entrevistas y sustentaciones, compartiendo la app en su red de LinkedIn y grupos universitarios.</td>
+      <td>Rodrigo Sánchez<br><em>(Segmento 2)</em></td>
+      <td>Usar Talki de forma recurrente para ensayar entrevistas y sustentaciones, compartiendo la plataforma en su red de LinkedIn y grupos universitarios.</td>
       <td>Simulador de entrevistas laborales y sustentación de tesis con IA generativa en español.</td>
       <td><strong>Como</strong> estudiante próximo a egresar, <strong>deseo</strong> practicar entrevistas laborales y sustentaciones mediante escenarios simulados con IA, <strong>para</strong> mejorar mi vocabulario profesional y responder con seguridad en procesos de selección reales.</td>
     </tr>
     <tr>
       <td rowspan="2"><strong>BG-02</strong><br>Ingresos<br>(600 Premium + 3 convenios en 12 meses)</td>
-      <td>Valeria Ramírez<br><em>(Segmento 1)</em></td>
+      <td>Valeria Ríos<br><em>(Segmento 1)</em></td>
       <td>Convertirse a una suscripción Premium con precio estudiantil al percibir mejora en sus calificaciones y desbloquear rutas personalizadas de práctica.</td>
       <td>Plan Premium Estudiantil con reportes de progreso y pago mediante tarjeta o billetera digital (Yape, Plin).</td>
       <td><strong>Como</strong> estudiante, <strong>deseo</strong> suscribirme a un plan Premium con precio accesible pagando con Yape, Plin o tarjeta, <strong>para</strong> acceder a ejercicios avanzados, rutas personalizadas y reportes detallados de mi progreso.</td>
     </tr>
     <tr>
-      <td>Diego Fernández<br><em>(Segmento 2)</em></td>
+      <td>Rodrigo Sánchez<br><em>(Segmento 2)</em></td>
       <td>Acceder a Talki mediante convenio institucional de su universidad o contratar Premium de forma individual para prepararse durante su búsqueda laboral.</td>
       <td>Gestión de pagos con renovación automática y portal de convenios institucionales para universidades.</td>
       <td><strong>Como</strong> estudiante de últimos ciclos, <strong>deseo</strong> pagar mi suscripción con renovación automática o usar el convenio de mi universidad, <strong>para</strong> mantener acceso ininterrumpido a las simulaciones de entrevistas durante mi proceso de inserción laboral.</td>
     </tr>
     <tr>
       <td rowspan="2"><strong>BG-03</strong><br>Engagement<br>(70 % de usuarios con ≥ 4 sesiones/mes en 6 meses)</td>
-      <td>Valeria Ramírez<br><em>(Segmento 1)</em></td>
+      <td>Valeria Ríos<br><em>(Segmento 1)</em></td>
       <td>Completar al menos una sesión de práctica semanal motivada por retos, rachas y notificaciones que refuercen el hábito.</td>
       <td>Sistema de gamificación con rachas, logros y notificaciones push personalizadas.</td>
       <td><strong>Como</strong> estudiante, <strong>deseo</strong> recibir recordatorios diarios y ganar logros por mantener mi racha de práctica, <strong>para</strong> conservar la constancia y mejorar progresivamente mi comunicación oral.</td>
     </tr>
     <tr>
-      <td>Diego Fernández<br><em>(Segmento 2)</em></td>
+      <td>Rodrigo Sánchez<br><em>(Segmento 2)</em></td>
       <td>Realizar sesiones frecuentes alineadas a metas concretas (ej. entrevista próxima, sustentación de tesis) y monitorear su avance en un dashboard.</td>
       <td>Dashboard de progreso con metas personalizadas y reportes de evolución por habilidad (fluidez, claridad, vocabulario).</td>
       <td><strong>Como</strong> estudiante próximo a egresar, <strong>deseo</strong> definir metas específicas (ej. preparar entrevista técnica) y ver mi evolución en un dashboard, <strong>para</strong> enfocar mi práctica en las habilidades que más necesito antes de un evento real.</td>
