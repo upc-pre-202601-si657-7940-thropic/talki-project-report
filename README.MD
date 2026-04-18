@@ -69,6 +69,7 @@
 | 1.9 | 13/04/2026 | Alejandro, Gael, Manuel | Elaboración de Impact Map y Product Backlog priorizado (3.3, 3.4) |
 | 1.10 | 14/04/2026 | Alejandro, Gael, Manuel | Redacción del Student Outcome y revisión general del informe |
 | 1.11 | 17/04/2026 | Alejandro, Gael, Manuel | Auditoría contra rúbrica TB1 y ficha visual de personas: Talki reposicionada como aplicación web, nombres canónicos (Valeria Ríos, Rodrigo Sánchez) unificados en Impact Map y datos demográficos completados en 2.3.1, hipótesis 1.2.3.3 con feature template y outcomes medibles, regeneración del Lean UX Canvas (versión web, 2026-10, outcomes reconciliados con BG), Product Backlog priorizado con MoSCoW, normalización tipográfica del documento |
+| 1.12 | 18/04/2026 | Alejandro, Gael, Manuel | Revisión por pares TB1: corrección del rango del Segmento 2 a ciclos 6 al 10 (2.2.1 y 2.2.3), renumeración de iteraciones ADD de 4.2.X a 4.3.X, link de entrevista 1 de Belén Ordoñez agregado, nota sobre el perfil de Gianger (universidad remota), nota sobre conversión USD a PEN del precio premium, alt text descriptivo en empathy maps y scenario maps, alineación del título 5.4.2 entre TOC y cuerpo. La User Story US28 (Cerrar sesión) se mantiene con su identificador original ya que fue incorporada como adición tardía al Epic EP02 tras la revisión de seguridad del MVP; su orden en el Product Backlog (posición 5, prioridad Must) refleja correctamente su alcance como parte del core de autenticación |
 
 <hr class="page-break">
 
@@ -119,14 +120,14 @@
       - [4.2.4. Constraints](#424-constraints)
       - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
-      - [4.2.X. Iteration N: Iteration Name](#42x-iteration-n-iteration-name)
-         - [4.2.X.1. Architectural Design Backlog N](#42x1-architectural-design-backlog-n)
-         - [4.2.X.2. Establish Iteration Goal by Selecting Drivers](#42x2-establish-iteration-goal-by-selecting-drivers)
-         - [4.2.X.3. Choose One or More Elements of the System to Refine](#42x3-choose-one-or-more-elements-of-the-system-to-refine)
-         - [4.2.X.4. Choose One or More Design Concepts That Satisfy the Selected Drivers](#42x4-choose-one-or-more-design-concepts-that-satisfy-the-selected-drivers)
-         - [4.2.X.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces](#42x5-instantiate-architectural-elements-allocate-responsibilities-and-define-interfaces)
-         - [4.2.X.6. Sketch Views (C4 & UML) and Record Design Decisions](#42x6-sketch-views-c4--uml-and-record-design-decisions)
-         - [4.2.X.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)](#42x7-analysis-of-current-design-and-review-iteration-goal-kanban-board)
+      - [4.3.1. Iteration 1: Iteration Name](#431-iteration-1-iteration-name)
+         - [4.3.1.1. Architectural Design Backlog 1](#4311-architectural-design-backlog-1)
+         - [4.3.1.2. Establish Iteration Goal by Selecting Drivers](#4312-establish-iteration-goal-by-selecting-drivers)
+         - [4.3.1.3. Choose One or More Elements of the System to Refine](#4313-choose-one-or-more-elements-of-the-system-to-refine)
+         - [4.3.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers](#4314-choose-one-or-more-design-concepts-that-satisfy-the-selected-drivers)
+         - [4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces](#4315-instantiate-architectural-elements-allocate-responsibilities-and-define-interfaces)
+         - [4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions](#4316-sketch-views-c4--uml-and-record-design-decisions)
+         - [4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)](#4317-analysis-of-current-design-and-review-iteration-goal-kanban-board)
 
 - [Capítulo V: Product Implementation, Validation & Deployment](#capítulo-v-product-implementation-validation--deployment)
    - [5.1. Testing Suites & General Patterns](#51-testing-suites--general-patterns)
@@ -602,7 +603,7 @@ El objetivo de las entrevistas es comprender las necesidades, frustraciones y h�
 
 ---
 
-**Segmento 2: Estudiantes universitarios de ciclos 5 al 10**
+**Segmento 2: Estudiantes universitarios de ciclos 6 al 10**
 
 *Objetivos específicos:*
 - Entender cómo evolucionan las exigencias de comunicación oral en ciclos avanzados.
@@ -631,7 +632,7 @@ El objetivo de las entrevistas es comprender las necesidades, frustraciones y h�
  
 | Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
 |---|---|---|
-| 1 | **Nombre:** Belén Ordoñez <br> **Universidad:** PUCP <br> **Ciclo:** 5to <br> **Carrera:** Comunicación para el Desarrollo <br><br> **Resumen:** Estudiante de quinto ciclo en la PUCP cuya carrera gira en torno a presentaciones orales: la mayoría de sus evaluaciones son exposiciones de proyectos. Recuerda haberse puesto nerviosa en su primera exposición universitaria. Su principal problema es que el volumen de su voz va disminuyendo conforme avanza en la presentación. Ha sufrido "black outs" durante exposiciones, terminando sin recordar lo que dijo. No conocía la existencia de herramientas digitales para mejorar la oratoria. Actualmente pide a amigos que la escuchen antes de exponer. Se sentiría más cómoda recibiendo retroalimentación de una IA por su mayor honestidad y franqueza. Estaría dispuesta a pagar entre 2 y 5 dólares mensuales por una app que realmente funcione. | ![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-1.jpeg) [📂 Ver entrevista](#) <br> `00:00:00 a 00:06:07` |
+| 1 | **Nombre:** Belén Ordoñez <br> **Universidad:** PUCP <br> **Ciclo:** 5to <br> **Carrera:** Comunicación para el Desarrollo <br><br> **Resumen:** Estudiante de quinto ciclo en la PUCP cuya carrera gira en torno a presentaciones orales: la mayoría de sus evaluaciones son exposiciones de proyectos. Recuerda haberse puesto nerviosa en su primera exposición universitaria. Su principal problema es que el volumen de su voz va disminuyendo conforme avanza en la presentación. Ha sufrido "black outs" durante exposiciones, terminando sin recordar lo que dijo. No conocía la existencia de herramientas digitales para mejorar la oratoria. Actualmente pide a amigos que la escuchen antes de exponer. Se sentiría más cómoda recibiendo retroalimentación de una IA por su mayor honestidad y franqueza. Estaría dispuesta a pagar entre 2 y 5 dólares mensuales por una app que realmente funcione. | ![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-1.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:00:00 a 00:06:07` |
  
 | Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
 |---|---|---|
@@ -641,7 +642,7 @@ El objetivo de las entrevistas es comprender las necesidades, frustraciones y h�
 |---|---|---|
 | 3 | **Nombre:** Juan Alejandro Elías López <br> **Universidad:** UPC <br> **Ciclo:** 4to <br> **Carrera:** Ingeniería de Software <br><br> **Resumen:** Juan Alejandro ya tenía experiencia en exposiciones desde la secundaria, por lo que su primera presentación universitaria no le generó nerviosismo. Considera que exponer es divertido. El aspecto que más necesita mejorar es la fluidez, especialmente en exposiciones finales de alta importancia donde el nerviosismo sí lo afecta. Se prepara escribiendo su guión a mano y memorizándolo en partes a lo largo de varios días, dedicando aproximadamente 2 horas diarias. Nunca ha sentido que una exposición no reflejara lo que sabía. No ha usado herramientas digitales para mejorar su oratoria. Estaría dispuesto a grabarse como nueva forma de práctica autónoma. Estaría abierto tanto a retroalimentación de IA como de un tutor humano, y el precio que pagaría dependería de las funcionalidades concretas que ofrezca la aplicación. |![Evidencia](assets/images/interviews/Entrevista-Talki-Segmento1-3.jpeg) [📂 Ver entrevista](https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view?usp=sharing) <br> `00:13:23 a 00:19:12` |
 
-### Segmento #2: Estudiantes universitarios de ciclos 5 al 10
+### Segmento #2: Estudiantes universitarios de ciclos 6 al 10
 
 | Número de entrevista | Datos del entrevistado | Evidencia de entrevista |
 |---|---|---|
@@ -717,7 +718,7 @@ Estudia Ingeniería de Software en la UPC y está en cuarto ciclo. Ya venía con
 
 ### Gianger (Computer Science, University of the People EE.UU., 6to ciclo)
 
-Estudia Computer Science de forma remota en una universidad estadounidense y se encuentra en sexto ciclo. Ha tenido evaluaciones orales variadas: monografías, proyectos de software, debates y simulaciones de entrevistas, además de entrevistas reales de trabajo. Reconoce que su comunicación oral ha mejorado enormemente desde sus inicios universitarios, principalmente gracias al mundo laboral. Antes hablaba muy rápido, llenaba los silencios y usaba muletillas constantemente. Actualmente, los escenarios que aún le generan presión son las presentaciones ante jefes o personas con mayor jerarquía. Se prepara haciendo "chuletillas" (resúmenes de ideas principales), consultando guías de oratoria y grabándose para identificar sus puntos débiles. Ha reconocido que la mala comunicación le jugó en contra en sus primeras entrevistas de trabajo, especialmente una con una empresa española en inglés. Ha probado la herramienta digital "Speak", que le da feedback sobre pronunciación, entonación y relación de palabras, aunque no sobre contenido ni manejo de silencios. Considera que lo más valioso sería una app que analice silencios y variedad de vocabulario, dos de sus puntos más débiles. Ve una aplicación con IA para simular sustentaciones y entrevistas como "extremadamente útil", con feedback sobre gestos, pronunciación, muletillas y claridad de ideas. Prefiere un esquema híbrido: IA autónoma con checkpoints periódicos con un tutor humano.
+Estudiante peruano radicado en Lima que cursa Computer Science de forma remota en una universidad estadounidense (University of the People), se encuentra en sexto ciclo. Aunque su universidad es extranjera, se incluye en el estudio porque representa el caso de universitarios peruanos que complementan su formación local con programas internacionales 100% online y que enfrentan retos adicionales de comunicación oral en contextos bilingües, un perfil cada vez más frecuente en el mercado laboral tecnológico peruano. Ha tenido evaluaciones orales variadas: monografías, proyectos de software, debates y simulaciones de entrevistas, además de entrevistas reales de trabajo. Reconoce que su comunicación oral ha mejorado enormemente desde sus inicios universitarios, principalmente gracias al mundo laboral. Antes hablaba muy rápido, llenaba los silencios y usaba muletillas constantemente. Actualmente, los escenarios que aún le generan presión son las presentaciones ante jefes o personas con mayor jerarquía. Se prepara haciendo "chuletillas" (resúmenes de ideas principales), consultando guías de oratoria y grabándose para identificar sus puntos débiles. Ha reconocido que la mala comunicación le jugó en contra en sus primeras entrevistas de trabajo, especialmente una con una empresa española en inglés. Ha probado la herramienta digital "Speak", que le da feedback sobre pronunciación, entonación y relación de palabras, aunque no sobre contenido ni manejo de silencios. Considera que lo más valioso sería una app que analice silencios y variedad de vocabulario, dos de sus puntos más débiles. Ve una aplicación con IA para simular sustentaciones y entrevistas como "extremadamente útil", con feedback sobre gestos, pronunciación, muletillas y claridad de ideas. Prefiere un esquema híbrido: IA autónoma con checkpoints periódicos con un tutor humano.
 
 **Puntos clave:**
 - Experiencia amplia: debates, proyectos, simulaciones y **entrevistas reales de trabajo**.
@@ -759,7 +760,11 @@ Estudia Ingeniería de Software en la UPC y se encuentra entre el séptimo y oct
 - App con IA sería "**extremadamente útil**", especialmente si permite cargar contenido propio.
 - Prefiere modo **autónomo** por privacidad, aunque valora el feedback docente.
 
+---
 
+### Nota sobre la disposición a pagar
+
+Las entrevistadas del Segmento 1 (Belén e Isabel) expresaron su disposición a pagar un rango aproximado de **USD 2 a 5 mensuales** por una aplicación que realmente funcione. Considerando el tipo de cambio promedio de referencia (S/ 3.70 por USD), este rango equivale a **S/ 7 a S/ 19 mensuales**. El plan Premium Estudiantil de Talki, definido en la sección 1.2.3.2 en **S/ 15 a S/ 25 mensuales**, se encuentra dentro o muy cerca del techo indicado por las usuarias, lo que sugiere una aceptabilidad razonable del precio propuesto. Para el Segmento 2 (Rodrigo Sánchez y similares), la disposición a pagar es mayor por el retorno profesional esperado (entrevistas, ascensos, primer empleo), lo que habilita el tramo superior del rango y justifica mantener la horquilla S/ 15 a S/ 25 como precio de referencia.
 
 <hr class="page-break">
 
@@ -896,12 +901,12 @@ A continuación se presentan los mapas de empatía para los dos perfiles princip
 - Segmento 1:
 
 El mapa de empatía de Valeria muestra que es una estudiante que enfrenta con frecuencia exposiciones orales como principal forma de evaluación, pero carece de métodos objetivos para practicar. Se siente frustrada porque los nervios le provocan olvidos y su voz se apaga durante las presentaciones, y no encuentra herramientas digitales específicas que la ayuden a mejorar de forma autónoma y accesible.
-![alt text](assets/images/personas/Empathymap1-ValeriaRíos.jpg)
+![Empathy Map de Valeria Ríos (Segmento 1, ciclos 1 al 5)](assets/images/personas/Empathymap1-ValeriaRíos.jpg)
 
 - Segmento 2:
 
 El mapa de empatía de Rodrigo refleja a un estudiante avanzado con clara conciencia de que la comunicación oral es decisiva para su desarrollo profesional. Busca una solución específica que vaya más allá de la pronunciación y le ofrezca análisis profundo de su oratoria, permitiéndole prepararse de forma autónoma para entrevistas de trabajo y sustentaciones importantes con feedback real y medible.
-![alt text](assets/images/personas/Empathymap2-RodrigoSanchez.jpg)
+![Empathy Map de Rodrigo Sánchez (Segmento 2, ciclos 6 al 10)](assets/images/personas/Empathymap2-RodrigoSanchez.jpg)
 
 
 ### 2.3.4. As-is Scenario Mapping
@@ -909,13 +914,13 @@ Segmento 1
 
 Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario Mapping para el primer segmento. Este escenario refleja cómo los estudiantes universitarios que enfrentan exposiciones orales frecuentes se preparan actualmente para ellas, las dificultades que experimentan al no contar con herramientas objetivas de práctica, así como las emociones de ansiedad, frustración y resignación que acompañan cada etapa de su proceso expositivo.
 
-![alt text](assets/images/As-is/To-be/As-Is_Segmento1.png)
+![As-Is Scenario Mapping del Segmento 1 (Valeria Ríos, ciclos 1 al 5)](assets/images/As-is/To-be/As-Is_Segmento1.png)
 
 Segmento 2
 
 Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario Mapping para el segundo segmento. Este escenario describe cómo los estudiantes de ciclos superiores con experiencia laboral se preparan hoy en día para sustentaciones importantes y entrevistas de trabajo, evidenciando las limitaciones de las herramientas digitales actuales, los métodos de práctica poco objetivos a los que recurren y la incertidumbre que sienten al no poder medir su progreso de forma concreta.
 
-![alt text](assets/images/As-is/To-be/As-Is_Segmento2.png)
+![As-Is Scenario Mapping del Segmento 2 (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/As-Is_Segmento2.png)
 
 
 <hr class="page-break">
@@ -928,13 +933,13 @@ Segmento 1
 
 Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario Mapping para el primer segmento. Este escenario proyecta cómo Talki transformará la experiencia de los estudiantes universitarios al momento de prepararse para sus exposiciones orales, brindándoles una herramienta autónoma, accesible y objetiva que les permita identificar sus errores específicos, practicar a su propio ritmo y llegar a cada presentación con mayor confianza y preparación real.
 
-![alt text](assets/images/As-is/To-be/To-be_Segmento1.png)
+![To-Be Scenario Mapping del Segmento 1 con Talki (Valeria Ríos, ciclos 1 al 5)](assets/images/As-is/To-be/To-be_Segmento1.png)
 
 Segmento 2
 
 Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario Mapping para el segundo segmento. Este escenario proyecta cómo Talki cubrirá el vacío que dejan las herramientas actuales, permitiendo a los estudiantes de ciclos superiores simular entrevistas de trabajo y sustentaciones en condiciones realistas, recibir análisis profundo de su oratoria (contenido, silencios, muletillas y vocabulario), y hacer seguimiento de su progreso con métricas concretas, acompañados opcionalmente por un tutor en un modelo híbrido de mejora continua.
 
-![alt text](assets/images/As-is/To-be/To-be_Segmento2.png)
+![To-Be Scenario Mapping del Segmento 2 con Talki (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/To-be_Segmento2.png)
 
 <hr class="page-break">
 
@@ -1846,9 +1851,9 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
 
 ## 4.3. ADD Iterations
 
-### 4.2.1. Iteration 1: [Nombre de la Iteración]
+### 4.3.1. Iteration 1: [Nombre de la Iteración]
 
-#### 4.2.1.1. Architectural Design Backlog 1
+#### 4.3.1.1. Architectural Design Backlog 1
 
 <table>
   <thead>
@@ -1869,29 +1874,29 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
   </tbody>
 </table>
 
-#### 4.2.1.2. Establish Iteration Goal by Selecting Drivers
+#### 4.3.1.2. Establish Iteration Goal by Selecting Drivers
 
 
 
-#### 4.2.1.3. Choose One or More Elements of the System to Refine
+#### 4.3.1.3. Choose One or More Elements of the System to Refine
 
 
 
-#### 4.2.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
+#### 4.3.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
 
 
 
-#### 4.2.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
+#### 4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
 
 | Elemento | Responsabilidad | Interfaces |
 |----------|-----------------|------------|
 |          |                 |            |
 
-#### 4.2.1.6. Sketch Views (C4 & UML) and Record Design Decisions
+#### 4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions
 
 
 
-#### 4.2.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
+#### 4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
 
 <table>
   <thead>
@@ -2146,7 +2151,7 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 
 
-### 5.4.2. Cloud Architecture Deployment (AWS, Microsoft Azure o Google Cloud)
+### 5.4.2. Cloud Architecture Deployment
 
 
 
