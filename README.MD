@@ -1884,7 +1884,7 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
 
 ## 4.3. ADD Iterations
 
-### 4.3.1. Iteration 1: [Nombre de la Iteración]
+### 4.3.1. Iteration 1: Iteration Name
 
 #### 4.3.1.1. Architectural Design Backlog 1
 
