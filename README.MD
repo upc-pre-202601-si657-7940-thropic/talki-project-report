@@ -765,13 +765,21 @@ Estudia Ingeniería de Software en la UPC y se encuentra entre el séptimo y oct
 ### 2.3.1. User Personas
 Para comprender mejor las necesidades, motivaciones y comportamientos de los usuarios clave de Talki, se han desarrollado dos perfiles de usuario o personas representativas. Estos perfiles sintetizan características típicas, objetivos y retos de los segmentos principales, facilitando el diseño centrado en el usuario y la toma de decisiones estratégicas durante el desarrollo de la plataforma.
 
-- Persona 1: Valeria, la Estudiante en Formación Oral
-  Valeria representa a los estudiantes universitarios de ciclos iniciales que enfrentan con frecuencia exposiciones orales como principal forma de evaluación, pero carecen de herramientas y métodos efectivos para practicar. Este perfil valora recibir retroalimentación honesta y objetiva que le permita identificar sus errores —como la pérdida de volumen de voz o los olvidos por nervios— y mejorar progresivamente su desempeño, sin depender de terceros y a un costo accesible.
-![Evidencia](assets/images/personas/PersonaSeg1.jpg)
+**Persona 1: Valeria Ríos, la Estudiante en Formación Oral**
 
-- Persona 2: Rodrigo, el Estudiante Avanzado con Miras Profesionales
-  Rodrigo encarna a los estudiantes universitarios de ciclos avanzados que, habiendo ganado experiencia académica y laboral, reconocen que la comunicación oral es un factor decisivo en su desarrollo profesional. Con mayor dominio de herramientas digitales, busca una solución específica que le brinde análisis detallado de su oratoria —manejo de silencios, muletillas, claridad de ideas— y que le permita prepararse de forma autónoma para sustentaciones importantes y entrevistas de trabajo reales.
-![Evidencia](assets/images/personas/PersonaSeg2.jpg)
+Estudiante universitaria de 19 años, residente en Lima, Perú, cursando los ciclos 1 al 5 de una carrera con alta demanda de presentaciones orales. Valeria representa a los estudiantes de ciclos iniciales que enfrentan con frecuencia exposiciones como principal forma de evaluación, pero carecen de herramientas y métodos efectivos para practicar. Se considera responsable y esforzada, aunque algo insegura al hablar en público y en busca de mejorar de forma constante. Sus principales frustraciones son que su voz se apaga durante la exposición sin que ella lo note y los "black outs" provocados por los nervios. Valora recibir retroalimentación honesta y objetiva que le permita identificar errores (como la pérdida de volumen de voz o los olvidos por nervios) y mejorar progresivamente su desempeño, sin depender de terceros y a un costo accesible.
+
+> *"Sé que voy a estar nerviosa, pero trato de estar lo más preparada posible."*
+
+![Ficha de persona de Valeria Ríos](assets/images/personas/PersonaSeg1.jpg)
+
+**Persona 2: Rodrigo Sánchez, el Estudiante Avanzado con Miras Profesionales**
+
+Estudiante universitario de 23 años, residente en Lima, Perú, cursando los ciclos 6 al 10 de Ingeniería de Software con vida laboral activa. Rodrigo encarna a los estudiantes avanzados que, habiendo ganado experiencia académica y laboral, reconocen que la comunicación oral es un factor decisivo en su desarrollo profesional. Es analítico, proactivo y autodidacta; domina herramientas digitales como Speak y NotebookLM, pero ninguna cubre el feedback de oratoria que necesita (manejo de silencios, muletillas, claridad de ideas). Una mala entrevista en inglés con una empresa española le dejó claro que la comunicación oral es tan importante como el conocimiento técnico. Busca una solución específica que le brinde análisis detallado de su oratoria y le permita prepararse de forma autónoma para sustentaciones importantes y entrevistas de trabajo reales, con la opción de complementar la práctica autónoma con orientación periódica de un tutor.
+
+> *"A medida que sube la complejidad, te das cuenta de que la preparación es algo fundamental."*
+
+![Ficha de persona de Rodrigo Sánchez](assets/images/personas/PersonaSeg2.jpg)
 
 ### 2.3.2. User Task Matrix
 
