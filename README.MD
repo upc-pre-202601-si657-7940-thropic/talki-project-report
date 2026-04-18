@@ -2194,4 +2194,6 @@ Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends
 
 | Descripción | URL |
 |-------------|-----|
-|             |     |
+| Grabaciones de entrevistas a usuarios de ambos segmentos (sección 2.2) | https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view |
+| Organización de GitHub del equipo Thropic (SI657 sección 7940) | https://github.com/upc-pre-202601-si657-7940-thropic |
+| Repositorio del informe de proyecto de Talki | https://github.com/upc-pre-202601-si657-7940-thropic/talki-project-report |
