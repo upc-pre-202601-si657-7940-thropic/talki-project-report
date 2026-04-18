@@ -1884,7 +1884,7 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
 
 ## 4.3. ADD Iterations
 
-### 4.3.1. Iteration 1: Iteration Name
+### 4.3.1. Iteration 1: [Nombre de la Iteración]
 
 #### 4.3.1.1. Architectural Design Backlog 1
 
@@ -2190,16 +2190,31 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 <hr class="page-break">
 
-# Conclusiones
+# Conclusiones y recomendaciones
 
-## Conclusiones y recomendaciones
+## Conclusiones
 
-En el cierre del primer avance (TB1), el equipo Thropic logró consolidar la base estratégica y de requerimientos del producto Talki como una aplicación web orientada al desarrollo de comunicación oral en universitarios peruanos. A lo largo del Capítulo I se caracterizó la startup y se formalizó el problema mediante el framework 5W más 2H, con evidencia cuantitativa proveniente de SUNEDU, Redalyc, Teleprompter.com y Crown Counseling, lo que permitió sustentar que la ansiedad comunicativa afecta al 75 % de la población general y al 61 % de los universitarios, con impacto directo en el desempeño académico y la empleabilidad. El Capítulo II validó esta hipótesis de negocio con un análisis competitivo de ELSA Speak, Speeko y Orai, un programa de seis entrevistas distribuido en ambos segmentos objetivo, y artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-Is Scenario Maps) que convergen en insights consistentes sobre los dolores de Valeria Ríos y Rodrigo Sánchez. Finalmente, el Capítulo III tradujo estos hallazgos en 28 User Stories agrupadas en 7 Epics, priorizadas por MoSCoW y conectadas con tres Business Goals SMART mediante el Impact Map.
+Al cierre del primer avance (TB1), el equipo Thropic logró consolidar la base estratégica y de requerimientos del producto Talki como una aplicación web orientada al desarrollo de comunicación oral en universitarios peruanos. Los principales logros son:
 
-Entre las recomendaciones preliminares, el equipo identifica tres líneas de trabajo prioritarias para las siguientes iteraciones. En primer lugar, el Capítulo IV deberá formalizar la arquitectura del producto (Principles Statements, Architecture Overview C4, patrones y tácticas) tomando como entrada los requerimientos funcionales y no funcionales ya derivados del Product Backlog priorizado, de modo que la arquitectura no sea un ejercicio académico sino la respuesta técnica a los drivers identificados en el TB1. En segundo lugar, el equipo debe comenzar la preparación del Capítulo V con la configuración de repositorios, workflow GitFlow, convenciones de código y entorno de despliegue en la nube para no llegar con deuda de infraestructura al momento de la implementación. En tercer lugar, se recomienda expandir la base de entrevistas incorporando perfiles adicionales del Segmento 2 en universidades peruanas presenciales, y sostener una cadencia quincenal de revisión del informe que permita incorporar observaciones del docente y del proceso de aprendizaje continuo, en línea con el criterio 9 (Evolution) de los entregables siguientes.
+- **Startup y producto definidos.** Se formalizó la identidad de Thropic (misión, visión y equipo) y se posicionó Talki como una aplicación web accesible desde cualquier navegador, diferenciándose de los competidores móviles ELSA Speak, Speeko y Orai.
+- **Problema validado con evidencia cuantitativa.** Se aplicó el framework 5W más 2H sobre fuentes académicas (SUNEDU, MINEDU, Redalyc) y de la industria (Teleprompter.com, Crown Counseling), sustentando que el 75 % de la población general y el 61 % de los universitarios sufren ansiedad al hablar en público, con impacto directo en el desempeño académico y la empleabilidad.
+- **Segmentos objetivo caracterizados.** Se definieron dos segmentos complementarios dentro del universitario peruano: ciclos 1 al 5 (Valeria Ríos, enfocada en confianza y fluidez inicial) y ciclos 6 al 10 (Rodrigo Sánchez, enfocado en preparación profesional y simulación de entrevistas).
+- **Investigación primaria ejecutada.** Se realizaron seis entrevistas reales con guía por segmento, con evidencia grabada y timestamps, y una síntesis cruzada donde 6 de 6 entrevistados ven valor en una app de IA para oratoria y 5 de 6 reportan nervios que afectan su desempeño.
+- **Artefactos de Needfinding completos.** Se construyeron User Personas en UXpressia, User Task Matrix con diez tareas por segmento, Empathy Maps y As-Is Scenario Mapping, convergentes en los dolores prioritarios de cada persona.
+- **Requerimientos trazables.** Se especificaron 28 User Stories agrupadas en 7 Epics, con criterios de aceptación en formato Gherkin, conectadas con tres Business Goals SMART mediante el Impact Map y priorizadas con MoSCoW en el Product Backlog.
+- **Validación inicial del modelo de negocio.** El plan Premium Estudiantil de S/ 15 a S/ 25 mensuales es consistente con la disposición a pagar expresada por las entrevistadas del Segmento 1 (USD 2 a 5, equivalente a S/ 7 a S/ 19) y queda sustentado para el Segmento 2 por el retorno profesional esperado.
 
+## Recomendaciones
 
-## Video About-The-Team
+El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
+
+- **Preparar el Capítulo IV en función de los drivers del TB1.** La arquitectura del producto (Principles Statements, Architecture Overview en C4, diagramas de contenedores, patrones y tácticas) debe derivarse de los requerimientos funcionales del Product Backlog y de los atributos de calidad implícitos en las hipótesis, de modo que la arquitectura sea la respuesta técnica a los drivers ya identificados, y no un ejercicio académico desconectado.
+- **Adelantar la configuración del Capítulo V antes del sprint inicial.** Configurar los repositorios con GitFlow, convenciones de código, entorno de despliegue en la nube y canal de CI evitará acumular deuda de infraestructura al momento de iniciar la implementación del MVP, y permitirá que el equipo llegue al TB2 con foco en entregables de negocio.
+- **Ampliar la base de entrevistas del Segmento 2.** Aunque Gianger aporta un perfil bilingüe valioso, se recomienda incorporar al menos dos entrevistados adicionales del Segmento 2 en universidades peruanas presenciales (UPC, PUCP, UL, UPN) para robustecer los hallazgos de needfinding en contextos laborales 100 % locales.
+- **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
+- **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
+
+# Video About-The-Team
 
 
 
