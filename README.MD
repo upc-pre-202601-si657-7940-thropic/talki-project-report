@@ -762,6 +762,39 @@ Estudia Ingeniería de Software en la UPC y se encuentra entre el séptimo y oct
 
 ---
 
+### Síntesis cruzada de hallazgos
+
+Las fichas individuales anteriores recogen la evidencia bruta de cada entrevistado. A continuación se presentan los patrones convergentes y divergentes identificados al cruzar los seis casos, con el objetivo de extraer insights accionables para el diseño de Talki.
+
+**Patrones convergentes (aplican a ambos segmentos):**
+
+- **6 de 6** entrevistados consideran que una aplicación con IA especializada en oratoria sería "útil" o "extremadamente útil" para su preparación personal.
+- **6 de 6** no han encontrado una aplicación digital enfocada específicamente en oratoria en español; las que conocen (Speak, ChatGPT, NotebookLM, grabadoras nativas) cubren partes del problema pero no el feedback completo.
+- **5 de 6** reconocen que los nervios o la ansiedad los han llevado a olvidar contenido, perder fluidez o bajar el volumen durante una presentación importante (Belén, Isabel, Jennifer, Jorge, Juan Alejandro en exposiciones de alta importancia).
+- **5 de 6** valoran recibir retroalimentación objetiva y directa, ya sea porque la IA es percibida como más honesta (Belén) o porque les ahorra tiempo frente al feedback de pares (Isabel, Jennifer).
+- **4 de 6** se graban o están dispuestos a grabarse como método de práctica autónoma (Gianger, Jennifer, Juan Alejandro dispuesto, Jorge con su propio material).
+
+**Divergencias por segmento:**
+
+| Dimensión | Segmento 1 (ciclos 1 al 5) | Segmento 2 (ciclos 6 al 10) |
+|---|---|---|
+| Problema principal | Volumen, nerviosismo agudo, black outs, vocabulario repetitivo | Fluidez profesional, manejo de silencios, inseguridad ante jerarquías |
+| Contexto de presentación | Exposiciones académicas frecuentes (semanales) | Sustentaciones, jurados, entrevistas laborales reales |
+| Madurez oral percibida | Principiantes que buscan ganar confianza | Intermedios que buscan pulir un nivel ya existente |
+| Herramientas usadas | Prácticamente ninguna | Speak, NotebookLM, grabaciones personales |
+| Modelo de feedback preferido | Autónomo con IA (por honestidad y costo) | Híbrido (IA más checkpoints con tutor) |
+| Disposición a pagar | USD 2 a 5 (S/ 7 a S/ 19) | Mayor, justificada por retorno profesional |
+
+**Implicaciones para el diseño de Talki:**
+
+1. **MVP debe cubrir feedback de voz básico en español** (volumen, fluidez, muletillas, vocabulario), validado por los seis entrevistados como brecha universal. Esto sustenta US12, US15 y US16 del Product Backlog.
+2. **El análisis por segmento debe adaptar profundidad y foco**: para el Segmento 1, ejercicios guiados y métricas simples; para el Segmento 2, simulador de entrevistas y análisis de silencios. Esto sustenta US10 (tipo de sesión), US23 (segmento académico) y US26 (recomendaciones adaptadas).
+3. **La IA como juez imparcial es una ventaja competitiva validada**: cinco de seis entrevistados prefieren o aceptan feedback de IA por su objetividad, lo que reduce la fricción social que enfrentan con amigos o profesores.
+4. **El modelo freemium con precio estudiantil es viable**: el rango de disposición a pagar se alinea con el plan Premium de S/ 15 a S/ 25 (ver nota siguiente).
+5. **La opción híbrida (IA más tutor) debe considerarse para la fase TB2 o posterior**, ya que dos entrevistados del Segmento 2 la prefieren explícitamente, aunque no es bloqueante para el MVP.
+
+---
+
 ### Nota sobre la disposición a pagar
 
 Las entrevistadas del Segmento 1 (Belén e Isabel) expresaron su disposición a pagar un rango aproximado de **USD 2 a 5 mensuales** por una aplicación que realmente funcione. Considerando el tipo de cambio promedio de referencia (S/ 3.70 por USD), este rango equivale a **S/ 7 a S/ 19 mensuales**. El plan Premium Estudiantil de Talki, definido en la sección 1.2.3.2 en **S/ 15 a S/ 25 mensuales**, se encuentra dentro o muy cerca del techo indicado por las usuarias, lo que sugiere una aceptabilidad razonable del precio propuesto. Para el Segmento 2 (Rodrigo Sánchez y similares), la disposición a pagar es mayor por el retorno profesional esperado (entrevistas, ascensos, primer empleo), lo que habilita el tramo superior del rango y justifica mantener la horquilla S/ 15 a S/ 25 como precio de referencia.
@@ -2157,13 +2190,31 @@ Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes
 
 <hr class="page-break">
 
-# Conclusiones
+# Conclusiones y recomendaciones
 
-## Conclusiones y recomendaciones
+## Conclusiones
 
+Al cierre del primer avance (TB1), el equipo Thropic logró consolidar la base estratégica y de requerimientos del producto Talki como una aplicación web orientada al desarrollo de comunicación oral en universitarios peruanos. Los principales logros son:
 
+- **Startup y producto definidos.** Se formalizó la identidad de Thropic (misión, visión y equipo) y se posicionó Talki como una aplicación web accesible desde cualquier navegador, diferenciándose de los competidores móviles ELSA Speak, Speeko y Orai.
+- **Problema validado con evidencia cuantitativa.** Se aplicó el framework 5W más 2H sobre fuentes académicas (SUNEDU, MINEDU, Redalyc) y de la industria (Teleprompter.com, Crown Counseling), sustentando que el 75 % de la población general y el 61 % de los universitarios sufren ansiedad al hablar en público, con impacto directo en el desempeño académico y la empleabilidad.
+- **Segmentos objetivo caracterizados.** Se definieron dos segmentos complementarios dentro del universitario peruano: ciclos 1 al 5 (Valeria Ríos, enfocada en confianza y fluidez inicial) y ciclos 6 al 10 (Rodrigo Sánchez, enfocado en preparación profesional y simulación de entrevistas).
+- **Investigación primaria ejecutada.** Se realizaron seis entrevistas reales con guía por segmento, con evidencia grabada y timestamps, y una síntesis cruzada donde 6 de 6 entrevistados ven valor en una app de IA para oratoria y 5 de 6 reportan nervios que afectan su desempeño.
+- **Artefactos de Needfinding completos.** Se construyeron User Personas en UXpressia, User Task Matrix con diez tareas por segmento, Empathy Maps y As-Is Scenario Mapping, convergentes en los dolores prioritarios de cada persona.
+- **Requerimientos trazables.** Se especificaron 28 User Stories agrupadas en 7 Epics, con criterios de aceptación en formato Gherkin, conectadas con tres Business Goals SMART mediante el Impact Map y priorizadas con MoSCoW en el Product Backlog.
+- **Validación inicial del modelo de negocio.** El plan Premium Estudiantil de S/ 15 a S/ 25 mensuales es consistente con la disposición a pagar expresada por las entrevistadas del Segmento 1 (USD 2 a 5, equivalente a S/ 7 a S/ 19) y queda sustentado para el Segmento 2 por el retorno profesional esperado.
 
-## Video About-The-Team
+## Recomendaciones
+
+El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
+
+- **Preparar el Capítulo IV en función de los drivers del TB1.** La arquitectura del producto (Principles Statements, Architecture Overview en C4, diagramas de contenedores, patrones y tácticas) debe derivarse de los requerimientos funcionales del Product Backlog y de los atributos de calidad implícitos en las hipótesis, de modo que la arquitectura sea la respuesta técnica a los drivers ya identificados, y no un ejercicio académico desconectado.
+- **Adelantar la configuración del Capítulo V antes del sprint inicial.** Configurar los repositorios con GitFlow, convenciones de código, entorno de despliegue en la nube y canal de CI evitará acumular deuda de infraestructura al momento de iniciar la implementación del MVP, y permitirá que el equipo llegue al TB2 con foco en entregables de negocio.
+- **Ampliar la base de entrevistas del Segmento 2.** Aunque Gianger aporta un perfil bilingüe valioso, se recomienda incorporar al menos dos entrevistados adicionales del Segmento 2 en universidades peruanas presenciales (UPC, PUCP, UL, UPN) para robustecer los hallazgos de needfinding en contextos laborales 100 % locales.
+- **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
+- **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
+
+# Video About-The-Team
 
 
 
