@@ -1881,31 +1881,9 @@ Si en fases posteriores se requiriera refactorizar el módulo de autenticación 
 
 El diagrama de contexto C4 (nivel 1) muestra a Talki como sistema de caja negra en relación con sus usuarios y sistemas externos. Los actores primarios son los dos segmentos de estudiantes universitarios identificados en el Capítulo I. Los sistemas externos son aquellos con los que Talki se integra pero que están fuera del control del equipo de Thropic.
 
-```mermaid
-C4Context
-    title Diagrama de Contexto — Sistema Talki
+![C4-Context](assets/images/DiagramsUML/C4-contextdiagram.png)
 
-    Person(seg1, "Estudiante Ciclos 1-5", "Practica exposiciones académicas y recibe feedback de IA para ganar confianza al hablar en público.")
-    Person(seg2, "Estudiante Ciclos 6-10", "Simula entrevistas laborales y presentaciones profesionales, mide su progreso y mejora su empleabilidad.")
-
-    System(talki, "Talki", "Aplicación web que graba, transcribe y analiza la comunicación oral del estudiante mediante IA, entregando feedback personalizado y métricas de progreso.")
-
-    System_Ext(whisper, "Servicio de Transcripción (Whisper / Google STT)", "Convierte el audio de la presentación en texto en español con precisión.")
-    System_Ext(llm, "Servicio de Análisis de IA (OpenAI GPT / Claude)", "Analiza la transcripción y genera feedback contextualizado: muletillas, léxico, estructura y puntuación.")
-    System_Ext(email, "Servicio de Email (SendGrid / SES)", "Envía correos de confirmación de registro, recuperación de contraseña y notificaciones de feedback listo.")
-    System_Ext(storage, "Almacenamiento en la Nube (AWS S3 / GCS)", "Almacena los archivos de audio de las sesiones de práctica de forma segura y duradera.")
-
-    Rel(seg1, talki, "Usa", "HTTPS / Navegador web")
-    Rel(seg2, talki, "Usa", "HTTPS / Navegador web")
-    Rel(talki, whisper, "Envía audio para transcripción", "HTTPS / API REST")
-    Rel(talki, llm, "Envía transcripción para análisis", "HTTPS / API REST")
-    Rel(talki, email, "Solicita envío de correos transaccionales", "HTTPS / API REST")
-    Rel(talki, storage, "Sube y recupera archivos de audio", "HTTPS / SDK")
-
-    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
-```
-
-_Figura X: Diagrama de Contexto C4 — Sistema Talki. Elaboración propia (2026)._
+_Diagrama de Contexto C4 — Sistema Talki. Elaboración propia (2026)._
 
 **Descripción de actores y sistemas:**
 
@@ -1926,89 +1904,17 @@ Los diagramas de viewpoints derivados del enfoque arquitectónico presentan el s
 
 #### Diagrama de Contenedores (C4 – Nivel 2)
 
-```mermaid
-C4Container
-    title Diagrama de Contenedores — Sistema Talki
+![C4-Containers](assets/images/DiagramsUML/C4-containerdiagram.png)
 
-    Person(usuario, "Estudiante", "Ciclos 1-5 o 6-10")
-
-    System_Boundary(talki_boundary, "Sistema Talki") {
-        Container(spa, "Aplicación Web (SPA)", "Angular 17", "Interfaz de usuario accesible desde el navegador. Gestiona la grabación de audio, visualización de transcripción en tiempo real, feedback y métricas de progreso.")
-        Container(gateway, "API Gateway", "Spring Cloud Gateway / NGINX", "Punto de entrada único. Valida JWT, enruta solicitudes, aplica rate limiting y gestiona CORS.")
-        Container(identity, "Identity Service", "Spring Boot + PostgreSQL", "Gestiona registro, login, recuperación de contraseña y emisión/validación de JWT y refresh tokens.")
-        Container(session, "Session Service", "Spring Boot + PostgreSQL", "Gestiona el ciclo de vida de las sesiones de práctica: creación, configuración, estado (activa/pausada/finalizada) y metadatos.")
-        Container(transcription, "Transcription Service", "Spring Boot + S3 SDK", "Recibe el audio de la sesión, lo sube a S3, solicita la transcripción al proveedor externo y devuelve el texto al session-service.")
-        Container(ai_feedback, "AI Feedback Service", "Spring Boot + RabbitMQ", "Consume eventos SessionFinalized, envía la transcripción al LLM externo, estructura el feedback y publica FeedbackGenerated.")
-        Container(progress, "Progress Service", "Spring Boot + PostgreSQL", "Consume eventos FeedbackGenerated, calcula métricas acumuladas por usuario y sirve los endpoints de historial y gráficos de progreso.")
-        Container(notification, "Notification Service", "Spring Boot + SendGrid SDK", "Consume eventos de dominio y envía correos transaccionales (bienvenida, feedback listo, recuperación de contraseña).")
-        ContainerDb(db_identity, "DB Identity", "PostgreSQL", "Usuarios, credenciales y refresh tokens.")
-        ContainerDb(db_session, "DB Session", "PostgreSQL", "Sesiones, configuraciones y transcripciones.")
-        ContainerDb(db_progress, "DB Progress", "PostgreSQL", "Métricas de sesión, puntuaciones y metas del usuario.")
-        Container(broker, "Message Broker", "RabbitMQ", "Bus de eventos asíncronos entre microservicios.")
-    }
-
-    System_Ext(whisper, "Whisper / Google STT", "Transcripción de audio a texto")
-    System_Ext(llm, "OpenAI GPT / Claude API", "Análisis de IA y generación de feedback")
-    System_Ext(s3, "AWS S3", "Almacenamiento de archivos de audio")
-    System_Ext(sendgrid, "SendGrid", "Envío de correos transaccionales")
-
-    Rel(usuario, spa, "Usa", "HTTPS")
-    Rel(spa, gateway, "Consume API", "HTTPS / REST + WebSocket")
-    Rel(gateway, identity, "Enruta", "HTTP / REST")
-    Rel(gateway, session, "Enruta", "HTTP / REST")
-    Rel(gateway, progress, "Enruta", "HTTP / REST")
-    Rel(session, transcription, "Solicita transcripción", "HTTP / REST interno")
-    Rel(transcription, s3, "Sube audio", "HTTPS / SDK")
-    Rel(transcription, whisper, "Solicita transcripción", "HTTPS / REST")
-    Rel(session, broker, "Publica SessionFinalized", "AMQP")
-    Rel(broker, ai_feedback, "Entrega SessionFinalized", "AMQP")
-    Rel(ai_feedback, llm, "Solicita análisis de IA", "HTTPS / REST")
-    Rel(ai_feedback, broker, "Publica FeedbackGenerated", "AMQP")
-    Rel(broker, progress, "Entrega FeedbackGenerated", "AMQP")
-    Rel(broker, notification, "Entrega eventos de dominio", "AMQP")
-    Rel(notification, sendgrid, "Envía correos", "HTTPS / REST")
-    Rel(identity, db_identity, "Lee y escribe", "TCP / JDBC")
-    Rel(session, db_session, "Lee y escribe", "TCP / JDBC")
-    Rel(progress, db_progress, "Lee y escribe", "TCP / JDBC")
-```
-
-_Figura X: Diagrama de Contenedores C4 — Sistema Talki. Elaboración propia (2026)._
+_Diagrama de Contenedores C4 — Sistema Talki. Elaboración propia (2026)._
 
 #### Diagrama de Componentes del AI Feedback Service (C4 – Nivel 3)
 
 El `ai-feedback-service` es el contenedor más crítico y complejo del sistema, ya que orquesta la comunicación con el proveedor de IA externo y aplica las reglas de análisis contextualizado. Por ello se detalla a nivel de componentes.
 
-```mermaid
-C4Component
-    title Componentes — AI Feedback Service
+![C4-Containers](assets/images/DiagramsUML/C4-componentdiagram.png)
 
-    Container_Boundary(ai_service, "AI Feedback Service") {
-        Component(consumer, "Session Event Consumer", "RabbitMQ Listener", "Recibe eventos SessionFinalized del broker y los encola para procesamiento asíncrono.")
-        Component(orchestrator, "Feedback Orchestrator", "Spring Service", "Coordina el flujo: recupera la transcripción, selecciona la estrategia de análisis según el tipo de sesión y orquesta las llamadas al proveedor de IA.")
-        Component(strategy, "Analysis Strategy Factory", "Strategy Pattern", "Selecciona y construye la estrategia de análisis adecuada (PitchStrategy, ThesisStrategy, InterviewStrategy) según el tipo de sesión.")
-        Component(ai_client, "AI Provider Client", "REST Client + Circuit Breaker", "Encapsula las llamadas HTTP al LLM externo con reintentos configurables y Circuit Breaker para degradación elegante.")
-        Component(feedback_mapper, "Feedback Response Mapper", "Mapper Component", "Transforma la respuesta cruda del LLM en el modelo de dominio estructurado de feedback (puntuación, muletillas, léxico, sugerencias por sección).")
-        Component(publisher, "Feedback Event Publisher", "RabbitMQ Publisher", "Publica el evento FeedbackGenerated con el feedback estructurado una vez completado el análisis.")
-        Component(repo, "Feedback Repository", "JPA Repository", "Persiste el feedback estructurado en la base de datos del servicio para consultas posteriores desde el progress-service.")
-    }
-
-    ContainerDb(db_feedback, "DB Feedback", "PostgreSQL", "Almacena feedback estructurado por sesión.")
-    Container_Ext(broker, "Message Broker", "RabbitMQ")
-    System_Ext(llm, "OpenAI / Claude API")
-
-    Rel(broker, consumer, "Entrega SessionFinalized")
-    Rel(consumer, orchestrator, "Delega procesamiento")
-    Rel(orchestrator, strategy, "Solicita estrategia de análisis")
-    Rel(orchestrator, ai_client, "Llama al proveedor de IA")
-    Rel(ai_client, llm, "POST /chat/completions", "HTTPS")
-    Rel(ai_client, feedback_mapper, "Pasa respuesta cruda")
-    Rel(feedback_mapper, repo, "Persiste feedback")
-    Rel(repo, db_feedback, "JDBC")
-    Rel(orchestrator, publisher, "Solicita publicación del evento")
-    Rel(publisher, broker, "Publica FeedbackGenerated")
-```
-
-_Figura X: Diagrama de Componentes C4 — AI Feedback Service. Elaboración propia (2026)._
+_Diagrama de Componentes C4 — AI Feedback Service. Elaboración propia (2026)._
 
 ---
 
@@ -2123,7 +2029,7 @@ _Figura X: Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. E
 
 ### 4.1.6. Design Patterns
 
-Talki aplica los siguientes patrones de diseño de software (GoF y patrones de microservicios), seleccionados para resolver problemas concretos identificados durante el diseño.
+Talki aplica los siguientes patrones de diseño de software, seleccionados para resolver problemas concretos identificados durante el diseño.
 
 **Strategy (Comportamiento) — AI Feedback Service.**
 El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulación de entrevista) determina el conjunto de instrucciones enviadas al LLM y los criterios de evaluación aplicados. El patrón Strategy encapsula cada variante de análisis en una clase independiente (`PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`) que implementa la interfaz `AnalysisStrategy`. El `FeedbackOrchestrator` delega en la estrategia apropiada sin conocer sus detalles internos. Esto permite agregar nuevos tipos de sesión sin modificar el orquestador (Open/Closed Principle).
