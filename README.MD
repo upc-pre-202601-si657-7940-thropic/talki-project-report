@@ -1819,29 +1819,388 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
 
 ### 4.1.1. Principles Statements
 
+Los siguientes principios guían todas las decisiones de diseño arquitectónico de Talki. Cada principio está formulado como un enunciado normativo que el equipo aplica durante las iteraciones ADD y que puede verificarse en las decisiones de diseño registradas.
 
+**P1 – Separación de responsabilidades por capacidad de negocio.**
+Cada servicio de Talki encapsula una única capacidad de negocio (autenticación, gestión de sesiones, transcripción, análisis de IA, progreso) y no comparte base de datos con otros servicios. Este principio minimiza el acoplamiento entre equipos y permite evolucionar cada capacidad de forma independiente sin afectar al resto del sistema.
+
+**P2 – Diseño orientado a la API (API-First).**
+Todo comportamiento del sistema se expone exclusivamente a través de contratos REST definidos antes de la implementación. El frontend Angular y cualquier cliente externo consumen única y exclusivamente las interfaces publicadas por el API Gateway, lo que garantiza que los cambios internos de un servicio no rompan a sus consumidores mientras el contrato se mantenga estable.
+
+**P3 – Servicios sin estado (Stateless Services).**
+Los servicios del backend no almacenan estado de sesión de usuario en memoria. La identidad y el contexto de cada solicitud se transportan en el token JWT incluido en el encabezado HTTP. Este principio permite escalar horizontalmente cualquier servicio sin necesidad de sesiones pegajosas (sticky sessions) y simplifica la recuperación ante fallos.
+
+**P4 – Propiedad exclusiva de los datos por servicio (Database per Service).**
+Cada microservicio es el único propietario y gestor de su almacenamiento persistente. Ningún servicio lee ni escribe directamente en la base de datos de otro. La comunicación entre servicios se realiza únicamente a través de sus APIs o mediante eventos publicados en el bus de mensajería. Este principio preserva la autonomía de despliegue y evita el acoplamiento estructural a nivel de esquema.
+
+**P5 – Seguridad por diseño (Security by Design).**
+La seguridad no es una capa añadida a posteriori sino una restricción de diseño desde el primer boceto. Todas las comunicaciones entre el cliente y el servidor usan HTTPS/TLS. Los tokens JWT son de corta duración (15 minutos) y se renuevan mediante refresh tokens con rotación. Las entradas externas se validan en el perímetro (API Gateway) antes de ser enrutadas a los servicios internos.
+
+**P6 – Observabilidad integrada.**
+Cada servicio emite trazas distribuidas (trace ID), métricas de negocio y logs estructurados en formato JSON desde el momento de su primera versión. Este principio permite diagnosticar incidentes en producción sin depender de acceso directo a los contenedores y es especialmente crítico dado que el servicio de transcripción y análisis de IA introduce latencias variables que deben monitorearse continuamente.
+
+**P7 – Degradación elegante (Graceful Degradation).**
+Cuando un servicio dependiente falla o supera el tiempo de respuesta aceptable, el sistema responde con funcionalidad reducida en lugar de un error total. Si el servicio de análisis de IA no está disponible, la sesión de grabación y la transcripción continúan funcionando y el análisis se reprocesa en cuanto el servicio se recupera. Este principio protege la experiencia del usuario en el caso de fallo parcial del sistema.
+
+**P8 – Evolución sin ruptura de contrato (Backward Compatibility).**
+Al versionar las APIs (v1, v2…) y mantener versiones anteriores durante al menos un ciclo de sprint, se garantiza que los clientes existentes no se rompan ante cambios internos. Esto es especialmente relevante porque el frontend y el backend se despliegan de forma independiente.
+
+---
 
 ### 4.1.2. Approaches Statements Architectural Styles & Patterns
 
+La arquitectura de Talki combina varios estilos y patrones complementarios seleccionados en función de los drivers de calidad identificados (latencia del análisis de IA, escalabilidad del servicio de transcripción, evolución independiente de capacidades). A continuación se describe cada estilo o patrón adoptado y su justificación en el contexto del producto.
 
+**Arquitectura de microservicios.**
+Talki se descompone en servicios independientes desplegables por separado, cada uno con su propia base de código, contenedor Docker y ciclo de vida de despliegue. Esta elección responde al driver de modifiability: las reglas de análisis de IA evolucionan con frecuencia sin impactar el resto de la plataforma. Los servicios identificados son: `identity-service`, `session-service`, `transcription-service`, `ai-feedback-service`, `progress-service` y `notification-service`.
+
+**Domain-Driven Design (DDD).**
+La descomposición en microservicios sigue los límites de contexto acotado (Bounded Contexts) derivados del dominio de Talki. Los contextos identificados son: *Identity & Access*, *Practice Session*, *Speech Analysis*, *Progress & Metrics*, y *Notification*. Dentro de cada contexto se aplican los bloques tácticos de DDD: Aggregates, Value Objects, Domain Events y Repositories. Esta alineación entre la estructura del código y el dominio de negocio reduce la fricción cognitiva y facilita la incorporación de nuevos integrantes al equipo.
+
+**Arquitectura orientada a eventos (Event-Driven Architecture).**
+El análisis de IA es una operación de larga duración (potencialmente 10-30 segundos) que no puede bloquear la respuesta al usuario. Por esta razón, la finalización de una sesión de grabación publica un evento `SessionFinalized` en un bus de mensajería (RabbitMQ/Kafka). El `ai-feedback-service` consume este evento de forma asíncrona, procesa la transcripción y publica `FeedbackGenerated`, que el `progress-service` consume para actualizar las métricas. Esta arquitectura desacopla temporalmente los servicios y permite que el frontend notifique al usuario cuando el análisis esté listo mediante WebSockets o polling.
+
+**Patrón API Gateway.**
+Un API Gateway centralizado actúa como punto de entrada único para todos los clientes del sistema. Responsabilidades delegadas al gateway: autenticación y validación de JWT, enrutamiento hacia microservicios internos, limitación de tasa (rate limiting), logging de accesos y transformación de respuestas. Este patrón evita que los clientes necesiten conocer la topología interna de los servicios y permite aplicar cross-cutting concerns en un solo lugar.
+
+**Backend for Frontend (BFF).**
+Dado que Talki opera actualmente como aplicación web (Angular), el API Gateway actúa también como BFF adaptando las respuestas de los microservicios al formato específico que la interfaz de usuario necesita, evitando múltiples roundtrips y reduciendo la complejidad en el cliente.
+
+**CQRS (Command Query Responsibility Segregation).**
+El `progress-service` separa los modelos de escritura (registro de métricas al finalizar una sesión) de los modelos de lectura (consulta de gráficos de progreso histórico). Las escrituras actualizan un almacén normalizado (PostgreSQL), mientras que las lecturas utilizan vistas materializadas optimizadas para las consultas de tendencias y comparaciones. Esta separación permite escalar las lecturas de forma independiente y evitar contención en escenarios donde un usuario consulta su historial mientras otro guarda una sesión nueva.
+
+**Circuit Breaker.**
+Las llamadas del `ai-feedback-service` hacia la API de IA externa (Whisper, OpenAI) están envueltas en un Circuit Breaker con tres estados: Cerrado (operación normal), Abierto (fallo repetido, solicitudes rechazadas inmediatamente) y Semi-Abierto (sondeo de recuperación). Esto previene la cascada de fallos cuando el proveedor externo experimenta degradación y permite que el resto de la plataforma continúe operando.
+
+**Patrón Strangler Fig (migración progresiva).**
+Si en fases posteriores se requiriera refactorizar el módulo de autenticación hacia un proveedor de identidad dedicado (Auth0, Keycloak), se aplicaría el patrón Strangler Fig: enrutando gradualmente el tráfico desde la implementación existente hacia la nueva, sin downtime ni reescritura total.
+
+---
 
 ### 4.1.3. Context Diagram
 
+El diagrama de contexto C4 (nivel 1) muestra a Talki como sistema de caja negra en relación con sus usuarios y sistemas externos. Los actores primarios son los dos segmentos de estudiantes universitarios identificados en el Capítulo I. Los sistemas externos son aquellos con los que Talki se integra pero que están fuera del control del equipo de Thropic.
 
+```mermaid
+C4Context
+    title Diagrama de Contexto — Sistema Talki
+
+    Person(seg1, "Estudiante Ciclos 1-5", "Practica exposiciones académicas y recibe feedback de IA para ganar confianza al hablar en público.")
+    Person(seg2, "Estudiante Ciclos 6-10", "Simula entrevistas laborales y presentaciones profesionales, mide su progreso y mejora su empleabilidad.")
+
+    System(talki, "Talki", "Aplicación web que graba, transcribe y analiza la comunicación oral del estudiante mediante IA, entregando feedback personalizado y métricas de progreso.")
+
+    System_Ext(whisper, "Servicio de Transcripción (Whisper / Google STT)", "Convierte el audio de la presentación en texto en español con precisión.")
+    System_Ext(llm, "Servicio de Análisis de IA (OpenAI GPT / Claude)", "Analiza la transcripción y genera feedback contextualizado: muletillas, léxico, estructura y puntuación.")
+    System_Ext(email, "Servicio de Email (SendGrid / SES)", "Envía correos de confirmación de registro, recuperación de contraseña y notificaciones de feedback listo.")
+    System_Ext(storage, "Almacenamiento en la Nube (AWS S3 / GCS)", "Almacena los archivos de audio de las sesiones de práctica de forma segura y duradera.")
+
+    Rel(seg1, talki, "Usa", "HTTPS / Navegador web")
+    Rel(seg2, talki, "Usa", "HTTPS / Navegador web")
+    Rel(talki, whisper, "Envía audio para transcripción", "HTTPS / API REST")
+    Rel(talki, llm, "Envía transcripción para análisis", "HTTPS / API REST")
+    Rel(talki, email, "Solicita envío de correos transaccionales", "HTTPS / API REST")
+    Rel(talki, storage, "Sube y recupera archivos de audio", "HTTPS / SDK")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
+
+_Figura X: Diagrama de Contexto C4 — Sistema Talki. Elaboración propia (2026)._
+
+**Descripción de actores y sistemas:**
+
+| Actor / Sistema | Tipo | Descripción |
+|---|---|---|
+| Estudiante Ciclos 1-5 | Usuario primario | Valeria Ríos (User Persona 1). Busca practicar exposiciones académicas con feedback inmediato para superar el miedo escénico. Accede desde laptop/PC en sesiones de 10-20 minutos. |
+| Estudiante Ciclos 6-10 | Usuario primario | Rodrigo Sánchez (User Persona 2). Busca prepararse para entrevistas laborales y sustentaciones de tesis con feedback profesional y métricas de mejora a largo plazo. |
+| Servicio de Transcripción | Sistema externo | Recibe el archivo de audio y devuelve la transcripción en texto. Se evalúan Whisper (OpenAI) y Google Speech-to-Text como candidatos por su precisión en español latinoamericano. |
+| Servicio de IA | Sistema externo | Recibe la transcripción y el tipo de sesión, y devuelve el análisis estructurado: puntuación global, muletillas detectadas, análisis de léxico y sugerencias de mejora por sección. |
+| Servicio de Email | Sistema externo | Gestiona el envío de correos transaccionales. Se desacopla del core de Talki para evitar dependencias de entrega sincrónica. |
+| Almacenamiento en la Nube | Sistema externo | Almacena los archivos de audio de forma persistente y los entrega al servicio de transcripción mediante URLs prefirmadas, evitando que los archivos pasen por los servidores de aplicación. |
+
+---
 
 ### 4.1.4. Approach driven ViewPoints Diagrams
 
+Los diagramas de viewpoints derivados del enfoque arquitectónico presentan el sistema Talki en los niveles C4 de Contenedores (nivel 2) y Componentes (nivel 3 del servicio de análisis de IA), alineados con los estilos arquitectónicos declarados en la sección 4.1.2.
 
+#### Diagrama de Contenedores (C4 – Nivel 2)
+
+```mermaid
+C4Container
+    title Diagrama de Contenedores — Sistema Talki
+
+    Person(usuario, "Estudiante", "Ciclos 1-5 o 6-10")
+
+    System_Boundary(talki_boundary, "Sistema Talki") {
+        Container(spa, "Aplicación Web (SPA)", "Angular 17", "Interfaz de usuario accesible desde el navegador. Gestiona la grabación de audio, visualización de transcripción en tiempo real, feedback y métricas de progreso.")
+        Container(gateway, "API Gateway", "Spring Cloud Gateway / NGINX", "Punto de entrada único. Valida JWT, enruta solicitudes, aplica rate limiting y gestiona CORS.")
+        Container(identity, "Identity Service", "Spring Boot + PostgreSQL", "Gestiona registro, login, recuperación de contraseña y emisión/validación de JWT y refresh tokens.")
+        Container(session, "Session Service", "Spring Boot + PostgreSQL", "Gestiona el ciclo de vida de las sesiones de práctica: creación, configuración, estado (activa/pausada/finalizada) y metadatos.")
+        Container(transcription, "Transcription Service", "Spring Boot + S3 SDK", "Recibe el audio de la sesión, lo sube a S3, solicita la transcripción al proveedor externo y devuelve el texto al session-service.")
+        Container(ai_feedback, "AI Feedback Service", "Spring Boot + RabbitMQ", "Consume eventos SessionFinalized, envía la transcripción al LLM externo, estructura el feedback y publica FeedbackGenerated.")
+        Container(progress, "Progress Service", "Spring Boot + PostgreSQL", "Consume eventos FeedbackGenerated, calcula métricas acumuladas por usuario y sirve los endpoints de historial y gráficos de progreso.")
+        Container(notification, "Notification Service", "Spring Boot + SendGrid SDK", "Consume eventos de dominio y envía correos transaccionales (bienvenida, feedback listo, recuperación de contraseña).")
+        ContainerDb(db_identity, "DB Identity", "PostgreSQL", "Usuarios, credenciales y refresh tokens.")
+        ContainerDb(db_session, "DB Session", "PostgreSQL", "Sesiones, configuraciones y transcripciones.")
+        ContainerDb(db_progress, "DB Progress", "PostgreSQL", "Métricas de sesión, puntuaciones y metas del usuario.")
+        Container(broker, "Message Broker", "RabbitMQ", "Bus de eventos asíncronos entre microservicios.")
+    }
+
+    System_Ext(whisper, "Whisper / Google STT", "Transcripción de audio a texto")
+    System_Ext(llm, "OpenAI GPT / Claude API", "Análisis de IA y generación de feedback")
+    System_Ext(s3, "AWS S3", "Almacenamiento de archivos de audio")
+    System_Ext(sendgrid, "SendGrid", "Envío de correos transaccionales")
+
+    Rel(usuario, spa, "Usa", "HTTPS")
+    Rel(spa, gateway, "Consume API", "HTTPS / REST + WebSocket")
+    Rel(gateway, identity, "Enruta", "HTTP / REST")
+    Rel(gateway, session, "Enruta", "HTTP / REST")
+    Rel(gateway, progress, "Enruta", "HTTP / REST")
+    Rel(session, transcription, "Solicita transcripción", "HTTP / REST interno")
+    Rel(transcription, s3, "Sube audio", "HTTPS / SDK")
+    Rel(transcription, whisper, "Solicita transcripción", "HTTPS / REST")
+    Rel(session, broker, "Publica SessionFinalized", "AMQP")
+    Rel(broker, ai_feedback, "Entrega SessionFinalized", "AMQP")
+    Rel(ai_feedback, llm, "Solicita análisis de IA", "HTTPS / REST")
+    Rel(ai_feedback, broker, "Publica FeedbackGenerated", "AMQP")
+    Rel(broker, progress, "Entrega FeedbackGenerated", "AMQP")
+    Rel(broker, notification, "Entrega eventos de dominio", "AMQP")
+    Rel(notification, sendgrid, "Envía correos", "HTTPS / REST")
+    Rel(identity, db_identity, "Lee y escribe", "TCP / JDBC")
+    Rel(session, db_session, "Lee y escribe", "TCP / JDBC")
+    Rel(progress, db_progress, "Lee y escribe", "TCP / JDBC")
+```
+
+_Figura X: Diagrama de Contenedores C4 — Sistema Talki. Elaboración propia (2026)._
+
+#### Diagrama de Componentes del AI Feedback Service (C4 – Nivel 3)
+
+El `ai-feedback-service` es el contenedor más crítico y complejo del sistema, ya que orquesta la comunicación con el proveedor de IA externo y aplica las reglas de análisis contextualizado. Por ello se detalla a nivel de componentes.
+
+```mermaid
+C4Component
+    title Componentes — AI Feedback Service
+
+    Container_Boundary(ai_service, "AI Feedback Service") {
+        Component(consumer, "Session Event Consumer", "RabbitMQ Listener", "Recibe eventos SessionFinalized del broker y los encola para procesamiento asíncrono.")
+        Component(orchestrator, "Feedback Orchestrator", "Spring Service", "Coordina el flujo: recupera la transcripción, selecciona la estrategia de análisis según el tipo de sesión y orquesta las llamadas al proveedor de IA.")
+        Component(strategy, "Analysis Strategy Factory", "Strategy Pattern", "Selecciona y construye la estrategia de análisis adecuada (PitchStrategy, ThesisStrategy, InterviewStrategy) según el tipo de sesión.")
+        Component(ai_client, "AI Provider Client", "REST Client + Circuit Breaker", "Encapsula las llamadas HTTP al LLM externo con reintentos configurables y Circuit Breaker para degradación elegante.")
+        Component(feedback_mapper, "Feedback Response Mapper", "Mapper Component", "Transforma la respuesta cruda del LLM en el modelo de dominio estructurado de feedback (puntuación, muletillas, léxico, sugerencias por sección).")
+        Component(publisher, "Feedback Event Publisher", "RabbitMQ Publisher", "Publica el evento FeedbackGenerated con el feedback estructurado una vez completado el análisis.")
+        Component(repo, "Feedback Repository", "JPA Repository", "Persiste el feedback estructurado en la base de datos del servicio para consultas posteriores desde el progress-service.")
+    }
+
+    ContainerDb(db_feedback, "DB Feedback", "PostgreSQL", "Almacena feedback estructurado por sesión.")
+    Container_Ext(broker, "Message Broker", "RabbitMQ")
+    System_Ext(llm, "OpenAI / Claude API")
+
+    Rel(broker, consumer, "Entrega SessionFinalized")
+    Rel(consumer, orchestrator, "Delega procesamiento")
+    Rel(orchestrator, strategy, "Solicita estrategia de análisis")
+    Rel(orchestrator, ai_client, "Llama al proveedor de IA")
+    Rel(ai_client, llm, "POST /chat/completions", "HTTPS")
+    Rel(ai_client, feedback_mapper, "Pasa respuesta cruda")
+    Rel(feedback_mapper, repo, "Persiste feedback")
+    Rel(repo, db_feedback, "JDBC")
+    Rel(orchestrator, publisher, "Solicita publicación del evento")
+    Rel(publisher, broker, "Publica FeedbackGenerated")
+```
+
+_Figura X: Diagrama de Componentes C4 — AI Feedback Service. Elaboración propia (2026)._
+
+---
 
 ### 4.1.5. Relational/Non Relational Database Diagram
 
+Talki utiliza un esquema de **base de datos por servicio** (Database per Service), donde cada microservicio gestiona su propio almacenamiento relacional (PostgreSQL). A continuación se presenta el diagrama entidad-relación consolidado de los esquemas principales.
 
+**Decisiones de modelado:**
+- Se usa **PostgreSQL** como base de datos relacional principal para todos los servicios, dado que los datos de sesión, feedback y progreso tienen estructura predecible y requieren consistencia transaccional.
+- El campo `feedback_json` en la tabla `session_feedback` almacena el análisis completo como JSONB de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados (lista de muletillas, sugerencias por sección) sin sacrificar las garantías ACID.
+- Las relaciones entre servicios se modelan mediante `user_id` como clave foránea lógica (no referencial entre bases de datos), lo que preserva la autonomía de cada esquema.
+
+```mermaid
+erDiagram
+    %% ── Identity Service DB ──
+    users {
+        uuid id PK
+        varchar email UK
+        varchar password_hash
+        varchar full_name
+        int current_cycle
+        varchar university
+        varchar career
+        varchar academic_segment
+        timestamp created_at
+        timestamp updated_at
+    }
+    refresh_tokens {
+        uuid id PK
+        uuid user_id FK
+        varchar token_hash UK
+        timestamp expires_at
+        boolean revoked
+    }
+
+    %% ── Session Service DB ──
+    practice_sessions {
+        uuid id PK
+        uuid user_id
+        varchar session_type
+        int target_duration_seconds
+        varchar status
+        text[] focus_areas
+        text transcription
+        int actual_duration_seconds
+        timestamp started_at
+        timestamp finished_at
+        timestamp created_at
+    }
+
+    %% ── AI Feedback Service DB ──
+    session_feedback {
+        uuid id PK
+        uuid session_id UK
+        uuid user_id
+        int overall_score
+        jsonb filler_words_analysis
+        jsonb keywords_analysis
+        jsonb lexicon_suggestions
+        jsonb section_feedback
+        varchar processing_status
+        timestamp generated_at
+    }
+
+    %% ── Progress Service DB ──
+    user_metrics {
+        uuid id PK
+        uuid user_id UK
+        int total_sessions
+        float avg_overall_score
+        float avg_filler_words_per_min
+        float avg_lexical_diversity
+        int total_practice_minutes
+        timestamp last_session_at
+        timestamp updated_at
+    }
+    session_metric_snapshots {
+        uuid id PK
+        uuid user_id
+        uuid session_id UK
+        int overall_score
+        float filler_words_per_min
+        float lexical_diversity_score
+        int duration_seconds
+        varchar session_type
+        timestamp recorded_at
+    }
+    user_goals {
+        uuid id PK
+        uuid user_id
+        varchar goal_type
+        boolean is_active
+        timestamp set_at
+    }
+
+    %% ── Relaciones dentro de cada servicio ──
+    users ||--o{ refresh_tokens : "tiene"
+    users ||--o{ practice_sessions : "crea (lógica)"
+    users ||--o{ session_feedback : "recibe (lógica)"
+    users ||--|| user_metrics : "tiene (lógica)"
+    users ||--o{ session_metric_snapshots : "acumula (lógica)"
+    users ||--o{ user_goals : "define"
+    practice_sessions ||--o| session_feedback : "genera (lógica)"
+    practice_sessions ||--o| session_metric_snapshots : "origina (lógica)"
+```
+
+_Figura X: Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
+
+> **Nota sobre relaciones lógicas:** Las relaciones marcadas como "lógica" entre tablas de distintos servicios no se implementan como foreign keys de base de datos. La integridad referencial entre servicios se mantiene a nivel de aplicación mediante eventos de dominio y validaciones en los handlers de eventos.
+
+---
 
 ### 4.1.6. Design Patterns
 
+Talki aplica los siguientes patrones de diseño de software (GoF y patrones de microservicios), seleccionados para resolver problemas concretos identificados durante el diseño.
 
+**Strategy (Comportamiento) — AI Feedback Service.**
+El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulación de entrevista) determina el conjunto de instrucciones enviadas al LLM y los criterios de evaluación aplicados. El patrón Strategy encapsula cada variante de análisis en una clase independiente (`PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`) que implementa la interfaz `AnalysisStrategy`. El `FeedbackOrchestrator` delega en la estrategia apropiada sin conocer sus detalles internos. Esto permite agregar nuevos tipos de sesión sin modificar el orquestador (Open/Closed Principle).
+
+**Factory Method (Creacional) — Strategy Factory.**
+El `AnalysisStrategyFactory` centraliza la creación de instancias de estrategia a partir del tipo de sesión recibido en el evento. Desacopla el código cliente de la lógica de instanciación y facilita las pruebas unitarias mediante inyección de dependencias.
+
+**Repository (Arquitectural) — Acceso a datos en todos los servicios.**
+Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`UserRepository`, `SessionRepository`, `FeedbackRepository`, `MetricSnapshotRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo. Este patrón facilita la aplicación del principio de inversión de dependencias.
+
+**Observer / Event-Driven (Comportamiento) — Bus de eventos.**
+Los servicios productores de eventos (`session-service`, `ai-feedback-service`) publican eventos de dominio en RabbitMQ sin conocer quién los consumirá. Los consumidores (`ai-feedback-service`, `progress-service`, `notification-service`) se suscriben a las colas relevantes e implementan los handlers correspondientes. Este patrón desacopla temporalmente los servicios y permite agregar nuevos consumidores sin modificar los productores (extensibilidad).
+
+**Circuit Breaker (Resiliencia) — Llamadas a servicios externos.**
+Las llamadas al LLM externo desde el `ai-feedback-service` y al servicio de transcripción están protegidas con el patrón Circuit Breaker (implementado con Resilience4j). Cuando el número de fallos consecutivos supera el umbral configurado, el circuito se abre y las solicitudes se rechazan inmediatamente durante un período de espera. Transcurrido ese período, el circuito entra en estado semi-abierto para sondear la recuperación del servicio externo.
+
+**Decorator (Estructural) — Middleware de logging y métricas en el API Gateway.**
+El API Gateway aplica capas decoradoras sobre cada solicitud entrante: validación de JWT, registro de métricas de latencia e inyección de trace IDs para trazabilidad distribuida. Cada decorador añade comportamiento transversal sin modificar la lógica de enrutamiento central.
+
+**DTO (Data Transfer Object) — Contratos de API.**
+Cada endpoint del API Gateway recibe y devuelve DTOs específicos (nunca entidades de dominio directamente). Esto protege el modelo de dominio de la serialización externa, permite versionar los contratos de API de forma independiente al modelo interno y reduce el acoplamiento entre capas.
+
+**Saga (Coreografía) — Procesamiento asíncrono de sesión finalizada.**
+El flujo completo de análisis de una sesión (guardar transcripción → transcribir audio → analizar con IA → actualizar métricas → notificar al usuario) se implementa como una Saga de coreografía sobre eventos: cada servicio reacciona al evento del anterior y publica su propio evento de resultado. No existe un coordinador central, lo que evita un punto único de fallo en el flujo de procesamiento.
+
+---
 
 ### 4.1.7. Tactics
+
+Las tácticas arquitectónicas son decisiones de diseño concretas que permiten satisfacer los atributos de calidad declarados. A continuación se describen las tácticas seleccionadas para los atributos más críticos de Talki.
+
+#### Disponibilidad (Availability)
+
+| Táctica | Descripción | Aplicación en Talki |
+|---|---|---|
+| **Monitor** | Detección activa de fallos mediante health checks | Cada microservicio expone `/actuator/health`. El orquestador de contenedores (Kubernetes) reinicia automáticamente los pods que fallen el health check. |
+| **Retry con backoff exponencial** | Reintentos automáticos ante fallos transitorios | El `ai-feedback-service` reintenta hasta 3 veces con backoff exponencial las llamadas al LLM externo antes de abrir el Circuit Breaker. |
+| **Circuit Breaker** | Aislamiento de fallos en servicios externos | Implementado con Resilience4j en todas las llamadas a APIs externas (transcripción, LLM, email). |
+| **Redundancia activa** | Múltiples instancias del mismo servicio | Los servicios críticos (`session-service`, `ai-feedback-service`) se despliegan con al menos 2 réplicas en Kubernetes, garantizando continuidad ante la caída de una instancia. |
+| **Degradación elegante** | Funcionalidad reducida ante fallo parcial | Si el análisis de IA falla, el usuario recibe confirmación de que la sesión fue guardada y se le notifica cuando el análisis esté disponible. La grabación y la transcripción siempre funcionan de forma independiente. |
+
+#### Rendimiento (Performance)
+
+| Táctica | Descripción | Aplicación en Talki |
+|---|---|---|
+| **Procesamiento asíncrono** | Operaciones lentas fuera del path síncrono | El análisis de IA se ejecuta de forma asíncrona vía RabbitMQ. La respuesta al usuario en la acción "Finalizar sesión" es inmediata (< 500 ms); el feedback llega cuando el procesamiento termina. |
+| **Caché de datos frecuentes** | Almacenamiento en memoria de lecturas repetidas | Las métricas de progreso del usuario (consultadas en cada carga del dashboard) se cachean en Redis con TTL de 5 minutos, reduciendo la carga sobre la base de datos. |
+| **CDN para activos estáticos** | Distribución geográfica de la SPA | El bundle Angular se sirve desde un CDN (CloudFront / Cloudflare), reduciendo la latencia de carga inicial para usuarios en regiones fuera de Lima. |
+| **Conexiones persistentes (WebSocket)** | Comunicación push del servidor al cliente | El estado del análisis de IA se notifica al cliente mediante WebSocket desde el API Gateway, evitando el polling periódico y reduciendo el número de solicitudes HTTP. |
+| **Paginación en consultas de historial** | Limitar el volumen de datos por respuesta | Las consultas al `progress-service` para el historial de sesiones devuelven páginas de 20 elementos con cursor de paginación, evitando cargas completas de datos históricos. |
+
+#### Seguridad (Security)
+
+| Táctica | Descripción | Aplicación en Talki |
+|---|---|---|
+| **Autenticación con JWT de corta duración** | Minimizar la ventana de exposición de tokens | Access tokens con expiración de 15 minutos y refresh tokens con rotación obligatoria. La revocación de refresh tokens se gestiona en la base de datos del `identity-service`. |
+| **Validación de entrada en el perímetro** | Sanitización antes de procesar la solicitud | El API Gateway valida el formato y los límites de tamaño de todas las solicitudes entrantes (cuerpo, parámetros, encabezados) antes de enrutarlas a los servicios internos. |
+| **HTTPS obligatorio** | Cifrado de todas las comunicaciones en tránsito | TLS 1.2+ requerido en todos los endpoints públicos y en la comunicación entre el API Gateway y los servicios internos. Certificados gestionados por Let's Encrypt con renovación automática. |
+| **Limitación de tasa (Rate Limiting)** | Protección ante abuso y ataques de fuerza bruta | El API Gateway aplica límites de 100 solicitudes/minuto por IP en endpoints públicos y 10 intentos de login fallidos por hora antes de bloqueo temporal. |
+| **Principio de mínimo privilegio** | Cada servicio accede solo a los recursos que necesita | Los servicios internos se comunican mediante tokens de servicio con scopes limitados. Ningún servicio tiene acceso de escritura a la base de datos de otro servicio. |
+
+#### Modificabilidad (Modifiability)
+
+| Táctica | Descripción | Aplicación en Talki |
+|---|---|---|
+| **Alta cohesión, bajo acoplamiento** | Servicios con responsabilidad única y dependencias mínimas | Cada microservicio encapsula un bounded context de DDD. Los cambios en las reglas de análisis de IA están contenidos en el `ai-feedback-service` sin afectar al resto. |
+| **Parametrizar reglas variables** | Externalizarizar la configuración que cambia con frecuencia | Los prompts del LLM, los umbrales de detección de muletillas y las listas de vocabulario académico se almacenan como configuración externalizada (Spring Cloud Config / variables de entorno), no hardcodeados. |
+| **Versionado de API** | Evolución sin ruptura de contrato | Los endpoints del API Gateway se versionan bajo el prefijo `/v1/`. Al introducir cambios incompatibles, se crea `/v2/` manteniendo `/v1/` activo durante al menos un sprint. |
+| **Interfaces sobre implementaciones** | Inversión de dependencias en la capa de dominio | Los repositorios y los clientes de servicios externos son interfaces. Las implementaciones concretas se inyectan por constructor, facilitando la sustitución del proveedor de transcripción o LLM sin modificar la lógica de orquestación. |
+
+#### Testeabilidad (Testability)
+
+| Táctica | Descripción | Aplicación en Talki |
+|---|---|---|
+| **Test doubles e inyección de dependencias** | Sustitución de dependencias externas en pruebas | Los clientes de LLM y de transcripción son interfaces inyectadas por constructor. En pruebas unitarias se sustituyen por mocks (Mockito) que retornan respuestas predefinidas. |
+| **Separación de lógica de orquestación y dominio** | Testear reglas de negocio sin infraestructura | Las estrategias de análisis (`AnalysisStrategy`) y el orquestador de feedback contienen solo lógica de negocio pura, sin dependencias de framework, permitiendo pruebas unitarias rápidas sin contexto Spring. |
+| **Contratos de API con Consumer-Driven Contract Testing** | Verificar compatibilidad entre servicios | Se definen contratos Pact entre el frontend y el API Gateway, y entre el `session-service` y el `ai-feedback-service`, para detectar regresiones de contrato antes del despliegue. |
 
 
 
