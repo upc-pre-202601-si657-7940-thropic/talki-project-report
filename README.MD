@@ -2021,9 +2021,7 @@ erDiagram
     practice_sessions ||--o| session_metric_snapshots : "origina (lógica)"
 ```
 
-_Figura X: Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
-
-> **Nota sobre relaciones lógicas:** Las relaciones marcadas como "lógica" entre tablas de distintos servicios no se implementan como foreign keys de base de datos. La integridad referencial entre servicios se mantiene a nivel de aplicación mediante eventos de dominio y validaciones en los handlers de eventos.
+_Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
 
 ---
 
