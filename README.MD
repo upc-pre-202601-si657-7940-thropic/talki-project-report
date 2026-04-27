@@ -23,17 +23,14 @@
 **Docente:** Mori Yzaguirre, Daniel Enrique
 
 
-<br>
-
 ### Informe de Trabajo Final
 
-<br>
 
 **Startup:** Thropic
 
 **Producto:** Talki
 
-<br><br>
+<br>
 
 **Integrantes:**
 
@@ -43,7 +40,7 @@
 | U202312222 | Rivera Sosa, Eduardo Gael |
 | U20241C134 | Tumi Oliden, Manuel Ignacio |
 
-<br><br>
+<br>
 
 *Abril 2026-10*
 
