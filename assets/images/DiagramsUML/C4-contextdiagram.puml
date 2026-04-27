@@ -1,0 +1,30 @@
+@startuml Talki_Context
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam Handwritten false
+skinparam Padding 2
+
+title Context Diagram for Talki
+
+Person(seg1, "Estudiante Ciclos 1-5", "Practica exposiciones académicas\ny recibe feedback de IA para ganar\nconfianza al hablar en público.")
+Person(seg2, "Estudiante Ciclos 6-10", "Simula entrevistas laborales y\npresentaciones profesionales, mide\nsu progreso y mejora su empleabilidad.")
+
+System(talki, "Talki", "Aplicación web que graba, transcribe\ny analiza la comunicación oral del\nestudiante mediante IA, entregando\nfeedback personalizado y métricas\nde progreso.")
+
+System_Ext(whisper, "Servicio de Transcripción\n(Whisper / Google STT)", "Convierte el audio en texto\nen español con precisión.")
+System_Ext(llm, "Servicio de Análisis de IA\n(OpenAI GPT / Claude)", "Analiza la transcripción y genera\nfeedback contextualizado.")
+System_Ext(email, "Servicio de Email\n(SendGrid / SES)", "Envía correos de confirmación\ny notificaciones de feedback.")
+System_Ext(storage, "Almacenamiento en la Nube\n(AWS S3 / GCS)", "Almacena los archivos de audio\nde las sesiones de práctica.")
+
+Rel(seg1, talki, "Usa", "HTTPS / Navegador web")
+Rel(seg2, talki, "Usa", "HTTPS / Navegador web")
+Rel(talki, whisper, "Envía audio para transcripción", "HTTPS / API REST")
+Rel(talki, llm, "Envía transcripción para análisis", "HTTPS / API REST")
+Rel(talki, email, "Solicita envío de correos", "HTTPS / API REST")
+Rel(talki, storage, "Sube y recupera archivos de audio", "HTTPS / SDK")
+
+@enduml

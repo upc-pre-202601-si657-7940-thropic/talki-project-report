@@ -1,0 +1,38 @@
+@startuml Talki_Component_AIFeedback
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam Handwritten false
+skinparam Padding 2
+
+title Component Diagram for AI Feedback Service — Talki
+
+Container_Boundary(ai_service, "AI Feedback Service") {
+    Component(consumer, "Session Event Consumer", "RabbitMQ Listener", "Recibe eventos SessionFinalized\ndel broker.")
+    Component(orchestrator, "Feedback Orchestrator", "Spring Service", "Coordina el flujo: selecciona\nla estrategia y orquesta las\nllamadas al proveedor de IA.")
+    Component(strategy, "Analysis Strategy Factory", "Strategy Pattern", "Construye la estrategia adecuada\nsegún el tipo de sesión\n(Pitch, Thesis, Interview).")
+    Component(ai_client, "AI Provider Client", "REST Client + Circuit Breaker", "Encapsula las llamadas HTTP al\nLLM con reintentos y Circuit\nBreaker.")
+    Component(feedback_mapper, "Feedback Response Mapper", "Mapper Component", "Transforma la respuesta cruda\ndel LLM en el modelo de dominio\nestructurado.")
+    Component(publisher, "Feedback Event Publisher", "RabbitMQ Publisher", "Publica FeedbackGenerated\ncon el feedback estructurado.")
+    Component(repo, "Feedback Repository", "JPA Repository", "Persiste el feedback\nen la base de datos.")
+}
+
+ContainerDb(db_feedback, "DB Feedback", "PostgreSQL", "Feedback estructurado\npor sesión.")
+Container_Ext(broker, "Message Broker", "RabbitMQ")
+System_Ext(llm, "OpenAI / Claude API", "Análisis de IA")
+
+Rel(broker, consumer, "Entrega SessionFinalized", "AMQP")
+Rel(consumer, orchestrator, "Delega procesamiento")
+Rel(orchestrator, strategy, "Solicita estrategia de análisis")
+Rel(orchestrator, ai_client, "Llama al proveedor de IA")
+Rel(ai_client, llm, "POST /chat/completions", "HTTPS")
+Rel(ai_client, feedback_mapper, "Pasa respuesta cruda")
+Rel(feedback_mapper, repo, "Persiste feedback")
+Rel(repo, db_feedback, "Lee y escribe", "JDBC")
+Rel(orchestrator, publisher, "Solicita publicación")
+Rel(publisher, broker, "Publica FeedbackGenerated", "AMQP")
+
+@enduml
