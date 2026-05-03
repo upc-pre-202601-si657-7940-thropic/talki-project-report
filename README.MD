@@ -2605,9 +2605,9 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
     </tr>
     <tr>
       <td>ADB-04</td>
-      <td>Aplicar el patrón <strong>Strategy</strong> en <code>ai-feedback-service</code> para variar el análisis por <code>session_type</code> y por <code>academic_segment</code>.</td>
+      <td>Aplicar el patrón <strong>Strategy</strong> en <code>ai-feedback-service</code> para variar el análisis por <code>session_type</code> (US10) y por <code>academic_segment</code> (US23). En el alcance <em>Must</em> de esta iteración, <code>session_type</code> admite un valor por defecto <code>"general"</code> hasta que US10 (Should) entre al sprint.</td>
       <td>Hecho</td>
-      <td>US23, US26, QAS-07, AC-01</td>
+      <td>US10, US23, US26, QAS-07, AC-01</td>
     </tr>
     <tr>
       <td>ADB-05</td>
@@ -2617,7 +2617,7 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
     </tr>
     <tr>
       <td>ADB-06</td>
-      <td>Aislar el proveedor LLM y el proveedor de transcripción detrás de las interfaces <code>LlmClient</code> y <code>TranscriptionClient</code> (Adapter + Inversión de Dependencias).</td>
+      <td>Aislar el proveedor LLM y el proveedor de transcripción detrás de las interfaces <code>LlmClient</code> y <code>TranscriptionClient</code>, aplicando la táctica <em>"Interfaces sobre implementaciones"</em> (4.1.7) y la inversión de dependencias derivada de P1.</td>
       <td>Hecho</td>
       <td>QAS-08, AC-06, AC-09</td>
     </tr>
@@ -2693,8 +2693,8 @@ La selección de drivers prioriza los que aparecen simultáneamente en el camino
       <td>User Story más exigente en calidad (8 SP). Justifica procesamiento asíncrono y Circuit Breaker.</td>
     </tr>
     <tr>
-      <td>US23 / US26</td>
-      <td>Habilitan el patrón Strategy: el segmento académico cambia las reglas de análisis sin tocar el orquestador.</td>
+      <td>US10 / US23 / US26</td>
+      <td>Habilitan el patrón Strategy: <code>session_type</code> (US10, Should) y <code>academic_segment</code> (US23, Must) cambian las reglas de análisis sin tocar el orquestador. US10 se incorpora como driver de diseño aunque su implementación quede para un sprint posterior.</td>
     </tr>
     <tr>
       <td rowspan="4">Quality Attribute Scenarios</td>
@@ -2821,9 +2821,9 @@ Para cada driver seleccionado en 4.3.1.2 se elige el concepto de diseño que lo 
     </tr>
     <tr>
       <td>QAS-03 (degradación elegante)<br>AC-06 (vendor lock-in)</td>
-      <td><strong>Circuit Breaker</strong> (Resilience4j) + <strong>Retry con backoff exponencial</strong> + <strong>Adapter</strong> sobre interfaz <code>LlmClient</code>.</td>
-      <td>Reintento ilimitado en el mismo hilo del consumer.</td>
-      <td>Los reintentos sin breaker amplifican la sobrecarga del proveedor caído (cascading failure). El Adapter desacopla el proveedor concreto y permite swap (QAS-08).</td>
+      <td><strong>Circuit Breaker</strong> (Resilience4j) + <strong>Retry con backoff exponencial</strong> (4.1.7) + interfaz <code>LlmClient</code> con implementación intercambiable (táctica <em>"Interfaces sobre implementaciones"</em>, 4.1.7).</td>
+      <td>Reintento ilimitado en el mismo hilo del consumer y cliente LLM acoplado al SDK del proveedor.</td>
+      <td>Los reintentos sin breaker amplifican la sobrecarga del proveedor caído (cascading failure). La interfaz <code>LlmClient</code> desacopla el proveedor concreto y permite cambiarlo en una sola clase (QAS-08).</td>
     </tr>
     <tr>
       <td>US23, US26, QAS-07, AC-01</td>
@@ -2875,12 +2875,12 @@ A partir de los conceptos elegidos en 4.3.1.4 se instancian los elementos concre
 | **`session-service` :: SessionRepository (JPA)** | Persistir el agregado `PracticeSession` en PostgreSQL respetando *database per service* (P4). | Provee: `save`, `findById`, `findByUserId`. Consume: PostgreSQL local. |
 | **`session-service` :: EventPublisher** | Publicar eventos de dominio en RabbitMQ con trace ID y *outbox pattern* para garantía at-least-once. | Provee: `publish(SessionFinalized)`. Consume: AMQP exchange `talki.events`. |
 | **`transcription-service` :: TranscriptionGateway (WebSocket)** | Recibir el flujo de audio del cliente vía WebSocket y reenviar segmentos transcritos en tiempo real. | Provee: `wss://api/v1/sessions/{id}/transcription`. Consume: `TranscriptionClient`. |
-| **`transcription-service` :: TranscriptionClient (Adapter)** | Encapsular la integración con el proveedor externo de speech-to-text (Whisper / Google STT). | Provee: interfaz Java `TranscriptionClient.transcribeStream(audioChunk)`. Consume: API HTTPS del proveedor (C-05, C-06). |
+| **`transcription-service` :: TranscriptionClient** (interfaz + implementación) | Encapsular la integración con el proveedor externo de speech-to-text (Whisper / Google STT) detrás de una interfaz intercambiable. | Provee: interfaz Java `TranscriptionClient.transcribeStream(audioChunk)`. Consume: API HTTPS del proveedor (C-05, C-06). |
 | **`ai-feedback-service` :: SessionFinalizedConsumer** | Consumir `SessionFinalized` desde RabbitMQ, descargar la transcripción persistida y disparar la orquestación. | Consume: cola `talki.feedback.session-finalized`. Provee: invocación a `FeedbackOrchestrator`. |
 | **`ai-feedback-service` :: FeedbackOrchestrator** | Coordinar el caso de uso: seleccionar la `AnalysisStrategy`, ejecutar el análisis, persistir el resultado y publicar `FeedbackGenerated`. | Provee: `analyze(sessionId, sessionType, academicSegment)`. Consume: `AnalysisStrategyFactory`, `LlmClient`, `FeedbackRepository`, `EventPublisher`. |
 | **`ai-feedback-service` :: AnalysisStrategyFactory** | Resolver la estrategia concreta según `(session_type, academic_segment)`. | Provee: `create(sessionType, segment) → AnalysisStrategy`. |
 | **`ai-feedback-service` :: AnalysisStrategy (interfaz)** | Definir el contrato de análisis: prompt, criterios y parsing del resultado del LLM. Implementaciones: `PitchStrategy`, `ThesisStrategy`, `InterviewStrategy`. | Provee: `analyze(transcription, context) → FeedbackResult`. Consume: `LlmClient`, configuración externalizada. |
-| **`ai-feedback-service` :: LlmClient (Adapter)** | Aislar al proveedor LLM externo. Envuelve la llamada con Circuit Breaker y Retry. | Provee: `generate(prompt, params) → LlmResponse`. Consume: API HTTPS del proveedor LLM (C-05). |
+| **`ai-feedback-service` :: LlmClient** (interfaz + implementación) | Aislar al proveedor LLM externo detrás de una interfaz intercambiable. La implementación envuelve la llamada con Circuit Breaker y Retry. | Provee: `generate(prompt, params) → LlmResponse`. Consume: API HTTPS del proveedor LLM (C-05). |
 | **`ai-feedback-service` :: FeedbackRepository (JPA)** | Persistir `SessionFeedback` con campo `feedback_json` (JSONB) en PostgreSQL del servicio. | Provee: `save`, `findBySessionId`. Consume: PostgreSQL local. |
 | **`api-gateway` :: AuthFilter** | Validar JWT en cada request entrante; rechazar tráfico HTTP plano (C-07). | Provee: filtro WebFlux. Consume: clave pública JWKS del `identity-service`. |
 | **`api-gateway` :: WebSocketRouter** | Pasar el handshake WebSocket del cliente al `transcription-service` preservando el trace ID. | Provee: `wss://gateway/...`. Consume: ruta interna al `transcription-service`. |
@@ -2895,9 +2895,9 @@ Authorization: Bearer <jwt>
 Content-Type: application/json
 
 {
-  "session_type": "pitch | thesis | interview",
-  "target_duration_seconds": 600,
-  "focus_areas": ["fluency", "filler_words"]
+  "session_type": "general | pitch | thesis | interview",   // opcional, default "general" hasta US10 (Should)
+  "target_duration_seconds": 600,                            // opcional, US11 (Should)
+  "focus_areas": ["fluency", "filler_words"]                 // opcional, US25 (Could)
 }
 
 201 Created
@@ -2907,6 +2907,8 @@ Content-Type: application/json
   "websocket_url": "wss://api/v1/sessions/{id}/transcription"
 }
 ```
+
+> **Nota de alcance:** los campos opcionales (`session_type` ≠ "general", `target_duration_seconds`, `focus_areas`) están reservados en el contrato para preservar la **estabilidad de la API bajo evolución** (P8, C-13). Su procesamiento real entra al sprint cuando US10/US11/US25 sean priorizadas. En el alcance <em>Must</em> de esta iteración, el backend acepta los campos pero solo aplica <code>session_type = "general"</code> con la <code>AnalysisStrategy</code> por defecto.
 
 ```http
 POST /v1/sessions/{id}/finalize
@@ -3037,8 +3039,8 @@ sequenceDiagram
     </tr>
     <tr>
       <td>DD-03</td>
-      <td>Strategy seleccionada por <code>(session_type, academic_segment)</code> mediante Factory.</td>
-      <td>US23, US26, QAS-07, AC-01</td>
+      <td>Strategy seleccionada por <code>(session_type, academic_segment)</code> mediante Factory. En el alcance Must, <code>session_type = "general"</code> por defecto hasta que US10 (Should) entre al sprint.</td>
+      <td>US10, US23, US26, QAS-07, AC-01</td>
       <td>ADB-04</td>
       <td>Aceptada</td>
     </tr>
@@ -3051,7 +3053,7 @@ sequenceDiagram
     </tr>
     <tr>
       <td>DD-05</td>
-      <td>Adapter <code>LlmClient</code> e <code>TranscriptionClient</code> para aislar proveedores externos.</td>
+      <td>Interfaces <code>LlmClient</code> y <code>TranscriptionClient</code> con implementaciones intercambiables (táctica 4.1.7).</td>
       <td>QAS-08, AC-06, AC-09</td>
       <td>ADB-06</td>
       <td>Aceptada</td>
@@ -3125,7 +3127,7 @@ El cierre de la iteración revisa el cumplimiento del *iteration goal* contra lo
         <strong>ADB-03</strong> — Evento <code>SessionFinalized</code> y contrato AMQP. <em>Drivers: US14, US15, AC-02.</em><br><br>
         <strong>ADB-04</strong> — Strategy + Factory por <code>(session_type, academic_segment)</code>. <em>Drivers: US23, US26, QAS-07, AC-01.</em><br><br>
         <strong>ADB-05</strong> — Circuit Breaker + Retry sobre el cliente LLM. <em>Drivers: QAS-03, AC-02, AC-06.</em><br><br>
-        <strong>ADB-06</strong> — Adapter <code>LlmClient</code> y <code>TranscriptionClient</code>. <em>Drivers: QAS-08, AC-06, AC-09.</em><br><br>
+        <strong>ADB-06</strong> — Interfaces <code>LlmClient</code> y <code>TranscriptionClient</code> con implementaciones intercambiables. <em>Drivers: QAS-08, AC-06, AC-09.</em><br><br>
         <strong>ADB-09</strong> — Esquema relacional de <code>practice_sessions</code> y <code>session_feedback</code>. <em>Drivers: US14, US15, C-03, P4.</em>
       </td>
     </tr>
@@ -3176,7 +3178,7 @@ El cierre de la iteración revisa el cumplimiento del *iteration goal* contra lo
     <tr>
       <td>QAS-08 (cambio de proveedor LLM)</td>
       <td>Cubierto</td>
-      <td>Adapter <code>LlmClient</code> con única clase de implementación intercambiable (DD-05).</td>
+      <td>Interfaz <code>LlmClient</code> con única clase de implementación intercambiable (DD-05).</td>
     </tr>
     <tr>
       <td>QAS-11 (observabilidad)</td>
