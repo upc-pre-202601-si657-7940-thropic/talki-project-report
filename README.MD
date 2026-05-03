@@ -1962,7 +1962,7 @@ Talki utiliza un esquema de **base de datos por servicio** (Database per Service
 
 **Decisiones de modelado:**
 - Se usa **PostgreSQL** como base de datos relacional principal para todos los servicios, dado que los datos de sesión, feedback y progreso tienen estructura predecible y requieren consistencia transaccional.
-- El campo `feedback_json` en la tabla `session_feedback` almacena el análisis completo como JSONB de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados (lista de muletillas, sugerencias por sección) sin sacrificar las garantías ACID.
+- Los campos `filler_words_analysis`, `keywords_analysis`, `lexicon_suggestions` y `section_feedback` en la tabla `session_feedback` se almacenan como JSONB de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados sin sacrificar las garantías ACID.
 - Las relaciones entre servicios se modelan mediante `user_id` como clave foránea lógica (no referencial entre bases de datos), lo que preserva la autonomía de cada esquema.
 
 ![EntityRelations](assets/images/DiagramsUML/Entity-Relation.png)

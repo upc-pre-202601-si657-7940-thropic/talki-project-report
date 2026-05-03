@@ -111,20 +111,31 @@ classDiagram
         +deactivate() void
     }
 
-    %% ── Relaciones ──
+    %% ── Notification BC ──
+    class Notification {
+        +UUID id
+        +UUID userId
+        +String type
+        +String payload
+        +boolean sent
+        +DateTime sentAt
+        +send() void
+    }
+
+    %% ── Relaciones dentro del mismo BC ──
     User "1" --> "0..*" RefreshToken : tiene
-    User "1" --> "0..*" PracticeSession : crea
-    User "1" --> "1" UserMetrics : acumula en
-    User "1" --> "0..*" UserGoal : define
-    User "1" --> "0..*" SessionFeedback : recibe
-
-    PracticeSession "1" --> "0..1" SessionFeedback : genera
-    PracticeSession "1" --> "0..1" SessionMetricSnapshot : origina
-
     FeedbackOrchestrator --> AnalysisStrategy : delega en
     AnalysisStrategy <|.. PitchAnalysisStrategy : implementa
     AnalysisStrategy <|.. ThesisAnalysisStrategy : implementa
     AnalysisStrategy <|.. InterviewAnalysisStrategy : implementa
     FeedbackOrchestrator "1" --> "1" SessionFeedback : produce
-
     UserMetrics "1" --> "0..*" SessionMetricSnapshot : agrega
+
+    %% ── Relaciones cross-BC (lógicas, vía eventos) ──
+    User "1" --> "0..*" PracticeSession : crea (lógica)
+    User "1" --> "1" UserMetrics : acumula en (lógica)
+    User "1" --> "0..*" UserGoal : define (lógica)
+    User "1" --> "0..*" SessionFeedback : recibe (lógica)
+    PracticeSession "1" --> "0..1" SessionFeedback : genera (lógica)
+    PracticeSession "1" --> "0..1" SessionMetricSnapshot : origina (lógica)
+    SessionFeedback "1" --> "0..*" Notification : dispara (lógica)
