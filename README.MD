@@ -2943,9 +2943,40 @@ Authorization: Bearer <jwt>
 
 #### 4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions
 
-Los bocetos de esta iteración se apoyan en los diagramas C4 ya publicados en 4.1.3 y 4.1.4 y los extienden con dos vistas dinámicas que muestran el comportamiento del flujo crítico: una secuencia UML del *happy path* y una secuencia UML del escenario degradado (QAS-03). Las decisiones de diseño tomadas durante la iteración se registran en una bitácora trazable que enlaza cada decisión con su driver y con el ítem del Architectural Design Backlog que la materializa.
+Los bocetos de esta iteración se apoyan en los diagramas C4 ya publicados en 4.1.3 y 4.1.4 y los extienden con tres vistas adicionales: un **C4 Nivel 3 refinado del `session-service`** (vista estática) y dos secuencias UML que muestran el comportamiento del flujo crítico bajo *happy path* y bajo escenario degradado (QAS-03). Las decisiones de diseño tomadas durante la iteración se registran en una bitácora trazable que enlaza cada decisión con su driver y con el ítem del Architectural Design Backlog que la materializa.
 
-**Vista 1 — Flujo end-to-end de la sesión (happy path).** La secuencia *Cliente → API Gateway → Session Service → S3 → Transcription Service → RabbitMQ → AI Feedback Service → API Gateway → Cliente* muestra el camino crítico cuando todos los componentes responden dentro de su SLO.
+**Vista 1 — C4 Nivel 3 del `session-service` (refinamiento de componentes).** El contenedor `session-service` se descompone en los componentes que materializan las decisiones DD-01, DD-02, DD-07 y DD-08 de esta iteración: el `SessionController` recibe el comando, delega en el `SessionApplicationService`, que persiste el agregado vía `SessionRepository`, registra el evento en la `OutboxTable` y publica vía `EventPublisher` con el `TraceContextPropagator` inyectando el `X-Trace-Id`. Esta vista complementa el C4 Nivel 3 del `ai-feedback-service` ya publicado en 4.1.4.
+
+```mermaid
+flowchart TB
+    subgraph SS["session-service (contenedor Spring Boot)"]
+        direction TB
+        SC[SessionController<br/>REST endpoints /v1/sessions]
+        AS[SessionApplicationService<br/>orquestación del caso de uso]
+        DOM[PracticeSession<br/>aggregate root + domain events]
+        REP[SessionRepository JPA]
+        OB[OutboxTable<br/>at-least-once guarantee]
+        EP[EventPublisher AMQP]
+        TC[TraceContextPropagator<br/>X-Trace-Id header + payload]
+        PUI[PresignedUrlIssuer<br/>cliente S3]
+    end
+
+    GW[API Gateway] -->|"POST /v1/sessions<br/>POST /finalize"| SC
+    SC --> AS
+    AS --> DOM
+    AS --> REP
+    AS --> OB
+    AS --> PUI
+    OB -.->|polling| EP
+    EP --> TC
+    EP -->|"SessionFinalized"| MQ[(RabbitMQ<br/>talki.events)]
+    REP --> DB[(PostgreSQL<br/>session_db)]
+    PUI --> S3[(S3<br/>talki-sessions)]
+```
+
+_Diagrama C4 Nivel 3 — Componentes del `session-service` refinados en la Iteration 1. Elaboración propia (2026)._
+
+**Vista 2 — Flujo end-to-end de la sesión (happy path).** La secuencia *Cliente → API Gateway → Session Service → S3 → Transcription Service → RabbitMQ → AI Feedback Service → API Gateway → Cliente* muestra el camino crítico cuando todos los componentes responden dentro de su SLO.
 
 ```mermaid
 sequenceDiagram
@@ -2986,7 +3017,7 @@ sequenceDiagram
     GW->>C: WebSocket: feedback ready
 ```
 
-**Vista 2 — Degradación elegante (QAS-03).** Cuando el proveedor LLM responde con error 5xx repetidamente, el Circuit Breaker abre y la sesión queda en estado `ANALYSIS_PENDING`; la sesión y la transcripción nunca se pierden.
+**Vista 3 — Degradación elegante (QAS-03).** Cuando el proveedor LLM responde con error 5xx repetidamente, el Circuit Breaker abre y la sesión queda en estado `ANALYSIS_PENDING`; la sesión y la transcripción nunca se pierden.
 
 ```mermaid
 sequenceDiagram
