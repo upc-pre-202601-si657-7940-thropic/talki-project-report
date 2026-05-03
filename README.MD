@@ -2664,7 +2664,46 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
 
 **Iteration Goal:** Diseñar el camino crítico end-to-end del flujo *crear sesión → grabar y transcribir en vivo → finalizar sesión → analizar con IA → entregar feedback al usuario*, garantizando que la respuesta síncrona al usuario sea inmediata (≤ 500 ms al finalizar) y que la latencia variable del proveedor LLM nunca bloquee la experiencia ni provoque pérdida de transcripciones.
 
-La selección de drivers prioriza los que aparecen simultáneamente en el camino crítico funcional (US *Must* del Product Backlog) y en los escenarios de calidad más exigentes (latencia, disponibilidad y modificabilidad), de modo que las decisiones de esta iteración resuelvan los riesgos arquitectónicos de mayor impacto antes de abordar los servicios secundarios.
+**Priorización de drivers candidatos.** Antes de decidir qué drivers atacar en esta iteración, el equipo aplicó la matriz de priorización propuesta por el método ADD (Wojcik et al., 2006), donde cada driver se evalúa por dos ejes: *Importance* (cuán crítico es para los stakeholders) y *Difficulty* (cuán complejo es resolverlo arquitectónicamente). Se favorecen los drivers (High, High) — alta importancia y alta dificultad — porque concentran el riesgo y deben resolverse primero.
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Architectural Driver</th>
+      <th>Sección donde se discute</th>
+      <th>Importance</th>
+      <th>Difficulty</th>
+      <th>¿Seleccionado para Iteration 1?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>QAS-01 Latencia de transcripción en vivo</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
+    <tr><td>2</td><td>QAS-02 Respuesta inmediata al finalizar sesión</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
+    <tr><td>3</td><td>QAS-03 Degradación elegante del feedback</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
+    <tr><td>4</td><td>QAS-07 Nuevo tipo de sesión (modificabilidad)</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
+    <tr><td>5</td><td>QAS-08 Cambio de proveedor LLM</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>✅ Sí</td></tr>
+    <tr><td>6</td><td>QAS-04 Continuidad operativa (rolling update)</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración 4</td></tr>
+    <tr><td>7</td><td>QAS-05 Protección de credenciales</td><td>4.2.3</td><td>High</td><td>Medium</td><td>❌ Iteración 3 (identity)</td></tr>
+    <tr><td>8</td><td>QAS-06 HTTPS obligatorio</td><td>4.2.3</td><td>High</td><td>Low</td><td>❌ Heredado (constraint C-07)</td></tr>
+    <tr><td>9</td><td>QAS-09 Carga concurrente</td><td>4.2.3</td><td>Medium</td><td>High</td><td>⚠ Parcial (S3 + diseño stateless lo habilitan)</td></tr>
+    <tr><td>10</td><td>QAS-10 Testabilidad lógica de análisis</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración 2</td></tr>
+    <tr><td>11</td><td>QAS-11 Diagnóstico de incidentes</td><td>4.2.3</td><td>High</td><td>Medium</td><td>⚠ Parcial (trace ID definido, instrumentación pendiente)</td></tr>
+    <tr><td>12</td><td>QAS-12 Onboarding del primer uso</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>❌ Iteración de UX</td></tr>
+    <tr><td>13</td><td>US12 Grabación + transcripción en vivo (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
+    <tr><td>14</td><td>US15 Recibir feedback general de la IA (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
+    <tr><td>15</td><td>US14 Finalizar sesión (3 SP)</td><td>4.2.2</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
+    <tr><td>16</td><td>US09 Crear sesión de práctica (3 SP)</td><td>4.2.2</td><td>High</td><td>Low</td><td>✅ Sí (heredado)</td></tr>
+    <tr><td>17</td><td>US23/US26 Adaptación al segmento académico</td><td>4.2.2</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
+    <tr><td>18</td><td>AC-02 Latencia variable del LLM</td><td>4.2.5</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
+    <tr><td>19</td><td>AC-06 Vendor lock-in del LLM</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
+    <tr><td>20</td><td>AC-08 Privacidad y datos sensibles (Ley 29733)</td><td>4.2.5</td><td>High</td><td>Medium</td><td>❌ Iteración 3 (identity + retención)</td></tr>
+  </tbody>
+</table>
+
+_Tabla de Architectural Driver Priorities — formato adaptado de Wojcik et al. (SEI, 2006), usado en el ejemplo oficial Track Manager del curso._
+
+La selección final prioriza los drivers (High, High) y los (High, Medium) cuyo costo de postergar implicaría rediseño posterior del flujo crítico. Los drivers que se atacan simultáneamente en el camino crítico funcional (US *Must* del Product Backlog) y en los escenarios de calidad más exigentes (latencia, disponibilidad y modificabilidad) se resumen a continuación.
 
 <table>
   <thead>
@@ -3244,6 +3283,99 @@ El cierre de la iteración revisa el cumplimiento del *iteration goal* contra lo
 - **Latencia real de la transcripción en vivo (QAS-01):** depende del proveedor de speech-to-text seleccionado. Antes de cerrar ADB-07 conviene ejecutar una prueba comparativa Whisper vs. Google STT con audio peruano (AC-09).
 - **Carga del bus en escenarios pico (QAS-09):** el diseño actual no contempla particionamiento de colas por tipo de sesión; queda como concern para la iteración 2.
 - **Costo del LLM (AC-07):** el caché de feedback para sesiones reprocesadas no está diseñado todavía; se planifica para la iteración 3 cuando se agregue el `progress-service`.
+
+**Vista consolidada del sistema después de la Iteration 1.** Siguiendo la convención del ejemplo oficial Track Manager (Figure 4 — *Software Element View of the Architecture*), se presenta la vista consolidada de todos los elementos arquitectónicos vivos al cierre de esta iteración. Los elementos en color sólido fueron refinados en la Iteration 1; los elementos en línea punteada se incorporarán en iteraciones posteriores y aparecen aquí solo para mostrar el contexto del sistema completo.
+
+```mermaid
+flowchart TB
+    Cliente[Cliente Angular SPA]
+
+    subgraph EDGE["Edge layer"]
+        GW["API Gateway<br/>+ AuthFilter<br/>+ WebSocketRouter<br/>+ NotificationDispatcher"]
+    end
+
+    subgraph CORE["Core de Sesión - refinado en Iteration 1"]
+        SS["session-service<br/>Controller / AppService /<br/>Outbox / EventPublisher"]
+        TS["transcription-service<br/>Gateway WS + TranscriptionClient"]
+        AI["ai-feedback-service<br/>Consumer / Orchestrator /<br/>StrategyFactory / LlmClient<br/>+ Circuit Breaker"]
+    end
+
+    subgraph DEFERRED["Servicios diferidos"]
+        ID["identity-service<br/>(Iteration 3)"]
+        PR["progress-service<br/>(Iteration 2 - CQRS)"]
+        NT["notification-service<br/>(Iteration 4)"]
+    end
+
+    subgraph INFRA["Infraestructura compartida"]
+        MQ[("RabbitMQ<br/>talki.events")]
+        S3[("Object Storage S3")]
+        DB1[("PostgreSQL<br/>session_db")]
+        DB2[("PostgreSQL<br/>feedback_db")]
+    end
+
+    subgraph EXT["Sistemas externos"]
+        STT["Speech-to-Text<br/>Whisper / Google STT"]
+        LLM["Proveedor LLM<br/>OpenAI / equivalente"]
+    end
+
+    Cliente -->|HTTPS / WSS| GW
+    Cliente -.->|PUT audio<br/>presigned URL| S3
+    GW --> SS
+    GW --> TS
+    GW -.-> ID
+    GW -.-> PR
+    SS --> DB1
+    SS -->|publica<br/>SessionFinalized| MQ
+    SS --> S3
+    TS --> STT
+    MQ -->|consume<br/>SessionFinalized| AI
+    AI --> LLM
+    AI --> DB2
+    AI -->|publica<br/>FeedbackGenerated| MQ
+    MQ -.->|consume| PR
+    MQ -.->|consume| NT
+    MQ -->|consume| GW
+
+    classDef refined fill:#cfe8ff,stroke:#0b5394,stroke-width:2px,color:#000
+    classDef deferred fill:#f3f3f3,stroke:#888,stroke-dasharray: 5 5,color:#555
+    classDef infra fill:#dff0d8,stroke:#3c763d,color:#000
+    classDef external fill:#fcf3cf,stroke:#b7950b,color:#000
+    classDef edge fill:#fde2e2,stroke:#a93226,color:#000
+
+    class SS,TS,AI refined
+    class ID,PR,NT deferred
+    class MQ,S3,DB1,DB2 infra
+    class STT,LLM external
+    class GW edge
+```
+
+_Diagrama Software Element View — Estado del sistema Talki después de la Iteration 1. Los elementos sólidos azules fueron refinados en esta iteración; los de línea punteada gris se difieren a iteraciones posteriores. Elaboración propia (2026), formato adaptado del ejemplo Track Manager (Wojcik et al., SEI 2006)._
+
+**Tabla 4.3.1.7-A — Elements after Iteration 1.** La siguiente tabla resume el estado de cada elemento del sistema al cierre de esta iteración, siguiendo el formato de la *Table 17* del ejemplo Track Manager.
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Element</th>
+      <th>Refinado en esta iteración</th>
+      <th>Drivers asignados</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>API Gateway</td><td>Sí (AuthFilter, WebSocketRouter, NotificationDispatcher)</td><td>QAS-05, QAS-06, US12, US15, C-07, C-13</td></tr>
+    <tr><td>2</td><td>session-service</td><td>Sí (Controller, AppService, Outbox, EventPublisher)</td><td>US09, US14, QAS-02</td></tr>
+    <tr><td>3</td><td>transcription-service</td><td>Sí (TranscriptionGateway WS + TranscriptionClient)</td><td>US12, QAS-01, AC-04, AC-09</td></tr>
+    <tr><td>4</td><td>ai-feedback-service</td><td>Sí (Consumer, Orchestrator, StrategyFactory, LlmClient + CB)</td><td>US15, US23, US26, QAS-03, QAS-07, QAS-08, AC-01, AC-02, AC-06</td></tr>
+    <tr><td>5</td><td>RabbitMQ broker (exchange <code>talki.events</code>)</td><td>Sí (definición de exchanges, queues, DLQ)</td><td>US14, US15, AC-02</td></tr>
+    <tr><td>6</td><td>Object Storage S3</td><td>Sí (presigned URL flow)</td><td>C-08, QAS-09, AC-08</td></tr>
+    <tr><td>7</td><td>PostgreSQL session_db</td><td>Parcial (esquema definido)</td><td>US14, C-03, P4</td></tr>
+    <tr><td>8</td><td>PostgreSQL feedback_db</td><td>Parcial (esquema definido)</td><td>US15, C-03, P4</td></tr>
+    <tr><td>9</td><td>identity-service</td><td>No — diferido a Iteration 3</td><td>US05, US06, US08, US28, QAS-05</td></tr>
+    <tr><td>10</td><td>progress-service</td><td>No — diferido a Iteration 2 (CQRS)</td><td>US18, US20, US21, QAS-09</td></tr>
+    <tr><td>11</td><td>notification-service</td><td>No — diferido a Iteration 4</td><td>US15 (notif. push), AC-04</td></tr>
+  </tbody>
+</table>
 
 **Conclusión de la iteración.** El *iteration goal* se considera **alcanzado en su núcleo de diseño**: los drivers funcionales (US09, US12, US14, US15) y los escenarios de calidad de mayor riesgo (QAS-02, QAS-03, QAS-07, QAS-08) están cubiertos por decisiones registradas y trazables. Quedan tres ítems en *Por hacer* (ADB-10, ADB-11, ADB-12) que se promueven al backlog de la **Iteration 2**, junto con el refinamiento del `progress-service` (CQRS) y la activación de la observabilidad transversal.
 
