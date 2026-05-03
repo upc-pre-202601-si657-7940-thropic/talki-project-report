@@ -1,0 +1,17 @@
+graph TD
+    IA["<b>Identity &amp; Access BC</b><br/>(Open Host Service / OHS)<br/>Provee identidad y autenticación<br/>para todo el sistema"]
+    PS["<b>Practice Session BC</b><br/>(Downstream / ACL)<br/>Gestiona el ciclo de vida<br/>de las sesiones de práctica"]
+    SA["<b>Speech Analysis BC</b><br/>(Downstream / ACL)<br/>Orquesta transcripción,<br/>análisis y feedback con IA"]
+    PM["<b>Progress &amp; Metrics BC</b><br/>(Downstream / Conformist)<br/>Agrega métricas históricas<br/>del usuario"]
+    NT["<b>Notification BC</b><br/>(Downstream / Conformist)<br/>Envía alertas y resúmenes<br/>de feedback"]
+
+    IA -->|"U → D  OHS\nJWT / userCreated event"| PS
+    IA -->|"U → D  OHS\nJWT / userCreated event"| SA
+    IA -->|"U → D  OHS\nJWT"| PM
+    IA -->|"U → D  OHS\nJWT"| NT
+
+    PS -->|"U → D  PL\nSessionCompleted event"| SA
+    PS -->|"U → D  PL\nSessionCompleted event"| PM
+
+    SA -->|"U → D  PL\nFeedbackGenerated event"| PM
+    SA -->|"U → D  PL\nFeedbackGenerated event"| NT

@@ -216,7 +216,7 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
       <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.<br><br><b>AV2:</b> Redacté las secciones 4.1.1 a 4.1.7 del Capítulo IV, comunicando las decisiones de diseño arquitectónico mediante narrativa técnica estructurada, diagramas C4 de contexto, contenedores y componentes, un Context Map DDD, el diagrama de clases consolidado de los cinco bounded contexts con atributos y métodos representativos, el diagrama entidad-relación de los esquemas de base de datos por servicio, y tablas de patrones de diseño y tácticas arquitectónicas alineadas con los drivers del sistema, adaptando el nivel de abstracción a audiencias técnicas del equipo de desarrollo y evaluadores académicos.</td>
     </tr>
     <tr>
       <td rowspan="3"><strong>Criterio 2: ABET-EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
@@ -227,7 +227,7 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
       <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.<br><br><b>AV2:</b> Formulé los drivers arquitectónicos de Talki (sección 4.2) traduciendo los requerimientos del Capítulo III en 12 Quality Attribute Scenarios medibles, 14 Constraints y 11 Architectural Concerns con identificadores trazables, aplicando principios de ingeniería de software para sustentar las decisiones de diseño en evidencia y criterios verificables.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.<br><br><b>AV2:</b> Resolví el problema del diseño conceptual de la arquitectura de Talki aplicando principios de Domain-Driven Design: descompuse el sistema en cinco bounded contexts (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics, Notification), definí sus mecanismos de integración mediante un Context Map, diseñé el modelo de clases por contexto incorporando los patrones Strategy, Factory Method, Repository y Observer justificados por los drivers del sistema, y modelé el esquema de base de datos relacional con decisiones de modelado fundamentadas en los requerimientos de consistencia transaccional y autonomía de cada servicio (secciones 4.1.1 a 4.1.7).</td>
     </tr>
   </tbody>
 </table>
@@ -1910,7 +1910,23 @@ _Diagrama de Contexto C4 — Sistema Talki. Elaboración propia (2026)._
 
 ### 4.1.4. Approach driven ViewPoints Diagrams
 
-Los diagramas de viewpoints derivados del enfoque arquitectónico presentan el sistema Talki en los niveles C4 de Contenedores (nivel 2) y Componentes (nivel 3 del servicio de análisis de IA), alineados con los estilos arquitectónicos declarados en la sección 4.1.2.
+Los diagramas de viewpoints derivados del enfoque arquitectónico presentan el sistema Talki desde tres perspectivas complementarias: el Context Map de DDD que delimita los Bounded Contexts del dominio, y los niveles C4 de Contenedores (nivel 2) y Componentes (nivel 3) que describen la arquitectura técnica. Todos se alinean con los estilos arquitectónicos declarados en la sección 4.1.2.
+
+#### Context Map — Domain-Driven Design
+
+El Context Map identifica los cinco Bounded Contexts de Talki y define sus relaciones de integración usando la notación DDD: **U** (upstream) y **D** (downstream) indican la dirección del flujo de influencia; **OHS** (Open Host Service) marca los contextos que exponen una API pública estable; **ACL** (Anti-Corruption Layer) señala donde un contexto traduce activamente el modelo del upstream para proteger su propio dominio; y **PL** (Published Language) indica que la integración se realiza mediante un lenguaje de eventos compartido y versionado.
+
+![ContextMap](assets/images/DiagramsUML/ContextMap-DDD.png)
+
+_Context Map DDD — Bounded Contexts de Talki y sus relaciones de integración. Elaboración propia (2026)._
+
+**Decisiones de integración relevantes:**
+- **Identity & Access** actúa como upstream absoluto (OHS): todos los demás contextos validan identidad contra él sin acoplar su modelo de dominio interno.
+- **Practice Session** y **Speech Analysis** usan ACL para traducir los eventos de Identity al lenguaje de su propio dominio (`UserId` como Value Object), evitando que un cambio en el modelo de usuario rompa su lógica interna.
+- **Progress & Metrics** y **Notification** son conformistas: consumen los eventos publicados tal como los define el upstream, sin traducción adicional, dado que su lógica es reactiva y de bajo riesgo de divergencia.
+- La comunicación entre contextos se realiza exclusivamente a través del bus de eventos (RabbitMQ) con eventos versionados, no mediante llamadas síncronas directas entre servicios.
+
+---
 
 #### Diagrama de Contenedores (C4 – Nivel 2)
 
@@ -1928,7 +1944,19 @@ _Diagrama de Componentes C4 — AI Feedback Service. Elaboración propia (2026).
 
 ---
 
-### 4.1.5. Relational/Non Relational Database Diagram
+### 4.1.5. Architecture Overview: Class Diagram & Database Diagram
+
+#### Diagrama de Clases
+
+El diagrama de clases consolida las entidades de dominio de los cinco Bounded Contexts de Talki, mostrando atributos, métodos representativos y relaciones estructurales. Las clases están agrupadas por contexto para reflejar la separación de responsabilidades del diseño DDD.
+
+![ClassDiagram](assets/images/DiagramsUML/ClassDiagram.png)
+
+_Diagrama de Clases — Bounded Contexts de Talki (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics). Elaboración propia (2026)._
+
+---
+
+#### Diagrama Entidad-Relación (Base de Datos Relacional)
 
 Talki utiliza un esquema de **base de datos por servicio** (Database per Service), donde cada microservicio gestiona su propio almacenamiento relacional (PostgreSQL). A continuación se presenta el diagrama entidad-relación consolidado de los esquemas principales.
 
@@ -1937,99 +1965,7 @@ Talki utiliza un esquema de **base de datos por servicio** (Database per Service
 - El campo `feedback_json` en la tabla `session_feedback` almacena el análisis completo como JSONB de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados (lista de muletillas, sugerencias por sección) sin sacrificar las garantías ACID.
 - Las relaciones entre servicios se modelan mediante `user_id` como clave foránea lógica (no referencial entre bases de datos), lo que preserva la autonomía de cada esquema.
 
-```mermaid
-erDiagram
-    %% ── Identity Service DB ──
-    users {
-        uuid id PK
-        varchar email UK
-        varchar password_hash
-        varchar full_name
-        int current_cycle
-        varchar university
-        varchar career
-        varchar academic_segment
-        timestamp created_at
-        timestamp updated_at
-    }
-    refresh_tokens {
-        uuid id PK
-        uuid user_id FK
-        varchar token_hash UK
-        timestamp expires_at
-        boolean revoked
-    }
-
-    %% ── Session Service DB ──
-    practice_sessions {
-        uuid id PK
-        uuid user_id
-        varchar session_type
-        int target_duration_seconds
-        varchar status
-        text[] focus_areas
-        text transcription
-        int actual_duration_seconds
-        timestamp started_at
-        timestamp finished_at
-        timestamp created_at
-    }
-
-    %% ── AI Feedback Service DB ──
-    session_feedback {
-        uuid id PK
-        uuid session_id UK
-        uuid user_id
-        int overall_score
-        jsonb filler_words_analysis
-        jsonb keywords_analysis
-        jsonb lexicon_suggestions
-        jsonb section_feedback
-        varchar processing_status
-        timestamp generated_at
-    }
-
-    %% ── Progress Service DB ──
-    user_metrics {
-        uuid id PK
-        uuid user_id UK
-        int total_sessions
-        float avg_overall_score
-        float avg_filler_words_per_min
-        float avg_lexical_diversity
-        int total_practice_minutes
-        timestamp last_session_at
-        timestamp updated_at
-    }
-    session_metric_snapshots {
-        uuid id PK
-        uuid user_id
-        uuid session_id UK
-        int overall_score
-        float filler_words_per_min
-        float lexical_diversity_score
-        int duration_seconds
-        varchar session_type
-        timestamp recorded_at
-    }
-    user_goals {
-        uuid id PK
-        uuid user_id
-        varchar goal_type
-        boolean is_active
-        timestamp set_at
-    }
-
-    %% ── Relaciones dentro de cada servicio ──
-    users ||--o{ refresh_tokens : "tiene"
-    users ||--o{ practice_sessions : "crea (lógica)"
-    users ||--o{ session_feedback : "recibe (lógica)"
-    users ||--|| user_metrics : "tiene (lógica)"
-    users ||--o{ session_metric_snapshots : "acumula (lógica)"
-    users ||--o{ user_goals : "define"
-    practice_sessions ||--o| session_feedback : "genera (lógica)"
-    practice_sessions ||--o| session_metric_snapshots : "origina (lógica)"
-```
+![EntityRelations](assets/images/DiagramsUML/Entity-Relation.png)
 
 _Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
 
