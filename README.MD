@@ -128,6 +128,7 @@
       - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
       - [4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Feedback Asíncrono](#431-iteration-1-núcleo-de-sesión-de-práctica-y-feedback-asíncrono)
+      - [4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal](#432-iteration-2-identidad-seguridad-y-observabilidad-transversal)
          - [4.3.1.1. Architectural Design Backlog 1](#4311-architectural-design-backlog-1)
          - [4.3.1.2. Establish Iteration Goal by Selecting Drivers](#4312-establish-iteration-goal-by-selecting-drivers)
          - [4.3.1.3. Choose One or More Elements of the System to Refine](#4313-choose-one-or-more-elements-of-the-system-to-refine)
@@ -3377,7 +3378,293 @@ _Diagrama Software Element View — Estado del sistema Talki después de la Iter
   </tbody>
 </table>
 
-**Conclusión de la iteración.** El *iteration goal* se considera **alcanzado en su núcleo de diseño**: los drivers funcionales (US09, US12, US14, US15) y los escenarios de calidad de mayor riesgo (QAS-02, QAS-03, QAS-07, QAS-08) están cubiertos por decisiones registradas y trazables. Quedan tres ítems en *Por hacer* (ADB-10, ADB-11, ADB-12) que se promueven al backlog de la **Iteration 2**, junto con el refinamiento del `progress-service` (CQRS) y la activación de la observabilidad transversal.
+**Conclusión de la iteración.** El *iteration goal* se considera **alcanzado en su núcleo de diseño**: los drivers funcionales (US09, US12, US14, US15) y los escenarios de calidad de mayor riesgo (QAS-02, QAS-03, QAS-07, QAS-08) están cubiertos por decisiones registradas y trazables. Quedan tres ítems en *Por hacer* (ADB-10, ADB-11, ADB-12) que se promueven al backlog de la **Iteration 2**, junto con el refinamiento del `identity-service` (seguridad y autenticación) y la activación de la observabilidad transversal.
+
+<hr class="page-break">
+
+### 4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal
+
+Aplicando el paso 8 del método ADD (*"repetir pasos 2 a 7 en la siguiente iteración"*), la Iteration 2 ataca los drivers de seguridad y observabilidad que la Iteration 1 dejó parcial o pendiente. Esta iteración refina el `identity-service` end-to-end, formaliza la propagación de trazas distribuidas y completa los ítems ADB-10 (configuración externalizada), ADB-11 (notificación push) y ADB-12 (observabilidad) heredados de la iteración anterior. La descripción se hace más concisa que la Iteration 1 ya que reutiliza el catálogo de principios (4.1.1), estilos (4.1.2), patrones (4.1.6) y tácticas (4.1.7) ya declarados.
+
+#### 4.3.2.1. Architectural Design Backlog 2
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Decisión de Diseño</th>
+      <th>Estado</th>
+      <th>Driver(s) Relacionados</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ADB-13</td>
+      <td>Definir contratos REST <code>POST /v1/auth/register</code>, <code>POST /v1/auth/login</code>, <code>POST /v1/auth/refresh</code>, <code>POST /v1/auth/logout</code> en el <code>identity-service</code>.</td>
+      <td>En progreso</td>
+      <td>US05, US06, US28, C-13</td>
+    </tr>
+    <tr>
+      <td>ADB-14</td>
+      <td>Implementar emisión de JWT firmados con clave asimétrica (RSA-256) y publicación de JWKS en <code>/.well-known/jwks.json</code> para validación distribuida.</td>
+      <td>Por hacer</td>
+      <td>US06, QAS-05, AC-11</td>
+    </tr>
+    <tr>
+      <td>ADB-15</td>
+      <td>Aplicar rotación obligatoria de refresh tokens con almacenamiento hasheado y revocación al cierre de sesión (US28).</td>
+      <td>Por hacer</td>
+      <td>US28, QAS-05, C-14</td>
+    </tr>
+    <tr>
+      <td>ADB-16</td>
+      <td>Aplicar bcrypt (cost ≥ 12) para hashing de contraseñas y política mínima de longitud y composición.</td>
+      <td>Por hacer</td>
+      <td>QAS-05, C-14, AC-08</td>
+    </tr>
+    <tr>
+      <td>ADB-17</td>
+      <td>Configurar rate limiting en el API Gateway: 100 req/min por IP en endpoints públicos y 10 intentos de login fallidos/hora antes de bloqueo temporal.</td>
+      <td>Por hacer</td>
+      <td>QAS-05</td>
+    </tr>
+    <tr>
+      <td>ADB-18</td>
+      <td>Diseñar el flujo de recuperación de contraseña con token de un solo uso y TTL ≤ 30 minutos (US07).</td>
+      <td>Por hacer</td>
+      <td>US07, QAS-05</td>
+    </tr>
+    <tr>
+      <td>ADB-19</td>
+      <td>Diseñar la edición de perfil con publicación del evento <code>UserProfileUpdated</code> para que <code>ai-feedback-service</code> reciba el contexto académico actualizado.</td>
+      <td>Por hacer</td>
+      <td>US08, US23</td>
+    </tr>
+    <tr>
+      <td>ADB-20</td>
+      <td>Instrumentar trazas distribuidas con OpenTelemetry: cada servicio propaga el <code>traceparent</code> (W3C Trace Context) por header HTTP y embebe el <code>trace_id</code> en el payload de eventos AMQP. Cierra ADB-12.</td>
+      <td>Por hacer</td>
+      <td>QAS-11, AC-11, P6</td>
+    </tr>
+    <tr>
+      <td>ADB-21</td>
+      <td>Externalizar prompts y umbrales del <code>ai-feedback-service</code> con Spring Cloud Config (cierra ADB-10).</td>
+      <td>Por hacer</td>
+      <td>QAS-07, AC-03</td>
+    </tr>
+    <tr>
+      <td>ADB-22</td>
+      <td>Diseñar la política de retención del audio: eliminación automática del archivo en S3 al confirmarse la transcripción exitosa (Ley 29733).</td>
+      <td>Por hacer</td>
+      <td>AC-08, C-09</td>
+    </tr>
+  </tbody>
+</table>
+
+#### 4.3.2.2. Establish Iteration Goal by Selecting Drivers
+
+**Iteration Goal:** Habilitar el ciclo de vida completo de la cuenta de usuario (registro, login, recuperación, edición, logout) con garantías de seguridad alineadas con QAS-05/QAS-06 y la Ley 29733 (AC-08, C-09), y completar la instrumentación de observabilidad transversal (QAS-11) que la Iteration 1 dejó pendiente.
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>ID</th>
+      <th>Justificación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td rowspan="6">User Stories</td><td>US05</td><td>Registro de cuenta — bloqueante del MVP.</td></tr>
+    <tr><td>US06</td><td>Login con JWT — base para todo el resto del sistema.</td></tr>
+    <tr><td>US07</td><td>Recuperación de contraseña.</td></tr>
+    <tr><td>US08</td><td>Edición de perfil — emite el evento que <code>ai-feedback-service</code> necesita.</td></tr>
+    <tr><td>US23</td><td>Selección de segmento académico — completa el contexto que la Iteration 1 dejó por defecto.</td></tr>
+    <tr><td>US28</td><td>Cierre de sesión seguro con revocación de refresh token.</td></tr>
+    <tr><td rowspan="3">QAS</td><td>QAS-05</td><td>Protección de credenciales (rate limiting, bloqueo, bcrypt).</td></tr>
+    <tr><td>QAS-06</td><td>HTTPS obligatorio — heredado de la Iteration 1, se valida en el Gateway.</td></tr>
+    <tr><td>QAS-11</td><td>Diagnóstico de incidentes ≤ 5 min con trace ID end-to-end.</td></tr>
+    <tr><td rowspan="3">Constraints</td><td>C-09</td><td>Ley 29733 (datos personales).</td></tr>
+    <tr><td>C-14</td><td>JWT con refresh tokens rotativos y bcrypt cost ≥ 10.</td></tr>
+    <tr><td>C-13</td><td>API versionada bajo <code>/v1/</code>.</td></tr>
+    <tr><td rowspan="2">Concerns</td><td>AC-08</td><td>Privacidad y datos sensibles.</td></tr>
+    <tr><td>AC-11</td><td>Trazabilidad de decisiones de diseño / observabilidad académica.</td></tr>
+  </tbody>
+</table>
+
+#### 4.3.2.3. Choose One or More Elements of the System to Refine
+
+| Elemento | Tipo | Motivo del refinamiento |
+|---|---|---|
+| `identity-service` | Microservicio | Era caja negra en la Iteration 1; ahora se descompone en componentes (Controller, AppService, JWT Issuer, RefreshTokenStore, PasswordHasher, JwksPublisher). |
+| API Gateway | Edge component | Se suma `RateLimitFilter` y se conecta el `AuthFilter` al JWKS del `identity-service`. |
+| Todos los servicios refinados en Iteration 1 | Cross-cutting | Reciben el `OpenTelemetryAgent` y la propagación de `traceparent`. |
+| Object Storage S3 | Sistema externo | Se diseña la política de lifecycle para eliminación de audio post-transcripción. |
+
+#### 4.3.2.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
+
+<table>
+  <thead>
+    <tr>
+      <th>Driver</th>
+      <th>Concepto elegido</th>
+      <th>Alternativa descartada</th>
+      <th>Justificación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>QAS-05, C-14</td><td><strong>JWT firmados con RSA-256</strong> + <strong>JWKS</strong> público + <strong>refresh token rotativo</strong> con almacenamiento hasheado.</td><td>JWT con HS256 (clave simétrica compartida) o sesiones server-side con cookie.</td><td>RSA-256 permite que cualquier servicio valide tokens sin compartir el secreto del firmante (P3 stateless). JWKS rota llaves sin redeploy.</td></tr>
+    <tr><td>QAS-05</td><td><strong>bcrypt cost ≥ 12</strong> + política de complejidad mínima.</td><td>SHA-256 + sal o argon2.</td><td>SHA-256 es vulnerable a fuerza bruta con GPUs. argon2 sería superior pero el equipo tiene experiencia con bcrypt y la diferencia es marginal en el rango cost ≥ 12.</td></tr>
+    <tr><td>QAS-05</td><td><strong>Rate limiting</strong> por IP y por usuario en el API Gateway.</td><td>Rate limiting solo por IP.</td><td>Atacantes con IPs rotativas evaden el límite por IP. Combinar con límite por cuenta cubre el escenario QAS-05 (10 intentos fallidos/hora).</td></tr>
+    <tr><td>QAS-11, P6</td><td><strong>OpenTelemetry</strong> con propagación W3C Trace Context (header <code>traceparent</code>).</td><td>Trace ID propio (UUID) en header custom.</td><td>OpenTelemetry es estándar de facto, integra con Jaeger/Tempo/Datadog sin acoplar al equipo a un vendor (alineado con AC-06).</td></tr>
+    <tr><td>AC-08, C-09</td><td><strong>Lifecycle policy de S3</strong> con eliminación automática post-transcripción + consentimiento explícito en registro.</td><td>Retención indefinida.</td><td>La grabación de voz es dato biométrico (Ley 29733). Retener solo lo necesario (transcripción) reduce superficie de filtración (AC-08).</td></tr>
+    <tr><td>US08, US23, AC-01</td><td><strong>Evento de dominio</strong> <code>UserProfileUpdated</code> publicado al bus <code>talki.events</code>.</td><td>Llamada síncrona del <code>ai-feedback-service</code> al <code>identity-service</code> en cada análisis.</td><td>Evita acoplamiento temporal y mantiene el principio P3 (stateless). El <code>ai-feedback-service</code> guarda una caché local del segmento y la actualiza por evento.</td></tr>
+  </tbody>
+</table>
+
+#### 4.3.2.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
+
+| Elemento | Responsabilidad | Interfaces |
+|---|---|---|
+| **`identity-service` :: AuthController** | Recibir comandos de registro, login, refresh, logout, recuperación. | Provee: `POST /v1/auth/{register,login,refresh,logout,reset-password}`. |
+| **`identity-service` :: UserApplicationService** | Orquestar creación, autenticación, edición y revocación. | Consume: `UserRepository`, `JwtIssuer`, `PasswordHasher`, `EventPublisher`. |
+| **`identity-service` :: JwtIssuer** | Firmar y validar JWT con clave RSA y exponer JWKS. | Provee: `issue(userId, claims)`, `verify(token)`, `GET /.well-known/jwks.json`. |
+| **`identity-service` :: RefreshTokenStore** | Persistir refresh tokens hasheados con expiración y revocación. | Provee: `store`, `validate`, `revoke`, `revokeAllForUser`. |
+| **`identity-service` :: PasswordHasher** | Hash y verificación bcrypt. | Provee: `hash(plaintext)`, `verify(plaintext, hash)`. |
+| **`identity-service` :: ProfileEventPublisher** | Publicar `UserProfileUpdated` al bus al editarse el perfil. | Provee: `publish(UserProfileUpdated)`. Consume: AMQP exchange `talki.events`. |
+| **`api-gateway` :: AuthFilter (refinado)** | Validar JWT con la clave pública obtenida vía JWKS del `identity-service`. | Consume: `GET /.well-known/jwks.json`. |
+| **`api-gateway` :: RateLimitFilter** | Aplicar rate limiting por IP y por user-id. | Provee: filtro WebFlux con backend Redis. |
+| **`api-gateway` :: ObservabilityFilter** | Generar `traceparent` si no viene del cliente y propagarlo aguas abajo. | Provee: filtro WebFlux. |
+| **`*-service` :: OpenTelemetryAgent** | Cross-cutting en todos los servicios — exportar trazas a un colector OTLP. | Consume: `OTEL_EXPORTER_OTLP_ENDPOINT`. |
+
+**Contrato resumido:**
+
+```http
+POST /v1/auth/login
+Content-Type: application/json
+
+{ "email": "valeria@upc.edu.pe", "password": "********" }
+
+200 OK
+{
+  "access_token": "<JWT 15 min>",
+  "refresh_token": "<opaque 7 days, rotativo>",
+  "token_type": "Bearer"
+}
+```
+
+#### 4.3.2.6. Sketch Views (C4 & UML) and Record Design Decisions
+
+**Vista 1 — C4 Nivel 3 del `identity-service`.**
+
+```mermaid
+flowchart TB
+    subgraph IS["identity-service (Spring Boot)"]
+        AC[AuthController<br/>POST /v1/auth/*]
+        UAS[UserApplicationService]
+        JI[JwtIssuer<br/>RSA-256 + JWKS]
+        RTS[RefreshTokenStore]
+        PH[PasswordHasher<br/>bcrypt cost 12]
+        PEP[ProfileEventPublisher]
+        UR[UserRepository JPA]
+    end
+
+    GW[API Gateway] --> AC
+    AC --> UAS
+    UAS --> UR
+    UAS --> JI
+    UAS --> RTS
+    UAS --> PH
+    UAS --> PEP
+    PEP -->|UserProfileUpdated| MQ[(RabbitMQ<br/>talki.events)]
+    UR --> DB[(PostgreSQL identity_db)]
+    JI -.->|JWKS| GW
+```
+
+**Vista 2 — UML secuencia del login con rotación de refresh token.**
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Cliente
+    participant GW as API Gateway
+    participant ID as identity-service
+    participant DB as identity_db
+
+    C->>GW: POST /v1/auth/login (email, password)
+    GW->>ID: forward
+    ID->>DB: find user by email
+    DB-->>ID: user + password_hash
+    ID->>ID: bcrypt.verify(password, hash)
+    ID->>ID: JwtIssuer.issue(userId)
+    ID->>DB: store refresh_token (hash, expires)
+    ID-->>GW: 200 OK (access, refresh)
+    GW-->>C: 200 OK
+    Note over C,ID: Cuando el access expira (15 min)
+    C->>GW: POST /v1/auth/refresh (refresh)
+    GW->>ID: forward
+    ID->>DB: validate refresh + revoke
+    ID->>DB: store NEW refresh (rotación)
+    ID-->>C: 200 OK (new access, new refresh)
+```
+
+**Decision Log Iteration 2.**
+
+| ID | Decisión | Driver | ADB | Estado |
+|---|---|---|---|---|
+| DD-11 | JWT RSA-256 + JWKS público para validación distribuida sin secretos compartidos. | QAS-05, P3 | ADB-14 | Aceptada |
+| DD-12 | Refresh tokens rotativos con almacenamiento hasheado. | QAS-05, C-14 | ADB-15 | Aceptada |
+| DD-13 | bcrypt cost 12 para hashing de contraseñas. | QAS-05, C-14 | ADB-16 | Aceptada |
+| DD-14 | Rate limiting combinado IP + user-id con backend Redis. | QAS-05 | ADB-17 | Aceptada |
+| DD-15 | OpenTelemetry W3C Trace Context para trazas distribuidas. | QAS-11, AC-11 | ADB-20 | Aceptada |
+| DD-16 | Evento `UserProfileUpdated` para sincronizar segmento académico al `ai-feedback-service`. | US08, AC-01 | ADB-19 | Aceptada |
+| DD-17 | S3 lifecycle policy para eliminar audio post-transcripción exitosa. | AC-08, C-09 | ADB-22 | Aceptada |
+| DD-18 | Spring Cloud Config para externalizar prompts y umbrales del LLM. | QAS-07, AC-03 | ADB-21 | Aceptada |
+
+#### 4.3.2.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
+
+<table>
+  <thead>
+    <tr>
+      <th>Por hacer</th>
+      <th>En progreso</th>
+      <th>Hecho</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>ADB-18</strong> — Flujo de recuperación de contraseña con token TTL ≤ 30 min. <em>Drivers: US07, QAS-05.</em><br><br>
+        <strong>ADB-19</strong> — Edición de perfil + evento <code>UserProfileUpdated</code>. <em>Drivers: US08, US23.</em>
+      </td>
+      <td>
+        <strong>ADB-13</strong> — Contratos REST de auth (parcial: <code>/login</code> y <code>/register</code> definidos; <code>/refresh</code> y <code>/logout</code> en revisión).<br><br>
+        <strong>ADB-20</strong> — Instrumentación OpenTelemetry (agent integrado, dashboards pendientes). <em>Cierra ADB-12 de Iteration 1.</em>
+      </td>
+      <td>
+        <strong>ADB-14</strong> — JWT RSA-256 + JWKS. <em>Drivers: US06, QAS-05.</em><br><br>
+        <strong>ADB-15</strong> — Refresh token rotativo. <em>Drivers: US28, QAS-05, C-14.</em><br><br>
+        <strong>ADB-16</strong> — bcrypt cost 12. <em>Drivers: QAS-05, C-14.</em><br><br>
+        <strong>ADB-17</strong> — Rate limiting IP + user-id. <em>Drivers: QAS-05.</em><br><br>
+        <strong>ADB-21</strong> — Spring Cloud Config para prompts. <em>Cierra ADB-10. Drivers: QAS-07, AC-03.</em><br><br>
+        <strong>ADB-22</strong> — S3 lifecycle policy. <em>Drivers: AC-08, C-09.</em>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+**Análisis del cumplimiento del Iteration Goal**
+
+| Driver | Estado | Evidencia |
+|---|---|---|
+| US05, US06, US28 | Cubierto | Contratos REST definidos, JWT con JWKS, refresh rotativo. |
+| US07, US08, US23 | Parcial | US07 y US08 quedan como ítems en *En progreso* / *Por hacer*. |
+| QAS-05 | Cubierto | bcrypt + rate limiting + JWT corto + revocación. |
+| QAS-06 | Heredado | TLS 1.2+ obligatorio (constraint C-07 ya respetado). |
+| QAS-11 | Parcial | Trace propagation diseñada; dashboards y alertas en *En progreso*. |
+| C-09, C-14, AC-08 | Cubierto | Política de retención S3, hashing bcrypt, consentimiento al registro. |
+| AC-03 | Cubierto (cerrado) | Externalización con Spring Cloud Config (ADB-21). |
+
+**Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US18, US20, US21, QAS-09) y el `notification-service` para alertas asíncronas al usuario.
 
 <hr class="page-break">
 
