@@ -1,0 +1,91 @@
+erDiagram
+    %% ── Identity Service DB ──
+    users {
+        uuid id PK
+        varchar email UK
+        varchar password_hash
+        varchar full_name
+        int current_cycle
+        varchar university
+        varchar career
+        varchar academic_segment
+        timestamp created_at
+        timestamp updated_at
+    }
+    refresh_tokens {
+        uuid id PK
+        uuid user_id FK
+        varchar token_hash UK
+        timestamp expires_at
+        boolean revoked
+    }
+
+    %% ── Session Service DB ──
+    practice_sessions {
+        uuid id PK
+        uuid user_id
+        varchar session_type
+        int target_duration_seconds
+        varchar status
+        text[] focus_areas
+        text transcription
+        int actual_duration_seconds
+        timestamp started_at
+        timestamp finished_at
+        timestamp created_at
+    }
+
+    %% ── AI Feedback Service DB ──
+    session_feedback {
+        uuid id PK
+        uuid session_id UK
+        uuid user_id
+        int overall_score
+        jsonb filler_words_analysis
+        jsonb keywords_analysis
+        jsonb lexicon_suggestions
+        jsonb section_feedback
+        varchar processing_status
+        timestamp generated_at
+    }
+
+    %% ── Progress Service DB ──
+    user_metrics {
+        uuid id PK
+        uuid user_id UK
+        int total_sessions
+        float avg_overall_score
+        float avg_filler_words_per_min
+        float avg_lexical_diversity
+        int total_practice_minutes
+        timestamp last_session_at
+        timestamp updated_at
+    }
+    session_metric_snapshots {
+        uuid id PK
+        uuid user_id
+        uuid session_id UK
+        int overall_score
+        float filler_words_per_min
+        float lexical_diversity_score
+        int duration_seconds
+        varchar session_type
+        timestamp recorded_at
+    }
+    user_goals {
+        uuid id PK
+        uuid user_id
+        varchar goal_type
+        boolean is_active
+        timestamp set_at
+    }
+
+    %% ── Relaciones dentro de cada servicio ──
+    users ||--o{ refresh_tokens : "tiene"
+    users ||--o{ practice_sessions : "crea (lógica)"
+    users ||--o{ session_feedback : "recibe (lógica)"
+    users ||--|| user_metrics : "tiene (lógica)"
+    users ||--o{ session_metric_snapshots : "acumula (lógica)"
+    users ||--o{ user_goals : "define"
+    practice_sessions ||--o| session_feedback : "genera (lógica)"
+    practice_sessions ||--o| session_metric_snapshots : "origina (lógica)"

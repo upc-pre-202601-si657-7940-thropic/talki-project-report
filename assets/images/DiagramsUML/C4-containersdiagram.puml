@@ -1,0 +1,54 @@
+@startuml Talki_Container
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam Handwritten false
+skinparam Padding 2
+
+title Container Diagram for Talki
+
+Person(usuario, "Estudiante", "Ciclos 1-5 o 6-10")
+
+System_Boundary(talki_boundary, "Sistema Talki") {
+    Container(spa, "Aplicación Web (SPA)", "Angular 17", "Gestiona la grabación de audio,\ntranscripción en tiempo real,\nfeedback y métricas de progreso.")
+    Container(gateway, "API Gateway", "Spring Cloud Gateway", "Valida JWT, enruta solicitudes,\naплica rate limiting y gestiona CORS.")
+    Container(identity, "Identity Service", "Spring Boot", "Gestiona registro, login y\nemisión/validación de JWT.")
+    Container(session, "Session Service", "Spring Boot", "Gestiona el ciclo de vida de\nlas sesiones de práctica.")
+    Container(transcription, "Transcription Service", "Spring Boot", "Sube audio a S3 y solicita\nla transcripción al proveedor externo.")
+    Container(ai_feedback, "AI Feedback Service", "Spring Boot", "Consume SessionFinalized, envía\nla transcripción al LLM y publica\nFeedbackGenerated.")
+    Container(progress, "Progress Service", "Spring Boot", "Calcula métricas acumuladas y\nsirve historial y gráficos de progreso.")
+    Container(notification, "Notification Service", "Spring Boot", "Envía correos transaccionales\nante eventos de dominio.")
+    Container(broker, "Message Broker", "RabbitMQ", "Bus de eventos asíncronos\nentre microservicios.")
+    ContainerDb(db_identity, "DB Identity", "PostgreSQL", "Usuarios, credenciales\ny refresh tokens.")
+    ContainerDb(db_session, "DB Session", "PostgreSQL", "Sesiones, configuraciones\ny transcripciones.")
+    ContainerDb(db_progress, "DB Progress", "PostgreSQL", "Métricas de sesión,\npuntuaciones y metas.")
+}
+
+System_Ext(whisper, "Whisper / Google STT", "Transcripción de audio a texto")
+System_Ext(llm, "OpenAI GPT / Claude API", "Análisis de IA y generación de feedback")
+System_Ext(s3, "AWS S3", "Almacenamiento de archivos de audio")
+System_Ext(sendgrid, "SendGrid", "Envío de correos transaccionales")
+
+Rel(usuario, spa, "Usa", "HTTPS")
+Rel(spa, gateway, "Consume API", "HTTPS / REST + WebSocket")
+Rel(gateway, identity, "Enruta", "HTTP / REST")
+Rel(gateway, session, "Enruta", "HTTP / REST")
+Rel(gateway, progress, "Enruta", "HTTP / REST")
+Rel(session, transcription, "Solicita transcripción", "HTTP / REST interno")
+Rel(transcription, s3, "Sube audio", "HTTPS / SDK")
+Rel(transcription, whisper, "Solicita transcripción", "HTTPS / REST")
+Rel(session, broker, "Publica SessionFinalized", "AMQP")
+Rel(broker, ai_feedback, "Entrega SessionFinalized", "AMQP")
+Rel(ai_feedback, llm, "Solicita análisis de IA", "HTTPS / REST")
+Rel(ai_feedback, broker, "Publica FeedbackGenerated", "AMQP")
+Rel(broker, progress, "Entrega FeedbackGenerated", "AMQP")
+Rel(broker, notification, "Entrega eventos de dominio", "AMQP")
+Rel(notification, sendgrid, "Envía correos", "HTTPS / REST")
+Rel(identity, db_identity, "Lee y escribe", "JDBC")
+Rel(session, db_session, "Lee y escribe", "JDBC")
+Rel(progress, db_progress, "Lee y escribe", "JDBC")
+
+@enduml

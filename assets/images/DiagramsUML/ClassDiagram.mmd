@@ -1,0 +1,141 @@
+classDiagram
+    %% ── Identity & Access BC ──
+    class User {
+        +UUID id
+        +String email
+        +String passwordHash
+        +String fullName
+        +int currentCycle
+        +String university
+        +String career
+        +String academicSegment
+        +DateTime createdAt
+        +register(email, password) void
+        +updateProfile(data) void
+        +validateCredentials(password) bool
+    }
+    class RefreshToken {
+        +UUID id
+        +UUID userId
+        +String tokenHash
+        +DateTime expiresAt
+        +boolean revoked
+        +revoke() void
+        +isExpired() bool
+    }
+
+    %% ── Practice Session BC ──
+    class PracticeSession {
+        +UUID id
+        +UUID userId
+        +String sessionType
+        +int targetDurationSeconds
+        +String status
+        +String[] focusAreas
+        +String transcription
+        +int actualDurationSeconds
+        +DateTime startedAt
+        +DateTime finishedAt
+        +start() void
+        +finish(transcription) void
+        +cancel() void
+    }
+
+    %% ── Speech Analysis BC ──
+    class AnalysisStrategy {
+        <<interface>>
+        +analyze(transcription, focusAreas) FeedbackResult
+        +getSessionType() String
+    }
+    class PitchAnalysisStrategy {
+        +analyze(transcription, focusAreas) FeedbackResult
+        +getSessionType() String
+    }
+    class ThesisAnalysisStrategy {
+        +analyze(transcription, focusAreas) FeedbackResult
+        +getSessionType() String
+    }
+    class InterviewAnalysisStrategy {
+        +analyze(transcription, focusAreas) FeedbackResult
+        +getSessionType() String
+    }
+    class FeedbackOrchestrator {
+        -AnalysisStrategy strategy
+        +orchestrate(session) SessionFeedback
+        +setStrategy(strategy) void
+    }
+    class SessionFeedback {
+        +UUID id
+        +UUID sessionId
+        +UUID userId
+        +int overallScore
+        +Object fillerWordsAnalysis
+        +Object keywordsAnalysis
+        +Object lexiconSuggestions
+        +Object sectionFeedback
+        +String processingStatus
+        +DateTime generatedAt
+    }
+
+    %% ── Progress & Metrics BC ──
+    class UserMetrics {
+        +UUID id
+        +UUID userId
+        +int totalSessions
+        +float avgOverallScore
+        +float avgFillerWordsPerMin
+        +float avgLexicalDiversity
+        +int totalPracticeMinutes
+        +DateTime lastSessionAt
+        +update(snapshot) void
+        +recalculate() void
+    }
+    class SessionMetricSnapshot {
+        +UUID id
+        +UUID userId
+        +UUID sessionId
+        +int overallScore
+        +float fillerWordsPerMin
+        +float lexicalDiversityScore
+        +int durationSeconds
+        +String sessionType
+        +DateTime recordedAt
+    }
+    class UserGoal {
+        +UUID id
+        +UUID userId
+        +String goalType
+        +boolean isActive
+        +DateTime setAt
+        +activate() void
+        +deactivate() void
+    }
+
+    %% ── Notification BC ──
+    class Notification {
+        +UUID id
+        +UUID userId
+        +String type
+        +String payload
+        +boolean sent
+        +DateTime sentAt
+        +send() void
+    }
+
+    %% ── Relaciones dentro del mismo BC ──
+    User "1" --> "0..*" RefreshToken : tiene
+    FeedbackOrchestrator --> AnalysisStrategy : delega en
+    AnalysisStrategy <|.. PitchAnalysisStrategy : implementa
+    AnalysisStrategy <|.. ThesisAnalysisStrategy : implementa
+    AnalysisStrategy <|.. InterviewAnalysisStrategy : implementa
+    FeedbackOrchestrator "1" --> "1" SessionFeedback : produce
+    UserMetrics "1" --> "0..*" SessionMetricSnapshot : agrega
+
+    %% ── Relaciones cross-BC (lógicas, vía eventos) ──
+    User "1" --> "0..*" PracticeSession : crea (lógica)
+    User "1" --> "1" UserMetrics : acumula en (lógica)
+    User "1" --> "0..*" UserGoal : define (lógica)
+    User "1" --> "0..*" SessionFeedback : recibe (lógica)
+    PracticeSession "1" --> "0..1" SessionFeedback : genera (lógica)
+    PracticeSession "1" --> "0..1" SessionMetricSnapshot : origina (lógica)
+    SessionFeedback "1" --> "0..*" Notification : dispara (lógica)
