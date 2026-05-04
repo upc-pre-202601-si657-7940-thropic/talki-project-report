@@ -2518,7 +2518,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
 
 Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como ciclos cortos en los que se selecciona un subconjunto de drivers de la sección 4.2, se eligen los elementos del sistema a refinar, se aplican conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y se registran las decisiones tomadas con su justificación trazable. Cada iteración cierra con un análisis del estado actual del diseño y la revisión del cumplimiento del *iteration goal*, materializado mediante un Kanban Board que comunica visualmente el avance del backlog de diseño.
 
-Para el MVP académico (ciclo 2026-10) se planifica una primera iteración orientada al núcleo funcional del producto: el flujo de **sesión de práctica con feedback asíncrono de IA**, que es el camino crítico que valida los drivers más exigentes (US12, US14, US15, QAS-01, QAS-02, QAS-03 y los concerns AC-02 y AC-04). Iteraciones posteriores —no documentadas en este avance— refinarán el módulo de identidad (US05, US06, US08), el dashboard de progreso (CQRS, QAS-09) y la observabilidad transversal (QAS-11).
+Para el MVP académico (ciclo 2026-10) se planifican dos iteraciones documentadas en este avance: la **Iteration 1** (sección 4.3.1) orienta el núcleo funcional del producto, el flujo de *sesión de práctica con feedback asíncrono de IA*, que es el camino crítico que valida los drivers más exigentes (US12, US14, US15, QAS-01, QAS-02, QAS-03 y los concerns AC-02 y AC-04); y la **Iteration 2** (sección 4.3.2) refina el módulo de identidad (US05, US06, US07, US08, US28), las garantías de seguridad transversales (QAS-05, QAS-06, AC-08, C-09, C-14) y la observabilidad distribuida (QAS-11). Iteraciones subsiguientes —no documentadas en este avance— abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido (US18) y el `notification-service` para alertas asíncronas al usuario.
 
 ### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Feedback Asíncrono
 
@@ -2634,12 +2634,12 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
     <tr><td>3</td><td>QAS-03 Degradación elegante del feedback</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
     <tr><td>4</td><td>QAS-07 Nuevo tipo de sesión (modificabilidad)</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
     <tr><td>5</td><td>QAS-08 Cambio de proveedor LLM</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>6</td><td>QAS-04 Continuidad operativa (rolling update)</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración 4</td></tr>
-    <tr><td>7</td><td>QAS-05 Protección de credenciales</td><td>4.2.3</td><td>High</td><td>Medium</td><td>❌ Iteración 3 (identity)</td></tr>
-    <tr><td>8</td><td>QAS-06 HTTPS obligatorio</td><td>4.2.3</td><td>High</td><td>Low</td><td>❌ Heredado (constraint C-07)</td></tr>
-    <tr><td>9</td><td>QAS-09 Carga concurrente</td><td>4.2.3</td><td>Medium</td><td>High</td><td>⚠ Parcial (S3 + diseño stateless lo habilitan)</td></tr>
-    <tr><td>10</td><td>QAS-10 Testabilidad lógica de análisis</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración 2</td></tr>
-    <tr><td>11</td><td>QAS-11 Diagnóstico de incidentes</td><td>4.2.3</td><td>High</td><td>Medium</td><td>⚠ Parcial (trace ID definido, instrumentación pendiente)</td></tr>
+    <tr><td>6</td><td>QAS-04 Continuidad operativa (rolling update)</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración posterior</td></tr>
+    <tr><td>7</td><td>QAS-05 Protección de credenciales</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2)</td></tr>
+    <tr><td>8</td><td>QAS-06 HTTPS obligatorio</td><td>4.2.3</td><td>High</td><td>Low</td><td>✅ Sí (Iteration 2; heredado del constraint C-07)</td></tr>
+    <tr><td>9</td><td>QAS-09 Carga concurrente</td><td>4.2.3</td><td>Medium</td><td>High</td><td>⚠ Parcial (S3 + diseño stateless lo habilitan; CQRS pendiente)</td></tr>
+    <tr><td>10</td><td>QAS-10 Testabilidad lógica de análisis</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración posterior</td></tr>
+    <tr><td>11</td><td>QAS-11 Diagnóstico de incidentes</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2; trace ID definido en Iteration 1)</td></tr>
     <tr><td>12</td><td>QAS-12 Onboarding del primer uso</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>❌ Iteración de UX</td></tr>
     <tr><td>13</td><td>US12 Grabación + transcripción en vivo (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
     <tr><td>14</td><td>US15 Recibir feedback general de la IA (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
@@ -2648,7 +2648,7 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
     <tr><td>17</td><td>US23/US26 Adaptación al segmento académico</td><td>4.2.2</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
     <tr><td>18</td><td>AC-02 Latencia variable del LLM</td><td>4.2.5</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
     <tr><td>19</td><td>AC-06 Vendor lock-in del LLM</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>20</td><td>AC-08 Privacidad y datos sensibles (Ley 29733)</td><td>4.2.5</td><td>High</td><td>Medium</td><td>❌ Iteración 3 (identity + retención)</td></tr>
+    <tr><td>20</td><td>AC-08 Privacidad y datos sensibles (Ley 29733)</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2; retención S3 + consentimiento)</td></tr>
   </tbody>
 </table>
 
