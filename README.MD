@@ -75,15 +75,14 @@
 | 2.9 | 30/04/2026 | Gael | Definición de Quality Attribute Scenarios |
 | 2.10 | 30/04/2026 | Gael | Catálogo de Constraints arquitectónicas |
 | 2.11 | 30/04/2026 | Gael | Identificación de Architectural Concerns y riesgos |
-| 2.12 | 02/05/2026 | Alejandro | Redacción de la sección 4.3 ADD Iterations — Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono): Architectural Design Backlog 1, Iteration Goal con priorización de drivers, elementos a refinar, conceptos de diseño, instanciación de elementos arquitectónicos con interfaces, vistas C4 + UML y Decision Log |
-| 2.13 | 02/05/2026 | Alejandro | Mejoras de trazabilidad en 4.3.1: incorporación de US10 como driver del Strategy con nota de alcance Must, reemplazo de la referencia a Adapter por la táctica oficial "Interfaces sobre implementaciones" (4.1.7) y marcado de campos opcionales en el contrato POST /v1/sessions con trazabilidad a US11/US25 |
-| 2.14 | 02/05/2026 | Alejandro | Incorporación del diagrama C4 Nivel 3 del session-service en 4.3.1.6 para cumplir el requisito explícito del cronograma "Sketch Views (C4 & UML)" |
-| 2.15 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Track Manager, SEI 2006): tabla de Architectural Driver Priorities en 4.3.1.2, Software Element View consolidada y tabla "Elements after Iteration 1" en 4.3.1.7 |
-| 2.16 | 02/05/2026 | Alejandro | Redacción de la sección 4.3.2 ADD Iterations — Iteration 2 (Identidad, Seguridad y Observabilidad Transversal): Architectural Design Backlog 2 con 10 ítems, conceptos de diseño para JWT RSA-256, bcrypt, rate limiting, OpenTelemetry, S3 lifecycle; C4 Nivel 3 del identity-service y UML del flujo de login con refresh token rotativo |
-| 2.17 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado de los cinco bounded contexts en 4.1.5 con atributos, métodos y relaciones (Architecture Overview: Class Diagram & Database Diagram) |
-| 2.18 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 con notación oficial (U/D, OHS, ACL, PL) sobre los cinco Bounded Contexts identificados |
-| 2.19 | 03/05/2026 | Manuel | Ajustes finales en los diagramas del Capítulo IV para mejorar la claridad visual y la consistencia de notación |
-| 2.20 | 03/05/2026 | Alejandro | Actualización del Registro de Versiones del informe consolidando todas las contribuciones del Avance 2 (Capítulo IV) por integrante |
+| 2.12 | 02/05/2026 | Alejandro | Redacción de Iteration 1 — Núcleo de Sesión de Práctica y Feedback Asíncrono (4.3.1) |
+| 2.13 | 02/05/2026 | Alejandro | Incorporación del C4 Nivel 3 del session-service en 4.3.1.6 |
+| 2.14 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Driver Priorities y Software Element View) |
+| 2.15 | 02/05/2026 | Alejandro | Redacción de Iteration 2 — Identidad, Seguridad y Observabilidad Transversal (4.3.2) |
+| 2.16 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado en 4.1.5 |
+| 2.17 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 |
+| 2.18 | 03/05/2026 | Alejandro | Correcciones de trazabilidad y nomenclatura del Capítulo IV |
+| 2.19 | 03/05/2026 | Alejandro, Gael, Manuel | Redacción de Conclusiones y Recomendaciones del Avance 2 |
 
 <hr class="page-break">
 
@@ -3889,6 +3888,14 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 - **Ampliar la base de entrevistas del Segmento 2.** Aunque Gianger aporta un perfil bilingüe valioso, se recomienda incorporar al menos dos entrevistados adicionales del Segmento 2 en universidades peruanas presenciales (UPC, PUCP, UL, UPN) para robustecer los hallazgos de needfinding en contextos laborales 100 % locales.
 - **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
 - **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
+
+Al cierre del segundo avance (TB2), el equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe en el siguiente entregable (TP1), tomando como base las decisiones de diseño consolidadas en el Capítulo IV:
+
+- **Iniciar la implementación del camino crítico de la Iteration 1.** Materializar primero los contratos REST y AMQP del `session-service`, `transcription-service` y `ai-feedback-service` definidos en 4.3.1.5, junto con las decisiones DD-01 a DD-10, garantiza que el MVP entregue valor a los User Personas desde el primer sprint y permite validar empíricamente los SLO de QAS-01 (latencia ≤ 1.5 s) y QAS-02 (finalize ≤ 500 ms).
+- **Configurar el entorno de desarrollo y CI/CD antes del Sprint 1.** Establecer GitFlow, convenciones de código, contenedores Docker, pipelines de CI con tests unitarios y un primer despliegue de prueba antes de iniciar la implementación funcional evita la deuda de infraestructura y prepara el camino para la rúbrica TP1 (Software Configuration Management, Web Services RESTful API, Backend Application Core Testing Suite).
+- **Externalizar los prompts del LLM y los umbrales de análisis desde el primer sprint.** La decisión DD-09 (Spring Cloud Config) solo es valiosa si se aplica en la implementación; codificarla desde el inicio permite ajustar las reglas de análisis sprint a sprint sin redeploy, alineado con AC-03.
+- **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories ya tienen criterios Given-When-Then formulados; convertirlos en pruebas automatizadas con Cucumber o equivalente desde el Sprint 1 cubre el ítem 4 de la rúbrica TB3 (testing microservices) y refuerza la trazabilidad requerimientos → código → pruebas.
+- **Mantener actualizado el Registro de Versiones y el Student Outcome con cada incorporación.** Documentar las modificaciones en el momento de realizarlas, en lugar de consolidarlas al final, refuerza el ítem 9 (Evolution) de la rúbrica y permite al equipo recibir retroalimentación temprana del docente durante las asesorías quincenales.
 
 # Video About-The-Team
 
