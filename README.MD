@@ -12,7 +12,7 @@
 
 **Ingeniería de Software**
 
-**Periodo:** 202610
+**Periodo:** 2026-10
 
 <br>
 
@@ -41,8 +41,6 @@
 | U20241C134 | Tumi Oliden, Manuel Ignacio |
 
 <br>
-
-*Mayo 2026-10*
 
 <br><br>
 
@@ -137,7 +135,6 @@
       - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
       - [4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Feedback Asíncrono](#431-iteration-1-núcleo-de-sesión-de-práctica-y-feedback-asíncrono)
-      - [4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal](#432-iteration-2-identidad-seguridad-y-observabilidad-transversal)
          - [4.3.1.1. Architectural Design Backlog 1](#4311-architectural-design-backlog-1)
          - [4.3.1.2. Establish Iteration Goal by Selecting Drivers](#4312-establish-iteration-goal-by-selecting-drivers)
          - [4.3.1.3. Choose One or More Elements of the System to Refine](#4313-choose-one-or-more-elements-of-the-system-to-refine)
@@ -145,6 +142,14 @@
          - [4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces](#4315-instantiate-architectural-elements-allocate-responsibilities-and-define-interfaces)
          - [4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions](#4316-sketch-views-c4--uml-and-record-design-decisions)
          - [4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)](#4317-analysis-of-current-design-and-review-iteration-goal-kanban-board)
+      - [4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal](#432-iteration-2-identidad-seguridad-y-observabilidad-transversal)
+         - [4.3.2.1. Architectural Design Backlog 2](#4321-architectural-design-backlog-2)
+         - [4.3.2.2. Establish Iteration Goal by Selecting Drivers](#4322-establish-iteration-goal-by-selecting-drivers)
+         - [4.3.2.3. Choose One or More Elements of the System to Refine](#4323-choose-one-or-more-elements-of-the-system-to-refine)
+         - [4.3.2.4. Choose One or More Design Concepts That Satisfy the Selected Drivers](#4324-choose-one-or-more-design-concepts-that-satisfy-the-selected-drivers)
+         - [4.3.2.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces](#4325-instantiate-architectural-elements-allocate-responsibilities-and-define-interfaces)
+         - [4.3.2.6. Sketch Views (C4 & UML) and Record Design Decisions](#4326-sketch-views-c4--uml-and-record-design-decisions)
+         - [4.3.2.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)](#4327-analysis-of-current-design-and-review-iteration-goal-kanban-board)
 
 - [Capítulo V: Product Implementation, Validation & Deployment](#capítulo-v-product-implementation-validation--deployment)
    - [5.1. Testing Suites & General Patterns](#51-testing-suites--general-patterns)
@@ -2333,7 +2338,7 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
       <td>C-02</td>
       <td>Stack tecnológico frontend</td>
       <td>El cliente web debe construirse como SPA con <strong>Angular</strong>.</td>
-      <td>Restricción organizacional alineada con el currículum del curso y con la experiencia previa de los integrantes (perfil de Eduardo Rivera en Capítulo I).</td>
+      <td>Restricción organizacional alineada con el currículum del curso y con la experiencia previa de los integrantes (perfil de Gael Rivera en Capítulo I).</td>
     </tr>
     <tr>
       <td>C-03</td>
@@ -2513,7 +2518,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
 
 Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como ciclos cortos en los que se selecciona un subconjunto de drivers de la sección 4.2, se eligen los elementos del sistema a refinar, se aplican conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y se registran las decisiones tomadas con su justificación trazable. Cada iteración cierra con un análisis del estado actual del diseño y la revisión del cumplimiento del *iteration goal*, materializado mediante un Kanban Board que comunica visualmente el avance del backlog de diseño.
 
-Para el MVP académico (ciclo 2026-10) se planifica una primera iteración orientada al núcleo funcional del producto: el flujo de **sesión de práctica con feedback asíncrono de IA**, que es el camino crítico que valida los drivers más exigentes (US12, US14, US15, QAS-01, QAS-02, QAS-03 y los concerns AC-02 y AC-04). Iteraciones posteriores —no documentadas en este avance— refinarán el módulo de identidad (US05, US06, US08), el dashboard de progreso (CQRS, QAS-09) y la observabilidad transversal (QAS-11).
+Para el MVP académico (ciclo 2026-10) se planifican dos iteraciones documentadas en este avance: la **Iteration 1** (sección 4.3.1) orienta el núcleo funcional del producto, el flujo de *sesión de práctica con feedback asíncrono de IA*, que es el camino crítico que valida los drivers más exigentes (US12, US14, US15, QAS-01, QAS-02, QAS-03 y los concerns AC-02 y AC-04); y la **Iteration 2** (sección 4.3.2) refina el módulo de identidad (US05, US06, US07, US08, US28), las garantías de seguridad transversales (QAS-05, QAS-06, AC-08, C-09, C-14) y la observabilidad distribuida (QAS-11). Iteraciones subsiguientes —no documentadas en este avance— abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido (US18) y el `notification-service` para alertas asíncronas al usuario.
 
 ### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Feedback Asíncrono
 
@@ -2629,12 +2634,12 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
     <tr><td>3</td><td>QAS-03 Degradación elegante del feedback</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
     <tr><td>4</td><td>QAS-07 Nuevo tipo de sesión (modificabilidad)</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
     <tr><td>5</td><td>QAS-08 Cambio de proveedor LLM</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>6</td><td>QAS-04 Continuidad operativa (rolling update)</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración 4</td></tr>
-    <tr><td>7</td><td>QAS-05 Protección de credenciales</td><td>4.2.3</td><td>High</td><td>Medium</td><td>❌ Iteración 3 (identity)</td></tr>
-    <tr><td>8</td><td>QAS-06 HTTPS obligatorio</td><td>4.2.3</td><td>High</td><td>Low</td><td>❌ Heredado (constraint C-07)</td></tr>
-    <tr><td>9</td><td>QAS-09 Carga concurrente</td><td>4.2.3</td><td>Medium</td><td>High</td><td>⚠ Parcial (S3 + diseño stateless lo habilitan)</td></tr>
-    <tr><td>10</td><td>QAS-10 Testabilidad lógica de análisis</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración 2</td></tr>
-    <tr><td>11</td><td>QAS-11 Diagnóstico de incidentes</td><td>4.2.3</td><td>High</td><td>Medium</td><td>⚠ Parcial (trace ID definido, instrumentación pendiente)</td></tr>
+    <tr><td>6</td><td>QAS-04 Continuidad operativa (rolling update)</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración posterior</td></tr>
+    <tr><td>7</td><td>QAS-05 Protección de credenciales</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2)</td></tr>
+    <tr><td>8</td><td>QAS-06 HTTPS obligatorio</td><td>4.2.3</td><td>High</td><td>Low</td><td>✅ Sí (Iteration 2; heredado del constraint C-07)</td></tr>
+    <tr><td>9</td><td>QAS-09 Carga concurrente</td><td>4.2.3</td><td>Medium</td><td>High</td><td>⚠ Parcial (S3 + diseño stateless lo habilitan; CQRS pendiente)</td></tr>
+    <tr><td>10</td><td>QAS-10 Testabilidad lógica de análisis</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración posterior</td></tr>
+    <tr><td>11</td><td>QAS-11 Diagnóstico de incidentes</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2; trace ID definido en Iteration 1)</td></tr>
     <tr><td>12</td><td>QAS-12 Onboarding del primer uso</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>❌ Iteración de UX</td></tr>
     <tr><td>13</td><td>US12 Grabación + transcripción en vivo (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
     <tr><td>14</td><td>US15 Recibir feedback general de la IA (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
@@ -2643,7 +2648,7 @@ El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo
     <tr><td>17</td><td>US23/US26 Adaptación al segmento académico</td><td>4.2.2</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
     <tr><td>18</td><td>AC-02 Latencia variable del LLM</td><td>4.2.5</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
     <tr><td>19</td><td>AC-06 Vendor lock-in del LLM</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>20</td><td>AC-08 Privacidad y datos sensibles (Ley 29733)</td><td>4.2.5</td><td>High</td><td>Medium</td><td>❌ Iteración 3 (identity + retención)</td></tr>
+    <tr><td>20</td><td>AC-08 Privacidad y datos sensibles (Ley 29733)</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2; retención S3 + consentimiento)</td></tr>
   </tbody>
 </table>
 
@@ -2727,7 +2732,7 @@ La selección final prioriza los drivers (High, High) y los (High, Medium) cuyo 
   </tbody>
 </table>
 
-Quedan fuera del alcance de esta iteración: el dashboard de métricas (US18, QAS-09 → iteración 2), la gestión de cuenta (US05, US06, US08 → iteración 3) y la observabilidad transversal de extremo a extremo (QAS-11 → iteración 4), aunque ADB-12 deja sembrada la propagación del trace ID para que la siguiente iteración la complete.
+Quedan fuera del alcance de esta iteración: la gestión de cuenta (US05, US06, US07, US08, US28, QAS-05, QAS-11 → Iteration 2), el dashboard de métricas (US20, US21, US22, QAS-09 → iteración posterior) y el `ai-feedback-service` extendido con recomendaciones de léxico (US18 → iteración posterior), aunque ADB-12 deja sembrada la propagación del trace ID para que la Iteration 2 la complete.
 
 #### 4.3.1.3. Choose One or More Elements of the System to Refine
 
@@ -3247,9 +3252,9 @@ flowchart TB
     end
 
     subgraph DEFERRED["Servicios diferidos"]
-        ID["identity-service<br/>(Iteration 3)"]
-        PR["progress-service<br/>(Iteration 2 - CQRS)"]
-        NT["notification-service<br/>(Iteration 4)"]
+        ID["identity-service<br/>(Iteration 2)"]
+        PR["progress-service<br/>(Iteración posterior - CQRS)"]
+        NT["notification-service<br/>(Iteración posterior)"]
     end
 
     subgraph INFRA["Infraestructura compartida"]
@@ -3317,9 +3322,9 @@ _Diagrama Software Element View — Estado del sistema Talki después de la Iter
     <tr><td>6</td><td>Object Storage S3</td><td>Sí (presigned URL flow)</td><td>C-08, QAS-09, AC-08</td></tr>
     <tr><td>7</td><td>PostgreSQL session_db</td><td>Parcial (esquema definido)</td><td>US14, C-03, P4</td></tr>
     <tr><td>8</td><td>PostgreSQL feedback_db</td><td>Parcial (esquema definido)</td><td>US15, C-03, P4</td></tr>
-    <tr><td>9</td><td>identity-service</td><td>No — diferido a Iteration 3</td><td>US05, US06, US08, US28, QAS-05</td></tr>
-    <tr><td>10</td><td>progress-service</td><td>No — diferido a Iteration 2 (CQRS)</td><td>US18, US20, US21, QAS-09</td></tr>
-    <tr><td>11</td><td>notification-service</td><td>No — diferido a Iteration 4</td><td>US15 (notif. push), AC-04</td></tr>
+    <tr><td>9</td><td>identity-service</td><td>No en Iteration 1 — refinado en Iteration 2 (sección 4.3.2)</td><td>US05, US06, US07, US08, US28, QAS-05, QAS-11</td></tr>
+    <tr><td>10</td><td>progress-service</td><td>No — diferido a iteración posterior (CQRS)</td><td>US20, US21, US22, QAS-09</td></tr>
+    <tr><td>11</td><td>notification-service</td><td>No — diferido a iteración posterior</td><td>US15 (notif. push), AC-04</td></tr>
   </tbody>
 </table>
 
@@ -3609,7 +3614,7 @@ sequenceDiagram
 | C-09, C-14, AC-08 | Cubierto | Política de retención S3, hashing bcrypt, consentimiento al registro. |
 | AC-03 | Cubierto (cerrado) | Externalización con Spring Cloud Config (ADB-21). |
 
-**Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US18, US20, US21, QAS-09) y el `notification-service` para alertas asíncronas al usuario.
+**Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido con recomendaciones de léxico (US18) y el `notification-service` para alertas asíncronas al usuario.
 
 <hr class="page-break">
 
@@ -3867,6 +3872,14 @@ Al cierre del primer avance (TB1), el equipo Thropic logró consolidar la base e
 - **Requerimientos trazables.** Se especificaron 28 User Stories agrupadas en 7 Epics, con criterios de aceptación en formato Gherkin, conectadas con tres Business Goals SMART mediante el Impact Map y priorizadas con MoSCoW en el Product Backlog.
 - **Validación inicial del modelo de negocio.** El plan Premium Estudiantil de S/ 15 a S/ 25 mensuales es consistente con la disposición a pagar expresada por las entrevistadas del Segmento 1 (USD 2 a 5, equivalente a S/ 7 a S/ 19) y queda sustentado para el Segmento 2 por el retorno profesional esperado.
 
+Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectónico de Talki en el Capítulo IV mediante la aplicación rigurosa del método Attribute-Driven Design (Wojcik et al., 2006). Los principales logros son:
+
+- **Catálogo de drivers formalizado.** Se especificaron 8 principios arquitectónicos (P1-P8), 8 estilos y patrones de aproximación, 8 patrones de diseño aplicados y 22 tácticas distribuidas en cinco atributos de calidad (Disponibilidad, Rendimiento, Seguridad, Modificabilidad, Testeabilidad), todos trazables a los requerimientos del Capítulo III.
+- **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), un Component Diagram C4 (Nivel 3) del `ai-feedback-service`, un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
+- **Drivers arquitectónicos formulados con métricas verificables.** La sección 4.2 establece 12 Quality Attribute Scenarios con seis partes (fuente, estímulo, artefacto, entorno, respuesta, medida), 14 Constraints técnicas y organizacionales, y 11 Architectural Concerns con riesgos gestionados, garantizando que cada decisión de diseño tenga un criterio de aceptación verificable.
+- **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono) y la Iteration 2 (Identidad, Seguridad y Observabilidad Transversal) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
+- **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
+
 ## Recomendaciones
 
 El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
@@ -3904,6 +3917,8 @@ Speeko Inc. (2024). *Speeko: Public Speaking Coach* [Aplicación móvil]. App St
 Superintendencia Nacional de Educación Superior Universitaria. (2023). *Sistema de información universitaria TUNI: Estadísticas de matrícula universitaria*. SUNEDU. https://www.sunedu.gob.pe/
 
 Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends*. https://www.teleprompter.com/blog/public-speaking-statistics
+
+Wojcik, R., Bachmann, F., Bass, L., Clements, P., Merson, P., Nord, R., & Wood, B. (2006). *Attribute-Driven Design (ADD), Version 2.0* (Technical Report CMU/SEI-2006-TR-023). Software Engineering Institute, Carnegie Mellon University. https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=8147
 
 <hr class="page-break">
 
