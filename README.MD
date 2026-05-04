@@ -3252,9 +3252,9 @@ flowchart TB
     end
 
     subgraph DEFERRED["Servicios diferidos"]
-        ID["identity-service<br/>(Iteration 3)"]
-        PR["progress-service<br/>(Iteration 2 - CQRS)"]
-        NT["notification-service<br/>(Iteration 4)"]
+        ID["identity-service<br/>(Iteration 2)"]
+        PR["progress-service<br/>(Iteración posterior - CQRS)"]
+        NT["notification-service<br/>(Iteración posterior)"]
     end
 
     subgraph INFRA["Infraestructura compartida"]
@@ -3322,9 +3322,9 @@ _Diagrama Software Element View — Estado del sistema Talki después de la Iter
     <tr><td>6</td><td>Object Storage S3</td><td>Sí (presigned URL flow)</td><td>C-08, QAS-09, AC-08</td></tr>
     <tr><td>7</td><td>PostgreSQL session_db</td><td>Parcial (esquema definido)</td><td>US14, C-03, P4</td></tr>
     <tr><td>8</td><td>PostgreSQL feedback_db</td><td>Parcial (esquema definido)</td><td>US15, C-03, P4</td></tr>
-    <tr><td>9</td><td>identity-service</td><td>No — diferido a Iteration 3</td><td>US05, US06, US08, US28, QAS-05</td></tr>
+    <tr><td>9</td><td>identity-service</td><td>No en Iteration 1 — refinado en Iteration 2 (sección 4.3.2)</td><td>US05, US06, US07, US08, US28, QAS-05, QAS-11</td></tr>
     <tr><td>10</td><td>progress-service</td><td>No — diferido a iteración posterior (CQRS)</td><td>US20, US21, US22, QAS-09</td></tr>
-    <tr><td>11</td><td>notification-service</td><td>No — diferido a Iteration 4</td><td>US15 (notif. push), AC-04</td></tr>
+    <tr><td>11</td><td>notification-service</td><td>No — diferido a iteración posterior</td><td>US15 (notif. push), AC-04</td></tr>
   </tbody>
 </table>
 
