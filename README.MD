@@ -12,7 +12,7 @@
 
 **Ingeniería de Software**
 
-**Periodo:** 202610
+**Periodo:** 2026-10
 
 <br>
 
@@ -41,8 +41,6 @@
 | U20241C134 | Tumi Oliden, Manuel Ignacio |
 
 <br>
-
-*Mayo 2026-10*
 
 <br><br>
 
