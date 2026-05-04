@@ -2732,7 +2732,7 @@ La selección final prioriza los drivers (High, High) y los (High, Medium) cuyo 
   </tbody>
 </table>
 
-Quedan fuera del alcance de esta iteración: el dashboard de métricas (US18, QAS-09 → iteración 2), la gestión de cuenta (US05, US06, US08 → iteración 3) y la observabilidad transversal de extremo a extremo (QAS-11 → iteración 4), aunque ADB-12 deja sembrada la propagación del trace ID para que la siguiente iteración la complete.
+Quedan fuera del alcance de esta iteración: la gestión de cuenta (US05, US06, US07, US08, US28, QAS-05, QAS-11 → Iteration 2), el dashboard de métricas (US20, US21, US22, QAS-09 → iteración posterior) y el `ai-feedback-service` extendido con recomendaciones de léxico (US18 → iteración posterior), aunque ADB-12 deja sembrada la propagación del trace ID para que la Iteration 2 la complete.
 
 #### 4.3.1.3. Choose One or More Elements of the System to Refine
 
@@ -3323,7 +3323,7 @@ _Diagrama Software Element View — Estado del sistema Talki después de la Iter
     <tr><td>7</td><td>PostgreSQL session_db</td><td>Parcial (esquema definido)</td><td>US14, C-03, P4</td></tr>
     <tr><td>8</td><td>PostgreSQL feedback_db</td><td>Parcial (esquema definido)</td><td>US15, C-03, P4</td></tr>
     <tr><td>9</td><td>identity-service</td><td>No — diferido a Iteration 3</td><td>US05, US06, US08, US28, QAS-05</td></tr>
-    <tr><td>10</td><td>progress-service</td><td>No — diferido a Iteration 2 (CQRS)</td><td>US18, US20, US21, QAS-09</td></tr>
+    <tr><td>10</td><td>progress-service</td><td>No — diferido a iteración posterior (CQRS)</td><td>US20, US21, US22, QAS-09</td></tr>
     <tr><td>11</td><td>notification-service</td><td>No — diferido a Iteration 4</td><td>US15 (notif. push), AC-04</td></tr>
   </tbody>
 </table>
@@ -3614,7 +3614,7 @@ sequenceDiagram
 | C-09, C-14, AC-08 | Cubierto | Política de retención S3, hashing bcrypt, consentimiento al registro. |
 | AC-03 | Cubierto (cerrado) | Externalización con Spring Cloud Config (ADB-21). |
 
-**Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US18, US20, US21, QAS-09) y el `notification-service` para alertas asíncronas al usuario.
+**Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido con recomendaciones de léxico (US18) y el `notification-service` para alertas asíncronas al usuario.
 
 <hr class="page-break">
 
