@@ -2338,7 +2338,7 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
       <td>C-02</td>
       <td>Stack tecnológico frontend</td>
       <td>El cliente web debe construirse como SPA con <strong>Angular</strong>.</td>
-      <td>Restricción organizacional alineada con el currículum del curso y con la experiencia previa de los integrantes (perfil de Eduardo Rivera en Capítulo I).</td>
+      <td>Restricción organizacional alineada con el currículum del curso y con la experiencia previa de los integrantes (perfil de Gael Rivera en Capítulo I).</td>
     </tr>
     <tr>
       <td>C-03</td>
@@ -3872,6 +3872,14 @@ Al cierre del primer avance (TB1), el equipo Thropic logró consolidar la base e
 - **Requerimientos trazables.** Se especificaron 28 User Stories agrupadas en 7 Epics, con criterios de aceptación en formato Gherkin, conectadas con tres Business Goals SMART mediante el Impact Map y priorizadas con MoSCoW en el Product Backlog.
 - **Validación inicial del modelo de negocio.** El plan Premium Estudiantil de S/ 15 a S/ 25 mensuales es consistente con la disposición a pagar expresada por las entrevistadas del Segmento 1 (USD 2 a 5, equivalente a S/ 7 a S/ 19) y queda sustentado para el Segmento 2 por el retorno profesional esperado.
 
+Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectónico de Talki en el Capítulo IV mediante la aplicación rigurosa del método Attribute-Driven Design (Wojcik et al., 2006). Los principales logros son:
+
+- **Catálogo de drivers formalizado.** Se especificaron 8 principios arquitectónicos (P1-P8), 8 estilos y patrones de aproximación, 8 patrones de diseño aplicados y 22 tácticas distribuidas en cinco atributos de calidad (Disponibilidad, Rendimiento, Seguridad, Modificabilidad, Testeabilidad), todos trazables a los requerimientos del Capítulo III.
+- **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), un Component Diagram C4 (Nivel 3) del `ai-feedback-service`, un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
+- **Drivers arquitectónicos formulados con métricas verificables.** La sección 4.2 establece 12 Quality Attribute Scenarios con seis partes (fuente, estímulo, artefacto, entorno, respuesta, medida), 14 Constraints técnicas y organizacionales, y 11 Architectural Concerns con riesgos gestionados, garantizando que cada decisión de diseño tenga un criterio de aceptación verificable.
+- **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono) y la Iteration 2 (Identidad, Seguridad y Observabilidad Transversal) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
+- **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
+
 ## Recomendaciones
 
 El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
@@ -3909,6 +3917,8 @@ Speeko Inc. (2024). *Speeko: Public Speaking Coach* [Aplicación móvil]. App St
 Superintendencia Nacional de Educación Superior Universitaria. (2023). *Sistema de información universitaria TUNI: Estadísticas de matrícula universitaria*. SUNEDU. https://www.sunedu.gob.pe/
 
 Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends*. https://www.teleprompter.com/blog/public-speaking-statistics
+
+Wojcik, R., Bachmann, F., Bass, L., Clements, P., Merson, P., Nord, R., & Wood, B. (2006). *Attribute-Driven Design (ADD), Version 2.0* (Technical Report CMU/SEI-2006-TR-023). Software Engineering Institute, Carnegie Mellon University. https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=8147
 
 <hr class="page-break">
 
