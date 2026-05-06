@@ -3882,7 +3882,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 **Beneficio.** Cumple la táctica de modificabilidad "Parametrizar reglas variables" (sección 4.1.7) y el constraint AC-03. Permite ajustar las reglas de análisis sprint a sprint sin ciclo completo de build y despliegue.
 
-![application](assets/images/Backend/application.png)
+![application](assets/images/Backend/Application.png)
 
 #### RF-05 — Adopción de `@ControllerAdvice` para manejo global de excepciones
 
