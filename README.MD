@@ -3862,7 +3862,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
                .resideInAPackage("..infrastructure..");
 ```
 
-![BackendFull](assets/images/Backend/BackendFull.png)
+![BackendFull](assets/images/Backend/Backend.png)
 
 #### RF-03 — Reemplazo de llamadas síncronas entre servicios por eventos asíncronos
 
