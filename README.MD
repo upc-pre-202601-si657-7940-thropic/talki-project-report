@@ -3782,6 +3782,112 @@ A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts
 
 La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización.
 
+### 5.2.3. Source Code Style Guide & Conventions
+
+El equipo Thropic adopta un conjunto de convenciones de estilo de código que abarca todos los lenguajes presentes en el producto Talki. Estas convenciones se basan en guías reconocidas de la industria, garantizando legibilidad uniforme entre integrantes, facilitando el *code review* y reduciendo la fricción al incorporar nuevos colaboradores. Las reglas se aplican a todos los repositorios listados en la sección 5.2.2 y se validan mediante *linters* y *formatters* automáticos integrados en el pipeline de CI/CD.
+
+**Java + Spring Boot (microservicios backend)**
+
+Se sigue la [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) complementada con las convenciones idiomáticas del ecosistema Spring Boot.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 4 espacios, sin tabulaciones. |
+| Longitud de línea | Máximo 120 caracteres. |
+| Nombres de clase | `UpperCamelCase` (ej. `PracticeSessionService`, `FeedbackRepository`). |
+| Nombres de método y variable | `lowerCamelCase` (ej. `startSession`, `transcriptText`). |
+| Constantes | `UPPER_SNAKE_CASE` (ej. `MAX_SESSION_DURATION_SECONDS`). |
+| Nombres de paquete | Todo en minúsculas, separados por punto: `com.thropic.talki.session.application`. |
+| Estructura de paquetes | Por *feature* y capa (`domain`, `application`, `infrastructure`, `interfaces`) siguiendo Hexagonal Architecture. |
+| Anotaciones Spring | `@Service`, `@Repository`, `@RestController`, `@Component` explícitas según rol del bean. |
+| DTOs | Sufijo `Request` o `Response` (ej. `CreateSessionRequest`, `FeedbackResponse`). |
+| Excepciones | Sufijo `Exception` (ej. `SessionNotFoundException`); excepciones de dominio extienden `RuntimeException`. |
+| Imports | Sin *wildcards* (`import java.util.*;` prohibido). |
+| Validación | Bean Validation (`@Valid`, `@NotNull`, `@Size`) en DTOs de entrada. |
+| Logging | SLF4J con niveles `INFO` para hitos de negocio, `WARN` para condiciones recuperables y `ERROR` para fallos. Sin `System.out.println`. |
+
+**TypeScript + Angular (frontend principal)**
+
+Se sigue la [Angular Style Guide oficial](https://angular.dev/style-guide) y la [Airbnb JavaScript/TypeScript Style Guide](https://github.com/airbnb/javascript) en lo que aplique.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 2 espacios, sin tabulaciones. |
+| Longitud de línea | Máximo 120 caracteres. |
+| Nombres de archivo | `kebab-case` con sufijo del tipo de artefacto: `practice-session.component.ts`, `auth.guard.ts`, `feedback.service.ts`. |
+| Nombres de clase | `UpperCamelCase` con sufijo de rol (ej. `PracticeSessionComponent`, `AuthInterceptor`). |
+| Selectores de componente | `kebab-case` con prefijo del *feature module* (ej. `talki-session-recorder`). |
+| Variables y métodos | `lowerCamelCase`. |
+| Constantes globales | `UPPER_SNAKE_CASE` (ej. `API_BASE_URL`). |
+| Tipado | TypeScript estricto (`strict: true` en `tsconfig.json`); prohibido el uso de `any` salvo justificación documentada. |
+| Componentes | Un componente por archivo; lógica en el `.ts`, plantilla en `.html` y estilos en `.scss`. |
+| Inyección de dependencias | Por constructor con modificador `private readonly`. |
+| Estado del componente | Signals u Observables (RxJS); evitar mutación directa de `@Input()`. |
+
+**HTML / CSS / JavaScript (landing page)**
+
+Se sigue la [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html) y la metodología BEM para nombres de clases CSS.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 2 espacios. |
+| HTML semántico | Uso obligatorio de etiquetas semánticas (`<header>`, `<section>`, `<nav>`, `<article>`, `<footer>`). |
+| Atributos | En minúsculas, valores entre comillas dobles. |
+| Nombres de clases CSS | Metodología **BEM**: `block__element--modifier` (ej. `hero__title--highlighted`). |
+| Variables CSS | Custom properties con prefijo `--talki-` (ej. `--talki-color-primary`). |
+| Imágenes | Atributo `alt` obligatorio en todas las imágenes; archivos en `kebab-case`. |
+| JavaScript | ES6+ con `const`/`let` (nunca `var`), funciones flecha y módulos ESM. |
+
+**SQL (esquemas de base de datos)**
+
+| Aspecto | Convención |
+|---|---|
+| Palabras reservadas | `UPPERCASE` (ej. `SELECT`, `FROM`, `WHERE`, `JOIN`). |
+| Nombres de tabla | `snake_case` en plural (ej. `practice_sessions`, `feedback_reports`). |
+| Nombres de columna | `snake_case` en singular (ej. `user_id`, `created_at`). |
+| Claves primarias | Columna `id` de tipo `UUID`. |
+| Claves foráneas | Sufijo `_id` (ej. `session_id`, `user_id`). |
+| Timestamps | Columnas `created_at` y `updated_at` de tipo `TIMESTAMP WITH TIME ZONE`. |
+| Índices | Prefijo `idx_<tabla>_<columna>` (ej. `idx_sessions_user_id`). |
+| Migraciones | Numeradas y descriptivas (`V001__create_users_table.sql`) gestionadas con Flyway. |
+
+**Gherkin (pruebas BDD)**
+
+Las pruebas de aceptación se redactan en **español** para mantener trazabilidad directa con los criterios de aceptación de las User Stories del Capítulo III.
+
+| Aspecto | Convención |
+|---|---|
+| Idioma | Español (`# language: es` al inicio del feature). |
+| Nombres de archivo | `kebab-case` con sufijo `.feature` (ej. `iniciar-sesion-practica.feature`). |
+| Estructura | `Característica` (Feature) → `Escenario` (Scenario) → pasos `Dado`, `Cuando`, `Entonces`, `Y`, `Pero`. |
+| Granularidad | Un escenario por criterio de aceptación de la User Story. |
+| Datos de ejemplo | Uso de `Esquema del escenario` con tabla `Ejemplos` para casos parametrizados. |
+
+**Markdown (informe y documentación técnica)**
+
+| Aspecto | Convención |
+|---|---|
+| Especificación | CommonMark con extensiones de GitHub Flavored Markdown. |
+| Encabezados | Jerarquía estricta `#`, `##`, `###`, sin saltar niveles. |
+| Listas | Guion `-` para no ordenadas; numeración explícita para ordenadas. |
+| Énfasis | `**negrita**` para énfasis fuerte; `*cursiva*` para énfasis suave. |
+| Código en línea | Backticks simples para identificadores técnicos. |
+| Bloques de código | Triple backtick con identificador de lenguaje (`java`, `typescript`, `sql`, `bash`). |
+| Tablas | Alineación visual con guiones; encabezados en negrita por contenido, no por sintaxis. |
+| Enlaces | `[texto](url)` siempre con texto descriptivo, nunca URLs sueltas. |
+| Imágenes | Almacenadas en `assets/images/` con nombres en `kebab-case`; `alt` obligatorio. |
+
+**Convenciones transversales**
+
+Adicionalmente, el equipo aplica los siguientes principios independientes del lenguaje:
+
+- **Idioma del código fuente**: identificadores en inglés (clases, métodos, variables, columnas SQL); comentarios en español.
+- **Sin código muerto**: no se commitea código comentado; el control de versiones preserva el historial.
+- **Comentarios significativos**: los comentarios explican el *por qué* (decisiones, restricciones, *workarounds*), no el *qué* (que se deduce del código).
+- **Funciones cortas**: máximo 30 líneas como referencia; si excede, indica que la función tiene más de una responsabilidad.
+- **Sin valores mágicos**: números y *strings* hardcodeados se elevan a constantes con nombre descriptivo.
+- **Charset y EOL**: UTF-8 sin BOM; *line endings* `LF` (configurado vía `.gitattributes`).
+
 <div style="page-break-after: always;"></div>
 
 # Conclusiones y recomendaciones
