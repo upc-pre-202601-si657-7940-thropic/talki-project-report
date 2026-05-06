@@ -4090,6 +4090,13 @@ Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectón
 - **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono) y la Iteration 2 (Identidad, Seguridad y Observabilidad Transversal) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
 - **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
 
+Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
+
+- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta nueve categorías y diecinueve herramientas seleccionadas (Trello, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit + Mockito, Cucumber, Swagger, GitHub Actions, Vercel, Railway, entre otras), cada una con propósito explícito y enlace oficial.
+- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura planificada de ocho repositorios alineada con los cinco *Bounded Contexts* del Capítulo IV.
+- **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
+- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los cinco microservicios en Railway con *database-per-service*, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con OpenTelemetry y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
+
 ## Recomendaciones
 
 El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
@@ -4099,6 +4106,13 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 - **Ampliar la base de entrevistas del Segmento 2.** Aunque Gianger aporta un perfil bilingüe valioso, se recomienda incorporar al menos dos entrevistados adicionales del Segmento 2 en universidades peruanas presenciales (UPC, PUCP, UL, UPN) para robustecer los hallazgos de needfinding en contextos laborales 100 % locales.
 - **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
 - **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
+
+Tras el cierre del TP1, el equipo identifica las siguientes acciones para preparar la entrada al Sprint 1 sin acumular deuda de configuración:
+
+- **Materializar los ocho repositorios planificados en 5.2.2.** Crear los repositorios bajo la organización `upc-pre-202601-si657-7940-thropic` con su `README` mínimo, `.gitignore` específico del stack, *workflow* base de GitHub Actions y archivo `.env.example`, de modo que cada integrante pueda clonar y ejecutar la base local antes de tomar la primera User Story.
+- **Generar el diagrama formal de arquitectura cloud.** Construir el diagrama referido en la sección 5.4.1 con íconos oficiales de Vercel, Railway y AWS (en Lucidchart, draw.io o Excalidraw) y publicarlo en `assets/images/cloud-architecture.png` para sustituir la nota provisional, completando la evidencia visual del despliegue planificado.
+- **Validar las convenciones del 5.2.3 con linters automáticos.** Configurar Spotless o Checkstyle en los repositorios backend, ESLint + Prettier en el frontend, y Stylelint en la landing, integrados al *pipeline* CI/CD para que las convenciones documentadas no dependan de la disciplina manual del equipo.
+- **Reservar los dominios de la sección 5.4.2.** Adquirir y configurar `talki.app` con sus subdominios `app` y `api` antes del Sprint 1, anticipando los tiempos de propagación DNS y de emisión de certificados TLS para no bloquear los despliegues del MVP.
 
 
 
