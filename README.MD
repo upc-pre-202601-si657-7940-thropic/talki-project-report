@@ -3888,6 +3888,89 @@ Adicionalmente, el equipo aplica los siguientes principios independientes del le
 - **Sin valores mágicos**: números y *strings* hardcodeados se elevan a constantes con nombre descriptivo.
 - **Charset y EOL**: UTF-8 sin BOM; *line endings* `LF` (configurado vía `.gitattributes`).
 
+### 5.2.4. Software Deployment Configuration
+
+El equipo Thropic adopta una estrategia de despliegue continuo basada en **GitHub Actions** como orquestador de los *pipelines* de CI/CD, **Vercel** como plataforma de despliegue del frontend y la landing page, y **Railway** como plataforma de despliegue de los microservicios backend y sus bases de datos. Esta combinación permite *previews* automáticos por *pull request*, despliegues reproducibles a partir de Git y separación de entornos sin infraestructura adicional.
+
+**Estrategia general por entorno**
+
+El despliegue se rige por la convención GitFlow descrita en la sección 5.2.2: cada rama de larga duración mapea a un entorno desplegable, y los *tags* semánticos materializan los *releases* de producción.
+
+| Entorno | Rama disparadora | Plataformas | Propósito |
+|---|---|---|---|
+| Development | `feature/*` | Vercel Preview | Previsualización por *pull request* del frontend y la landing. |
+| Staging | `develop` | Vercel + Railway (proyecto staging) | Validación integral antes del *release*: pruebas E2E, demos internas y revisiones del equipo. |
+| Producción | `main` (vía *tag* `vX.X.X`) | Vercel + Railway (proyecto producción) | Versión publicada del producto, accesible al usuario final. |
+
+**Pipeline de CI/CD con GitHub Actions**
+
+Cada repositorio listado en 5.2.2 mantiene su propio *workflow* en `.github/workflows/`. El pipeline se compone de las siguientes etapas, ejecutadas en *runners* `ubuntu-latest`:
+
+| Etapa | Descripción |
+|---|---|
+| Checkout | `actions/checkout@v4` para obtener el código de la rama disparadora. |
+| Setup | Configuración del entorno (`actions/setup-java@v4` con Temurin 21 para los microservicios; `actions/setup-node@v4` con Node 20 LTS para el frontend y la landing). |
+| Cache | Cacheo de dependencias (`~/.m2/repository` para Maven; `node_modules` para npm) por hash del *lockfile*. |
+| Lint | Validación de estilo: Checkstyle/Spotless en backend; ESLint + Prettier en frontend; Stylelint en landing. |
+| Build | Compilación del artefacto: `mvn -B clean package -DskipTests` en backend; `npm run build` en frontend y landing. |
+| Test | Ejecución de pruebas: JUnit + Mockito + Cucumber en backend; Jasmine/Karma en frontend; *coverage* mínimo configurable. |
+| Image | Construcción de la imagen Docker (solo backend) y *push* al registro de Railway. |
+| Deploy | Despliegue automático al entorno correspondiente: Vercel mediante integración Git nativa; Railway mediante `railway-action` o webhook. |
+
+Los *workflows* se configuran con la cláusula `concurrency` para cancelar ejecuciones obsoletas de la misma rama y evitar despliegues encolados.
+
+**Configuración de Vercel**
+
+Vercel se conecta directamente al repositorio de GitHub mediante la integración oficial, lo que automatiza el despliegue sin requerir un *workflow* explícito de `deploy`.
+
+| Aspecto | Configuración |
+|---|---|
+| Repositorios cubiertos | `talki-landing` y `talki-frontend`. |
+| Trigger de Production Deployment | *Push* a la rama `main`. |
+| Trigger de Preview Deployment | *Push* a cualquier rama `feature/*` y *pull requests* hacia `develop`. |
+| Build command | `npm run build` (Angular CLI o build estático según el proyecto). |
+| Output directory | `dist/` para Angular; raíz del proyecto para la landing. |
+| Variables de entorno | `NEXT_PUBLIC_API_BASE_URL`, `TALKI_ENV` y otras claves no sensibles definidas en el panel de Vercel por entorno. |
+| Dominios | Dominio principal en producción (por definir); subdominios automáticos `*.vercel.app` para *previews*. |
+| Headers y caching | Configuración mediante `vercel.json` con cabeceras de seguridad (CSP, HSTS) y *cache-control* para assets estáticos. |
+
+**Configuración de Railway**
+
+Railway aloja los cinco microservicios backend y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV.
+
+| Aspecto | Configuración |
+|---|---|
+| Servicios desplegados | `talki-identity-service`, `talki-session-service`, `talki-speech-analysis-service`, `talki-progress-service`, `talki-notification-service`. |
+| Origen de la imagen | `Dockerfile` versionado en cada repositorio backend (multi-stage build con Maven y JRE 21). |
+| Bases de datos | Una instancia gestionada de PostgreSQL por servicio, vinculada mediante variables de entorno inyectadas por Railway (`DATABASE_URL`). |
+| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY`, `S3_BUCKET_NAME`, definidas por entorno (staging/producción) en el panel de Railway. |
+| Health checks | Endpoint `GET /actuator/health` expuesto por Spring Boot Actuator; Railway reinicia el contenedor ante respuestas no saludables. |
+| Networking | Comunicación entre microservicios vía red privada de Railway; exposición pública únicamente del API Gateway. |
+| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service` y `speech-analysis-service` por la carga prevista en QAS-02 y QAS-04. |
+
+**Gestión de secretos y configuración sensible**
+
+Todas las credenciales y *secrets* se administran fuera del repositorio Git y se inyectan en tiempo de despliegue mediante los mecanismos nativos de cada plataforma:
+
+- **GitHub Secrets**: tokens de despliegue, claves de API y credenciales de servicios externos requeridas por los *workflows* de CI/CD.
+- **Vercel Environment Variables**: configuración del frontend y la landing por entorno (Production / Preview / Development).
+- **Railway Variables**: configuración de cada microservicio backend y de sus bases de datos por entorno.
+- **Repositorio Git**: nunca se commitean archivos `.env` ni claves; el `.gitignore` incluye `.env`, `.env.*` y `*.pem`. Cada repositorio incluye un archivo `.env.example` con los nombres de variables requeridas y valores ficticios.
+
+Adicionalmente, el equipo planifica la rotación periódica de los pares de claves JWT (RSA-256, conforme a DD-09 del Capítulo IV) y de los tokens de acceso a Railway y Vercel, manteniendo un registro de la fecha de la última rotación en la documentación interna.
+
+**Estrategia de release y rollback**
+
+El procedimiento de *release* del producto Talki sigue los siguientes pasos:
+
+1. Cuando `develop` reúne un conjunto cohesivo de features estables, se crea una rama `release/vX.X.X` para estabilización.
+2. En esa rama se actualizan los archivos de versión (`pom.xml`, `package.json`) y se generan las notas de release.
+3. La rama `release/vX.X.X` se fusiona a `main` mediante PR; al cerrarse, se crea un *tag* anotado `vX.X.X` que dispara el despliegue de producción.
+4. El mismo `release/vX.X.X` se fusiona de regreso a `develop` para preservar los cambios de estabilización en la línea de desarrollo.
+5. Ante un fallo en producción, el *rollback* se realiza re-desplegando el *tag* anterior estable desde el panel de Railway y de Vercel, sin necesidad de revertir commits en `main`.
+
+Esta estrategia mantiene la rama `main` siempre consistente con un *tag* desplegable, garantizando que cualquier punto del historial principal pueda restaurarse como versión activa del producto.
+
 <div style="page-break-after: always;"></div>
 
 # Conclusiones y recomendaciones
