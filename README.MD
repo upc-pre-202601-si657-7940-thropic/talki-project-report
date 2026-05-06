@@ -3696,6 +3696,92 @@ A continuación se listan las herramientas y servicios que el equipo emplea dura
 | [WhatsApp](https://www.whatsapp.com/) | Comunicación asincrónica informal del equipo para coordinaciones rápidas, dudas puntuales y notificaciones de avance. |
 | [Gmail](https://mail.google.com/) | Comunicación formal con el docente del curso y envío oficial de entregables académicos. |
 
+### 5.2.2. Source Code Management
+
+El equipo Thropic adopta **Git** como sistema de control de versiones distribuido y **GitHub** como plataforma central para alojar los repositorios del producto Talki bajo la organización académica `upc-pre-202601-si657-7940-thropic`. Sobre esa base se aplican las siguientes prácticas para garantizar trazabilidad, integración ordenada y colaboración entre integrantes.
+
+**Estrategia de ramificación: GitFlow**
+
+El equipo aplica el modelo *GitFlow* descrito por Vincent Driessen, que define ramas con propósitos diferenciados y reglas claras de origen y destino para cada *merge*. Esta estrategia es coherente con el enfoque iterativo del Capítulo V (Sprints) y permite mantener la rama `main` siempre en estado desplegable.
+
+| Tipo de rama | Patrón de nombre | Origen | Destino | Propósito |
+|---|---|---|---|---|
+| Principal estable | `main` | — | — | Refleja el estado de producción del producto. Cada *merge* corresponde a una versión publicada. |
+| Integración | `develop` | `main` | `release/*` | Integra todo el trabajo en curso del equipo y alimenta los *release candidates*. |
+| Funcionalidad | `feature/<nombre>` | `develop` | `develop` | Desarrollo de una sección, User Story o conjunto cohesivo de cambios. |
+| Release candidate | `release/vX.X.X` | `develop` | `main` y `develop` | Estabilización previa al despliegue: ajustes finales y bumps de versión. |
+| Corrección crítica | `hotfix/<nombre>` | `main` | `main` y `develop` | Corrección urgente sobre producción que retorna a `develop` para preservar la línea de cambios. |
+
+Los nombres de rama se escriben en **minúsculas** y con **guiones** como separador (no *underscores*); por ejemplo, `feature/capitulo-v` o `hotfix/fix-caratula`. Esta convención se aplica también a los repositorios del informe y del producto.
+
+**Convención de mensajes de commit**
+
+Cada commit sigue una estructura inspirada en *Conventional Commits* y en la guía de mensajes de Tim Pope, garantizando legibilidad del historial:
+
+- **Línea 1 (asunto):** máximo **72 caracteres**, en español, redactado en tiempo imperativo (*Agrega*, *Corrige*, *Actualiza*) y sin punto final.
+- **Línea 2:** vacía, como separador obligatorio entre asunto y cuerpo.
+- **Línea 3 en adelante (cuerpo):** descripción libre del *qué* y el *por qué* del cambio, con líneas envueltas a aproximadamente 72 caracteres.
+
+Los prefijos sugeridos para clasificar el tipo de cambio son los siguientes:
+
+| Prefijo | Uso |
+|---|---|
+| `feat:` | Incorporación de una nueva sección, funcionalidad o contenido. |
+| `fix:` | Corrección de un defecto, error de contenido o problema de formato. |
+| `docs:` | Cambios en documentación auxiliar (CLAUDE.md, README, ADRs). |
+| `style:` | Ajustes de formato sin cambio de contenido (espaciado, indentación, page breaks). |
+| `chore:` | Tareas de mantenimiento del repositorio (`.gitignore`, configs, dependencias). |
+| `refactor:` | Reorganización interna sin cambio de comportamiento observable. |
+| `test:` | Adición o modificación de pruebas automatizadas. |
+
+**Ejemplo de commit válido:**
+
+```
+feat: agrega antecedentes y problemática del cap. I
+
+Se completan las secciones del framework 5W+2H con fuentes del
+MINSA y un análisis de la situación actual del mercado peruano
+de salud para sustentar la propuesta de valor.
+```
+
+**Flujo de Pull Request y revisión de código**
+
+Todo cambio se integra a `develop` exclusivamente mediante *Pull Request* (PR), nunca por *push directo*. El flujo aplicado por el equipo es el siguiente:
+
+1. El responsable crea una rama `feature/<nombre>` desde `develop`.
+2. Realiza commits atómicos siguiendo la convención descrita.
+3. Abre un PR hacia `develop` con título y descripción que resuman el alcance, los entregables tocados (sección del informe o módulo del código) y, cuando aplique, los identificadores trazables (US, ADB, DD, QAS).
+4. Al menos otro integrante revisa el PR; los comentarios pendientes se resuelven antes de aprobar.
+5. La integración se realiza preferentemente por *squash merge* o *merge commit* según el tipo de aporte, manteniendo la linealidad legible del historial.
+6. La rama `feature/*` se elimina del remoto tras el *merge* para evitar acumulación.
+
+**Versionamiento semántico**
+
+Los *releases* del producto siguen **Semantic Versioning** en formato `vMAYOR.MENOR.PARCHE` (por ejemplo, `v1.0.0`):
+
+- **MAYOR**: cambios incompatibles en la API pública o en la arquitectura.
+- **MENOR**: nuevas funcionalidades retrocompatibles.
+- **PARCHE**: correcciones de defectos retrocompatibles.
+
+Cada *release* se materializa en una rama `release/vX.X.X` y, al fusionarse a `main`, queda etiquetada con un *tag* del mismo nombre.
+
+**Estructura planificada de repositorios**
+
+A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts* y un frontend único), el equipo planifica los siguientes repositorios bajo la organización `upc-pre-202601-si657-7940-thropic`. Cada repositorio mantiene su propio ciclo de GitFlow y *pipeline* de CI/CD independiente, alineado con el principio de autonomía por servicio.
+
+| Repositorio planificado | Tipo | Stack | Bounded Context / Rol |
+|---|---|---|---|
+| `talki-project-report` | Documentación | Markdown | Informe académico del curso (este documento). |
+| `talki-landing` | Frontend | HTML / CSS / JavaScript | Landing page pública del producto. |
+| `talki-frontend` | Frontend | Angular + TypeScript | Aplicación web principal de Talki. |
+| `talki-identity-service` | Backend | Java + Spring Boot | Identity & Access Bounded Context. |
+| `talki-session-service` | Backend | Java + Spring Boot | Practice Session Bounded Context. |
+| `talki-speech-analysis-service` | Backend | Java + Spring Boot | Speech Analysis Bounded Context. |
+| `talki-progress-service` | Backend | Java + Spring Boot | Progress & Metrics Bounded Context. |
+| `talki-notification-service` | Backend | Java + Spring Boot | Notification Bounded Context. |
+
+La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización.
+
 <div style="page-break-after: always;"></div>
 
 # Conclusiones y recomendaciones
