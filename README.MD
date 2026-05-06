@@ -3769,7 +3769,6 @@ AnalysisStrategy (interface, dominio)
 AnalysisStrategyFactory → crea la estrategia según el tipo de sesión
 FeedbackOrchestrator    → delega en la estrategia; no conoce sus detalles
 ```
-
 Permite agregar un nuevo tipo de sesión sin modificar el orquestador ni los demás servicios (Open/Closed Principle, QAS-07).
 
 #### Patrón Saga por coreografía — flujo de sesión finalizada
