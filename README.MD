@@ -46,7 +46,7 @@
 
 </div>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Registro de Versiones del Informe
 
@@ -75,16 +75,17 @@
 | 2.9 | 30/04/2026 | Gael | Definición de Quality Attribute Scenarios |
 | 2.10 | 30/04/2026 | Gael | Catálogo de Constraints arquitectónicas |
 | 2.11 | 30/04/2026 | Gael | Identificación de Architectural Concerns y riesgos |
-| 2.12 | 02/05/2026 | Alejandro | Redacción de Iteration 1 — Núcleo de Sesión de Práctica y Feedback Asíncrono (4.3.1) |
-| 2.13 | 02/05/2026 | Alejandro | Incorporación del C4 Nivel 3 del session-service en 4.3.1.6 |
-| 2.14 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Driver Priorities y Software Element View) |
-| 2.15 | 02/05/2026 | Alejandro | Redacción de Iteration 2 — Identidad, Seguridad y Observabilidad Transversal (4.3.2) |
-| 2.16 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado en 4.1.5 |
-| 2.17 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 |
-| 2.18 | 03/05/2026 | Alejandro | Correcciones de trazabilidad y nomenclatura del Capítulo IV |
-| 2.19 | 03/05/2026 | Alejandro, Gael, Manuel | Redacción de Conclusiones y Recomendaciones del Avance 2 |
+| 2.12 | 02/05/2026 | Alejandro | Redacción de la sección 4.3 ADD Iterations — Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono): Architectural Design Backlog 1, Iteration Goal con priorización de drivers, elementos a refinar, conceptos de diseño, instanciación de elementos arquitectónicos con interfaces, vistas C4 + UML y Decision Log |
+| 2.13 | 02/05/2026 | Alejandro | Mejoras de trazabilidad en 4.3.1: incorporación de US10 como driver del Strategy con nota de alcance Must, reemplazo de la referencia a Adapter por la táctica oficial "Interfaces sobre implementaciones" (4.1.7) y marcado de campos opcionales en el contrato POST /v1/sessions con trazabilidad a US11/US25 |
+| 2.14 | 02/05/2026 | Alejandro | Incorporación del diagrama C4 Nivel 3 del session-service en 4.3.1.6 para cumplir el requisito explícito del cronograma "Sketch Views (C4 & UML)" |
+| 2.15 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Track Manager, SEI 2006): tabla de Architectural Driver Priorities en 4.3.1.2, Software Element View consolidada y tabla "Elements after Iteration 1" en 4.3.1.7 |
+| 2.16 | 02/05/2026 | Alejandro | Redacción de la sección 4.3.2 ADD Iterations — Iteration 2 (Identidad, Seguridad y Observabilidad Transversal): Architectural Design Backlog 2 con 10 ítems, conceptos de diseño para JWT RSA-256, bcrypt, rate limiting, OpenTelemetry, S3 lifecycle; C4 Nivel 3 del identity-service y UML del flujo de login con refresh token rotativo |
+| 2.17 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado de los cinco bounded contexts en 4.1.5 con atributos, métodos y relaciones (Architecture Overview: Class Diagram & Database Diagram) |
+| 2.18 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 con notación oficial (U/D, OHS, ACL, PL) sobre los cinco Bounded Contexts identificados |
+| 2.19 | 03/05/2026 | Manuel | Ajustes finales en los diagramas del Capítulo IV para mejorar la claridad visual y la consistencia de notación |
+| 2.20 | 03/05/2026 | Alejandro | Actualización del Registro de Versiones del informe consolidando todas las contribuciones del Avance 2 (Capítulo IV) por integrante |
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Contenido
 
@@ -206,7 +207,7 @@
 - [Referencias Bibliográficas](#referencias-bibliográficas)
 - [Anexos](#anexos)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Student Outcome
 
@@ -246,7 +247,7 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo I: Introducción
 
@@ -287,7 +288,7 @@ Talki es la solución principal de Thropic: una aplicación web que utiliza IA p
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 1.2. Solution Profile
 
@@ -418,7 +419,7 @@ _Figura 4: Lean UX Canvas de Talki_
 
 _Nota._ Elaboración propia (2026).
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 1.3. Segmentos objetivo
 
@@ -458,7 +459,7 @@ _Nota._ Elaboración propia (2026).
 - Dolores: Dificultad para expresarse con fluidez y vocabulario profesional, ansiedad ante entrevistas de trabajo, falta de espacios reales de práctica con feedback concreto
 - Comportamientos digitales: Usuarios activos de LinkedIn, plataformas de empleabilidad y apps de productividad; dispuestos a pagar por herramientas que generen ROI directo en su carrera
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo II: Requirements & Analysis
 
@@ -589,7 +590,7 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 - *Alianzas universitarias:* Partnerships con facultades de Ingeniería y Comunicaciones de universidades peruanas para adopción institucional
 - *Gamificación contextual:* Sistema de logros y streaks adaptado a los ciclos académicos peruanos (exposiciones, sustentaciones, entrevistas de prácticas)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 2.2. Entrevistas
 
@@ -820,7 +821,7 @@ Las fichas individuales anteriores recogen la evidencia bruta de cada entrevista
 
 Las entrevistadas del Segmento 1 (Belén e Isabel) expresaron su disposición a pagar un rango aproximado de **USD 2 a 5 mensuales** por una aplicación que realmente funcione. Considerando el tipo de cambio promedio de referencia (S/ 3.70 por USD), este rango equivale a **S/ 7 a S/ 19 mensuales**. El plan Premium Estudiantil de Talki, definido en la sección 1.2.3.2 en **S/ 15 a S/ 25 mensuales**, se encuentra dentro o muy cerca del techo indicado por las usuarias, lo que sugiere una aceptabilidad razonable del precio propuesto. Para el Segmento 2 (Rodrigo Sánchez y similares), la disposición a pagar es mayor por el retorno profesional esperado (entrevistas, ascensos, primer empleo), lo que habilita el tramo superior del rango y justifica mantener la horquilla S/ 15 a S/ 25 como precio de referencia.
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 2.3. Needfinding
 
@@ -977,7 +978,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario
 ![As-Is Scenario Mapping del Segmento 2 (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/As-Is_Segmento2.png)
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo III: Requirements Specification
 
@@ -995,7 +996,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
 
 ![To-Be Scenario Mapping del Segmento 2 con Talki (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/To-be_Segmento2.png)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.2. User Stories
 
@@ -1517,7 +1518,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.3. Impact Map
 
@@ -1590,7 +1591,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.4. Product Backlog
 
@@ -1835,7 +1836,7 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo IV: Product Architecture Design
 
@@ -2068,7 +2069,7 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 4.2. Architectural Drivers
 
@@ -2511,7 +2512,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 4.3. ADD Iterations
 
@@ -3329,7 +3330,7 @@ _Diagrama Software Element View — Estado del sistema Talki después de la Iter
 
 **Conclusión de la iteración.** El *iteration goal* se considera **alcanzado en su núcleo de diseño**: los drivers funcionales (US09, US12, US14, US15) y los escenarios de calidad de mayor riesgo (QAS-02, QAS-03, QAS-07, QAS-08) están cubiertos por decisiones registradas y trazables. Quedan tres ítems en *Por hacer* (ADB-10, ADB-11, ADB-12) que se promueven al backlog de la **Iteration 2**, junto con el refinamiento del `identity-service` (seguridad y autenticación) y la activación de la observabilidad transversal.
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ### 4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal
 
@@ -3615,247 +3616,87 @@ sequenceDiagram
 
 **Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido con recomendaciones de léxico (US18) y el `notification-service` para alertas asíncronas al usuario.
 
-<hr class="page-break">
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo V: Product Implementation, Validation & Deployment
 
-## 5.1. Testing Suites & General Patterns
-
-### 5.1.1. Backend Application Core Testing Suite
-
-
-
-### 5.1.2. Pattern Based Backend Application(s)
-
-
-
-### 5.1.3. Pattern Based Custom Software Library
-
-
-
-### 5.1.4. Framework Pattern Driven Refactoring Report
-
-
-
-<hr class="page-break">
-
 ## 5.2. Software Configuration Management
+
+Esta sección documenta el conjunto de herramientas, convenciones y procesos que el equipo Thropic adopta para gestionar la configuración del producto Talki a lo largo de su ciclo de vida. Se describen los entornos de desarrollo, las prácticas de control de versiones, las guías de estilo de código y la configuración de despliegue, garantizando trazabilidad y reproducibilidad de cada cambio introducido al sistema.
 
 ### 5.2.1. Software Development Environment Configuration
 
+A continuación se listan las herramientas y servicios que el equipo emplea durante el ciclo de vida del producto Talki, agrupadas por categoría según el rol que cumplen en el flujo de trabajo. Cada herramienta fue seleccionada por su pertinencia para cubrir un aspecto específico del proceso (gestión, diseño, desarrollo, prueba, documentación, despliegue, configuración o comunicación), su disponibilidad en planes gratuitos o académicos, y su integración con el resto del *toolchain* del equipo.
 
+**Project Management**
 
-### 5.2.2. Source Code Management
+| Herramienta | Propósito |
+|---|---|
+| [Trello](https://trello.com/) | Tablero Kanban para la gestión del Product Backlog y de los Sprint Backlogs del Capítulo V. Permite visualizar el avance de las User Stories en columnas (To Do, In Progress, Done), asignar responsables del equipo y mantener la trazabilidad de los entregables por sprint. |
 
-Se utilizó **GitHub** como plataforma de control de versiones y colaboración en equipo.
+**Requirements Management**
 
-Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes:
+| Herramienta | Propósito |
+|---|---|
+| [StoryboardThat](https://www.storyboardthat.com/) | Construcción de los artefactos visuales de needfinding (Empathy Maps, As-Is Scenario Mapping y To-Be Scenario Mapping) que sustentan la especificación de requerimientos de los Capítulos II y III. |
 
-| Integrantes | Nombre en GitHub |
-|-------------|------------------|
-| Oroncoy Almeyda, Alejandro Daniel | alejooroncoy |
-| Rivera Sosa, Eduardo Gael | gael-rs |
-| Tumi Oliden, Manuel Ignacio | ManuelTumi2224 |
+**Product Design**
 
-### 5.2.3. Source Code Style Guide & Conventions
+| Herramienta | Propósito |
+|---|---|
+| [Figma](https://www.figma.com/) | Diseño de wireframes, mockups y prototipos de alta fidelidad de las pantallas de Talki, así como definición del sistema visual del producto (tipografía, paleta y componentes UI reutilizables). |
+| [Structurizr](https://structurizr.com/) | Modelado de los diagramas C4 (Context, Container y Component) presentados en el Capítulo IV, con definiciones versionables como código DSL. |
+| [PlantUML](https://plantuml.com/) | Generación de diagramas UML (clases, secuencia y entidad-relación) a partir de descripciones textuales versionadas junto al código fuente del informe. |
 
+**Software Development**
 
+| Herramienta | Propósito |
+|---|---|
+| [Visual Studio Code](https://code.visualstudio.com/) | Editor de código principal para la edición del informe Markdown, archivos de configuración, manifiestos de infraestructura como código y desarrollo ligero de frontend. |
+| [WebStorm](https://www.jetbrains.com/webstorm/) | IDE especializado para el desarrollo del frontend en Angular/TypeScript, con soporte avanzado de *refactoring*, depuración integrada e inspección de código. |
+| [IntelliJ IDEA](https://www.jetbrains.com/idea/) | IDE para el desarrollo de los microservicios backend en Java con Spring Boot, con integración nativa para Maven, JUnit y herramientas de análisis estático. |
+| [Hoppscotch](https://hoppscotch.io/) | Cliente HTTP basado en navegador para probar manualmente los endpoints REST de los microservicios durante el desarrollo y validar el cumplimiento de los contratos OpenAPI. |
 
-### 5.2.4. Software Deployment Configuration
+**Software Testing**
 
+| Herramienta | Propósito |
+|---|---|
+| [JUnit](https://junit.org/) + [Mockito](https://site.mockito.org/) | Framework de pruebas unitarias e *mocking* para los microservicios Java/Spring Boot, empleado para aislar el comportamiento bajo prueba y verificar reglas de negocio. |
+| [Cucumber](https://cucumber.io/) | Ejecución de pruebas de aceptación escritas en lenguaje Gherkin (Given/When/Then), alineadas con los criterios de aceptación de las User Stories especificadas en el Capítulo III. |
 
+**Software Documentation**
 
-<hr class="page-break">
+| Herramienta | Propósito |
+|---|---|
+| [Swagger / OpenAPI](https://swagger.io/) | Documentación interactiva de las APIs REST de los microservicios, autogenerada a partir de las anotaciones del código fuente siguiendo el enfoque API-First del Capítulo IV. |
+| [GitHub](https://github.com/) | Hosting del informe en formato Markdown y de la documentación técnica complementaria, con historial de versiones y revisión por *pull requests*. |
 
-## 5.3. Microservices Implementation
+**Software Deployment**
 
-### 5.3.1. Sprint 1
+| Herramienta | Propósito |
+|---|---|
+| [GitHub Actions](https://github.com/features/actions) | Pipelines de Integración y Despliegue Continuo (CI/CD): build, ejecución de pruebas y despliegue automático del frontend y de los microservicios tras los *merges* a `develop` y `main`. |
+| [Vercel](https://vercel.com/) | Plataforma de despliegue del frontend Angular y de la landing page de Talki, con generación automática de *previews* por cada pull request. |
+| [Railway](https://railway.app/) | Plataforma de despliegue de los microservicios backend en contenedores y de sus bases de datos asociadas, con escalado horizontal y variables de entorno gestionadas. |
 
-#### 5.3.1.1. Sprint Backlog 1
+**Software Configuration Management**
 
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 1 |            |                  |             |                   |            |        |
+| Herramienta | Propósito |
+|---|---|
+| [Git](https://git-scm.com/) | Sistema de control de versiones distribuido utilizado a nivel local por cada integrante del equipo para el seguimiento de cambios sobre el código y el informe. |
+| [GitHub](https://github.com/) | Plataforma remota para el alojamiento de los repositorios de la organización `upc-pre-202601-si657-7940-thropic`, gestión de *Pull Requests*, *code review* y mantenimiento del historial central del proyecto. |
+| [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) | Modelo de ramificación adoptado por el equipo (`main`, `develop`, `feature/*`, `release/*`, `hotfix/*`) para estructurar el flujo de integración y los ciclos de release del producto. |
 
-#### 5.3.1.2. Development Evidence for Sprint Review
+**Software Communication**
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+| Herramienta | Propósito |
+|---|---|
+| [Google Meet](https://meet.google.com/) | Reuniones sincrónicas formales del equipo (sprint planning, sprint review y retrospectivas) y asesorías con el docente del curso. |
+| [WhatsApp](https://www.whatsapp.com/) | Comunicación asincrónica informal del equipo para coordinaciones rápidas, dudas puntuales y notificaciones de avance. |
+| [Gmail](https://mail.google.com/) | Comunicación formal con el docente del curso y envío oficial de entregables académicos. |
 
-#### 5.3.1.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.1.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.1.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.1.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.1.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.1.8. Kanban Board
-
-<hr class="page-break">
-
-### 5.3.2. Sprint 2
-
-#### 5.3.2.1. Sprint Backlog 2
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 2 |            |                  |             |                   |            |        |
-
-#### 5.3.2.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.2.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.2.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.2.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.2.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.2.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.2.8. Kanban Board
-
-<hr class="page-break">
-
-### 5.3.3. Sprint 3
-
-#### 5.3.3.1. Sprint Backlog 3
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 3 |            |                  |             |                   |            |        |
-
-#### 5.3.3.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.3.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.3.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.3.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.3.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.3.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.3.8. Kanban Board
-
-<hr class="page-break">
-
-### 5.3.4. Sprint 4
-
-#### 5.3.4.1. Sprint Backlog 4
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 4 |            |                  |             |                   |            |        |
-
-#### 5.3.4.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.4.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.4.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.4.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.4.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.4.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.4.8. Kanban Board
-
-<hr class="page-break">
-
-## 5.4. Microservices Deployment
-
-### 5.4.1. Cloud Architecture Diagram
-
-
-
-### 5.4.2. Cloud Architecture Deployment
-
-
-
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Conclusiones y recomendaciones
 
@@ -3889,19 +3730,9 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 - **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
 - **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
 
-Al cierre del segundo avance (TB2), el equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe en el siguiente entregable (TP1), tomando como base las decisiones de diseño consolidadas en el Capítulo IV:
-
-- **Iniciar la implementación del camino crítico de la Iteration 1.** Materializar primero los contratos REST y AMQP del `session-service`, `transcription-service` y `ai-feedback-service` definidos en 4.3.1.5, junto con las decisiones DD-01 a DD-10, garantiza que el MVP entregue valor a los User Personas desde el primer sprint y permite validar empíricamente los SLO de QAS-01 (latencia ≤ 1.5 s) y QAS-02 (finalize ≤ 500 ms).
-- **Configurar el entorno de desarrollo y CI/CD antes del Sprint 1.** Establecer GitFlow, convenciones de código, contenedores Docker, pipelines de CI con tests unitarios y un primer despliegue de prueba antes de iniciar la implementación funcional evita la deuda de infraestructura y prepara el camino para la rúbrica TP1 (Software Configuration Management, Web Services RESTful API, Backend Application Core Testing Suite).
-- **Externalizar los prompts del LLM y los umbrales de análisis desde el primer sprint.** La decisión DD-09 (Spring Cloud Config) solo es valiosa si se aplica en la implementación; codificarla desde el inicio permite ajustar las reglas de análisis sprint a sprint sin redeploy, alineado con AC-03.
-- **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories ya tienen criterios Given-When-Then formulados; convertirlos en pruebas automatizadas con Cucumber o equivalente desde el Sprint 1 cubre el ítem 4 de la rúbrica TB3 (testing microservices) y refuerza la trazabilidad requerimientos → código → pruebas.
-- **Mantener actualizado el Registro de Versiones y el Student Outcome con cada incorporación.** Documentar las modificaciones en el momento de realizarlas, en lugar de consolidarlas al final, refuerza el ítem 9 (Evolution) de la rúbrica y permite al equipo recibir retroalimentación temprana del docente durante las asesorías quincenales.
-
-# Video About-The-Team
 
 
-
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Referencias Bibliográficas
 
@@ -3927,7 +3758,7 @@ Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends
 
 Wojcik, R., Bachmann, F., Bass, L., Clements, P., Merson, P., Nord, R., & Wood, B. (2006). *Attribute-Driven Design (ADD), Version 2.0* (Technical Report CMU/SEI-2006-TR-023). Software Engineering Institute, Carnegie Mellon University. https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=8147
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Anexos
 
