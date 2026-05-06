@@ -3973,6 +3973,101 @@ Esta estrategia mantiene la rama `main` siempre consistente con un *tag* despleg
 
 <div style="page-break-after: always;"></div>
 
+## 5.4. Microservices Deployment
+
+Esta sección describe la materialización del despliegue de Talki en infraestructura cloud, partiendo de la configuración general establecida en la sección 5.2.4 y del *Container Diagram* C4 (Nivel 2) del Capítulo IV. Se documenta tanto la vista estática de los componentes desplegados como la dinámica de su interacción en tiempo de ejecución.
+
+### 5.4.1. Cloud Architecture Diagram
+
+La arquitectura cloud de Talki sigue una topología de **microservicios desplegados de forma independiente** sobre plataformas *Platform-as-a-Service* (PaaS), conservando los límites de los cinco *Bounded Contexts* definidos en el Capítulo IV. La distribución de los componentes en proveedores cloud se resume en el siguiente diagrama lógico.
+
+**Vista lógica del despliegue**
+
+| Capa | Componente desplegado | Plataforma | Tecnología | Acceso |
+|---|---|---|---|---|
+| Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.app`) |
+| Edge / CDN | `talki-frontend` | Vercel | Angular + TypeScript | Público (`https://app.talki.app`) |
+| API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.app`) |
+| Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `session-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `speech-analysis-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `progress-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `notification-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Datos | PostgreSQL × 5 (una por servicio) | Railway | PostgreSQL 16 gestionado | Privado (vínculo por servicio) |
+| Almacenamiento | Bucket de audios | AWS S3 | S3 Standard + Lifecycle Policy | Privado (acceso por *signed URL*) |
+| IA externa | Servicio de transcripción y análisis | Proveedor IA (OpenAI / Whisper) | API HTTPS | Acceso saliente desde `speech-analysis-service` |
+| Identidad | Proveedor de email transaccional | Servicio externo (Resend / SendGrid) | API HTTPS | Acceso saliente desde `notification-service` |
+
+**Conexiones principales del diagrama**
+
+El siguiente listado representa los flujos de comunicación entre los componentes desplegados, complementando la tabla anterior:
+
+1. El **usuario final** accede a `talki-landing` y a `talki-frontend` desde su navegador, ambos servidos por la red CDN global de Vercel.
+2. El **frontend** consume exclusivamente el **API Gateway** público de Railway mediante HTTPS, autenticando cada solicitud con un *bearer token* JWT emitido por el `identity-service`.
+3. El **API Gateway** enruta las solicitudes a los microservicios correspondientes a través de la red privada interna de Railway, sin exposición pública.
+4. Cada **microservicio** se conecta exclusivamente a **su propia base de datos PostgreSQL** (patrón *database-per-service*), prohibiendo accesos cruzados.
+5. El `session-service` sube los audios al **bucket S3** mediante credenciales gestionadas por GitHub Secrets y emite una *signed URL* de subida al frontend cuando aplica.
+6. El `speech-analysis-service` consume el **proveedor de IA externo** para transcripción y análisis del audio, recibiendo la respuesta de forma asíncrona mediante eventos.
+7. El `notification-service` envía correos transaccionales mediante el **proveedor de email externo** ante eventos de negocio (registro, recuperación de contraseña, hito de progreso).
+
+> _Figura: Diagrama de arquitectura cloud de Talki._ El diagrama formal en notación cloud (íconos oficiales de AWS, Vercel y Railway) se elaborará en una herramienta de diagramación cloud y se incorporará en el directorio `assets/images/cloud-architecture.png` durante la implementación del primer sprint.
+
+### 5.4.2. Cloud Architecture Deployment
+
+Esta subsección describe los aspectos operacionales del despliegue de la arquitectura presentada: dominios, redes, exposición de servicios, observabilidad y costos asociados al modelo PaaS adoptado.
+
+**Estrategia de dominios y DNS**
+
+| Dominio | Apunta a | Propósito |
+|---|---|---|
+| `talki.app` | Vercel (`talki-landing`) | Landing pública del producto. |
+| `app.talki.app` | Vercel (`talki-frontend`) | Aplicación web principal autenticada. |
+| `api.talki.app` | Railway (API Gateway) | Endpoint público de la API REST. |
+| `*.preview.talki.app` | Vercel Previews | Subdominios automáticos por *pull request* para validación. |
+
+La gestión del DNS se realiza mediante un proveedor externo (Cloudflare o similar) configurado con registros `CNAME` hacia los *endpoints* públicos de Vercel y Railway, y certificados TLS gestionados automáticamente por cada plataforma.
+
+**Exposición de servicios y red privada**
+
+- **Servicios públicos**: únicamente la landing, el frontend y el API Gateway están expuestos a Internet. El resto de microservicios y las bases de datos permanecen en la red privada de Railway.
+- **Comunicación interna**: los microservicios se descubren entre sí mediante variables de entorno con las URLs internas (`http://session-service.railway.internal:8080`), evitando dependencia de un *service discovery* dedicado en esta etapa.
+- **Política de CORS**: el API Gateway acepta solicitudes desde los dominios `app.talki.app`, `talki.app` y los subdominios `*.preview.talki.app`, rechazando cualquier otro origen.
+- **TLS extremo a extremo**: todo el tráfico externo se cifra con TLS 1.3 mediante los certificados gestionados por Vercel y Railway.
+
+**Observabilidad y monitoreo**
+
+| Aspecto | Configuración |
+|---|---|
+| Logs centralizados | Logs estructurados en formato JSON emitidos por cada servicio y agregados por la consola nativa de Railway. |
+| Métricas | Spring Boot Actuator expone `/actuator/metrics` y `/actuator/prometheus`; Railway captura uso de CPU, memoria y latencia. |
+| Trazas distribuidas | OpenTelemetry con propagación W3C Trace Context (DD-13 del Capítulo IV) para correlacionar peticiones entre microservicios. |
+| Health checks | Endpoint `GET /actuator/health` consultado periódicamente por Railway; reinicio automático ante respuestas no saludables. |
+| Alertas | Reglas configuradas en Railway por umbrales de CPU > 80 %, memoria > 85 % y *error rate* > 5 % en ventanas de 5 minutos. |
+
+**Procedimiento operativo de despliegue**
+
+El despliegue de un nuevo *release* en producción sigue los siguientes pasos, automatizados por GitHub Actions y la integración nativa de cada plataforma:
+
+1. Se publica el *tag* `vX.X.X` desde la rama `main` (ver sección 5.2.4).
+2. GitHub Actions construye las imágenes Docker de cada microservicio modificado y las publica en el registro interno de Railway.
+3. Railway despliega secuencialmente los servicios actualizados ejecutando *rolling updates* sin tiempo de inactividad observable, gracias a los *health checks* configurados.
+4. Vercel detecta el *push* a `main` y publica las nuevas versiones del frontend y la landing en su CDN global.
+5. Tras el despliegue, las pruebas *smoke* automatizadas verifican el estado del API Gateway y de los endpoints críticos (`POST /v1/auth/login`, `POST /v1/sessions`).
+6. Si las pruebas *smoke* fallan, el equipo realiza un *rollback* re-desplegando el *tag* anterior estable desde el panel de Railway y de Vercel.
+
+**Modelo de costos**
+
+El equipo prioriza los planes gratuitos y académicos de cada plataforma para sostener la operación durante la fase de validación del MVP:
+
+- **Vercel**: plan *Hobby* (gratuito) suficiente para landing y frontend en validación inicial; migración planificada al plan *Pro* al superar los 100 GB de *bandwidth* mensual.
+- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los cinco microservicios y sus bases de datos se ajustan a los límites del plan durante la validación.
+- **AWS S3**: tier gratuito (5 GB) para los primeros meses; transición a *Standard* con políticas de *lifecycle* para mover audios a *Glacier Deep Archive* tras 90 días de inactividad (DD-15 del Capítulo IV).
+- **Proveedor de IA**: facturación por uso, controlada mediante *rate limiting* en el `speech-analysis-service` para acotar el costo por usuario.
+
+Esta combinación permite operar el producto durante la fase de validación con un costo mensual estimado inferior a USD 50, escalando linealmente con la adopción de usuarios reales.
+
+<div style="page-break-after: always;"></div>
+
 # Conclusiones y recomendaciones
 
 ## Conclusiones
