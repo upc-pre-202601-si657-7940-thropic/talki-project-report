@@ -3633,12 +3633,13 @@ Cubren la lógica de negocio pura de cada servicio de forma aislada, sin levanta
 
 | Servicio | Clases bajo prueba | Framework | Objetivo de cobertura |
 |---|---|---|---|
-| `ai-feedback-service` | `FeedbackOrchestrator`, `PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`, `AnalysisStrategyFactory` | JUnit 5 + Mockito | ≥ 80 % de líneas en capa de dominio (QAS-10) |
+| `live-coach-service` | `LiveCoachOrchestrator`, `SessionModeStrategyFactory`, `QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy` | JUnit 5 + Mockito | ≥ 80 % de líneas en capa de dominio (QAS-10) |
 | `session-service` | `SessionCommandServiceImpl`, `SessionQueryServiceImpl` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 | `identity-service` | `AuthService`, `TokenService`, `PasswordHasher` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `scoring-service` | `ScoreCalculator`, `SilenceAnalyzer`, `FillerScoreWeighter` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 | `progress-service` | `MetricCalculator`, `ProgressQueryHandler` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 
-Los clientes de servicios externos (LLM, transcripción) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
+Los clientes de servicios externos (Gemini Live, Whisper) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
 
 **Convenciones de nomenclatura:**
 ```
@@ -3658,9 +3659,11 @@ Verifican la interacción entre la lógica de aplicación y la infraestructura r
 | Servicio | Infraestructura levantada | Qué se verifica |
 |---|---|---|
 | `session-service` | PostgreSQL 15 (Testcontainers) | Persistencia de agregado `Session`, consultas JPA y transacciones |
-| `ai-feedback-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de evento `SessionFinalized`, escritura de `FeedbackResult` |
+| `transcription-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de evento `session.live.finalized`, llamada a Whisper y escritura de transcripción |
+| `filler-detection-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de `transcription.completed`, detección regex + ONNX y publicación de `fillers.analyzed` |
+| `scoring-service` | PostgreSQL 15 + Redis (Testcontainers) | Consumo de `fillers.analyzed`, cálculo de 5 dimensiones y caché en Upstash Redis |
 | `identity-service` | PostgreSQL 15 (Testcontainers) | Registro, login, refresh token y revocación |
-| `progress-service` | PostgreSQL 15 (Testcontainers) | Proyección CQRS: escritura de `MetricSnapshot` y consulta del handler |
+| `progress-service` | PostgreSQL 15 (Testcontainers) | Proyección CQRS: escritura de vista materializada al consumir `scoring.completed` |
 
 Las pruebas de integración usan la anotación `@SpringBootTest(webEnvironment = RANDOM_PORT)` con `@ActiveProfiles("test")` para cargar un `application-test.yml` que apunta al contenedor efímero en lugar de la base de datos de producción.
 
@@ -3674,17 +3677,18 @@ Cada feature file cubre un User Story primario y se almacena en `src/test/resour
 # features/session/finalize-session.feature
 Feature: Finalizar sesión de práctica (US14)
 
-  Scenario: Finalización exitosa con transcripción disponible
+  Scenario: Finalización exitosa con audio guardado y evento publicado
     Given un estudiante autenticado con sesión activa "session-001"
-    When el estudiante envía POST /v1/sessions/session-001/finalize
-    Then el sistema responde con HTTP 202
+    When el live-coach-service cierra el WebSocket de Gemini Live
+    Then el audio se guarda en Supabase Storage
+    And se publica el evento "session.live.finalized" en RabbitMQ
     And la sesión queda en estado "PROCESSING"
 
-  Scenario: Finalización cuando el servicio de IA está caído
+  Scenario: Finalización cuando el transcription-service falla tras 3 reintentos
     Given un estudiante autenticado con sesión activa "session-002"
-    And el ai-feedback-service responde con HTTP 503
-    When el estudiante envía POST /v1/sessions/session-002/finalize
-    Then el sistema responde con HTTP 202
+    And el transcription-service falla con excepción en el tercer reintento
+    When el evento "session.live.finalized" es procesado
+    Then el mensaje pasa a la Dead Letter Queue "talki.dlx"
     And la sesión queda en estado "ANALYSIS_PENDING"
 ```
 
@@ -3696,9 +3700,12 @@ Se definen contratos **Pact** entre consumidores y proveedores de API para detec
 
 | Consumidor | Proveedor | Contratos verificados |
 |---|---|---|
-| Angular SPA | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress` |
-| `ai-feedback-service` | `session-service` | Evento `SessionFinalized` (esquema AMQP) |
-| `progress-service` | `ai-feedback-service` | Evento `FeedbackGenerated` (esquema AMQP) |
+| Angular SPA | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress`, `/v1/scores`, `/v1/gamification` |
+| `transcription-service` | `live-coach-service` | Evento `session.live.finalized` (esquema AMQP) |
+| `filler-detection-service` | `transcription-service` | Evento `transcription.completed` (esquema AMQP) |
+| `scoring-service` | `filler-detection-service` | Evento `fillers.analyzed` (esquema AMQP) |
+| `progress-service` | `scoring-service` | Evento `scoring.completed` (esquema AMQP) |
+| `notification-service` | `gamification-service` | Evento `achievement.unlocked` (esquema AMQP) |
 
 Los contratos Pact se publican en un **Pact Broker** y el pipeline de CI verifica la compatibilidad en cada build antes de hacer merge a `main`.
 
@@ -3756,34 +3763,42 @@ com.thropic.talki.<service>/
 
 ![SessionResource](assets/images/Backend/SessionResource.png)
 
-#### Patrón Strategy — `ai-feedback-service`
+#### Patrón Strategy — `live-coach-service`
 
-El tipo de sesión determina en tiempo de ejecución qué conjunto de instrucciones se envía al LLM y qué criterios de evaluación se aplican:
+El modo de sesión determina en tiempo de ejecución qué system prompt se carga para Gemini Live y cómo se configura la conversación:
 
 ```
-AnalysisStrategy (interface, dominio)
-├── PitchAnalysisStrategy
-├── ThesisAnalysisStrategy
-└── InterviewAnalysisStrategy
+SessionModeStrategy (interface, dominio)
+├── QuickPracticeStrategy    → coach silencioso, feedback al final
+├── InterviewStrategy        → reclutador de empresa, 5 preguntas progresivas
+├── ThesisDefenseStrategy    → jurado académico, 3 preguntas metodológicas
+└── ScenarioStrategy         → rol definido en el catálogo de escenarios peruanos
 
-AnalysisStrategyFactory → crea la estrategia según el tipo de sesión
-FeedbackOrchestrator    → delega en la estrategia; no conoce sus detalles
+SessionModeStrategyFactory → instancia la estrategia según el parámetro `mode`
+LiveCoachOrchestrator      → delega en la estrategia; no conoce sus detalles internos
 ```
-Permite agregar un nuevo tipo de sesión sin modificar el orquestador ni los demás servicios (Open/Closed Principle, QAS-07).
+Permite agregar un nuevo modo de práctica (e.g. `PresentationStrategy`) sin modificar el orquestador ni los demás servicios (Open/Closed Principle, QAS-07).
 
 #### Patrón Saga por coreografía — flujo de sesión finalizada
 
-El flujo `SessionFinalized → TranscripcionGenerada → FeedbackGenerado → MétricasActualizadas → UsuarioNotificado` se implementa como una **Saga de coreografía** sobre RabbitMQ:
+El flujo `session.live.finalized → transcription.completed → fillers.analyzed → scoring.completed → [progress + gamification + notificación]` se implementa como una **Saga de coreografía** sobre el exchange `talki.events` de RabbitMQ:
 
 ```
-session-service          → publica SessionFinalized
-  transcription-service  → consume SessionFinalized, publica TranscriptionCompleted
-  ai-feedback-service    → consume TranscriptionCompleted, publica FeedbackGenerated
-  progress-service       → consume FeedbackGenerated, publica MetricsUpdated
-  notification-service   → consume MetricsUpdated, notifica al usuario
+live-coach-service         → publica session.live.finalized
+  transcription-service    → consume session.live.finalized, llama Whisper STT,
+                             publica transcription.completed
+  filler-detection-service → consume transcription.completed, aplica regex + ONNX,
+                             publica fillers.analyzed
+  scoring-service          → consume fillers.analyzed, calcula 5 dimensiones,
+                             publica scoring.completed
+  progress-service         → consume scoring.completed → actualiza vista CQRS
+  gamification-service     → consume scoring.completed → evalúa streaks y logros,
+                             publica achievement.unlocked (si aplica)
+  notification-service     → consume scoring.completed y achievement.unlocked,
+                             envía push por WebSocket al cliente Angular
 ```
 
-Cada servicio es idempotente: reintenta el procesamiento del mismo evento hasta tres veces con backoff exponencial antes de enviarlo a la **Dead Letter Queue (DLQ)** para inspección manual.
+Cada servicio es idempotente: reintenta el procesamiento del mismo evento hasta tres veces con backoff exponencial antes de enviarlo a la **Dead Letter Exchange (talki.dlx)** para inspección manual.
 
 ---
 
@@ -3815,11 +3830,11 @@ Talki centraliza el código compartido entre microservicios en el módulo Maven 
 
 | Paquete | Clases / Interfaces | Propósito |
 |---|---|---|
-| `com.thropic.talki.commons.event` | `SessionFinalizedEvent`, `TranscriptionCompletedEvent`, `FeedbackGeneratedEvent`, `MetricsUpdatedEvent` | Contratos de eventos de dominio compartidos entre productor y consumidor. Garantizan que el esquema AMQP sea idéntico en ambos extremos. |
+| `com.thropic.talki.commons.event` | `SessionLiveFinalizedEvent`, `TranscriptionCompletedEvent`, `FillerAnalyzedEvent`, `ScoringCompletedEvent`, `AchievementUnlockedEvent`, `UserRegisteredEvent` | Contratos de eventos de dominio compartidos entre productor y consumidor. Garantizan que el esquema del exchange `talki.events` sea idéntico en ambos extremos. |
 | `com.thropic.talki.commons.dto` | `ApiErrorResponse`, `PagedResponse<T>` | DTOs estándar de respuesta de error y paginación para todos los endpoints REST. |
-| `com.thropic.talki.commons.security` | `JwtClaimsExtractor`, `ServiceTokenValidator` | Utilidades para extraer claims del JWT y validar tokens de servicio en comunicaciones internas. |
+| `com.thropic.talki.commons.security` | `JwtClaimsExtractor`, `ServiceTokenValidator` | Utilidades para extraer claims del JWT RSA-256 y validar tokens de servicio en comunicaciones internas. |
 | `com.thropic.talki.commons.exception` | `DomainException`, `ResourceNotFoundException`, `ConflictException` | Jerarquía de excepciones de dominio con sus códigos de error estandarizados. |
-| `com.thropic.talki.commons.messaging` | `RabbitMqConfig` (abstracta), `DeadLetterQueueConfig` | Configuración base de RabbitMQ (exchanges, queues, bindings y DLQ) que cada servicio extiende con sus propias colas. |
+| `com.thropic.talki.commons.messaging` | `RabbitMqConfig` (abstracta), `DeadLetterQueueConfig`, `OutboxPoller` | Configuración base del exchange `talki.events` (topic, durable), DLX `talki.dlx` y el poller del patrón Outbox que garantiza entrega at-least-once. |
 
 #### Versionado y compatibilidad
 
@@ -3866,17 +3881,17 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 #### RF-03 — Reemplazo de llamadas síncronas entre servicios por eventos asíncronos
 
-**Situación inicial.** El `session-service` llamaba por HTTP REST al `ai-feedback-service` al finalizar una sesión, bloqueando el hilo hasta recibir respuesta y generando latencias de 2-4 s en el endpoint `POST /finalize` (incumplimiento de QAS-02: ≤ 500 ms en P95).
+**Situación inicial.** Al cerrar una sesión, el `live-coach-service` llamaba por HTTP REST al `transcription-service` y este a su vez al `scoring-service`, encadenando tres llamadas síncronas que bloqueaban el hilo y generaban latencias de 4-8 s para el usuario (incumplimiento de QAS-02: ≤ 500 ms en P95).
 
-**Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre RabbitMQ (documentado en 5.1.2). El `session-service` publica `SessionFinalizedEvent` y devuelve HTTP 202 inmediatamente; el análisis de IA procede de forma asíncrona.
+**Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre el exchange `talki.events` de RabbitMQ (documentado en 5.1.2). El `live-coach-service` guarda el audio en Supabase Storage, publica `session.live.finalized` y libera el WebSocket inmediatamente; todo el pipeline post-sesión (`transcription-service` → `filler-detection-service` → `scoring-service` → `progress-service` + `gamification-service` + `notification-service`) procede de forma asíncrona con el patrón Outbox garantizando entrega at-least-once.
 
-**Resultado.** Latencia P95 del endpoint `POST /finalize` reducida a 180 ms. Cumplimiento de QAS-02 verificado con pruebas de carga con Gatling (200 sesiones concurrentes).
+**Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente 5-10 s), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
 
 ![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png)
 
 #### RF-04 — Externalización de configuración variable (Spring Cloud Config)
 
-**Situación inicial.** Los prompts del LLM, los umbrales de detección de muletillas y los parámetros de la estrategia de análisis estaban hardcodeados como constantes en el `ai-feedback-service`.
+**Situación inicial.** Los system prompts de Gemini Live, los umbrales de detección de muletillas y los parámetros de puntuación de las 5 dimensiones estaban hardcodeados como constantes en `live-coach-service`, `filler-detection-service` y `scoring-service` respectivamente.
 
 **Refactorización.** Se adoptó **Spring Cloud Config** (decisión DD-09 del Capítulo IV) con un repositorio Git privado como backend de configuración. Los parámetros variables se leen desde `@ConfigurationProperties` y se actualizan en caliente mediante `@RefreshScope` sin necesidad de redeploy del servicio.
 
