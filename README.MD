@@ -79,7 +79,7 @@
 | 2.13 | 02/05/2026 | Alejandro | Incorporación del C4 Nivel 3 del session-service en 4.3.1.6 |
 | 2.14 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Driver Priorities y Software Element View) |
 | 2.15 | 02/05/2026 | Alejandro | Redacción de Iteration 2 — Identidad, Seguridad y Observabilidad Transversal (4.3.2) |
-| 2.21 | 09/05/2026 | Alejandro | Alineación de Iteration 1 (4.3.1): servicios finales live-coach-service, transcription-service, filler-detection-service, scoring-service, Supabase Storage, Gemini Live |
+| 2.21 | 09/05/2026 | Alejandro | Alineación de Iteration 1 (4.3.1): pipeline sin Whisper — filler-detection-service consume transcript_gemini de session.live.finalized directamente |
 | 2.22 | 09/05/2026 | Alejandro | Alineación de Iteration 2 (4.3.2): incorporación de progress-service (CQRS), gamification-service, notification-service; observabilidad con Zipkin + Spring Sleuth |
 | 2.16 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado en 4.1.5 |
 | 2.17 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 |
@@ -1878,7 +1878,7 @@ Al versionar las APIs (v1, v2…) y mantener versiones anteriores durante al men
 La arquitectura de Talki combina varios estilos y patrones complementarios seleccionados en función de los drivers de calidad identificados (latencia del análisis de IA, escalabilidad del servicio de transcripción, evolución independiente de capacidades). A continuación se describe cada estilo o patrón adoptado y su justificación en el contexto del producto.
 
 **Arquitectura de microservicios.**
-Talki se descompone en servicios independientes desplegables por separado, cada uno con su propia base de código, contenedor Docker y ciclo de vida de despliegue. Esta elección responde al driver de modifiability: las reglas de análisis de IA evolucionan con frecuencia sin impactar el resto de la plataforma. Los servicios identificados son: `identity-service`, `session-service`, `transcription-service`, `ai-feedback-service`, `progress-service` y `notification-service`.
+Talki se descompone en servicios independientes desplegables por separado, cada uno con su propia base de código, contenedor Docker y ciclo de vida de despliegue. Esta elección responde al driver de modifiability: las reglas de análisis de IA evolucionan con frecuencia sin impactar el resto de la plataforma. Los servicios identificados son: `identity-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service` y `notification-service`.
 
 **Domain-Driven Design (DDD).**
 La descomposición en microservicios sigue los límites de contexto acotado (Bounded Contexts) derivados del dominio de Talki. Los contextos identificados son: *Identity & Access*, *Practice Session*, *Speech Analysis*, *Progress & Metrics*, y *Notification*. Dentro de cada contexto se aplican los bloques tácticos de DDD: Aggregates, Value Objects, Domain Events y Repositories. Esta alineación entre la estructura del código y el dominio de negocio reduce la fricción cognitiva y facilita la incorporación de nuevos integrantes al equipo.
@@ -2195,7 +2195,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Performance (Latencia de transcripción en vivo)</td>
       <td>Estudiante usuario</td>
       <td>Habla durante la sesión de práctica generando audio continuo</td>
-      <td><code>transcription-service</code> + proveedor de speech-to-text</td>
+      <td><code>live-coach-service</code> + Gemini Live (transcripción nativa)</td>
       <td>Operación normal, conexión a internet ≥ 5 Mbps</td>
       <td>El sistema entrega segmentos de transcripción al cliente conforme se producen</td>
       <td>Latencia ≤ 1.5 s entre la palabra hablada y su aparición en pantalla en el percentil 95.</td>
@@ -2356,7 +2356,7 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     <tr>
       <td>C-05</td>
       <td>Proveedor de IA externa</td>
-      <td>El análisis de comunicación oral debe apoyarse en <strong>APIs LLM y de transcripción de terceros</strong> (OpenAI Whisper, GPT-4o-mini o equivalente, Google Speech-to-Text).</td>
+      <td>El análisis de comunicación oral se apoya en <strong>Gemini Live API</strong> para la interacción en tiempo real y transcripción nativa, eliminando la necesidad de un servicio STT externo independiente.</td>
       <td>Entrenar modelos propios queda fuera del alcance temporal y económico del MVP. La calidad del análisis depende de proveedores maduros con soporte para español latinoamericano.</td>
     </tr>
     <tr>
@@ -2519,7 +2519,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
 
 Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como ciclos cortos en los que se selecciona un subconjunto de drivers de la sección 4.2, se eligen los elementos del sistema a refinar, se aplican conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y se registran las decisiones tomadas con su justificación trazable. Cada iteración cierra con un análisis del estado actual del diseño y la revisión del cumplimiento del *iteration goal*, materializado mediante un Kanban Board que comunica visualmente el avance del backlog de diseño.
 
-Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`transcription-service` → `filler-detection-service` → `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) incorpora el ciclo de vida de la cuenta de usuario (`identity-service`), los servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y la observabilidad transversal (Zipkin + Prometheus + Grafana), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas dos iteraciones completan el diseño arquitectónico del sistema Talki con 11 microservicios de negocio y 3 de infraestructura.
+Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`filler-detection-service` → `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) incorpora el ciclo de vida de la cuenta de usuario (`identity-service`), los servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y la observabilidad transversal (Zipkin + Prometheus + Grafana), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas dos iteraciones completan el diseño arquitectónico del sistema Talki con 11 microservicios de negocio y 3 de infraestructura.
 
 ### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico
 
@@ -2529,15 +2529,15 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 |---|---|---|---|
 | ADB-01 | Diseñar `live-coach-service` como proxy WebSocket bidireccional entre el cliente Angular y Gemini Live API, con captura paralela del audio del usuario hacia Supabase Storage. | Hecho | US12, QAS-01, AC-04, AC-09 |
 | ADB-02 | Definir contrato `POST /v1/sessions` y `GET /v1/sessions/{id}` en `session-service` para crear y consultar sesiones con historial paginado. | Hecho | US09, US14, C-13 |
-| ADB-03 | Definir evento `session.live.finalized` en RabbitMQ; contrato: `event_id`, `event_type`, `occurred_at`, `trace_id`, `version`, `payload` (`session_id`, `user_id`, `mode`, `scenario_id`, `audio_uri`, `transcript_gemini`, `duration_seconds`, `academic_segment`). | Hecho | US14, US15, AC-02 |
-| ADB-04 | Implementar `transcription-service` como consumidor del evento `session.live.finalized`: descarga audio de Supabase Storage, llama a Whisper STT (OpenAI API) con idioma `es`, publica `transcription.completed`. | Hecho | US15, QAS-02, AC-09 |
-| ADB-05 | Implementar `filler-detection-service` como consumidor de `transcription.completed`: aplica regex español (muletillas "este", "o sea", "eh", "básicamente") más modelo ONNX local para detección avanzada; publica `fillers.analyzed`. | Hecho | US15, QAS-07, AC-09 |
-| ADB-06 | Implementar `scoring-service` como consumidor de `fillers.analyzed`: calcula Voice Coach Score en 5 dimensiones (Fluidez, Claridad, Volumen, Vocabulario, Confianza), cachea en Upstash Redis (TTL 30 min) y publica `scoring.completed`. | Hecho | US15, US17, QAS-02, AC-01 |
+| ADB-03 | Definir evento `session.live.finalized` en RabbitMQ; contrato: `event_id`, `event_type`, `occurred_at`, `trace_id`, `version`, `payload` (`session_id`, `user_id`, `mode`, `scenario_id`, `transcript_gemini`, `duration_seconds`, `academic_segment`, `words_per_minute`, `silence_ratio`, `volume_rms_avg`). | Hecho | US14, US15, AC-02 |
+| ADB-04 | Implementar `filler-detection-service` como consumidor directo de `session.live.finalized`: usa el campo `transcript_gemini` (ya generado por Gemini Live) para aplicar regex español (muletillas "este", "o sea", "eh", "básicamente") más modelo ONNX local; publica `fillers.analyzed`. | Hecho | US15, QAS-07, AC-09 |
+| ADB-06 | Implementar `scoring-service` como consumidor de `fillers.analyzed`: calcula Voice Coach Score en 5 dimensiones (Fluidez, Claridad, Volumen, Vocabulario, Confianza) usando `transcript_gemini` + métricas acústicas del evento (`words_per_minute`, `silence_ratio`, `volume_rms_avg`), cachea en Upstash Redis (TTL 30 min) y publica `scoring.completed`. | Hecho | US15, US17, QAS-02, AC-01 |
 | ADB-07 | Configurar topología RabbitMQ: exchange `talki.events` (topic, durable), queues por consumidor con DLX `talki.dlx` y TTL 300 000 ms; Dead Letter Exchange para mensajes con más de 3 fallos. | Hecho | US14, QAS-03, AC-02 |
 | ADB-08 | Usar Supabase Storage (buckets `talki-audio-sessions`, `talki-user-materials`, `talki-exports`) en lugar de S3/MinIO; `media-service` emite URLs prefirmadas (TTL 5 min); el cliente sube directo sin pasar por el API Gateway. | Hecho | C-08, QAS-09, AC-08 |
 | ADB-09 | Aplicar Outbox Pattern en cada servicio productor: persistir el evento en tabla `outbox_events` dentro de la misma transacción antes de publicar a RabbitMQ, garantizando entrega at-least-once. | Hecho | US14, AC-02, P4 |
 | ADB-10 | Implementar `scenario-catalog-service` con catálogo de 10 escenarios peruanos (entrevistas, sustentaciones, presentaciones) y system prompts para Gemini; caché en Upstash Redis (TTL 1 h). | Hecho | US10, QAS-07, AC-01 |
 | ADB-11 | Implementar `media-service` para gestión de materiales del usuario (PDFs, PPTs para F6): generación de presigned URL, registro de URI, políticas de retención por tipo de bucket. | Hecho | US16, C-08, AC-08 |
+| ADB-11b | `live-coach-service` extrae métricas acústicas en memoria durante la sesión (RMS promedio → `volume_rms_avg`, ratio de silencios → `silence_ratio`, palabras por minuto → `words_per_minute`) e incluye estas métricas junto con `transcript_gemini` en el payload de `session.live.finalized`. | Hecho | US17, QAS-01 |
 | ADB-12 | Aplicar Circuit Breaker (Resilience4j) en `live-coach-service` sobre la conexión a Gemini Live: `failureRateThreshold` 40%, `slidingWindow` 20 llamadas, `waitDurationInOpenState` 60 s; fallback a modo scripted con preguntas del catálogo. | Hecho | QAS-03, QAS-08, AC-06 |
 
 #### 4.3.1.2. Establish Iteration Goal by Selecting Drivers
@@ -2574,7 +2574,6 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 |---|---|---|
 | `live-coach-service` | Microservicio | Núcleo de la sesión en vivo: proxy Gemini Live, relay de audio, captura y publicación del evento de cierre. |
 | `session-service` | Microservicio | Gestión del ciclo de vida de sesiones: CRUD, historial, configuración. |
-| `transcription-service` | Microservicio | Primer consumidor del pipeline post-sesión: STT con Whisper sobre el audio capturado. |
 | `filler-detection-service` | Microservicio | Segundo consumidor: análisis de muletillas con regex + modelo ONNX offline. |
 | `scoring-service` | Microservicio | Tercer consumidor: cálculo del Voice Coach Score en 5 dimensiones con caché Redis. |
 | `scenario-catalog-service` | Microservicio | Catálogo de escenarios y system prompts usados por `live-coach-service`. |
@@ -2607,7 +2606,6 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 | **`live-coach-service` :: LiveCoachController** | Gestionar conexión WebSocket con el cliente; abrir sesión con Gemini Live; relay de audio bidireccional; captura paralela de audio a Supabase Storage. | Provee: `WSS /v1/live/coach?sessionId=&mode=&scenarioId=`. Consume: Gemini Live API, Supabase Storage, `scenario-catalog-service`. |
 | **`live-coach-service` :: SessionFinalizer** | Al cerrar el WebSocket: guardar audio capturado, publicar `session.live.finalized` al bus. | Consume: `OutboxPublisher`, Supabase Storage. |
 | **`session-service` :: SessionController** | CRUD de sesiones: crear, consultar, listar con paginación, eliminar. | Provee: `POST /v1/sessions`, `GET /v1/sessions/{id}`, `GET /v1/sessions?userId=&page=`, `DELETE /v1/sessions/{id}`. |
-| **`transcription-service` :: TranscriptionConsumer** | Escucha `session.live.finalized`; descarga audio de Supabase; llama a Whisper con `language=es`; guarda transcripción en schema `transcriptions`; publica `transcription.completed`. | Consume: RabbitMQ queue `transcription.session-finalized`, Whisper API, Supabase Storage. Publica: `transcription.completed`. |
 | **`filler-detection-service` :: FillerConsumer** | Escucha `transcription.completed`; aplica regex español y modelo ONNX local; cuenta frecuencia por tipo; guarda en schema `fillers`; publica `fillers.analyzed`. | Consume: RabbitMQ queue `filler.transcription-ready`. Publica: `fillers.analyzed`. |
 | **`scoring-service` :: ScoringConsumer** | Escucha `fillers.analyzed`; combina transcripción + muletillas + duración + silencios; calcula 5 dimensiones; guarda en schema `scores`; cachea en Redis (TTL 30 min); publica `scoring.completed`. | Consume: RabbitMQ queue `scoring.fillers-ready`. Publica: `scoring.completed`. Provee: `GET /v1/scores/{sessionId}`, `GET /v1/scores/user/{userId}/history`. |
 | **`scenario-catalog-service` :: ScenarioController** | Exponer catálogo de escenarios peruanos con system prompts para Gemini. | Provee: `GET /v1/scenarios`, `GET /v1/scenarios/{id}`, `GET /v1/scenarios?category=`. |
@@ -2629,8 +2627,7 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
     "user_id": "uuid",
     "mode": "interview | quick_practice | thesis | scenario",
     "scenario_id": "uuid | null",
-    "audio_uri": "supabase://talki-audio-sessions/sessions/{id}/audio.wav",
-    "transcript_gemini": "texto parcial de Gemini",
+    "transcript_gemini": "transcripción completa generada por Gemini Live",
     "duration_seconds": 612,
     "academic_segment": "ciclos_1_5 | ciclos_6_10"
   }
@@ -2664,8 +2661,7 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 **Topología RabbitMQ — Exchange `talki.events` (topic, durable):**
 
 ```
-session.live.finalized  → Queue: transcription.session-finalized  → transcription-service
-transcription.completed → Queue: filler.transcription-ready       → filler-detection-service
+session.live.finalized  → Queue: filler.session-finalized          → filler-detection-service
 fillers.analyzed        → Queue: scoring.fillers-ready            → scoring-service
 scoring.completed       → Queue: progress.score-ready             → progress-service
                         → Queue: gamification.score-ready         → gamification-service
@@ -2694,7 +2690,6 @@ flowchart TB
     end
 
     subgraph PIPELINE["Pipeline de Análisis (coreografía saga)"]
-        TS["transcription-service\nWhisper STT\npost-sesión"]
         FDS["filler-detection-service\nRegex + ONNX local\nEspañol peruano"]
         SCS["scoring-service\nVoice Coach Score\n5 dimensiones"]
     end
@@ -2705,7 +2700,6 @@ flowchart TB
         SUPA_ST[("Supabase Storage\ntalki-audio-sessions\ntalki-user-materials")]
         REDIS[("Upstash Redis\nRate limit · Score cache")]
         GEMINI["Gemini Live API\n~600ms latencia"]
-        WHISPER["OpenAI Whisper\nSTT post-sesión"]
     end
 
     Cliente["Cliente Angular"] -->|HTTPS / WSS| GW
@@ -2718,9 +2712,6 @@ flowchart TB
     LCS -->|audio capturado| SUPA_ST
     LCS -->|publica session.live.finalized| MQ
     MQ -->|consume| TS
-    TS --> WHISPER
-    TS --> SUPA_DB
-    TS -->|publica transcription.completed| MQ
     MQ -->|consume| FDS
     FDS --> SUPA_DB
     FDS -->|publica fillers.analyzed| MQ
@@ -2746,7 +2737,6 @@ sequenceDiagram
     participant GEM as Gemini Live API
     participant SUPA as Supabase Storage
     participant MQ as RabbitMQ
-    participant TS as transcription-service
     participant FDS as filler-detection-service
     participant SCS as scoring-service
 
@@ -2776,12 +2766,7 @@ sequenceDiagram
     LCS->>MQ: publica session.live.finalized
     LCS-->>C: 1000 (WebSocket close)
 
-    MQ->>TS: consume session.live.finalized
-    TS->>SUPA: descarga audio.wav
-    TS->>TS: Whisper STT (language=es)
-    TS->>MQ: publica transcription.completed
-
-    MQ->>FDS: consume transcription.completed
+    MQ->>FDS: consume session.live.finalized
     FDS->>FDS: regex + ONNX local
     FDS->>MQ: publica fillers.analyzed
 
@@ -2819,7 +2804,6 @@ sequenceDiagram
 | — | — | ADB-01 — live-coach-service (proxy Gemini Live + captura audio) |
 | — | — | ADB-02 — session-service (CRUD + historial) |
 | — | — | ADB-03 — Evento session.live.finalized |
-| — | — | ADB-04 — transcription-service (Whisper STT post-sesión) |
 | — | — | ADB-05 — filler-detection-service (regex + ONNX) |
 | — | — | ADB-06 — scoring-service (Voice Coach Score 5D + Redis) |
 | — | — | ADB-07 — Topología RabbitMQ (exchanges, queues, DLX) |
@@ -2835,7 +2819,6 @@ sequenceDiagram
 |---|---|---|---|
 | 1 | `live-coach-service` | Sí | US12, QAS-01, QAS-03, AC-06 |
 | 2 | `session-service` | Sí | US09, US14, C-13 |
-| 3 | `transcription-service` | Sí | US15, QAS-02, AC-09 |
 | 4 | `filler-detection-service` | Sí | US15, QAS-07, AC-09 |
 | 5 | `scoring-service` | Sí | US15, US17, QAS-02 |
 | 6 | `scenario-catalog-service` | Sí | US10, QAS-07, AC-01 |
@@ -2870,7 +2853,7 @@ Aplicando el paso 8 del método ADD (*repetir pasos 2 a 7 en la siguiente iterac
 | ADB-19 | Implementar `gamification-service`: consume `scoring.completed`, actualiza streaks en Upstash Redis (Sorted Sets), evalúa logros, actualiza leaderboard semanal; publica `achievement.unlocked`. | Hecho | US18, US19 |
 | ADB-20 | Implementar `notification-service`: consume `scoring.completed`, `achievement.unlocked` y `user.registered`; envía push por WebSocket persistente (`WSS /v1/notifications/stream`) y email como canal alternativo. | Hecho | US15, AC-04 |
 | ADB-21 | Configurar Zipkin + Spring Sleuth para tracing distribuido end-to-end: cada request recibe un `Trace ID` único que se propaga en header `X-B3-TraceId` entre servicios REST y en el campo `trace_id` de los eventos RabbitMQ. | Hecho | QAS-11, AC-11, P6 |
-| ADB-22 | Aplicar lifecycle policy en Supabase Storage: eliminar automáticamente el archivo de audio al confirmarse la transcripción exitosa en `transcription-service` (cumplimiento Ley 29733 — dato biométrico, retención mínima). | Hecho | AC-08, C-09 |
+| ADB-22 | El audio de sesión **no se persiste** en storage — Gemini Live genera la transcripción en tiempo real, eliminando la necesidad de almacenar audio. Esto cumple la Ley 29733 de forma nativa: nunca se graba un dato biométrico en reposo. | Hecho | AC-08, C-09 |
 
 #### 4.3.2.2. Establish Iteration Goal by Selecting Drivers
 
@@ -2917,7 +2900,7 @@ Aplicando el paso 8 del método ADD (*repetir pasos 2 a 7 en la siguiente iterac
 | US18, US19 | **Redis Sorted Sets** en `gamification-service` para streaks, leaderboard semanal y set de logros desbloqueados por usuario. | Tabla SQL para cada consulta de ranking. | Sorted Sets permiten ranking O(log N) sin queries SQL de agregación costosas; el leaderboard se actualiza en tiempo real. |
 | AC-04, US15 | **WebSocket persistente** (`WSS /v1/notifications/stream`) en `notification-service` + email como canal de fallback. | Polling del cliente o Server-Sent Events. | WebSocket permite push en tiempo real cuando el análisis termina (puede ser minutos después de cerrar la sesión); email cubre el caso donde el usuario cerró la app. |
 | QAS-11, P6 | **Zipkin + Spring Sleuth** para tracing distribuido: `Trace ID` propagado en header `X-B3-TraceId` (REST) y campo `trace_id` en payloads de eventos RabbitMQ. | OpenTelemetry con colector externo, Jaeger. | Spring Sleuth integra Zipkin de forma nativa en Spring Boot con configuración mínima. Permite trazar una sesión completa a través del pipeline asincrónico (REST + mensajería). |
-| AC-08, C-09 | **Eliminación automática de audio** en Supabase Storage al confirmarse la transcripción exitosa (`transcription-service`). | Retención indefinida. | El audio es un dato biométrico según la Ley 29733 de Protección de Datos Personales (Perú). Retener solo la transcripción (texto) reduce la superficie de exposición y el costo de storage. |
+| AC-08, C-09 | **No persistir el audio** — Gemini Live genera la transcripción en tiempo real; el audio nunca se almacena en reposo. | Guardar audio para STT posterior. | Cumplimiento nativo de Ley 29733 (dato biométrico nunca en reposo), eliminación de costo de storage y del servicio STT externo. |
 | C-03, P4 | **Un usuario PostgreSQL por schema** de Supabase (ej. `identity_user`, `notifications_user`). | Usuario único con acceso total a todos los schemas. | Principio de mínimo privilegio: un servicio comprometido no puede leer datos de otros bounded contexts. |
 | QAS-03 | **Dead Letter Exchange `talki.dlx`** en RabbitMQ para mensajes que fallan más de 3 veces. | Descartar mensajes tras N reintentos. | Permite reproceso manual o automático de mensajes críticos sin pérdida de datos; el equipo puede inspeccionar la DLQ ante un incidente. |
 
@@ -3104,7 +3087,6 @@ sequenceDiagram
 | 6 | `live-coach-service` | Completo |
 | 7 | `scenario-catalog-service` | Completo |
 | 8 | `media-service` | Completo |
-| 9 | `transcription-service` | Completo |
 | 10 | `filler-detection-service` | Completo |
 | 11 | `scoring-service` | Completo |
 | 12 | `progress-service` | Completo |
@@ -3646,7 +3628,7 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 
 Al cierre del segundo avance (TB2), el equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe en el siguiente entregable (TP1), tomando como base las decisiones de diseño consolidadas en el Capítulo IV:
 
-- **Iniciar la implementación del camino crítico de la Iteration 1.** Materializar primero los contratos REST y AMQP del `session-service`, `transcription-service` y `ai-feedback-service` definidos en 4.3.1.5, junto con las decisiones DD-01 a DD-10, garantiza que el MVP entregue valor a los User Personas desde el primer sprint y permite validar empíricamente los SLO de QAS-01 (latencia ≤ 1.5 s) y QAS-02 (finalize ≤ 500 ms).
+- **Iniciar la implementación del camino crítico de la Iteration 1.** Materializar primero los contratos REST y AMQP del `session-service`, `filler-detection-service` y `scoring-service` definidos en 4.3.1.5, junto con las decisiones DD-01 a DD-10, garantiza que el MVP entregue valor a los User Personas desde el primer sprint y permite validar empíricamente los SLO de QAS-01 (latencia ≤ 1.5 s) y QAS-02 (finalize ≤ 500 ms).
 - **Configurar el entorno de desarrollo y CI/CD antes del Sprint 1.** Establecer GitFlow, convenciones de código, contenedores Docker, pipelines de CI con tests unitarios y un primer despliegue de prueba antes de iniciar la implementación funcional evita la deuda de infraestructura y prepara el camino para la rúbrica TP1 (Software Configuration Management, Web Services RESTful API, Backend Application Core Testing Suite).
 - **Externalizar los prompts del LLM y los umbrales de análisis desde el primer sprint.** La decisión DD-09 (Spring Cloud Config) solo es valiosa si se aplica en la implementación; codificarla desde el inicio permite ajustar las reglas de análisis sprint a sprint sin redeploy, alineado con AC-03.
 - **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories ya tienen criterios Given-When-Then formulados; convertirlos en pruebas automatizadas con Cucumber o equivalente desde el Sprint 1 cubre el ítem 4 de la rúbrica TB3 (testing microservices) y refuerza la trazabilidad requerimientos → código → pruebas.
