@@ -3635,9 +3635,11 @@ Cubren la lógica de negocio pura de cada servicio de forma aislada, sin levanta
 |---|---|---|---|
 | `live-coach-service` | `LiveCoachOrchestrator`, `SessionModeStrategyFactory`, `QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy` | JUnit 5 + Mockito | ≥ 80 % de líneas en capa de dominio (QAS-10) |
 | `session-service` | `SessionCommandServiceImpl`, `SessionQueryServiceImpl` | JUnit 5 + Mockito | ≥ 75 % de líneas |
-| `identity-service` | `AuthService`, `TokenService`, `PasswordHasher` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `identity-service` | `AuthService`, `JwtTokenProvider`, `AppUser` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 | `scoring-service` | `ScoreCalculator`, `SilenceAnalyzer`, `FillerScoreWeighter` | JUnit 5 + Mockito | ≥ 75 % de líneas |
-| `progress-service` | `MetricCalculator`, `ProgressQueryHandler` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `progress-service` | `UserProgress`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `gamification-service` | `UserStreak`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `notification-service` | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 
 Los clientes de servicios externos (Gemini Live, Whisper) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
 
