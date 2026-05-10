@@ -1896,7 +1896,7 @@ Dado que Talki opera actualmente como aplicación web (Angular), el API Gateway 
 El `progress-service` separa los modelos de escritura (registro de métricas al finalizar una sesión) de los modelos de lectura (consulta de gráficos de progreso histórico). Las escrituras actualizan un almacén normalizado (PostgreSQL), mientras que las lecturas utilizan vistas materializadas optimizadas para las consultas de tendencias y comparaciones. Esta separación permite escalar las lecturas de forma independiente y evitar contención en escenarios donde un usuario consulta su historial mientras otro guarda una sesión nueva.
 
 **Circuit Breaker.**
-Las llamadas del `ai-feedback-service` hacia la API de IA externa (Whisper, OpenAI) están envueltas en un Circuit Breaker con tres estados: Cerrado (operación normal), Abierto (fallo repetido, solicitudes rechazadas inmediatamente) y Semi-Abierto (sondeo de recuperación). Esto previene la cascada de fallos cuando el proveedor externo experimenta degradación y permite que el resto de la plataforma continúe operando.
+Las llamadas del `live-coach-service` hacia la API de IA externa (Google Gemini Live) están envueltas en un Circuit Breaker con tres estados: Cerrado (operación normal), Abierto (fallo repetido, solicitudes rechazadas inmediatamente) y Semi-Abierto (sondeo de recuperación). Esto previene la cascada de fallos cuando el proveedor externo experimenta degradación y permite que el resto de la plataforma continúe operando mediante el modo *scripted* alternativo.
 
 **Patrón Strangler Fig (migración progresiva).**
 Si en fases posteriores se requiriera refactorizar el módulo de autenticación hacia un proveedor de identidad dedicado (Auth0, Keycloak), se aplicaría el patrón Strangler Fig: enrutando gradualmente el tráfico desde la implementación existente hacia la nueva, sin downtime ni reescritura total.
@@ -1917,8 +1917,8 @@ _Diagrama de Contexto C4 — Sistema Talki. Elaboración propia (2026)._
 |---|---|---|
 | Estudiante Ciclos 1-5 | Usuario primario | Valeria Ríos (User Persona 1). Busca practicar exposiciones académicas con feedback inmediato para superar el miedo escénico. Accede desde laptop/PC en sesiones de 10-20 minutos. |
 | Estudiante Ciclos 6-10 | Usuario primario | Rodrigo Sánchez (User Persona 2). Busca prepararse para entrevistas laborales y sustentaciones de tesis con feedback profesional y métricas de mejora a largo plazo. |
-| Servicio de Transcripción | Sistema externo | Recibe el archivo de audio y devuelve la transcripción en texto. Se evalúan Whisper (OpenAI) y Google Speech-to-Text como candidatos por su precisión en español latinoamericano. |
-| Servicio de IA | Sistema externo | Recibe la transcripción y el tipo de sesión, y devuelve el análisis estructurado: puntuación global, muletillas detectadas, análisis de léxico y sugerencias de mejora por sección. |
+| Google Gemini Live API | Sistema externo | Servicio de IA conversacional bidireccional (audio entrada / audio salida) con transcripción nativa en tiempo real (`transcript_gemini`). Reemplaza el pipeline clásico STT → LLM → TTS por un único proveedor con latencia ~600ms. |
+| Servicio de IA (asincrónico) | Sistema externo | Recibe la transcripción ya generada por Gemini y el tipo de sesión, y devuelve el análisis estructurado: puntuación global, muletillas detectadas, análisis de léxico y sugerencias de mejora por sección. |
 | Servicio de Email | Sistema externo | Gestiona el envío de correos transaccionales. Se desacopla del core de Talki para evitar dependencias de entrega sincrónica. |
 | Almacenamiento en la Nube | Sistema externo | Almacena los archivos de audio de forma persistente y los entrega al servicio de transcripción mediante URLs prefirmadas, evitando que los archivos pasen por los servidores de aplicación. |
 
@@ -2213,12 +2213,12 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
     <tr>
       <td>QAS-03</td>
       <td>Availability (Degradación elegante del feedback)</td>
-      <td>Proveedor externo de IA (Whisper / OpenAI)</td>
-      <td>El proveedor responde con error 5xx o timeout durante el análisis</td>
-      <td><code>ai-feedback-service</code> con Circuit Breaker</td>
+      <td>Proveedor externo de IA (Google Gemini Live)</td>
+      <td>El proveedor responde con error 5xx o timeout durante la sesión</td>
+      <td><code>live-coach-service</code> con Circuit Breaker</td>
       <td>Caída parcial del proveedor LLM</td>
-      <td>El sistema marca la sesión como "análisis pendiente", continúa aceptando nuevas sesiones y reprocesa cuando el proveedor se recupera</td>
-      <td>0% de pérdida de transcripciones; 100% de las sesiones son reprocesadas en ≤ 10 minutos tras la recuperación del proveedor.</td>
+      <td>El sistema activa el modo <em>scripted</em> con preguntas pregrabadas del <code>scenario-catalog-service</code>, marca la sesión como "análisis pendiente" y reprocesa cuando el proveedor se recupera</td>
+      <td>0% de pérdida de sesiones iniciadas; 100% de las sesiones son reprocesadas en ≤ 10 minutos tras la recuperación del proveedor.</td>
     </tr>
     <tr>
       <td>QAS-04</td>
@@ -2494,7 +2494,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>Riesgo gestionado</td>
       <td>Calidad de transcripción en español peruano</td>
       <td>Los modelos de speech-to-text generales pueden tener tasa de error palabra (WER) más alta en variantes regionales y con audio de bajo SNR (estudiantes en ambientes ruidosos).</td>
-      <td>Evaluación comparativa Whisper vs. Google Speech-to-Text en muestras reales antes de elegir. Cliente intercambiable detrás de la interfaz <code>TranscriptionClient</code>.</td>
+      <td>Validación empírica del <code>transcript_gemini</code> nativo de Gemini Live sobre muestras reales en español peruano antes del cierre del MVP. Si el WER supera el umbral aceptable, se evalúa pre-procesamiento de audio (filtros de ruido) o fallback a un cliente STT alternativo detrás de la interfaz <code>TranscriptionClient</code>.</td>
     </tr>
     <tr>
       <td>AC-10</td>
@@ -2519,7 +2519,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
 
 Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como ciclos cortos en los que se selecciona un subconjunto de drivers de la sección 4.2, se eligen los elementos del sistema a refinar, se aplican conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y se registran las decisiones tomadas con su justificación trazable. Cada iteración cierra con un análisis del estado actual del diseño y la revisión del cumplimiento del *iteration goal*, materializado mediante un Kanban Board que comunica visualmente el avance del backlog de diseño.
 
-Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`filler-detection-service` → `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) incorpora el ciclo de vida de la cuenta de usuario (`identity-service`), los servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y la observabilidad transversal (Zipkin + Prometheus + Grafana), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas dos iteraciones completan el diseño arquitectónico del sistema Talki con 11 microservicios de negocio y 3 de infraestructura.
+Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`filler-detection-service` → `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) incorpora el ciclo de vida de la cuenta de usuario (`identity-service`), los servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y la observabilidad transversal (Zipkin + Prometheus + Grafana), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas dos iteraciones completan el diseño arquitectónico del sistema Talki con 10 microservicios de negocio y 3 de infraestructura.
 
 ### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico
 
@@ -2533,7 +2533,7 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 | ADB-04 | Implementar `filler-detection-service` como consumidor directo de `session.live.finalized`: usa el campo `transcript_gemini` (ya generado por Gemini Live) para aplicar regex español (muletillas "este", "o sea", "eh", "básicamente") más modelo ONNX local; publica `fillers.analyzed`. | Hecho | US15, QAS-07, AC-09 |
 | ADB-06 | Implementar `scoring-service` como consumidor de `fillers.analyzed`: calcula Voice Coach Score en 5 dimensiones (Fluidez, Claridad, Volumen, Vocabulario, Confianza) usando `transcript_gemini` + métricas acústicas del evento (`words_per_minute`, `silence_ratio`, `volume_rms_avg`), cachea en Upstash Redis (TTL 30 min) y publica `scoring.completed`. | Hecho | US15, US17, QAS-02, AC-01 |
 | ADB-07 | Configurar topología RabbitMQ: exchange `talki.events` (topic, durable), queues por consumidor con DLX `talki.dlx` y TTL 300 000 ms; Dead Letter Exchange para mensajes con más de 3 fallos. | Hecho | US14, QAS-03, AC-02 |
-| ADB-08 | Usar Supabase Storage (buckets `talki-audio-sessions`, `talki-user-materials`, `talki-exports`) en lugar de S3/MinIO; `media-service` emite URLs prefirmadas (TTL 5 min); el cliente sube directo sin pasar por el API Gateway. | Hecho | C-08, QAS-09, AC-08 |
+| ADB-08 | Usar Supabase Storage (buckets `talki-user-materials`, `talki-exports`) en lugar de S3/MinIO; `media-service` emite URLs prefirmadas (TTL 5 min); el cliente sube directo sin pasar por el API Gateway. El audio de sesión no se persiste (ADB-22). | Hecho | C-08, QAS-09, AC-08 |
 | ADB-09 | Aplicar Outbox Pattern en cada servicio productor: persistir el evento en tabla `outbox_events` dentro de la misma transacción antes de publicar a RabbitMQ, garantizando entrega at-least-once. | Hecho | US14, AC-02, P4 |
 | ADB-10 | Implementar `scenario-catalog-service` con catálogo de 10 escenarios peruanos (entrevistas, sustentaciones, presentaciones) y system prompts para Gemini; caché en Upstash Redis (TTL 1 h). | Hecho | US10, QAS-07, AC-01 |
 | ADB-11 | Implementar `media-service` para gestión de materiales del usuario (PDFs, PPTs para F6): generación de presigned URL, registro de URI, políticas de retención por tipo de bucket. | Hecho | US16, C-08, AC-08 |
@@ -2606,7 +2606,7 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 | **`live-coach-service` :: LiveCoachController** | Gestionar conexión WebSocket con el cliente; abrir sesión con Gemini Live; relay de audio bidireccional; captura paralela de audio a Supabase Storage. | Provee: `WSS /v1/live/coach?sessionId=&mode=&scenarioId=`. Consume: Gemini Live API, Supabase Storage, `scenario-catalog-service`. |
 | **`live-coach-service` :: SessionFinalizer** | Al cerrar el WebSocket: guardar audio capturado, publicar `session.live.finalized` al bus. | Consume: `OutboxPublisher`, Supabase Storage. |
 | **`session-service` :: SessionController** | CRUD de sesiones: crear, consultar, listar con paginación, eliminar. | Provee: `POST /v1/sessions`, `GET /v1/sessions/{id}`, `GET /v1/sessions?userId=&page=`, `DELETE /v1/sessions/{id}`. |
-| **`filler-detection-service` :: FillerConsumer** | Escucha `transcription.completed`; aplica regex español y modelo ONNX local; cuenta frecuencia por tipo; guarda en schema `fillers`; publica `fillers.analyzed`. | Consume: RabbitMQ queue `filler.transcription-ready`. Publica: `fillers.analyzed`. |
+| **`filler-detection-service` :: FillerConsumer** | Escucha `session.live.finalized`; aplica regex español y modelo ONNX local sobre `transcript_gemini`; cuenta frecuencia por tipo; guarda en schema `fillers`; publica `fillers.analyzed`. | Consume: RabbitMQ queue `filler.session-finalized`. Publica: `fillers.analyzed`. |
 | **`scoring-service` :: ScoringConsumer** | Escucha `fillers.analyzed`; combina transcripción + muletillas + duración + silencios; calcula 5 dimensiones; guarda en schema `scores`; cachea en Redis (TTL 30 min); publica `scoring.completed`. | Consume: RabbitMQ queue `scoring.fillers-ready`. Publica: `scoring.completed`. Provee: `GET /v1/scores/{sessionId}`, `GET /v1/scores/user/{userId}/history`. |
 | **`scenario-catalog-service` :: ScenarioController** | Exponer catálogo de escenarios peruanos con system prompts para Gemini. | Provee: `GET /v1/scenarios`, `GET /v1/scenarios/{id}`, `GET /v1/scenarios?category=`. |
 | **`media-service` :: MediaController** | Generar presigned URL para upload directo del cliente a Supabase Storage; registrar URI del archivo. | Provee: `POST /v1/media/upload-url`, `GET /v1/media/{key}`, `DELETE /v1/media/{key}`. |
@@ -2697,7 +2697,7 @@ flowchart TB
     subgraph INFRA["Infraestructura"]
         MQ[("RabbitMQ\ntalki.events\ntopic exchange")]
         SUPA_DB[("Supabase PostgreSQL\nSchemas por servicio")]
-        SUPA_ST[("Supabase Storage\ntalki-audio-sessions\ntalki-user-materials")]
+        SUPA_ST[("Supabase Storage\ntalki-user-materials\ntalki-exports")]
         REDIS[("Upstash Redis\nRate limit · Score cache")]
         GEMINI["Gemini Live API\n~600ms latencia"]
     end
@@ -3093,7 +3093,7 @@ sequenceDiagram
 | 13 | `gamification-service` | Completo |
 | 14 | `notification-service` | Completo |
 
-**Conclusión de la Iteration 2.** Esta iteración cierra el diseño arquitectónico completo del sistema Talki con 11 microservicios de negocio + 3 de infraestructura. El ciclo de vida del usuario queda habilitado de extremo a extremo: registro seguro → práctica con IA → análisis asincrónico → feedback con score → progreso y gamificación → notificaciones push. Los 8 principios arquitectónicos declarados en la sección 4.1 quedan trazados a decisiones de diseño explícitas (DD-01 a DD-18). La observabilidad transversal (Zipkin + Prometheus + Grafana) permite diagnóstico de incidentes en ≤ 5 min (QAS-11). El cumplimiento de la Ley 29733 queda garantizado por la política de eliminación de audio biométrico (DD-15, ADB-22).
+**Conclusión de la Iteration 2.** Esta iteración cierra el diseño arquitectónico completo del sistema Talki con 10 microservicios de negocio + 3 de infraestructura. El ciclo de vida del usuario queda habilitado de extremo a extremo: registro seguro → práctica con IA → análisis asincrónico → feedback con score → progreso y gamificación → notificaciones push. Los 8 principios arquitectónicos declarados en la sección 4.1 quedan trazados a decisiones de diseño explícitas (DD-01 a DD-18). La observabilidad transversal (Zipkin + Prometheus + Grafana) permite diagnóstico de incidentes en ≤ 5 min (QAS-11). El cumplimiento de la Ley 29733 queda garantizado por la política de eliminación de audio biométrico (DD-15, ADB-22).
 
 
 <div style="page-break-after: always;"></div>
@@ -3122,7 +3122,7 @@ Cubren la lógica de negocio pura de cada servicio de forma aislada, sin levanta
 | `gamification-service` | `UserStreak`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 | `notification-service` | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
 
-Los clientes de servicios externos (Gemini Live, Whisper) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
+Los clientes de servicios externos (Gemini Live API) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
 
 **Convenciones de nomenclatura:**
 ```
@@ -3142,8 +3142,7 @@ Verifican la interacción entre la lógica de aplicación y la infraestructura r
 | Servicio | Infraestructura levantada | Qué se verifica |
 |---|---|---|
 | `session-service` | PostgreSQL 15 (Testcontainers) | Persistencia de agregado `Session`, consultas JPA y transacciones |
-| `transcription-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de evento `session.live.finalized`, llamada a Whisper y escritura de transcripción |
-| `filler-detection-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de `transcription.completed`, detección regex + ONNX y publicación de `fillers.analyzed` |
+| `filler-detection-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de `session.live.finalized` con `transcript_gemini`, detección regex + ONNX y publicación de `fillers.analyzed` |
 | `scoring-service` | PostgreSQL 15 + Redis (Testcontainers) | Consumo de `fillers.analyzed`, cálculo de 5 dimensiones y caché en Upstash Redis |
 | `identity-service` | PostgreSQL 15 (Testcontainers) | Registro, login, refresh token y revocación |
 | `progress-service` | PostgreSQL 15 (Testcontainers) | Proyección CQRS: escritura de vista materializada al consumir `scoring.completed` |
@@ -3160,16 +3159,16 @@ Cada feature file cubre un User Story primario y se almacena en `src/test/resour
 # features/session/finalize-session.feature
 Feature: Finalizar sesión de práctica (US14)
 
-  Scenario: Finalización exitosa con audio guardado y evento publicado
+  Scenario: Finalización exitosa con transcripción de Gemini y evento publicado
     Given un estudiante autenticado con sesión activa "session-001"
     When el live-coach-service cierra el WebSocket de Gemini Live
-    Then el audio se guarda en Supabase Storage
-    And se publica el evento "session.live.finalized" en RabbitMQ
+    Then se calculan las métricas acústicas en memoria (WPM, silence_ratio, volume_rms_avg)
+    And se publica el evento "session.live.finalized" en RabbitMQ con el transcript_gemini
     And la sesión queda en estado "PROCESSING"
 
-  Scenario: Finalización cuando el transcription-service falla tras 3 reintentos
+  Scenario: Finalización cuando el filler-detection-service falla tras 3 reintentos
     Given un estudiante autenticado con sesión activa "session-002"
-    And el transcription-service falla con excepción en el tercer reintento
+    And el filler-detection-service falla con excepción en el tercer reintento
     When el evento "session.live.finalized" es procesado
     Then el mensaje pasa a la Dead Letter Queue "talki.dlx"
     And la sesión queda en estado "ANALYSIS_PENDING"
@@ -3184,8 +3183,7 @@ Se definen contratos **Pact** entre consumidores y proveedores de API para detec
 | Consumidor | Proveedor | Contratos verificados |
 |---|---|---|
 | Angular SPA | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress`, `/v1/scores`, `/v1/gamification` |
-| `transcription-service` | `live-coach-service` | Evento `session.live.finalized` (esquema AMQP) |
-| `filler-detection-service` | `transcription-service` | Evento `transcription.completed` (esquema AMQP) |
+| `filler-detection-service` | `live-coach-service` | Evento `session.live.finalized` con `transcript_gemini` (esquema AMQP) |
 | `scoring-service` | `filler-detection-service` | Evento `fillers.analyzed` (esquema AMQP) |
 | `progress-service` | `scoring-service` | Evento `scoring.completed` (esquema AMQP) |
 | `notification-service` | `gamification-service` | Evento `achievement.unlocked` (esquema AMQP) |
@@ -3264,14 +3262,13 @@ Permite agregar un nuevo modo de práctica (e.g. `PresentationStrategy`) sin mod
 
 #### Patrón Saga por coreografía — flujo de sesión finalizada
 
-El flujo `session.live.finalized → transcription.completed → fillers.analyzed → scoring.completed → [progress + gamification + notificación]` se implementa como una **Saga de coreografía** sobre el exchange `talki.events` de RabbitMQ:
+El flujo `session.live.finalized → fillers.analyzed → scoring.completed → [progress + gamification + notificación]` se implementa como una **Saga de coreografía** sobre el exchange `talki.events` de RabbitMQ:
 
 ```
-live-coach-service         → publica session.live.finalized
-  transcription-service    → consume session.live.finalized, llama Whisper STT,
-                             publica transcription.completed
-  filler-detection-service → consume transcription.completed, aplica regex + ONNX,
-                             publica fillers.analyzed
+live-coach-service         → publica session.live.finalized con transcript_gemini
+                             y métricas acústicas calculadas en memoria
+  filler-detection-service → consume session.live.finalized, aplica regex + ONNX
+                             sobre transcript_gemini, publica fillers.analyzed
   scoring-service          → consume fillers.analyzed, calcula 5 dimensiones,
                              publica scoring.completed
   progress-service         → consume scoring.completed → actualiza vista CQRS
@@ -3364,11 +3361,11 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 #### RF-03 — Reemplazo de llamadas síncronas entre servicios por eventos asíncronos
 
-**Situación inicial.** Al cerrar una sesión, el `live-coach-service` llamaba por HTTP REST al `transcription-service` y este a su vez al `scoring-service`, encadenando tres llamadas síncronas que bloqueaban el hilo y generaban latencias de 4-8 s para el usuario (incumplimiento de QAS-02: ≤ 500 ms en P95).
+**Situación inicial.** Al cerrar una sesión, el `live-coach-service` llamaba por HTTP REST al `filler-detection-service` y este a su vez al `scoring-service`, encadenando llamadas síncronas que bloqueaban el hilo y generaban latencias de 4-8 s para el usuario (incumplimiento de QAS-02: ≤ 500 ms en P95).
 
-**Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre el exchange `talki.events` de RabbitMQ (documentado en 5.1.2). El `live-coach-service` guarda el audio en Supabase Storage, publica `session.live.finalized` y libera el WebSocket inmediatamente; todo el pipeline post-sesión (`transcription-service` → `filler-detection-service` → `scoring-service` → `progress-service` + `gamification-service` + `notification-service`) procede de forma asíncrona con el patrón Outbox garantizando entrega at-least-once.
+**Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre el exchange `talki.events` de RabbitMQ (documentado en 5.1.2). El `live-coach-service` calcula las métricas acústicas en memoria, publica `session.live.finalized` con el `transcript_gemini` ya generado por Gemini Live y libera el WebSocket inmediatamente; todo el pipeline post-sesión (`filler-detection-service` → `scoring-service` → `progress-service` + `gamification-service` + `notification-service`) procede de forma asíncrona con el patrón Outbox garantizando entrega at-least-once.
 
-**Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente 5-10 s), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
+**Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente ≤ 1 s gracias a la eliminación del paso STT post-sesión), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
 
 ![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png)
 
@@ -3405,7 +3402,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 | 1 | Gestión de proyecto | Trello | Tablero Kanban para Product Backlog y Sprint Backlog (Capítulo V). | [trello.com](https://trello.com) |
 | 2 | Diseño UX/UI | Figma | Wireframes, mockups y prototipos navegables del frontend y la landing (Capítulo III). | [figma.com](https://www.figma.com) |
 | 3 | Modelado de arquitectura | Structurizr DSL | Diagramas C4 (Contexto, Contenedor, Componente) versionados como código (Capítulo IV). | [structurizr.com](https://structurizr.com) |
-| 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los nueve microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
+| 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los ocho microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
 | 4 | IDEs y editores | WebStorm | IDE para el frontend Angular + TypeScript (`talki-frontend`). | [jetbrains.com/webstorm](https://www.jetbrains.com/webstorm/) |
 | 4 | IDEs y editores | Visual Studio Code | Editor para la landing page y para edición rápida del informe Markdown. | [code.visualstudio.com](https://code.visualstudio.com) |
 | 5 | Control de versiones | Git | Sistema de control de versiones distribuido. | [git-scm.com](https://git-scm.com) |
@@ -3413,7 +3410,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 | 6 | API testing | Hoppscotch | Cliente HTTP/REST liviano para validar endpoints durante el desarrollo. | [hoppscotch.io](https://hoppscotch.io) |
 | 6 | API testing | Postman | Colecciones compartidas del equipo y pruebas manuales más complejas. | [postman.com](https://www.postman.com) |
 | 7 | Pruebas automatizadas | JUnit 5 | Framework base de pruebas unitarias del Nivel 1 de la pirámide (ver 5.1.1). | [junit.org/junit5](https://junit.org/junit5/) |
-| 7 | Pruebas automatizadas | Mockito | Dobles de prueba para clientes externos (Whisper, Gemini Live) inyectados por constructor. | [site.mockito.org](https://site.mockito.org) |
+| 7 | Pruebas automatizadas | Mockito | Dobles de prueba para clientes externos (Gemini Live API) inyectados por constructor. | [site.mockito.org](https://site.mockito.org) |
 | 7 | Pruebas automatizadas | Spring Boot Test | Anotación `@SpringBootTest` para pruebas de slice y de integración con contexto Spring. | [docs.spring.io/spring-boot/.../testing](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing) |
 | 7 | Pruebas automatizadas | Testcontainers | Contenedores efímeros (PostgreSQL 15, RabbitMQ 3, Redis) para el Nivel 2 de pruebas de integración. | [testcontainers.com](https://testcontainers.com) |
 | 7 | Pruebas automatizadas | Cucumber 7 | Ejecución de criterios de aceptación en Gherkin (Nivel 3, BDD) con `@language: es`. | [cucumber.io](https://cucumber.io) |
@@ -3428,7 +3425,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 | 10 | CI/CD y despliegue | Docker | Contenerización de cada microservicio mediante `Dockerfile` versionado (`eclipse-temurin:17-jre-alpine`). | [docker.com](https://www.docker.com) |
 | 10 | CI/CD y despliegue | Docker Compose | Orquestación local de los microservicios y RabbitMQ vía `docker-compose.dev.yml` por mono-repo backend. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
 | 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Angular. | [vercel.com](https://vercel.com) |
-| 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los nueve microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
+| 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los ocho microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
 
 **Configuración del entorno de desarrollo por stack**
 
@@ -3437,7 +3434,7 @@ Cada integrante del equipo replica un entorno local idéntico mediante el siguie
 | Stack | Componente | Versión requerida | Notas |
 |---|---|---|---|
 | Backend (microservicios) | JDK | Eclipse Temurin 17 (LTS) | Coincide con el `<java.version>` declarado en cada `pom.xml` y con el `eclipse-temurin:17-jre-alpine` del `Dockerfile`. |
-| Backend (microservicios) | Apache Maven | 3.9+ | Build tool de los nueve microservicios; cada repo backend publica su `mvnw` (Maven Wrapper). |
+| Backend (microservicios) | Apache Maven | 3.9+ | Build tool de los ocho microservicios; cada repo backend publica su `mvnw` (Maven Wrapper). |
 | Backend (microservicios) | Spring Boot | 3.2.5 | Versión declarada en el `parent` de cada `pom.xml`. |
 | Backend (microservicios) | Spring Cloud | 2023.0.x | Compatible con Spring Boot 3.2.x para el API Gateway (Spring Cloud Gateway) y para Spring Cloud Config. |
 | Backend (microservicios) | `talki-commons` | Versión publicada en GitHub Packages | Librería interna con contratos de eventos AMQP, DTOs estándar (`ApiErrorResponse`, `PagedResponse<T>`), utilidades de seguridad JWT y configuración base de RabbitMQ + DLX (ver 5.1.3). Cada microservicio la declara como dependencia en su `pom.xml`. |
@@ -3451,8 +3448,7 @@ Cada integrante del equipo replica un entorno local idéntico mediante el siguie
 | Persistencia local | H2 in-memory | Embebido en Spring Boot | Perfil `dev` de los microservicios para acelerar el arranque local; PostgreSQL 15 solo en *staging* y producción (ver 5.2.4). |
 | Caché local | Redis (vía Docker) | 7-alpine | Levantada bajo demanda por `scoring-service` para validar el caché de resultados; en producción se utiliza Upstash Redis gestionado. |
 | Almacenamiento de objetos | Supabase Storage (cloud) | — | Bucket compartido para los audios subidos por el `live-coach-service`; en local se accede directamente al *bucket* de desarrollo mediante credenciales en `.env.local` (no se mockea). |
-| IA generativa | Gemini 2.0 Flash Live | API HTTPS | Modelo configurado vía variable `GEMINI_MODEL=gemini-2.0-flash-live-001` en el `live-coach-service`. Las pruebas unitarias sustituyen el cliente por un `Mockito.mock`. |
-| IA generativa | Whisper STT | API HTTPS | Cliente del `transcription-service` para transcribir el audio guardado en Supabase. Mockeado en pruebas unitarias y reemplazado por *fake* en pruebas de integración. |
+| IA generativa | Gemini 2.0 Flash Live | API HTTPS / WebSocket | Modelo configurado vía variable `GEMINI_MODEL=gemini-2.0-flash-live-001` en el `live-coach-service`. Genera la transcripción en tiempo real (`transcript_gemini`) eliminando la necesidad de un servicio STT post-sesión. Las pruebas unitarias sustituyen el cliente por un `Mockito.mock`. |
 
 **Levantamiento del entorno local**
 
@@ -3461,7 +3457,7 @@ Cada uno de los cuatro mono-repos backend (`talki-user-services`, `talki-session
 1. Clonar el repositorio backend de interés (por ejemplo, `git clone <repo-url>`).
 2. Instalar JDK 17, Maven 3.9+ y Docker Desktop.
 3. Configurar las credenciales de GitHub Packages en `~/.m2/settings.xml` para resolver la dependencia `talki-commons`.
-4. Copiar `.env.example` a `.env` y completar las claves (`SUPABASE_URL`, `SUPABASE_KEY`, `GEMINI_API_KEY`, `WHISPER_API_KEY` cuando aplique al servicio).
+4. Copiar `.env.example` a `.env` y completar las claves (`SUPABASE_URL`, `SUPABASE_KEY`, `GEMINI_API_KEY` cuando aplique al servicio).
 5. Compilar cada microservicio con `./mvnw -B clean package -DskipTests`.
 6. Ejecutar `docker compose -f docker-compose.dev.yml up --build` desde la raíz del mono-repo.
 7. Validar el arranque consultando el endpoint `/actuator/health` de cada servicio en su puerto asignado (ver tabla de la sección 5.2.2) y la consola de RabbitMQ en `http://localhost:15672`.
@@ -3555,10 +3551,10 @@ A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts
 | `talki-frontend` | Frontend | Angular 17 + TypeScript | — | Aplicación web principal de Talki. |
 | `talki-user-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `identity-service` (8081), `notification-service` (8091) | Identity & Access BC + Notification BC. |
 | `talki-session-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `session-service` (8082), `live-coach-service` (8083) | Practice Session BC. |
-| `talki-analysis-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `transcription-service` (8086), `filler-detection-service` (8087), `scoring-service` (8088) | Speech Analysis BC. |
-| `talki-engagement-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `progress-service` (8089), `gamification-service` (8090) | Progress & Metrics BC + Gamification. |
+| `talki-analysis-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `filler-detection-service` (8086), `scoring-service` (8087) | Speech Analysis BC. |
+| `talki-engagement-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `progress-service` (8088), `gamification-service` (8089) | Progress & Metrics BC + Gamification. |
 
-En total, los cuatro mono-repos backend albergan **nueve microservicios Spring Boot**, cada uno con su propio `pom.xml` y `Dockerfile`, manteniendo el principio de autonomía por servicio del Capítulo IV. La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización.
+En total, los cuatro mono-repos backend albergan **ocho microservicios Spring Boot**, cada uno con su propio `pom.xml` y `Dockerfile`, manteniendo el principio de autonomía por servicio del Capítulo IV. La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización. Los servicios `scenario-catalog-service` y `media-service` definidos en el Capítulo IV se incorporarán en el sprint subsiguiente al mono-repo correspondiente, completando el catálogo de 10 microservicios de negocio del diseño arquitectónico.
 
 Adicionalmente, el código compartido entre microservicios (contratos de eventos AMQP, DTOs estándar de respuesta de error y paginación, utilidades de seguridad JWT, configuración base del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx`) se centraliza en el módulo Maven interno **`talki-commons`**, descrito en detalle en la sección 5.1.3. Este módulo se publica como artefacto en **GitHub Packages** bajo la organización `upc-pre-202601-si657-7940-thropic`, y cada microservicio lo declara como dependencia en su `pom.xml`. Los cambios en `talki-commons` siguen Semantic Versioning estricto y los contratos Pact verificados en CI (sección 5.1.1) detectan de forma automática cualquier incompatibilidad introducida antes de llegar a `main`.
 
@@ -3718,21 +3714,21 @@ Vercel se conecta directamente al repositorio de GitHub mediante la integración
 
 **Configuración de Railway**
 
-Railway aloja los nueve microservicios backend, el *broker* RabbitMQ compartido y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV. Cada microservicio se despliega como un proyecto independiente de Railway, vinculado a su carpeta dentro del mono-repo correspondiente listado en 5.2.2.
+Railway aloja los ocho microservicios backend, el *broker* RabbitMQ compartido y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV. Cada microservicio se despliega como un proyecto independiente de Railway, vinculado a su carpeta dentro del mono-repo correspondiente listado en 5.2.2.
 
 | Aspecto | Configuración |
 |---|---|
-| Servicios desplegados | `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `transcription-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, además de un **API Gateway** (Spring Cloud Gateway) y un **Config Server** (Spring Cloud Config, DD-09 / RF-04) compartidos. |
+| Servicios desplegados | `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, además de un **API Gateway** (Spring Cloud Gateway) y un **Config Server** (Spring Cloud Config, DD-09 / RF-04) compartidos. |
 | Mono-repos backend | `talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`; cada uno aporta su `docker-compose.dev.yml` para validación local previa al despliegue. |
 | Origen de la imagen | `Dockerfile` versionado en cada microservicio (`FROM eclipse-temurin:17-jre-alpine`), construido en CI a partir del *jar* generado por Maven. |
 | *Broker* de mensajería | Una instancia gestionada de RabbitMQ 3.12 expuesta vía red privada de Railway, consumida por los productores y consumidores del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx` (Saga por coreografía descrita en 5.1.2). |
 | Bases de datos | Una instancia gestionada de **PostgreSQL 15** por servicio (`DATABASE_URL` inyectado por Railway). En el perfil `dev` local los servicios usan H2 in-memory para acelerar el arranque (ver 5.2.1). |
 | Caché | Instancia de **Upstash Redis** consumida por `scoring-service` para cachear los resultados de las cinco dimensiones de puntuación (5.1.1 Nivel 2). |
 | Almacenamiento de objetos | **Supabase Storage** como *bucket* de los audios subidos por `live-coach-service` (RF-03); el acceso se realiza mediante credenciales `SUPABASE_URL` y `SUPABASE_KEY` inyectadas como variables de entorno. |
-| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY` (RSA-256, DD-09), `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD`, `SUPABASE_URL`, `SUPABASE_KEY`, `REDIS_URL`, `GEMINI_MODEL`, `GEMINI_API_KEY`, `WHISPER_API_KEY`, `CONFIG_SERVER_URL`, definidas por entorno (staging/producción) en el panel de Railway. En el perfil `dev` local se utiliza el `JWT_SECRET` simétrico declarado en el `docker-compose.dev.yml` para acelerar el arranque. |
+| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY` (RSA-256, DD-09), `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD`, `SUPABASE_URL`, `SUPABASE_KEY`, `REDIS_URL`, `GEMINI_MODEL`, `GEMINI_API_KEY`, `CONFIG_SERVER_URL`, definidas por entorno (staging/producción) en el panel de Railway. En el perfil `dev` local se utiliza el `JWT_SECRET` simétrico declarado en el `docker-compose.dev.yml` para acelerar el arranque. |
 | Health checks | Endpoint `GET /actuator/health` expuesto por Spring Boot Actuator; Railway reinicia el contenedor ante respuestas no saludables. |
 | Networking | Comunicación entre microservicios vía red privada de Railway; exposición pública únicamente del API Gateway. |
-| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service`, `live-coach-service`, `transcription-service` y `scoring-service` por la carga prevista en QAS-02 y QAS-04. |
+| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service`, `live-coach-service`, `filler-detection-service` y `scoring-service` por la carga prevista en QAS-02 y QAS-04. |
 
 **Gestión de secretos y configuración sensible**
 
@@ -3781,7 +3777,7 @@ La arquitectura cloud de Talki sigue una topología de **microservicios desplega
 | Servicios | `notification-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Datos | PostgreSQL × 5 (una por servicio) | Railway | PostgreSQL 16 gestionado | Privado (vínculo por servicio) |
 | Almacenamiento | Bucket de audios | AWS S3 | S3 Standard + Lifecycle Policy | Privado (acceso por *signed URL*) |
-| IA externa | Servicio de transcripción y análisis | Proveedor IA (OpenAI / Whisper) | API HTTPS | Acceso saliente desde `speech-analysis-service` |
+| IA externa | Servicio de IA conversacional con transcripción nativa | Google Gemini Live API | WebSocket / API HTTPS | Acceso saliente desde `live-coach-service` |
 | Identidad | Proveedor de email transaccional | Servicio externo (Resend / SendGrid) | API HTTPS | Acceso saliente desde `notification-service` |
 
 **Conexiones principales del diagrama**
@@ -3846,7 +3842,7 @@ El despliegue de un nuevo *release* en producción sigue los siguientes pasos, a
 El equipo prioriza los planes gratuitos y académicos de cada plataforma para sostener la operación durante la fase de validación del MVP:
 
 - **Vercel**: plan *Hobby* (gratuito) suficiente para landing y frontend en validación inicial; migración planificada al plan *Pro* al superar los 100 GB de *bandwidth* mensual.
-- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los nueve microservicios, el *broker* RabbitMQ y sus bases de datos se ajustan a los límites del plan durante la validación, escalando al plan *Pro* si la carga del MVP lo demanda.
+- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los ocho microservicios, el *broker* RabbitMQ y sus bases de datos se ajustan a los límites del plan durante la validación, escalando al plan *Pro* si la carga del MVP lo demanda.
 - **AWS S3**: tier gratuito (5 GB) para los primeros meses; transición a *Standard* con políticas de *lifecycle* para mover audios a *Glacier Deep Archive* tras 90 días de inactividad (DD-15 del Capítulo IV).
 - **Proveedor de IA**: facturación por uso, controlada mediante *rate limiting* en el `speech-analysis-service` para acotar el costo por usuario.
 
@@ -3879,9 +3875,9 @@ Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectón
 Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
 
 - **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintisiete herramientas seleccionadas (Trello, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, OpenTelemetry, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
-- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan nueve microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
+- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan ocho microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
 - **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
-- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los nueve microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con OpenTelemetry y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
+- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los ocho microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con OpenTelemetry y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
 
 ## Recomendaciones
 
