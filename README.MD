@@ -1884,7 +1884,7 @@ Talki se descompone en servicios independientes desplegables por separado, cada 
 La descomposición en microservicios sigue los límites de contexto acotado (Bounded Contexts) derivados del dominio de Talki. Los contextos identificados son: *Identity & Access*, *Practice Session*, *Speech Analysis*, *Progress & Metrics*, y *Notification*. Dentro de cada contexto se aplican los bloques tácticos de DDD: Aggregates, Value Objects, Domain Events y Repositories. Esta alineación entre la estructura del código y el dominio de negocio reduce la fricción cognitiva y facilita la incorporación de nuevos integrantes al equipo.
 
 **Arquitectura orientada a eventos (Event-Driven Architecture).**
-El análisis de IA es una operación de larga duración (potencialmente 10-30 segundos) que no puede bloquear la respuesta al usuario. Por esta razón, la finalización de una sesión de grabación publica un evento `SessionFinalized` en un bus de mensajería (RabbitMQ/Kafka). El `ai-feedback-service` consume este evento de forma asíncrona, procesa la transcripción y publica `FeedbackGenerated`, que el `progress-service` consume para actualizar las métricas. Esta arquitectura desacopla temporalmente los servicios y permite que el frontend notifique al usuario cuando el análisis esté listo mediante WebSockets o polling.
+El análisis post-sesión es una operación que no puede bloquear la respuesta al usuario. Por esta razón, la finalización de una sesión publica un evento `session.live.finalized` en RabbitMQ con el `transcript_gemini` y las métricas acústicas calculadas en memoria por el `live-coach-service`. El `filler-detection-service` consume este evento, aplica análisis sobre la transcripción y publica `fillers.analyzed`; el `scoring-service` calcula las cinco dimensiones del Voice Coach Score y publica `scoring.completed`, que el `progress-service` consume para actualizar las vistas materializadas. Esta arquitectura desacopla temporalmente los servicios y permite que el frontend notifique al usuario cuando el análisis esté listo mediante WebSockets o polling.
 
 **Patrón API Gateway.**
 Un API Gateway centralizado actúa como punto de entrada único para todos los clientes del sistema. Responsabilidades delegadas al gateway: autenticación y validación de JWT, enrutamiento hacia microservicios internos, limitación de tasa (rate limiting), logging de accesos y transformación de respuestas. Este patrón evita que los clientes necesiten conocer la topología interna de los servicios y permite aplicar cross-cutting concerns en un solo lugar.
@@ -1950,13 +1950,13 @@ _Context Map DDD — Bounded Contexts de Talki y sus relaciones de integración.
 
 _Diagrama de Contenedores C4 — Sistema Talki. Elaboración propia (2026)._
 
-#### Diagrama de Componentes del AI Feedback Service (C4 – Nivel 3)
+#### Diagrama de Componentes del Live Coach Service (C4 – Nivel 3)
 
-El `ai-feedback-service` es el contenedor más crítico y complejo del sistema, ya que orquesta la comunicación con el proveedor de IA externo y aplica las reglas de análisis contextualizado. Por ello se detalla a nivel de componentes.
+El `live-coach-service` es el contenedor más crítico y complejo del sistema, ya que orquesta la comunicación bidireccional con Gemini Live API durante toda la sesión, calcula las métricas acústicas en memoria y publica el evento `session.live.finalized` que dispara el pipeline de análisis. Por ello se detalla a nivel de componentes.
 
 ![C4-Containers](assets/images/DiagramsUML/C4-componentdiagram.png)
 
-_Diagrama de Componentes C4 — AI Feedback Service. Elaboración propia (2026)._
+_Diagrama de Componentes C4 — Live Coach Service. Elaboración propia (2026)._
 
 ---
 
@@ -1991,20 +1991,20 @@ _Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboració
 
 Talki aplica los siguientes patrones de diseño de software, seleccionados para resolver problemas concretos identificados durante el diseño.
 
-**Strategy (Comportamiento) — AI Feedback Service.**
-El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulación de entrevista) determina el conjunto de instrucciones enviadas al LLM y los criterios de evaluación aplicados. El patrón Strategy encapsula cada variante de análisis en una clase independiente (`PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`) que implementa la interfaz `AnalysisStrategy`. El `FeedbackOrchestrator` delega en la estrategia apropiada sin conocer sus detalles internos. Esto permite agregar nuevos tipos de sesión sin modificar el orquestador (Open/Closed Principle).
+**Strategy (Comportamiento) — Live Coach Service y Scoring Service.**
+El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulación de entrevista) determina el conjunto de system prompts enviados a Gemini Live por el `live-coach-service` y los criterios de evaluación aplicados por el `scoring-service`. El patrón Strategy encapsula cada variante en una clase independiente (`PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`) que implementa la interfaz `AnalysisStrategy`. El orquestador delega en la estrategia apropiada sin conocer sus detalles internos. Esto permite agregar nuevos tipos de sesión sin modificar el orquestador (Open/Closed Principle).
 
 **Factory Method (Creacional) — Strategy Factory.**
-El `AnalysisStrategyFactory` centraliza la creación de instancias de estrategia a partir del tipo de sesión recibido en el evento. Desacopla el código cliente de la lógica de instanciación y facilita las pruebas unitarias mediante inyección de dependencias.
+El `AnalysisStrategyFactory` centraliza la creación de instancias de estrategia a partir del tipo de sesión recibido en el evento o en la sesión activa. Desacopla el código cliente de la lógica de instanciación y facilita las pruebas unitarias mediante inyección de dependencias.
 
 **Repository (Arquitectural) — Acceso a datos en todos los servicios.**
 Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`UserRepository`, `SessionRepository`, `FeedbackRepository`, `MetricSnapshotRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo. Este patrón facilita la aplicación del principio de inversión de dependencias.
 
 **Observer / Event-Driven (Comportamiento) — Bus de eventos.**
-Los servicios productores de eventos (`session-service`, `ai-feedback-service`) publican eventos de dominio en RabbitMQ sin conocer quién los consumirá. Los consumidores (`ai-feedback-service`, `progress-service`, `notification-service`) se suscriben a las colas relevantes e implementan los handlers correspondientes. Este patrón desacopla temporalmente los servicios y permite agregar nuevos consumidores sin modificar los productores (extensibilidad).
+Los servicios productores de eventos (`live-coach-service`, `filler-detection-service`, `scoring-service`, `gamification-service`, `identity-service`) publican eventos de dominio en RabbitMQ sin conocer quién los consumirá. Los consumidores (`filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, `notification-service`) se suscriben a las colas relevantes e implementan los handlers correspondientes. Este patrón desacopla temporalmente los servicios y permite agregar nuevos consumidores sin modificar los productores (extensibilidad).
 
 **Circuit Breaker (Resiliencia) — Llamadas a servicios externos.**
-Las llamadas al LLM externo desde el `ai-feedback-service` y al servicio de transcripción están protegidas con el patrón Circuit Breaker (implementado con Resilience4j). Cuando el número de fallos consecutivos supera el umbral configurado, el circuito se abre y las solicitudes se rechazan inmediatamente durante un período de espera. Transcurrido ese período, el circuito entra en estado semi-abierto para sondear la recuperación del servicio externo.
+Las llamadas al LLM externo desde el `live-coach-service` (Gemini Live API) están protegidas con el patrón Circuit Breaker (implementado con Resilience4j). Cuando el número de fallos consecutivos supera el umbral configurado, el circuito se abre y las solicitudes se rechazan inmediatamente durante un período de espera. Transcurrido ese período, el circuito entra en estado semi-abierto para sondear la recuperación del servicio externo, mientras tanto el servicio activa el modo *scripted* alternativo.
 
 **Decorator (Estructural) — Middleware de logging y métricas en el API Gateway.**
 El API Gateway aplica capas decoradoras sobre cada solicitud entrante: validación de JWT, registro de métricas de latencia e inyección de trace IDs para trazabilidad distribuida. Cada decorador añade comportamiento transversal sin modificar la lógica de enrutamiento central.
@@ -2025,10 +2025,10 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 
 | Táctica | Descripción | Aplicación en Talki |
 |---|---|---|
-| **Monitor** | Detección activa de fallos mediante health checks | Cada microservicio expone `/actuator/health`. El orquestador de contenedores (Kubernetes) reinicia automáticamente los pods que fallen el health check. |
-| **Retry con backoff exponencial** | Reintentos automáticos ante fallos transitorios | El `ai-feedback-service` reintenta hasta 3 veces con backoff exponencial las llamadas al LLM externo antes de abrir el Circuit Breaker. |
-| **Circuit Breaker** | Aislamiento de fallos en servicios externos | Implementado con Resilience4j en todas las llamadas a APIs externas (transcripción, LLM, email). |
-| **Redundancia activa** | Múltiples instancias del mismo servicio | Los servicios críticos (`session-service`, `ai-feedback-service`) se despliegan con al menos 2 réplicas en Kubernetes, garantizando continuidad ante la caída de una instancia. |
+| **Monitor** | Detección activa de fallos mediante health checks | Cada microservicio expone `/actuator/health`. La plataforma de despliegue (Railway) reinicia automáticamente los contenedores que fallen el health check. |
+| **Retry con backoff exponencial** | Reintentos automáticos ante fallos transitorios | El `live-coach-service` reintenta hasta 3 veces con backoff exponencial las llamadas a Gemini Live antes de abrir el Circuit Breaker. |
+| **Circuit Breaker** | Aislamiento de fallos en servicios externos | Implementado con Resilience4j en todas las llamadas a APIs externas (Gemini Live, email). |
+| **Redundancia activa** | Múltiples instancias del mismo servicio | Los servicios críticos (`session-service`, `live-coach-service`, `scoring-service`) se despliegan con al menos 2 réplicas (escalado horizontal de Railway), garantizando continuidad ante la caída de una instancia. |
 | **Degradación elegante** | Funcionalidad reducida ante fallo parcial | Si el análisis de IA falla, el usuario recibe confirmación de que la sesión fue guardada y se le notifica cuando el análisis esté disponible. La grabación y la transcripción siempre funcionan de forma independiente. |
 
 #### Rendimiento (Performance)
@@ -2055,7 +2055,7 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 
 | Táctica | Descripción | Aplicación en Talki |
 |---|---|---|
-| **Alta cohesión, bajo acoplamiento** | Servicios con responsabilidad única y dependencias mínimas | Cada microservicio encapsula un bounded context de DDD. Los cambios en las reglas de análisis de IA están contenidos en el `ai-feedback-service` sin afectar al resto. |
+| **Alta cohesión, bajo acoplamiento** | Servicios con responsabilidad única y dependencias mínimas | Cada microservicio encapsula un bounded context de DDD. Los cambios en las reglas de análisis post-sesión están contenidos en `filler-detection-service` y `scoring-service` sin afectar al resto. |
 | **Parametrizar reglas variables** | Externalizarizar la configuración que cambia con frecuencia | Los prompts del LLM, los umbrales de detección de muletillas y las listas de vocabulario académico se almacenan como configuración externalizada (Spring Cloud Config / variables de entorno), no hardcodeados. |
 | **Versionado de API** | Evolución sin ruptura de contrato | Los endpoints del API Gateway se versionan bajo el prefijo `/v1/`. Al introducir cambios incompatibles, se crea `/v2/` manteniendo `/v1/` activo durante al menos un sprint. |
 | **Interfaces sobre implementaciones** | Inversión de dependencias en la capa de dominio | Los repositorios y los clientes de servicios externos son interfaces. Las implementaciones concretas se inyectan por constructor, facilitando la sustitución del proveedor de transcripción o LLM sin modificar la lógica de orquestación. |
@@ -2066,7 +2066,7 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 |---|---|---|
 | **Test doubles e inyección de dependencias** | Sustitución de dependencias externas en pruebas | Los clientes de LLM y de transcripción son interfaces inyectadas por constructor. En pruebas unitarias se sustituyen por mocks (Mockito) que retornan respuestas predefinidas. |
 | **Separación de lógica de orquestación y dominio** | Testear reglas de negocio sin infraestructura | Las estrategias de análisis (`AnalysisStrategy`) y el orquestador de feedback contienen solo lógica de negocio pura, sin dependencias de framework, permitiendo pruebas unitarias rápidas sin contexto Spring. |
-| **Contratos de API con Consumer-Driven Contract Testing** | Verificar compatibilidad entre servicios | Se definen contratos Pact entre el frontend y el API Gateway, y entre el `session-service` y el `ai-feedback-service`, para detectar regresiones de contrato antes del despliegue. |
+| **Contratos de API con Consumer-Driven Contract Testing** | Verificar compatibilidad entre servicios | Se definen contratos Pact entre el frontend y el API Gateway, y entre el `live-coach-service` y los consumidores del evento `session.live.finalized` (`filler-detection-service`), para detectar regresiones de contrato antes del despliegue. |
 
 
 
@@ -2121,13 +2121,13 @@ Las User Stories que más impactan la estructura de la arquitectura son aquellas
       <td>US08</td>
       <td>Edición de perfil de usuario</td>
       <td>Como estudiante registrado, quiero editar mi perfil con información como ciclo universitario, carrera y universidad, para que Talki personalice mi experiencia.</td>
-      <td>Define el modelo de datos del <code>identity-service</code> y obliga a publicar eventos de actualización de perfil para que el <code>ai-feedback-service</code> reciba el contexto académico del usuario.</td>
+      <td>Define el modelo de datos del <code>identity-service</code> y obliga a publicar eventos de actualización de perfil para que el <code>live-coach-service</code> y el <code>scoring-service</code> reciban el contexto académico del usuario.</td>
     </tr>
     <tr>
       <td>US23</td>
       <td>Seleccionar segmento académico</td>
       <td>Como estudiante, quiero indicar mi segmento académico (ciclo 1-5 o ciclo 6-10) durante el registro o en mi perfil, para que Talki adapte el feedback a mi nivel.</td>
-      <td>Driver clave del patrón <strong>Strategy</strong> en el <code>ai-feedback-service</code>: el segmento determina la estrategia de análisis aplicada y los criterios de evaluación enviados al LLM.</td>
+      <td>Driver clave del patrón <strong>Strategy</strong> en el <code>live-coach-service</code> (carga de system prompts vía <code>scenario-catalog-service</code>) y en el <code>scoring-service</code>: el segmento determina los prompts enviados a Gemini Live y los criterios de evaluación aplicados al transcript.</td>
     </tr>
     <tr>
       <td>US09</td>
@@ -2139,13 +2139,13 @@ Las User Stories que más impactan la estructura de la arquitectura son aquellas
       <td>US12</td>
       <td>Iniciar grabación y transcripción en tiempo real</td>
       <td>Como estudiante, quiero iniciar la grabación de mi presentación y ver la transcripción en tiempo real, para monitorear lo que digo mientras practico.</td>
-      <td>User Story de mayor peso técnico (8 SP). Impone restricciones de latencia y conectividad: requiere streaming de audio, conexiones persistentes (WebSocket o equivalente), e integración con un servicio externo de speech-to-text con soporte para español latinoamericano.</td>
+      <td>User Story de mayor peso técnico (8 SP). Impone restricciones de latencia y conectividad: requiere streaming de audio bidireccional, conexiones WebSocket persistentes e integración con Google Gemini Live API que provee transcripción nativa en tiempo real (`transcript_gemini`) en español latinoamericano.</td>
     </tr>
     <tr>
       <td>US14</td>
       <td>Finalizar sesión y guardar transcripción</td>
       <td>Como estudiante, quiero finalizar la sesión de grabación y que se guarde la transcripción completa, para poder revisarla posteriormente y recibir feedback.</td>
-      <td>Punto de disparo del evento de dominio <code>SessionFinalized</code>, eje de la arquitectura orientada a eventos. Justifica la presencia del bus de mensajería (RabbitMQ/Kafka) y el patrón Saga por coreografía.</td>
+      <td>Punto de disparo del evento de dominio <code>session.live.finalized</code>, eje de la arquitectura orientada a eventos. Justifica la presencia del bus de mensajería (RabbitMQ) y el patrón Saga por coreografía.</td>
     </tr>
     <tr>
       <td>US15</td>
@@ -2225,7 +2225,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Availability (Continuidad operativa del MVP)</td>
       <td>Operador de infraestructura</td>
       <td>Despliegue de una nueva versión de un microservicio</td>
-      <td>Cluster Kubernetes con réplicas de <code>session-service</code> y <code>ai-feedback-service</code></td>
+      <td>Railway con escalado horizontal de <code>session-service</code>, <code>live-coach-service</code> y <code>scoring-service</code></td>
       <td>Operación normal en horario de uso académico</td>
       <td>El sistema completa el despliegue mediante rolling update sin tirar todas las réplicas a la vez</td>
       <td>Tiempo de indisponibilidad observable por el usuario ≤ 0 s (rolling update con readiness probes); SLO mensual de disponibilidad ≥ 99.0%.</td>
@@ -2255,7 +2255,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Modifiability (Nuevo tipo de sesión)</td>
       <td>Equipo de producto</td>
       <td>Solicita agregar un nuevo tipo de sesión (p. ej., "simulación de entrevista")</td>
-      <td><code>ai-feedback-service</code> (patrón Strategy)</td>
+      <td><code>live-coach-service</code> y <code>scoring-service</code> (patrón Strategy)</td>
       <td>Sprint regular</td>
       <td>El equipo introduce una nueva <code>AnalysisStrategy</code> sin modificar el orquestador ni el resto de servicios</td>
       <td>Cambio limitado a ≤ 1 servicio y ≤ 3 archivos nuevos; ≤ 16 horas de esfuerzo de desarrollo.</td>
@@ -2265,7 +2265,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Modifiability (Cambio de proveedor LLM)</td>
       <td>Equipo de arquitectura</td>
       <td>Decide reemplazar el proveedor LLM externo por otro distinto</td>
-      <td>Cliente LLM dentro del <code>ai-feedback-service</code></td>
+      <td>Cliente LLM dentro del <code>live-coach-service</code></td>
       <td>Sprint planificado</td>
       <td>El equipo sustituye la implementación de la interfaz de cliente sin modificar la lógica de orquestación ni las estrategias</td>
       <td>Cambio contenido en una única clase de adaptador; suite de tests de orquestación pasa sin modificación.</td>
@@ -2275,7 +2275,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Scalability (Aumento de carga concurrente)</td>
       <td>Equipo académico (varios cursos)</td>
       <td>Múltiples grupos universitarios usan Talki en paralelo durante una semana de exposiciones</td>
-      <td><code>session-service</code> y <code>ai-feedback-service</code></td>
+      <td><code>session-service</code>, <code>live-coach-service</code> y <code>scoring-service</code></td>
       <td>Pico estacional (50× la carga base)</td>
       <td>El sistema escala horizontalmente sumando réplicas y mantiene los SLO de QAS-01 y QAS-02</td>
       <td>Latencia P95 dentro del 120% del valor base con hasta 200 sesiones concurrentes activas.</td>
@@ -2285,7 +2285,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Testability (Lógica de análisis)</td>
       <td>Desarrollador</td>
       <td>Modifica una <code>AnalysisStrategy</code> y ejecuta la suite de pruebas</td>
-      <td>Tests unitarios del <code>ai-feedback-service</code></td>
+      <td>Tests unitarios del <code>scoring-service</code></td>
       <td>Pipeline de CI</td>
       <td>El sistema permite probar la lógica de negocio de forma aislada, sin levantar el contexto Spring ni servicios externos</td>
       <td>≥ 80% de cobertura de líneas en la capa de dominio; suite unitaria del servicio en ≤ 60 s.</td>
@@ -2350,7 +2350,7 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     <tr>
       <td>C-04</td>
       <td>Empaquetado y despliegue</td>
-      <td>Cada servicio debe empaquetarse como <strong>contenedor Docker</strong> y orquestarse con Kubernetes (o un orquestador equivalente accesible desde el plan académico).</td>
+      <td>Cada servicio debe empaquetarse como <strong>contenedor Docker</strong> y desplegarse en una plataforma PaaS (Railway) accesible desde el plan académico, con red privada y escalado horizontal por servicio.</td>
       <td>Es el estándar aceptado por el curso de Fundamentos para evaluar entregables y permite reproducibilidad de despliegues entre el entorno local del equipo y la nube.</td>
     </tr>
     <tr>
@@ -2373,9 +2373,9 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     </tr>
     <tr>
       <td>C-08</td>
-      <td>Almacenamiento de audio</td>
-      <td>Los archivos de audio deben almacenarse en <strong>almacenamiento de objetos en la nube</strong> (S3 o equivalente) y entregarse al servicio de transcripción mediante URLs prefirmadas.</td>
-      <td>Evita que los servicios de aplicación procesen binarios grandes y reduce el costo de ancho de banda interno.</td>
+      <td>Almacenamiento de archivos del usuario</td>
+      <td>Los materiales del usuario (CV, plantillas, exports) deben almacenarse en <strong>almacenamiento de objetos en la nube</strong> (Supabase Storage) y entregarse mediante URLs prefirmadas. El audio de sesión <strong>no se persiste</strong> (cumplimiento nativo de la Ley 29733; ver DD-15 / ADB-22).</td>
+      <td>Evita que los servicios de aplicación procesen binarios grandes, reduce el costo de ancho de banda interno y elimina el riesgo de almacenar dato biométrico en reposo.</td>
     </tr>
     <tr>
       <td>C-09</td>
@@ -2438,7 +2438,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>Preocupación funcional</td>
       <td>Adaptación del feedback al segmento académico</td>
       <td>Los estudiantes de los ciclos 1-5 (Valeria) y 6-10 (Rodrigo) tienen necesidades muy distintas: la primera busca reducir miedo escénico y muletillas; el segundo, perfilar discurso para entrevistas y sustentaciones. Un feedback genérico desmotiva a ambos perfiles.</td>
-      <td>Patrón Strategy en el <code>ai-feedback-service</code> + atributo <code>academic_segment</code> en el modelo de usuario. Decisión registrada en 4.1.6.</td>
+      <td>Patrón Strategy en el <code>live-coach-service</code> y el <code>scoring-service</code> + atributo <code>academic_segment</code> en el modelo de usuario. Decisión registrada en 4.1.6.</td>
     </tr>
     <tr>
       <td>AC-02</td>
@@ -2465,8 +2465,8 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>AC-05</td>
       <td>Preocupación organizacional</td>
       <td>Curva de aprendizaje del equipo</td>
-      <td>El equipo no tiene experiencia previa con event-driven architecture ni con Kubernetes en producción.</td>
-      <td>Restringir a un único bus de mensajería (RabbitMQ) y a una topología Kubernetes mínima (single cluster, namespaces por entorno). Documentación interna y pair programming durante las primeras iteraciones.</td>
+      <td>El equipo no tiene experiencia previa con event-driven architecture ni con despliegue de microservicios en producción.</td>
+      <td>Restringir a un único bus de mensajería (RabbitMQ) y a una plataforma PaaS de baja complejidad operativa (Railway), con un proyecto independiente por microservicio y entornos separados (`develop` / `main`). Documentación interna y pair programming durante las primeras iteraciones.</td>
     </tr>
     <tr>
       <td>AC-06</td>
@@ -2556,17 +2556,17 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 | | QAS-02 | Feedback disponible < 30 s sin bloquear al usuario. |
 | | QAS-03 | Disponibilidad ≥ 99.5 % con degradación elegante ante fallo de Gemini. |
 | | QAS-07 | Análisis personalizado por segmento académico (ciclos 1–5 y 6–10). |
-| | QAS-08 | Intercambiar proveedores de STT o LLM sin cambios de código. |
+| | QAS-08 | Intercambiar proveedores de IA conversacional o LLM sin cambios de código. |
 | | QAS-09 | Bus de eventos sin degradación bajo carga nominal. |
 | Constraints | C-01 | Spring Boot 3 + Java 17. |
 | | C-02 | Angular 18 en el frontend. |
 | | C-04 | Docker + Docker Compose. |
-| | C-08 | Almacenamiento de objetos para audio y materiales. |
+| | C-08 | Almacenamiento de objetos para materiales del usuario (audio no se persiste). |
 | | C-13 | API versionada bajo `/v1/`. |
 | Concerns | AC-01 | Coherencia de la estrategia de análisis académico. |
 | | AC-02 | Desacoplamiento temporal (pipeline asincrónico). |
 | | AC-06 | Compatibilidad con múltiples proveedores de IA. |
-| | AC-09 | Calidad de STT para español peruano. |
+| | AC-09 | Calidad de transcripción nativa de Gemini Live para español peruano. |
 
 #### 4.3.1.3. Choose One or More Elements of the System to Refine
 
@@ -3772,11 +3772,15 @@ La arquitectura cloud de Talki sigue una topología de **microservicios desplega
 | API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.app`) |
 | Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Servicios | `session-service` | Railway | Java + Spring Boot | Privado (red interna) |
-| Servicios | `speech-analysis-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `live-coach-service` | Railway | Java + Spring Boot | Privado (red interna; WebSocket expuesto vía API Gateway) |
+| Servicios | `filler-detection-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `scoring-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Servicios | `progress-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `gamification-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Servicios | `notification-service` | Railway | Java + Spring Boot | Privado (red interna) |
-| Datos | PostgreSQL × 5 (una por servicio) | Railway | PostgreSQL 16 gestionado | Privado (vínculo por servicio) |
-| Almacenamiento | Bucket de audios | AWS S3 | S3 Standard + Lifecycle Policy | Privado (acceso por *signed URL*) |
+| Datos | PostgreSQL × N (una por servicio, *database-per-service*) | Supabase / Railway | PostgreSQL 15 gestionado | Privado (vínculo por servicio) |
+| Caché | Caché de scoring + rate limiting | Upstash Redis | Redis 7 gestionado | Privado (acceso por token) |
+| Almacenamiento | Materiales del usuario y exports (audio NO se persiste) | Supabase Storage | Buckets privados + presigned URLs | Privado (acceso por *signed URL*) |
 | IA externa | Servicio de IA conversacional con transcripción nativa | Google Gemini Live API | WebSocket / API HTTPS | Acceso saliente desde `live-coach-service` |
 | Identidad | Proveedor de email transaccional | Servicio externo (Resend / SendGrid) | API HTTPS | Acceso saliente desde `notification-service` |
 
@@ -3788,11 +3792,11 @@ El siguiente listado representa los flujos de comunicación entre los componente
 2. El **frontend** consume exclusivamente el **API Gateway** público de Railway mediante HTTPS, autenticando cada solicitud con un *bearer token* JWT emitido por el `identity-service`.
 3. El **API Gateway** enruta las solicitudes a los microservicios correspondientes a través de la red privada interna de Railway, sin exposición pública.
 4. Cada **microservicio** se conecta exclusivamente a **su propia base de datos PostgreSQL** (patrón *database-per-service*), prohibiendo accesos cruzados.
-5. El `session-service` sube los audios al **bucket S3** mediante credenciales gestionadas por GitHub Secrets y emite una *signed URL* de subida al frontend cuando aplica.
-6. El `speech-analysis-service` consume el **proveedor de IA externo** para transcripción y análisis del audio, recibiendo la respuesta de forma asíncrona mediante eventos.
+5. El `media-service` emite *presigned URLs* de **Supabase Storage** para que el cliente suba directamente los materiales del usuario (CV, plantillas) y descargue los exports, sin pasar por el API Gateway. El audio de la sesión **no se persiste** en almacenamiento (cumplimiento nativo de la Ley 29733; ver DD-15 / ADB-22).
+6. El `live-coach-service` mantiene una conexión WebSocket bidireccional con **Google Gemini Live** durante toda la sesión y, al cerrarla, publica el evento `session.live.finalized` con el `transcript_gemini` y las métricas acústicas calculadas en memoria; el pipeline `filler-detection-service → scoring-service → progress-service + gamification-service + notification-service` continúa de forma asíncrona sobre RabbitMQ.
 7. El `notification-service` envía correos transaccionales mediante el **proveedor de email externo** ante eventos de negocio (registro, recuperación de contraseña, hito de progreso).
 
-> _Figura: Diagrama de arquitectura cloud de Talki._ El diagrama formal en notación cloud (íconos oficiales de AWS, Vercel y Railway) se elaborará en una herramienta de diagramación cloud y se incorporará en el directorio `assets/images/cloud-architecture.png` durante la implementación del primer sprint.
+> _Figura: Diagrama de arquitectura cloud de Talki._ El diagrama formal en notación cloud (íconos oficiales de Vercel, Railway, Supabase, Upstash y Google Cloud) se elaborará en una herramienta de diagramación cloud y se incorporará en el directorio `assets/images/cloud-architecture.png` durante la implementación del primer sprint.
 
 ### 5.4.2. Cloud Architecture Deployment
 
@@ -3843,10 +3847,11 @@ El equipo prioriza los planes gratuitos y académicos de cada plataforma para so
 
 - **Vercel**: plan *Hobby* (gratuito) suficiente para landing y frontend en validación inicial; migración planificada al plan *Pro* al superar los 100 GB de *bandwidth* mensual.
 - **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los ocho microservicios, el *broker* RabbitMQ y sus bases de datos se ajustan a los límites del plan durante la validación, escalando al plan *Pro* si la carga del MVP lo demanda.
-- **AWS S3**: tier gratuito (5 GB) para los primeros meses; transición a *Standard* con políticas de *lifecycle* para mover audios a *Glacier Deep Archive* tras 90 días de inactividad (DD-15 del Capítulo IV).
-- **Proveedor de IA**: facturación por uso, controlada mediante *rate limiting* en el `speech-analysis-service` para acotar el costo por usuario.
+- **Supabase Storage**: tier gratuito (1 GB) cubre los materiales del usuario y los exports durante la validación. El audio de sesión **no se persiste** (cumplimiento nativo de la Ley 29733; DD-15 / ADB-22 del Capítulo IV), eliminando la línea de costo más significativa del diseño original.
+- **Upstash Redis**: tier gratuito (10K comandos/día) cubre la caché de scoring y el *rate limiting* del `identity-service`.
+- **Google Gemini Live**: facturación por uso (~USD 0.50 por 1M tokens de audio entrada / USD 2 por 1M de salida); rate limiting en el `live-coach-service` y por usuario para acotar el costo.
 
-Esta combinación permite operar el producto durante la fase de validación con un costo mensual estimado inferior a USD 50, escalando linealmente con la adopción de usuarios reales.
+Esta combinación permite operar el producto durante la fase de validación con un costo mensual estimado de ~USD 72 (frente a los ~USD 82 del diseño original con STT post-sesión), escalando linealmente con la adopción de usuarios reales.
 
 <div style="page-break-after: always;"></div>
 
@@ -3867,7 +3872,7 @@ Al cierre del primer avance (TB1), el equipo Thropic logró consolidar la base e
 Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectónico de Talki en el Capítulo IV mediante la aplicación rigurosa del método Attribute-Driven Design (Wojcik et al., 2006). Los principales logros son:
 
 - **Catálogo de drivers formalizado.** Se especificaron 8 principios arquitectónicos (P1-P8), 8 estilos y patrones de aproximación, 8 patrones de diseño aplicados y 22 tácticas distribuidas en cinco atributos de calidad (Disponibilidad, Rendimiento, Seguridad, Modificabilidad, Testeabilidad), todos trazables a los requerimientos del Capítulo III.
-- **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), un Component Diagram C4 (Nivel 3) del `ai-feedback-service`, un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
+- **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), Component Diagrams C4 (Nivel 3) del `live-coach-service`, del `session-service` (4.3.1.6) y del `identity-service` (4.3.2), un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
 - **Drivers arquitectónicos formulados con métricas verificables.** La sección 4.2 establece 12 Quality Attribute Scenarios con seis partes (fuente, estímulo, artefacto, entorno, respuesta, medida), 14 Constraints técnicas y organizacionales, y 11 Architectural Concerns con riesgos gestionados, garantizando que cada decisión de diseño tenga un criterio de aceptación verificable.
 - **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono) y la Iteration 2 (Identidad, Seguridad y Observabilidad Transversal) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
 - **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
