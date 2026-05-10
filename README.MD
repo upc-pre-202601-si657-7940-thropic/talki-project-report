@@ -4210,11 +4210,13 @@ Cada repositorio listado en 5.2.2 mantiene su propio *workflow* en `.github/work
 | Etapa | Descripción |
 |---|---|
 | Checkout | `actions/checkout@v4` para obtener el código de la rama disparadora. |
-| Setup | Configuración del entorno (`actions/setup-java@v4` con Temurin 21 para los microservicios; `actions/setup-node@v4` con Node 20 LTS para el frontend y la landing). |
+| Setup | Configuración del entorno (`actions/setup-java@v4` con Temurin 17 para los microservicios; `actions/setup-node@v4` con Node 20 LTS para el frontend y la landing). |
 | Cache | Cacheo de dependencias (`~/.m2/repository` para Maven; `node_modules` para npm) por hash del *lockfile*. |
 | Lint | Validación de estilo: Checkstyle/Spotless en backend; ESLint + Prettier en frontend; Stylelint en landing. |
 | Build | Compilación del artefacto: `mvn -B clean package -DskipTests` en backend; `npm run build` en frontend y landing. |
-| Test | Ejecución de pruebas: JUnit + Mockito + Cucumber en backend; Jasmine/Karma en frontend; *coverage* mínimo configurable. |
+| Test | Ejecución de la pirámide completa descrita en 5.1.1: JUnit 5 + Mockito (Nivel 1), Spring Boot Test + Testcontainers con PostgreSQL 15, RabbitMQ 3 y Redis (Nivel 2), Cucumber 7 (Nivel 3) y verificación Pact contra el Pact Broker (Nivel 4). En el frontend, Jasmine/Karma. *Coverage* mínimo configurable según QAS-10. |
+| ArchUnit | Validación arquitectónica continua: la regla `domain/` no depende de `infrastructure/` (RF-02) bloquea el merge si se incumple. |
+| Load | Pruebas de carga con k6 sobre el flujo de sesión finalizada (RF-03) en el ambiente de *staging* de Railway, verificando QAS-02 (≤ 500 ms P95) y QAS-04. |
 | Image | Construcción de la imagen Docker (solo backend) y *push* al registro de Railway. |
 | Deploy | Despliegue automático al entorno correspondiente: Vercel mediante integración Git nativa; Railway mediante `railway-action` o webhook. |
 
@@ -4237,17 +4239,21 @@ Vercel se conecta directamente al repositorio de GitHub mediante la integración
 
 **Configuración de Railway**
 
-Railway aloja los cinco microservicios backend y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV.
+Railway aloja los nueve microservicios backend, el *broker* RabbitMQ compartido y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV. Cada microservicio se despliega como un proyecto independiente de Railway, vinculado a su carpeta dentro del mono-repo correspondiente listado en 5.2.2.
 
 | Aspecto | Configuración |
 |---|---|
-| Servicios desplegados | `talki-identity-service`, `talki-session-service`, `talki-speech-analysis-service`, `talki-progress-service`, `talki-notification-service`. |
-| Origen de la imagen | `Dockerfile` versionado en cada repositorio backend (multi-stage build con Maven y JRE 21). |
-| Bases de datos | Una instancia gestionada de PostgreSQL por servicio, vinculada mediante variables de entorno inyectadas por Railway (`DATABASE_URL`). |
-| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY`, `S3_BUCKET_NAME`, definidas por entorno (staging/producción) en el panel de Railway. |
+| Servicios desplegados | `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `transcription-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, además de un **API Gateway** (Spring Cloud Gateway) y un **Config Server** (Spring Cloud Config, DD-09 / RF-04) compartidos. |
+| Mono-repos backend | `talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`; cada uno aporta su `docker-compose.dev.yml` para validación local previa al despliegue. |
+| Origen de la imagen | `Dockerfile` versionado en cada microservicio (`FROM eclipse-temurin:17-jre-alpine`), construido en CI a partir del *jar* generado por Maven. |
+| *Broker* de mensajería | Una instancia gestionada de RabbitMQ 3.12 expuesta vía red privada de Railway, consumida por los productores y consumidores del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx` (Saga por coreografía descrita en 5.1.2). |
+| Bases de datos | Una instancia gestionada de **PostgreSQL 15** por servicio (`DATABASE_URL` inyectado por Railway). En el perfil `dev` local los servicios usan H2 in-memory para acelerar el arranque (ver 5.2.1). |
+| Caché | Instancia de **Upstash Redis** consumida por `scoring-service` para cachear los resultados de las cinco dimensiones de puntuación (5.1.1 Nivel 2). |
+| Almacenamiento de objetos | **Supabase Storage** como *bucket* de los audios subidos por `live-coach-service` (RF-03); el acceso se realiza mediante credenciales `SUPABASE_URL` y `SUPABASE_KEY` inyectadas como variables de entorno. |
+| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY` (RSA-256, DD-09), `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD`, `SUPABASE_URL`, `SUPABASE_KEY`, `REDIS_URL`, `GEMINI_MODEL`, `GEMINI_API_KEY`, `WHISPER_API_KEY`, `CONFIG_SERVER_URL`, definidas por entorno (staging/producción) en el panel de Railway. En el perfil `dev` local se utiliza el `JWT_SECRET` simétrico declarado en el `docker-compose.dev.yml` para acelerar el arranque. |
 | Health checks | Endpoint `GET /actuator/health` expuesto por Spring Boot Actuator; Railway reinicia el contenedor ante respuestas no saludables. |
 | Networking | Comunicación entre microservicios vía red privada de Railway; exposición pública únicamente del API Gateway. |
-| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service` y `speech-analysis-service` por la carga prevista en QAS-02 y QAS-04. |
+| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service`, `live-coach-service`, `transcription-service` y `scoring-service` por la carga prevista en QAS-02 y QAS-04. |
 
 **Gestión de secretos y configuración sensible**
 
@@ -4361,7 +4367,7 @@ El despliegue de un nuevo *release* en producción sigue los siguientes pasos, a
 El equipo prioriza los planes gratuitos y académicos de cada plataforma para sostener la operación durante la fase de validación del MVP:
 
 - **Vercel**: plan *Hobby* (gratuito) suficiente para landing y frontend en validación inicial; migración planificada al plan *Pro* al superar los 100 GB de *bandwidth* mensual.
-- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los cinco microservicios y sus bases de datos se ajustan a los límites del plan durante la validación.
+- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los nueve microservicios, el *broker* RabbitMQ y sus bases de datos se ajustan a los límites del plan durante la validación, escalando al plan *Pro* si la carga del MVP lo demanda.
 - **AWS S3**: tier gratuito (5 GB) para los primeros meses; transición a *Standard* con políticas de *lifecycle* para mover audios a *Glacier Deep Archive* tras 90 días de inactividad (DD-15 del Capítulo IV).
 - **Proveedor de IA**: facturación por uso, controlada mediante *rate limiting* en el `speech-analysis-service` para acotar el costo por usuario.
 
@@ -4393,10 +4399,10 @@ Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectón
 
 Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
 
-- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta nueve categorías y diecinueve herramientas seleccionadas (Trello, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit + Mockito, Cucumber, Swagger, GitHub Actions, Vercel, Railway, entre otras), cada una con propósito explícito y enlace oficial.
-- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura planificada de ocho repositorios alineada con los cinco *Bounded Contexts* del Capítulo IV.
+- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintisiete herramientas seleccionadas (Trello, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, OpenTelemetry, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
+- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan nueve microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
 - **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
-- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los cinco microservicios en Railway con *database-per-service*, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con OpenTelemetry y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
+- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los nueve microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con OpenTelemetry y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
 
 ## Recomendaciones
 
@@ -4410,7 +4416,7 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 
 Tras el cierre del TP1, el equipo identifica las siguientes acciones para preparar la entrada al Sprint 1 sin acumular deuda de configuración:
 
-- **Materializar los ocho repositorios planificados en 5.2.2.** Crear los repositorios bajo la organización `upc-pre-202601-si657-7940-thropic` con su `README` mínimo, `.gitignore` específico del stack, *workflow* base de GitHub Actions y archivo `.env.example`, de modo que cada integrante pueda clonar y ejecutar la base local antes de tomar la primera User Story.
+- **Consolidar los siete repositorios listados en 5.2.2.** Completar bajo la organización `upc-pre-202601-si657-7940-thropic` el `README` mínimo, el `.gitignore` específico del stack, el *workflow* base de GitHub Actions y el archivo `.env.example` en cada repositorio (informe, landing, frontend y los cuatro mono-repos backend), de modo que cualquier integrante pueda clonar y levantar el `docker-compose.dev.yml` antes de tomar la primera User Story.
 - **Generar el diagrama formal de arquitectura cloud.** Construir el diagrama referido en la sección 5.4.1 con íconos oficiales de Vercel, Railway y AWS (en Lucidchart, draw.io o Excalidraw) y publicarlo en `assets/images/cloud-architecture.png` para sustituir la nota provisional, completando la evidencia visual del despliegue planificado.
 - **Validar las convenciones del 5.2.3 con linters automáticos.** Configurar Spotless o Checkstyle en los repositorios backend, ESLint + Prettier en el frontend, y Stylelint en la landing, integrados al *pipeline* CI/CD para que las convenciones documentadas no dependan de la disciplina manual del equipo.
 - **Reservar los dominios de la sección 5.4.2.** Adquirir y configurar `talki.app` con sus subdominios `app` y `api` antes del Sprint 1, anticipando los tiempos de propagación DNS y de emisión de certificados TLS para no bloquear los despliegues del MVP.
