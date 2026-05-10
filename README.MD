@@ -4065,22 +4065,23 @@ Los *releases* del producto siguen **Semantic Versioning** en formato `vMAYOR.ME
 
 Cada *release* se materializa en una rama `release/vX.X.X` y, al fusionarse a `main`, queda etiquetada con un *tag* del mismo nombre.
 
-**Estructura planificada de repositorios**
+**Estructura de repositorios**
 
-A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts* y un frontend único), el equipo planifica los siguientes repositorios bajo la organización `upc-pre-202601-si657-7940-thropic`. Cada repositorio mantiene su propio ciclo de GitFlow y *pipeline* de CI/CD independiente, alineado con el principio de autonomía por servicio.
+A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts* y un frontend único), el equipo materializa los siguientes siete repositorios bajo la organización `upc-pre-202601-si657-7940-thropic`. Para reducir la sobrecarga operativa de mantener nueve repositorios independientes, los microservicios backend se agrupan en **cuatro mono-repos por afinidad de dominio**: cada mono-repo contiene los microservicios que comparten *bounded context* o ciclo de vida operacional, junto con su `docker-compose.dev.yml` para levantamiento local conjunto. Cada repositorio mantiene su propio ciclo de GitFlow y *pipeline* de CI/CD independiente.
 
-| Repositorio planificado | Tipo | Stack | Bounded Context / Rol |
-|---|---|---|---|
-| `talki-project-report` | Documentación | Markdown | Informe académico del curso (este documento). |
-| `talki-landing` | Frontend | HTML / CSS / JavaScript | Landing page pública del producto. |
-| `talki-frontend` | Frontend | Angular + TypeScript | Aplicación web principal de Talki. |
-| `talki-identity-service` | Backend | Java + Spring Boot | Identity & Access Bounded Context. |
-| `talki-session-service` | Backend | Java + Spring Boot | Practice Session Bounded Context. |
-| `talki-speech-analysis-service` | Backend | Java + Spring Boot | Speech Analysis Bounded Context. |
-| `talki-progress-service` | Backend | Java + Spring Boot | Progress & Metrics Bounded Context. |
-| `talki-notification-service` | Backend | Java + Spring Boot | Notification Bounded Context. |
+| Repositorio | Tipo | Stack | Microservicios contenidos (puerto local) | Bounded Context / Rol |
+|---|---|---|---|---|
+| `talki-project-report` | Documentación | Markdown | — | Informe académico del curso (este documento). |
+| `talki-landing` | Frontend | HTML / CSS / JavaScript | — | Landing page pública del producto. |
+| `talki-frontend` | Frontend | Angular 17 + TypeScript | — | Aplicación web principal de Talki. |
+| `talki-user-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `identity-service` (8081), `notification-service` (8091) | Identity & Access BC + Notification BC. |
+| `talki-session-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `session-service` (8082), `live-coach-service` (8083) | Practice Session BC. |
+| `talki-analysis-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `transcription-service` (8086), `filler-detection-service` (8087), `scoring-service` (8088) | Speech Analysis BC. |
+| `talki-engagement-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `progress-service` (8089), `gamification-service` (8090) | Progress & Metrics BC + Gamification. |
 
-La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización.
+En total, los cuatro mono-repos backend albergan **nueve microservicios Spring Boot**, cada uno con su propio `pom.xml` y `Dockerfile`, manteniendo el principio de autonomía por servicio del Capítulo IV. La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización.
+
+Adicionalmente, el código compartido entre microservicios (contratos de eventos AMQP, DTOs estándar de respuesta de error y paginación, utilidades de seguridad JWT, configuración base del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx`) se centraliza en el módulo Maven interno **`talki-commons`**, descrito en detalle en la sección 5.1.3. Este módulo se publica como artefacto en **GitHub Packages** bajo la organización `upc-pre-202601-si657-7940-thropic`, y cada microservicio lo declara como dependencia en su `pom.xml`. Los cambios en `talki-commons` siguen Semantic Versioning estricto y los contratos Pact verificados en CI (sección 5.1.1) detectan de forma automática cualquier incompatibilidad introducida antes de llegar a `main`.
 
 ### 5.2.3. Source Code Style Guide & Conventions
 
