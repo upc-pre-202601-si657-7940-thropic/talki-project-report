@@ -1998,7 +1998,7 @@ El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulaci
 El `AnalysisStrategyFactory` centraliza la creación de instancias de estrategia a partir del tipo de sesión recibido en el evento o en la sesión activa. Desacopla el código cliente de la lógica de instanciación y facilita las pruebas unitarias mediante inyección de dependencias.
 
 **Repository (Arquitectural) — Acceso a datos en todos los servicios.**
-Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`UserRepository`, `SessionRepository`, `FeedbackRepository`, `MetricSnapshotRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo. Este patrón facilita la aplicación del principio de inversión de dependencias.
+Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`AppUserRepository`, `SessionRepository`, `FeedbackRepository`, `ScoreResultRepository`, `UserProgressRepository`, `UserStreakRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo. Este patrón facilita la aplicación del principio de inversión de dependencias.
 
 **Observer / Event-Driven (Comportamiento) — Bus de eventos.**
 Los servicios productores de eventos (`live-coach-service`, `filler-detection-service`, `scoring-service`, `gamification-service`, `identity-service`) publican eventos de dominio en RabbitMQ sin conocer quién los consumirá. Los consumidores (`filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, `notification-service`) se suscriben a las colas relevantes e implementan los handlers correspondientes. Este patrón desacopla temporalmente los servicios y permite agregar nuevos consumidores sin modificar los productores (extensibilidad).
@@ -3221,11 +3221,11 @@ com.thropic.talki.<service>/
     └── dto/            # DTOs de entrada y salida de la API
 ```
 
-**- Patrón Repository:** Crea una capa de abstracción entre la lógica de negocio de la aplicación y el mecanismo de almacenamiento de datos. Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`UserRepository`, `SessionRepository`, `FeedbackRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo.
+**- Patrón Repository:** Crea una capa de abstracción entre la lógica de negocio de la aplicación y el mecanismo de almacenamiento de datos. Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`AppUserRepository` en `identity-service`, `SessionRepository` y `FeedbackRepository` en `session-service`, `ScoreResultRepository` en `scoring-service`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo.
 
 ![SessionRepository](assets/images/Backend/SessionRepository.png)
 
-![UserRepository](assets/images/Backend/UserRepository.png)
+![AppUserRepository](assets/images/Backend/UserRepository.png)
 ![FeedbackRepository](assets/images/Backend/FeedbackRepository.png)
 
 **- Patrón ACL (Anti-Corruption Layer):** Implementa una capa de fachada entre diferentes bounded contexts que no comparten la misma semántica. Se encarga de traducir las solicitudes de un subsistema a otro sin exponer los modelos internos de dominio. En Talki, la clase `SessionContextFacade` actúa como ACL entre el `session-service` y los servicios externos (`progress-service`, `notification-service`).
@@ -3286,21 +3286,21 @@ Cada servicio es idempotente: reintenta el procesamiento del mismo evento hasta 
 
 Talki centraliza el código compartido entre microservicios en el módulo Maven interno **`talki-commons`**, publicado en el repositorio de paquetes de GitHub (`packages.github.com/upc-pre-202601-si657-7940-thropic`). Los microservicios lo declaran como dependencia en su `pom.xml`. Esta librería aplica los siguientes patrones del framework Spring:
 
-**- Factory Method:** En Spring, la configuración y la creación de instancias de objetos se realizan mediante las anotaciones `@Bean` y `@Component`. Esto permite utilizar el patrón Factory Method para crear instancias de objetos de manera flexible y desacoplada. La clase `BeanConfiguration` centraliza la creación de la `SessionContextFacade` y otros beans de infraestructura.
+**- Factory Method:** En Spring, la configuración y la creación de instancias de objetos se realizan mediante las anotaciones `@Bean` y `@Component`. Esto permite utilizar el patrón Factory Method para crear instancias de objetos de manera flexible y desacoplada. Cada microservicio expone una clase `@Configuration` que centraliza la creación de sus beans de infraestructura (clientes de RabbitMQ, configuración de seguridad, fachadas ACL, propiedades externalizadas).
 
 ![BeanConfiguration](assets/images/Backend/BeanConfiguration.png)
 
-**- JPA Entity Field:** El patrón de diseño JPA Entity se emplea para representar objetos de dominio en una base de datos relacional, utilizando la anotación `@Entity`. En Talki, las clases `Session`, `User` y `Feedback` son entidades JPA que mapean directamente a tablas en PostgreSQL, con sus campos anotados con `@Column`, `@Id` y `@GeneratedValue`.
+**- JPA Entity Field:** El patrón de diseño JPA Entity se emplea para representar objetos de dominio en una base de datos relacional, utilizando la anotación `@Entity`. En Talki, las clases `AppUser` (en `identity-service`), `Session` y `Feedback` (en `session-service`) y `ScoreResult` (en `scoring-service`) son entidades JPA que mapean directamente a tablas en PostgreSQL, con sus campos anotados con `@Column`, `@Id` y `@GeneratedValue`. Cada entidad reside en el schema del bounded context al que pertenece (database-per-service).
 
 ![Session](assets/images/Backend/Session.png)
 
-![User](assets/images/Backend/User.png)
+![AppUser](assets/images/Backend/User.png)
 
-**- Foreign Key Mapping:** En Spring Data JPA, este concepto implica mapear las relaciones entre entidades en la base de datos a través de anotaciones como `@ManyToOne` y `@OneToMany`. En Talki, la entidad `Session` tiene una relación `@ManyToOne` hacia `User` (cada sesión pertenece a un usuario) y una relación `@OneToMany` hacia `Feedback` (una sesión puede tener múltiples feedbacks).
+**- Foreign Key Mapping:** En Spring Data JPA, este concepto implica mapear las relaciones entre entidades **dentro del mismo bounded context** mediante anotaciones como `@ManyToOne` y `@OneToMany`. En Talki, la entidad `Session` tiene una relación `@OneToMany` hacia `Feedback` dentro del mismo schema del `session-service` (una sesión puede tener múltiples feedbacks intra-BC). Las correlaciones entre bounded contexts (por ejemplo, `Session` ↔ `ScoreResult` en `scoring-service`) **no** se modelan con JPA: se realizan por `session_id` propagado en los eventos del exchange `talki.events`, respetando el patrón *database-per-service*.
 
 ![SessionMany](assets/images/Backend/SessionMany.png)
 
-![Feedback](assets/images/Backend/Feedback.png)
+![ScoreResult](assets/images/Backend/Feedback.png)
 
 **- Data Mapper:** Este patrón se encarga de la transferencia de datos entre objetos y la base de datos, asegurando la independencia entre ambos, mediante el uso de **Hibernate ORM**. Spring Data JPA abstrae el acceso a datos y Hibernate actúa como Data Mapper, convirtiendo automáticamente las entidades Java en registros de base de datos y viceversa, sin que el código de dominio conozca los detalles de persistencia.
 
@@ -3310,7 +3310,7 @@ Talki centraliza el código compartido entre microservicios en el módulo Maven 
 
 | Paquete | Clases / Interfaces | Propósito |
 |---|---|---|
-| `com.thropic.talki.commons.event` | `SessionLiveFinalizedEvent`, `TranscriptionCompletedEvent`, `FillerAnalyzedEvent`, `ScoringCompletedEvent`, `AchievementUnlockedEvent`, `UserRegisteredEvent` | Contratos de eventos de dominio compartidos entre productor y consumidor. Garantizan que el esquema del exchange `talki.events` sea idéntico en ambos extremos. |
+| `com.thropic.talki.commons.event` | `SessionLiveFinalizedEvent`, `FillerAnalyzedEvent`, `ScoringCompletedEvent`, `AchievementUnlockedEvent`, `UserRegisteredEvent` | Contratos de eventos de dominio compartidos entre productor y consumidor. Garantizan que el esquema del exchange `talki.events` sea idéntico en ambos extremos. |
 | `com.thropic.talki.commons.dto` | `ApiErrorResponse`, `PagedResponse<T>` | DTOs estándar de respuesta de error y paginación para todos los endpoints REST. |
 | `com.thropic.talki.commons.security` | `JwtClaimsExtractor`, `ServiceTokenValidator` | Utilidades para extraer claims del JWT RSA-256 y validar tokens de servicio en comunicaciones internas. |
 | `com.thropic.talki.commons.exception` | `DomainException`, `ResourceNotFoundException`, `ConflictException` | Jerarquía de excepciones de dominio con sus códigos de error estandarizados. |
