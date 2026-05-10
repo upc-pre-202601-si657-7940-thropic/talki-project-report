@@ -46,7 +46,7 @@
 
 </div>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Registro de Versiones del Informe
 
@@ -75,16 +75,17 @@
 | 2.9 | 30/04/2026 | Gael | Definición de Quality Attribute Scenarios |
 | 2.10 | 30/04/2026 | Gael | Catálogo de Constraints arquitectónicas |
 | 2.11 | 30/04/2026 | Gael | Identificación de Architectural Concerns y riesgos |
-| 2.12 | 02/05/2026 | Alejandro | Redacción de Iteration 1 — Núcleo de Sesión de Práctica y Feedback Asíncrono (4.3.1) |
-| 2.13 | 02/05/2026 | Alejandro | Incorporación del C4 Nivel 3 del session-service en 4.3.1.6 |
-| 2.14 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Driver Priorities y Software Element View) |
-| 2.15 | 02/05/2026 | Alejandro | Redacción de Iteration 2 — Identidad, Seguridad y Observabilidad Transversal (4.3.2) |
-| 2.16 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado en 4.1.5 |
-| 2.17 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 |
-| 2.18 | 03/05/2026 | Alejandro | Correcciones de trazabilidad y nomenclatura del Capítulo IV |
-| 2.19 | 03/05/2026 | Alejandro, Gael, Manuel | Redacción de Conclusiones y Recomendaciones del Avance 2 |
+| 2.12 | 02/05/2026 | Alejandro | Redacción de la sección 4.3 ADD Iterations — Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono): Architectural Design Backlog 1, Iteration Goal con priorización de drivers, elementos a refinar, conceptos de diseño, instanciación de elementos arquitectónicos con interfaces, vistas C4 + UML y Decision Log |
+| 2.13 | 02/05/2026 | Alejandro | Mejoras de trazabilidad en 4.3.1: incorporación de US10 como driver del Strategy con nota de alcance Must, reemplazo de la referencia a Adapter por la táctica oficial "Interfaces sobre implementaciones" (4.1.7) y marcado de campos opcionales en el contrato POST /v1/sessions con trazabilidad a US11/US25 |
+| 2.14 | 02/05/2026 | Alejandro | Incorporación del diagrama C4 Nivel 3 del session-service en 4.3.1.6 para cumplir el requisito explícito del cronograma "Sketch Views (C4 & UML)" |
+| 2.15 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Track Manager, SEI 2006): tabla de Architectural Driver Priorities en 4.3.1.2, Software Element View consolidada y tabla "Elements after Iteration 1" en 4.3.1.7 |
+| 2.16 | 02/05/2026 | Alejandro | Redacción de la sección 4.3.2 ADD Iterations — Iteration 2 (Identidad, Seguridad y Observabilidad Transversal): Architectural Design Backlog 2 con 10 ítems, conceptos de diseño para JWT RSA-256, bcrypt, rate limiting, OpenTelemetry, S3 lifecycle; C4 Nivel 3 del identity-service y UML del flujo de login con refresh token rotativo |
+| 2.17 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado de los cinco bounded contexts en 4.1.5 con atributos, métodos y relaciones (Architecture Overview: Class Diagram & Database Diagram) |
+| 2.18 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 con notación oficial (U/D, OHS, ACL, PL) sobre los cinco Bounded Contexts identificados |
+| 2.19 | 03/05/2026 | Manuel | Ajustes finales en los diagramas del Capítulo IV para mejorar la claridad visual y la consistencia de notación |
+| 2.20 | 03/05/2026 | Alejandro | Actualización del Registro de Versiones del informe consolidando todas las contribuciones del Avance 2 (Capítulo IV) por integrante |
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Contenido
 
@@ -206,7 +207,7 @@
 - [Referencias Bibliográficas](#referencias-bibliográficas)
 - [Anexos](#anexos)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Student Outcome
 
@@ -246,7 +247,7 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo I: Introducción
 
@@ -287,7 +288,7 @@ Talki es la solución principal de Thropic: una aplicación web que utiliza IA p
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 1.2. Solution Profile
 
@@ -418,7 +419,7 @@ _Figura 4: Lean UX Canvas de Talki_
 
 _Nota._ Elaboración propia (2026).
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 1.3. Segmentos objetivo
 
@@ -458,7 +459,7 @@ _Nota._ Elaboración propia (2026).
 - Dolores: Dificultad para expresarse con fluidez y vocabulario profesional, ansiedad ante entrevistas de trabajo, falta de espacios reales de práctica con feedback concreto
 - Comportamientos digitales: Usuarios activos de LinkedIn, plataformas de empleabilidad y apps de productividad; dispuestos a pagar por herramientas que generen ROI directo en su carrera
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo II: Requirements & Analysis
 
@@ -589,7 +590,7 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 - *Alianzas universitarias:* Partnerships con facultades de Ingeniería y Comunicaciones de universidades peruanas para adopción institucional
 - *Gamificación contextual:* Sistema de logros y streaks adaptado a los ciclos académicos peruanos (exposiciones, sustentaciones, entrevistas de prácticas)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 2.2. Entrevistas
 
@@ -820,7 +821,7 @@ Las fichas individuales anteriores recogen la evidencia bruta de cada entrevista
 
 Las entrevistadas del Segmento 1 (Belén e Isabel) expresaron su disposición a pagar un rango aproximado de **USD 2 a 5 mensuales** por una aplicación que realmente funcione. Considerando el tipo de cambio promedio de referencia (S/ 3.70 por USD), este rango equivale a **S/ 7 a S/ 19 mensuales**. El plan Premium Estudiantil de Talki, definido en la sección 1.2.3.2 en **S/ 15 a S/ 25 mensuales**, se encuentra dentro o muy cerca del techo indicado por las usuarias, lo que sugiere una aceptabilidad razonable del precio propuesto. Para el Segmento 2 (Rodrigo Sánchez y similares), la disposición a pagar es mayor por el retorno profesional esperado (entrevistas, ascensos, primer empleo), lo que habilita el tramo superior del rango y justifica mantener la horquilla S/ 15 a S/ 25 como precio de referencia.
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 2.3. Needfinding
 
@@ -977,7 +978,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario
 ![As-Is Scenario Mapping del Segmento 2 (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/As-Is_Segmento2.png)
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo III: Requirements Specification
 
@@ -995,7 +996,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
 
 ![To-Be Scenario Mapping del Segmento 2 con Talki (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/To-be_Segmento2.png)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.2. User Stories
 
@@ -1517,7 +1518,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.3. Impact Map
 
@@ -1590,7 +1591,7 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.4. Product Backlog
 
@@ -1835,7 +1836,7 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo IV: Product Architecture Design
 
@@ -2068,7 +2069,7 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 4.2. Architectural Drivers
 
@@ -2511,7 +2512,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 4.3. ADD Iterations
 
@@ -3329,7 +3330,7 @@ _Diagrama Software Element View — Estado del sistema Talki después de la Iter
 
 **Conclusión de la iteración.** El *iteration goal* se considera **alcanzado en su núcleo de diseño**: los drivers funcionales (US09, US12, US14, US15) y los escenarios de calidad de mayor riesgo (QAS-02, QAS-03, QAS-07, QAS-08) están cubiertos por decisiones registradas y trazables. Quedan tres ítems en *Por hacer* (ADB-10, ADB-11, ADB-12) que se promueven al backlog de la **Iteration 2**, junto con el refinamiento del `identity-service` (seguridad y autenticación) y la activación de la observabilidad transversal.
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ### 4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal
 
@@ -3615,7 +3616,8 @@ sequenceDiagram
 
 **Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido con recomendaciones de léxico (US18) y el `notification-service` para alertas asíncronas al usuario.
 
-<hr class="page-break">
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo V: Product Implementation, Validation & Deployment
 
@@ -3917,219 +3919,461 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 ### 5.2.1. Software Development Environment Configuration
 
+El entorno de desarrollo del producto Talki se compone de un *toolchain* unificado que el equipo Thropic adopta para cubrir todo el ciclo de vida del software, desde la planificación de Sprints hasta la operación de los microservicios en cloud. La selección está alineada con las decisiones técnicas declaradas en la sección 5.1 (suite de pruebas en cuatro niveles, librería compartida `talki-commons`, patrones de framework Spring) y prioriza herramientas gratuitas o con plan académico, integración nativa con GitHub y reproducibilidad del entorno local mediante contenedores. La siguiente tabla resume las diez categorías y las veintisiete herramientas seleccionadas, con su propósito y enlace oficial.
 
+| # | Categoría | Herramienta | Propósito | Enlace |
+|---|---|---|---|---|
+| 1 | Gestión de proyecto | Trello | Tablero Kanban para Product Backlog y Sprint Backlog (Capítulo V). | [trello.com](https://trello.com) |
+| 2 | Diseño UX/UI | Figma | Wireframes, mockups y prototipos navegables del frontend y la landing (Capítulo III). | [figma.com](https://www.figma.com) |
+| 3 | Modelado de arquitectura | Structurizr DSL | Diagramas C4 (Contexto, Contenedor, Componente) versionados como código (Capítulo IV). | [structurizr.com](https://structurizr.com) |
+| 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los nueve microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
+| 4 | IDEs y editores | WebStorm | IDE para el frontend Angular + TypeScript (`talki-frontend`). | [jetbrains.com/webstorm](https://www.jetbrains.com/webstorm/) |
+| 4 | IDEs y editores | Visual Studio Code | Editor para la landing page y para edición rápida del informe Markdown. | [code.visualstudio.com](https://code.visualstudio.com) |
+| 5 | Control de versiones | Git | Sistema de control de versiones distribuido. | [git-scm.com](https://git-scm.com) |
+| 5 | Control de versiones | GitHub | Plataforma de hosting de los repositorios y registro de paquetes de la organización `upc-pre-202601-si657-7940-thropic` (publicación del módulo `talki-commons`). | [github.com](https://github.com) |
+| 6 | API testing | Hoppscotch | Cliente HTTP/REST liviano para validar endpoints durante el desarrollo. | [hoppscotch.io](https://hoppscotch.io) |
+| 6 | API testing | Postman | Colecciones compartidas del equipo y pruebas manuales más complejas. | [postman.com](https://www.postman.com) |
+| 7 | Pruebas automatizadas | JUnit 5 | Framework base de pruebas unitarias del Nivel 1 de la pirámide (ver 5.1.1). | [junit.org/junit5](https://junit.org/junit5/) |
+| 7 | Pruebas automatizadas | Mockito | Dobles de prueba para clientes externos (Whisper, Gemini Live) inyectados por constructor. | [site.mockito.org](https://site.mockito.org) |
+| 7 | Pruebas automatizadas | Spring Boot Test | Anotación `@SpringBootTest` para pruebas de slice y de integración con contexto Spring. | [docs.spring.io/spring-boot/.../testing](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing) |
+| 7 | Pruebas automatizadas | Testcontainers | Contenedores efímeros (PostgreSQL 15, RabbitMQ 3, Redis) para el Nivel 2 de pruebas de integración. | [testcontainers.com](https://testcontainers.com) |
+| 7 | Pruebas automatizadas | Cucumber 7 | Ejecución de criterios de aceptación en Gherkin (Nivel 3, BDD) con `@language: es`. | [cucumber.io](https://cucumber.io) |
+| 7 | Pruebas automatizadas | Pact + Pact Broker | Consumer-Driven Contract Tests (Nivel 4) entre frontend / API Gateway y entre productores y consumidores de eventos AMQP. | [pact.io](https://pact.io) |
+| 7 | Pruebas automatizadas | ArchUnit | Validación de la regla de dependencia hexagonal (`domain/` no depende de `infrastructure/`) en cada build (RF-02). | [archunit.org](https://www.archunit.org) |
+| 7 | Pruebas automatizadas | k6 | Pruebas de carga del flujo end-to-end de sesión finalizada (RF-03, QAS-02). | [k6.io](https://k6.io) |
+| 8 | Documentación y configuración | Swagger / OpenAPI 3 | Especificación y exploración interactiva de los contratos REST de cada microservicio. | [swagger.io](https://swagger.io) |
+| 8 | Documentación y configuración | Spring Cloud Config | *Config server* con backend Git para parametrizar reglas variables (system prompts, umbrales) sin redeploy (DD-09 / RF-04). | [spring.io/projects/spring-cloud-config](https://spring.io/projects/spring-cloud-config) |
+| 9 | Observabilidad | Spring Boot Actuator | Endpoints `/actuator/health`, `/actuator/metrics`, `/actuator/prometheus` expuestos por cada microservicio. | [docs.spring.io/spring-boot/.../actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html) |
+| 9 | Observabilidad | OpenTelemetry | Trazas distribuidas con propagación W3C Trace Context entre microservicios (DD-13 del Capítulo IV). | [opentelemetry.io](https://opentelemetry.io) |
+| 10 | CI/CD y despliegue | GitHub Actions | Orquestador de los *pipelines* de integración y entrega continua. | [github.com/features/actions](https://github.com/features/actions) |
+| 10 | CI/CD y despliegue | Docker | Contenerización de cada microservicio mediante `Dockerfile` versionado (`eclipse-temurin:17-jre-alpine`). | [docker.com](https://www.docker.com) |
+| 10 | CI/CD y despliegue | Docker Compose | Orquestación local de los microservicios y RabbitMQ vía `docker-compose.dev.yml` por mono-repo backend. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
+| 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Angular. | [vercel.com](https://vercel.com) |
+| 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los nueve microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
+
+**Configuración del entorno de desarrollo por stack**
+
+Cada integrante del equipo replica un entorno local idéntico mediante el siguiente *baseline* de versiones, alineado con los `pom.xml` y los `Dockerfile` versionados en cada repositorio y consistente con la suite de pruebas descrita en 5.1.1.
+
+| Stack | Componente | Versión requerida | Notas |
+|---|---|---|---|
+| Backend (microservicios) | JDK | Eclipse Temurin 17 (LTS) | Coincide con el `<java.version>` declarado en cada `pom.xml` y con el `eclipse-temurin:17-jre-alpine` del `Dockerfile`. |
+| Backend (microservicios) | Apache Maven | 3.9+ | Build tool de los nueve microservicios; cada repo backend publica su `mvnw` (Maven Wrapper). |
+| Backend (microservicios) | Spring Boot | 3.2.5 | Versión declarada en el `parent` de cada `pom.xml`. |
+| Backend (microservicios) | Spring Cloud | 2023.0.x | Compatible con Spring Boot 3.2.x para el API Gateway (Spring Cloud Gateway) y para Spring Cloud Config. |
+| Backend (microservicios) | `talki-commons` | Versión publicada en GitHub Packages | Librería interna con contratos de eventos AMQP, DTOs estándar (`ApiErrorResponse`, `PagedResponse<T>`), utilidades de seguridad JWT y configuración base de RabbitMQ + DLX (ver 5.1.3). Cada microservicio la declara como dependencia en su `pom.xml`. |
+| Frontend principal | Node.js | 20 LTS | Coincide con `actions/setup-node@v4` del *workflow* de CI/CD. |
+| Frontend principal | npm | 10.x | Gestor de paquetes; `package-lock.json` versionado y cacheado en CI. |
+| Frontend principal | Angular CLI | 17.x | Coincide con la versión del `package.json` del `talki-frontend`. |
+| Landing | Node.js | 20 LTS | Solo necesario para el build estático y herramientas de linting. |
+| Contenedores | Docker Engine | 24+ | Requisito para levantar el `docker-compose.dev.yml` en local. |
+| Contenedores | Docker Compose | v2 | Plugin integrado a Docker Desktop; comando `docker compose up`. |
+| Mensajería local | RabbitMQ (vía Docker) | 3.12-management | Imagen `rabbitmq:3.12-management` levantada por Docker Compose en cada mono-repo backend, con UI en `http://localhost:15672` (`guest`/`guest`). El exchange `talki.events` y la *Dead Letter Exchange* `talki.dlx` los crea `talki-commons` al arrancar (ver 5.1.3). |
+| Persistencia local | H2 in-memory | Embebido en Spring Boot | Perfil `dev` de los microservicios para acelerar el arranque local; PostgreSQL 15 solo en *staging* y producción (ver 5.2.4). |
+| Caché local | Redis (vía Docker) | 7-alpine | Levantada bajo demanda por `scoring-service` para validar el caché de resultados; en producción se utiliza Upstash Redis gestionado. |
+| Almacenamiento de objetos | Supabase Storage (cloud) | — | Bucket compartido para los audios subidos por el `live-coach-service`; en local se accede directamente al *bucket* de desarrollo mediante credenciales en `.env.local` (no se mockea). |
+| IA generativa | Gemini 2.0 Flash Live | API HTTPS | Modelo configurado vía variable `GEMINI_MODEL=gemini-2.0-flash-live-001` en el `live-coach-service`. Las pruebas unitarias sustituyen el cliente por un `Mockito.mock`. |
+| IA generativa | Whisper STT | API HTTPS | Cliente del `transcription-service` para transcribir el audio guardado en Supabase. Mockeado en pruebas unitarias y reemplazado por *fake* en pruebas de integración. |
+
+**Levantamiento del entorno local**
+
+Cada uno de los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) incluye un `docker-compose.dev.yml` que orquesta sus microservicios junto con un *broker* RabbitMQ compartido del mono-repo. El procedimiento de arranque para un nuevo integrante es:
+
+1. Clonar el repositorio backend de interés (por ejemplo, `git clone <repo-url>`).
+2. Instalar JDK 17, Maven 3.9+ y Docker Desktop.
+3. Configurar las credenciales de GitHub Packages en `~/.m2/settings.xml` para resolver la dependencia `talki-commons`.
+4. Copiar `.env.example` a `.env` y completar las claves (`SUPABASE_URL`, `SUPABASE_KEY`, `GEMINI_API_KEY`, `WHISPER_API_KEY` cuando aplique al servicio).
+5. Compilar cada microservicio con `./mvnw -B clean package -DskipTests`.
+6. Ejecutar `docker compose -f docker-compose.dev.yml up --build` desde la raíz del mono-repo.
+7. Validar el arranque consultando el endpoint `/actuator/health` de cada servicio en su puerto asignado (ver tabla de la sección 5.2.2) y la consola de RabbitMQ en `http://localhost:15672`.
+
+Para el frontend principal y la landing, el levantamiento es independiente y no requiere Docker:
+
+1. Clonar el repositorio (`talki-frontend` o `talki-landing`).
+2. Instalar Node 20 LTS.
+3. Ejecutar `npm install` y luego `npm run start` (Angular) o `npm run dev` (landing).
+4. Configurar el archivo `.env.local` a partir de `.env.example`, apuntando `API_BASE_URL` al API Gateway local o al *staging* en Railway.
+
+Esta configuración garantiza que cualquier integrante del equipo pueda reproducir el entorno completo en menos de quince minutos a partir de un clon limpio, sin depender de servicios cloud activos para el desarrollo y la prueba unitaria.
 
 ### 5.2.2. Source Code Management
 
-Se utilizó **GitHub** como plataforma de control de versiones y colaboración en equipo.
+El equipo Thropic adopta **Git** como sistema de control de versiones distribuido y **GitHub** como plataforma central para alojar los repositorios del producto Talki bajo la organización académica `upc-pre-202601-si657-7940-thropic`. Sobre esa base se aplican las siguientes prácticas para garantizar trazabilidad, integración ordenada y colaboración entre integrantes.
 
-Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes:
+**Estrategia de ramificación: GitFlow**
 
-| Integrantes | Nombre en GitHub |
-|-------------|------------------|
-| Oroncoy Almeyda, Alejandro Daniel | alejooroncoy |
-| Rivera Sosa, Eduardo Gael | gael-rs |
-| Tumi Oliden, Manuel Ignacio | ManuelTumi2224 |
+El equipo aplica el modelo *GitFlow* descrito por Vincent Driessen, que define ramas con propósitos diferenciados y reglas claras de origen y destino para cada *merge*. Esta estrategia es coherente con el enfoque iterativo del Capítulo V (Sprints) y permite mantener la rama `main` siempre en estado desplegable.
+
+| Tipo de rama | Patrón de nombre | Origen | Destino | Propósito |
+|---|---|---|---|---|
+| Principal estable | `main` | — | — | Refleja el estado de producción del producto. Cada *merge* corresponde a una versión publicada. |
+| Integración | `develop` | `main` | `release/*` | Integra todo el trabajo en curso del equipo y alimenta los *release candidates*. |
+| Funcionalidad | `feature/<nombre>` | `develop` | `develop` | Desarrollo de una sección, User Story o conjunto cohesivo de cambios. |
+| Release candidate | `release/vX.X.X` | `develop` | `main` y `develop` | Estabilización previa al despliegue: ajustes finales y bumps de versión. |
+| Corrección crítica | `hotfix/<nombre>` | `main` | `main` y `develop` | Corrección urgente sobre producción que retorna a `develop` para preservar la línea de cambios. |
+
+Los nombres de rama se escriben en **minúsculas** y con **guiones** como separador (no *underscores*); por ejemplo, `feature/capitulo-v` o `hotfix/fix-caratula`. Esta convención se aplica también a los repositorios del informe y del producto.
+
+**Convención de mensajes de commit**
+
+Cada commit sigue una estructura inspirada en *Conventional Commits* y en la guía de mensajes de Tim Pope, garantizando legibilidad del historial:
+
+- **Línea 1 (asunto):** máximo **72 caracteres**, en español, redactado en tiempo imperativo (*Agrega*, *Corrige*, *Actualiza*) y sin punto final.
+- **Línea 2:** vacía, como separador obligatorio entre asunto y cuerpo.
+- **Línea 3 en adelante (cuerpo):** descripción libre del *qué* y el *por qué* del cambio, con líneas envueltas a aproximadamente 72 caracteres.
+
+Los prefijos sugeridos para clasificar el tipo de cambio son los siguientes:
+
+| Prefijo | Uso |
+|---|---|
+| `feat:` | Incorporación de una nueva sección, funcionalidad o contenido. |
+| `fix:` | Corrección de un defecto, error de contenido o problema de formato. |
+| `docs:` | Cambios en documentación auxiliar (CLAUDE.md, README, ADRs). |
+| `style:` | Ajustes de formato sin cambio de contenido (espaciado, indentación, page breaks). |
+| `chore:` | Tareas de mantenimiento del repositorio (`.gitignore`, configs, dependencias). |
+| `refactor:` | Reorganización interna sin cambio de comportamiento observable. |
+| `test:` | Adición o modificación de pruebas automatizadas. |
+
+**Ejemplo de commit válido:**
+
+```
+feat: agrega antecedentes y problemática del cap. I
+
+Se completan las secciones del framework 5W+2H con fuentes del
+MINSA y un análisis de la situación actual del mercado peruano
+de salud para sustentar la propuesta de valor.
+```
+
+**Flujo de Pull Request y revisión de código**
+
+Todo cambio se integra a `develop` exclusivamente mediante *Pull Request* (PR), nunca por *push directo*. El flujo aplicado por el equipo es el siguiente:
+
+1. El responsable crea una rama `feature/<nombre>` desde `develop`.
+2. Realiza commits atómicos siguiendo la convención descrita.
+3. Abre un PR hacia `develop` con título y descripción que resuman el alcance, los entregables tocados (sección del informe o módulo del código) y, cuando aplique, los identificadores trazables (US, ADB, DD, QAS).
+4. Al menos otro integrante revisa el PR; los comentarios pendientes se resuelven antes de aprobar.
+5. La integración se realiza preferentemente por *squash merge* o *merge commit* según el tipo de aporte, manteniendo la linealidad legible del historial.
+6. La rama `feature/*` se elimina del remoto tras el *merge* para evitar acumulación.
+
+**Versionamiento semántico**
+
+Los *releases* del producto siguen **Semantic Versioning** en formato `vMAYOR.MENOR.PARCHE` (por ejemplo, `v1.0.0`):
+
+- **MAYOR**: cambios incompatibles en la API pública o en la arquitectura.
+- **MENOR**: nuevas funcionalidades retrocompatibles.
+- **PARCHE**: correcciones de defectos retrocompatibles.
+
+Cada *release* se materializa en una rama `release/vX.X.X` y, al fusionarse a `main`, queda etiquetada con un *tag* del mismo nombre.
+
+**Estructura de repositorios**
+
+A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts* y un frontend único), el equipo materializa los siguientes siete repositorios bajo la organización `upc-pre-202601-si657-7940-thropic`. Para reducir la sobrecarga operativa de mantener nueve repositorios independientes, los microservicios backend se agrupan en **cuatro mono-repos por afinidad de dominio**: cada mono-repo contiene los microservicios que comparten *bounded context* o ciclo de vida operacional, junto con su `docker-compose.dev.yml` para levantamiento local conjunto. Cada repositorio mantiene su propio ciclo de GitFlow y *pipeline* de CI/CD independiente.
+
+| Repositorio | Tipo | Stack | Microservicios contenidos (puerto local) | Bounded Context / Rol |
+|---|---|---|---|---|
+| `talki-project-report` | Documentación | Markdown | — | Informe académico del curso (este documento). |
+| `talki-landing` | Frontend | HTML / CSS / JavaScript | — | Landing page pública del producto. |
+| `talki-frontend` | Frontend | Angular 17 + TypeScript | — | Aplicación web principal de Talki. |
+| `talki-user-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `identity-service` (8081), `notification-service` (8091) | Identity & Access BC + Notification BC. |
+| `talki-session-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `session-service` (8082), `live-coach-service` (8083) | Practice Session BC. |
+| `talki-analysis-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `transcription-service` (8086), `filler-detection-service` (8087), `scoring-service` (8088) | Speech Analysis BC. |
+| `talki-engagement-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `progress-service` (8089), `gamification-service` (8090) | Progress & Metrics BC + Gamification. |
+
+En total, los cuatro mono-repos backend albergan **nueve microservicios Spring Boot**, cada uno con su propio `pom.xml` y `Dockerfile`, manteniendo el principio de autonomía por servicio del Capítulo IV. La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización.
+
+Adicionalmente, el código compartido entre microservicios (contratos de eventos AMQP, DTOs estándar de respuesta de error y paginación, utilidades de seguridad JWT, configuración base del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx`) se centraliza en el módulo Maven interno **`talki-commons`**, descrito en detalle en la sección 5.1.3. Este módulo se publica como artefacto en **GitHub Packages** bajo la organización `upc-pre-202601-si657-7940-thropic`, y cada microservicio lo declara como dependencia en su `pom.xml`. Los cambios en `talki-commons` siguen Semantic Versioning estricto y los contratos Pact verificados en CI (sección 5.1.1) detectan de forma automática cualquier incompatibilidad introducida antes de llegar a `main`.
 
 ### 5.2.3. Source Code Style Guide & Conventions
 
+El equipo Thropic adopta un conjunto de convenciones de estilo de código que abarca todos los lenguajes presentes en el producto Talki. Estas convenciones se basan en guías reconocidas de la industria, garantizando legibilidad uniforme entre integrantes, facilitando el *code review* y reduciendo la fricción al incorporar nuevos colaboradores. Las reglas se aplican a todos los repositorios listados en la sección 5.2.2 y se validan mediante *linters* y *formatters* automáticos integrados en el pipeline de CI/CD.
 
+**Java + Spring Boot (microservicios backend)**
+
+Se sigue la [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) complementada con las convenciones idiomáticas del ecosistema Spring Boot.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 4 espacios, sin tabulaciones. |
+| Longitud de línea | Máximo 120 caracteres. |
+| Nombres de clase | `UpperCamelCase` (ej. `PracticeSessionService`, `FeedbackRepository`). |
+| Nombres de método y variable | `lowerCamelCase` (ej. `startSession`, `transcriptText`). |
+| Constantes | `UPPER_SNAKE_CASE` (ej. `MAX_SESSION_DURATION_SECONDS`). |
+| Nombres de paquete | Todo en minúsculas, separados por punto: `com.thropic.talki.session.application`. |
+| Estructura de paquetes | Por *feature* y capa (`domain`, `application`, `infrastructure`, `interfaces`) siguiendo Hexagonal Architecture. |
+| Anotaciones Spring | `@Service`, `@Repository`, `@RestController`, `@Component` explícitas según rol del bean. |
+| DTOs | Sufijo `Request` o `Response` (ej. `CreateSessionRequest`, `FeedbackResponse`). |
+| Excepciones | Sufijo `Exception` (ej. `SessionNotFoundException`); excepciones de dominio extienden `RuntimeException`. |
+| Imports | Sin *wildcards* (`import java.util.*;` prohibido). |
+| Validación | Bean Validation (`@Valid`, `@NotNull`, `@Size`) en DTOs de entrada. |
+| Logging | SLF4J con niveles `INFO` para hitos de negocio, `WARN` para condiciones recuperables y `ERROR` para fallos. Sin `System.out.println`. |
+
+**TypeScript + Angular (frontend principal)**
+
+Se sigue la [Angular Style Guide oficial](https://angular.dev/style-guide) y la [Airbnb JavaScript/TypeScript Style Guide](https://github.com/airbnb/javascript) en lo que aplique.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 2 espacios, sin tabulaciones. |
+| Longitud de línea | Máximo 120 caracteres. |
+| Nombres de archivo | `kebab-case` con sufijo del tipo de artefacto: `practice-session.component.ts`, `auth.guard.ts`, `feedback.service.ts`. |
+| Nombres de clase | `UpperCamelCase` con sufijo de rol (ej. `PracticeSessionComponent`, `AuthInterceptor`). |
+| Selectores de componente | `kebab-case` con prefijo del *feature module* (ej. `talki-session-recorder`). |
+| Variables y métodos | `lowerCamelCase`. |
+| Constantes globales | `UPPER_SNAKE_CASE` (ej. `API_BASE_URL`). |
+| Tipado | TypeScript estricto (`strict: true` en `tsconfig.json`); prohibido el uso de `any` salvo justificación documentada. |
+| Componentes | Un componente por archivo; lógica en el `.ts`, plantilla en `.html` y estilos en `.scss`. |
+| Inyección de dependencias | Por constructor con modificador `private readonly`. |
+| Estado del componente | Signals u Observables (RxJS); evitar mutación directa de `@Input()`. |
+
+**HTML / CSS / JavaScript (landing page)**
+
+Se sigue la [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html) y la metodología BEM para nombres de clases CSS.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 2 espacios. |
+| HTML semántico | Uso obligatorio de etiquetas semánticas (`<header>`, `<section>`, `<nav>`, `<article>`, `<footer>`). |
+| Atributos | En minúsculas, valores entre comillas dobles. |
+| Nombres de clases CSS | Metodología **BEM**: `block__element--modifier` (ej. `hero__title--highlighted`). |
+| Variables CSS | Custom properties con prefijo `--talki-` (ej. `--talki-color-primary`). |
+| Imágenes | Atributo `alt` obligatorio en todas las imágenes; archivos en `kebab-case`. |
+| JavaScript | ES6+ con `const`/`let` (nunca `var`), funciones flecha y módulos ESM. |
+
+**SQL (esquemas de base de datos)**
+
+| Aspecto | Convención |
+|---|---|
+| Palabras reservadas | `UPPERCASE` (ej. `SELECT`, `FROM`, `WHERE`, `JOIN`). |
+| Nombres de tabla | `snake_case` en plural (ej. `practice_sessions`, `feedback_reports`). |
+| Nombres de columna | `snake_case` en singular (ej. `user_id`, `created_at`). |
+| Claves primarias | Columna `id` de tipo `UUID`. |
+| Claves foráneas | Sufijo `_id` (ej. `session_id`, `user_id`). |
+| Timestamps | Columnas `created_at` y `updated_at` de tipo `TIMESTAMP WITH TIME ZONE`. |
+| Índices | Prefijo `idx_<tabla>_<columna>` (ej. `idx_sessions_user_id`). |
+| Migraciones | Numeradas y descriptivas (`V001__create_users_table.sql`) gestionadas con Flyway. |
+
+**Gherkin (pruebas BDD)**
+
+Las pruebas de aceptación se redactan en **español** para mantener trazabilidad directa con los criterios de aceptación de las User Stories del Capítulo III.
+
+| Aspecto | Convención |
+|---|---|
+| Idioma | Español (`# language: es` al inicio del feature). |
+| Nombres de archivo | `kebab-case` con sufijo `.feature` (ej. `iniciar-sesion-practica.feature`). |
+| Estructura | `Característica` (Feature) → `Escenario` (Scenario) → pasos `Dado`, `Cuando`, `Entonces`, `Y`, `Pero`. |
+| Granularidad | Un escenario por criterio de aceptación de la User Story. |
+| Datos de ejemplo | Uso de `Esquema del escenario` con tabla `Ejemplos` para casos parametrizados. |
+
+**Markdown (informe y documentación técnica)**
+
+| Aspecto | Convención |
+|---|---|
+| Especificación | CommonMark con extensiones de GitHub Flavored Markdown. |
+| Encabezados | Jerarquía estricta `#`, `##`, `###`, sin saltar niveles. |
+| Listas | Guion `-` para no ordenadas; numeración explícita para ordenadas. |
+| Énfasis | `**negrita**` para énfasis fuerte; `*cursiva*` para énfasis suave. |
+| Código en línea | Backticks simples para identificadores técnicos. |
+| Bloques de código | Triple backtick con identificador de lenguaje (`java`, `typescript`, `sql`, `bash`). |
+| Tablas | Alineación visual con guiones; encabezados en negrita por contenido, no por sintaxis. |
+| Enlaces | `[texto](url)` siempre con texto descriptivo, nunca URLs sueltas. |
+| Imágenes | Almacenadas en `assets/images/` con nombres en `kebab-case`; `alt` obligatorio. |
+
+**Convenciones transversales**
+
+Adicionalmente, el equipo aplica los siguientes principios independientes del lenguaje:
+
+- **Idioma del código fuente**: identificadores en inglés (clases, métodos, variables, columnas SQL); comentarios en español.
+- **Sin código muerto**: no se commitea código comentado; el control de versiones preserva el historial.
+- **Comentarios significativos**: los comentarios explican el *por qué* (decisiones, restricciones, *workarounds*), no el *qué* (que se deduce del código).
+- **Funciones cortas**: máximo 30 líneas como referencia; si excede, indica que la función tiene más de una responsabilidad.
+- **Sin valores mágicos**: números y *strings* hardcodeados se elevan a constantes con nombre descriptivo.
+- **Charset y EOL**: UTF-8 sin BOM; *line endings* `LF` (configurado vía `.gitattributes`).
 
 ### 5.2.4. Software Deployment Configuration
 
+El equipo Thropic adopta una estrategia de despliegue continuo basada en **GitHub Actions** como orquestador de los *pipelines* de CI/CD, **Vercel** como plataforma de despliegue del frontend y la landing page, y **Railway** como plataforma de despliegue de los microservicios backend y sus bases de datos. Esta combinación permite *previews* automáticos por *pull request*, despliegues reproducibles a partir de Git y separación de entornos sin infraestructura adicional.
 
+**Estrategia general por entorno**
 
-<hr class="page-break">
+El despliegue se rige por la convención GitFlow descrita en la sección 5.2.2: cada rama de larga duración mapea a un entorno desplegable, y los *tags* semánticos materializan los *releases* de producción.
 
-## 5.3. Microservices Implementation
+| Entorno | Rama disparadora | Plataformas | Propósito |
+|---|---|---|---|
+| Development | `feature/*` | Vercel Preview | Previsualización por *pull request* del frontend y la landing. |
+| Staging | `develop` | Vercel + Railway (proyecto staging) | Validación integral antes del *release*: pruebas E2E, demos internas y revisiones del equipo. |
+| Producción | `main` (vía *tag* `vX.X.X`) | Vercel + Railway (proyecto producción) | Versión publicada del producto, accesible al usuario final. |
 
-### 5.3.1. Sprint 1
+**Pipeline de CI/CD con GitHub Actions**
 
-#### 5.3.1.1. Sprint Backlog 1
+Cada repositorio listado en 5.2.2 mantiene su propio *workflow* en `.github/workflows/`. El pipeline se compone de las siguientes etapas, ejecutadas en *runners* `ubuntu-latest`:
 
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 1 |            |                  |             |                   |            |        |
+| Etapa | Descripción |
+|---|---|
+| Checkout | `actions/checkout@v4` para obtener el código de la rama disparadora. |
+| Setup | Configuración del entorno (`actions/setup-java@v4` con Temurin 17 para los microservicios; `actions/setup-node@v4` con Node 20 LTS para el frontend y la landing). |
+| Cache | Cacheo de dependencias (`~/.m2/repository` para Maven; `node_modules` para npm) por hash del *lockfile*. |
+| Lint | Validación de estilo: Checkstyle/Spotless en backend; ESLint + Prettier en frontend; Stylelint en landing. |
+| Build | Compilación del artefacto: `mvn -B clean package -DskipTests` en backend; `npm run build` en frontend y landing. |
+| Test | Ejecución de la pirámide completa descrita en 5.1.1: JUnit 5 + Mockito (Nivel 1), Spring Boot Test + Testcontainers con PostgreSQL 15, RabbitMQ 3 y Redis (Nivel 2), Cucumber 7 (Nivel 3) y verificación Pact contra el Pact Broker (Nivel 4). En el frontend, Jasmine/Karma. *Coverage* mínimo configurable según QAS-10. |
+| ArchUnit | Validación arquitectónica continua: la regla `domain/` no depende de `infrastructure/` (RF-02) bloquea el merge si se incumple. |
+| Load | Pruebas de carga con k6 sobre el flujo de sesión finalizada (RF-03) en el ambiente de *staging* de Railway, verificando QAS-02 (≤ 500 ms P95) y QAS-04. |
+| Image | Construcción de la imagen Docker (solo backend) y *push* al registro de Railway. |
+| Deploy | Despliegue automático al entorno correspondiente: Vercel mediante integración Git nativa; Railway mediante `railway-action` o webhook. |
 
-#### 5.3.1.2. Development Evidence for Sprint Review
+Los *workflows* se configuran con la cláusula `concurrency` para cancelar ejecuciones obsoletas de la misma rama y evitar despliegues encolados.
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+**Configuración de Vercel**
 
-#### 5.3.1.3. Testing Suite Evidence for Sprint Review
+Vercel se conecta directamente al repositorio de GitHub mediante la integración oficial, lo que automatiza el despliegue sin requerir un *workflow* explícito de `deploy`.
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+| Aspecto | Configuración |
+|---|---|
+| Repositorios cubiertos | `talki-landing` y `talki-frontend`. |
+| Trigger de Production Deployment | *Push* a la rama `main`. |
+| Trigger de Preview Deployment | *Push* a cualquier rama `feature/*` y *pull requests* hacia `develop`. |
+| Build command | `npm run build` (Angular CLI o build estático según el proyecto). |
+| Output directory | `dist/` para Angular; raíz del proyecto para la landing. |
+| Variables de entorno | `NEXT_PUBLIC_API_BASE_URL`, `TALKI_ENV` y otras claves no sensibles definidas en el panel de Vercel por entorno. |
+| Dominios | Dominio principal en producción (por definir); subdominios automáticos `*.vercel.app` para *previews*. |
+| Headers y caching | Configuración mediante `vercel.json` con cabeceras de seguridad (CSP, HSTS) y *cache-control* para assets estáticos. |
 
-#### 5.3.1.4. Execution Evidence for Sprint Review
+**Configuración de Railway**
 
+Railway aloja los nueve microservicios backend, el *broker* RabbitMQ compartido y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV. Cada microservicio se despliega como un proyecto independiente de Railway, vinculado a su carpeta dentro del mono-repo correspondiente listado en 5.2.2.
 
+| Aspecto | Configuración |
+|---|---|
+| Servicios desplegados | `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `transcription-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, además de un **API Gateway** (Spring Cloud Gateway) y un **Config Server** (Spring Cloud Config, DD-09 / RF-04) compartidos. |
+| Mono-repos backend | `talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`; cada uno aporta su `docker-compose.dev.yml` para validación local previa al despliegue. |
+| Origen de la imagen | `Dockerfile` versionado en cada microservicio (`FROM eclipse-temurin:17-jre-alpine`), construido en CI a partir del *jar* generado por Maven. |
+| *Broker* de mensajería | Una instancia gestionada de RabbitMQ 3.12 expuesta vía red privada de Railway, consumida por los productores y consumidores del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx` (Saga por coreografía descrita en 5.1.2). |
+| Bases de datos | Una instancia gestionada de **PostgreSQL 15** por servicio (`DATABASE_URL` inyectado por Railway). En el perfil `dev` local los servicios usan H2 in-memory para acelerar el arranque (ver 5.2.1). |
+| Caché | Instancia de **Upstash Redis** consumida por `scoring-service` para cachear los resultados de las cinco dimensiones de puntuación (5.1.1 Nivel 2). |
+| Almacenamiento de objetos | **Supabase Storage** como *bucket* de los audios subidos por `live-coach-service` (RF-03); el acceso se realiza mediante credenciales `SUPABASE_URL` y `SUPABASE_KEY` inyectadas como variables de entorno. |
+| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY` (RSA-256, DD-09), `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD`, `SUPABASE_URL`, `SUPABASE_KEY`, `REDIS_URL`, `GEMINI_MODEL`, `GEMINI_API_KEY`, `WHISPER_API_KEY`, `CONFIG_SERVER_URL`, definidas por entorno (staging/producción) en el panel de Railway. En el perfil `dev` local se utiliza el `JWT_SECRET` simétrico declarado en el `docker-compose.dev.yml` para acelerar el arranque. |
+| Health checks | Endpoint `GET /actuator/health` expuesto por Spring Boot Actuator; Railway reinicia el contenedor ante respuestas no saludables. |
+| Networking | Comunicación entre microservicios vía red privada de Railway; exposición pública únicamente del API Gateway. |
+| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service`, `live-coach-service`, `transcription-service` y `scoring-service` por la carga prevista en QAS-02 y QAS-04. |
 
-#### 5.3.1.5. Microservices Documentation Evidence for Sprint Review
+**Gestión de secretos y configuración sensible**
 
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
+Todas las credenciales y *secrets* se administran fuera del repositorio Git y se inyectan en tiempo de despliegue mediante los mecanismos nativos de cada plataforma:
 
-#### 5.3.1.6. Software Deployment Evidence for Sprint Review
+- **GitHub Secrets**: tokens de despliegue, claves de API y credenciales de servicios externos requeridas por los *workflows* de CI/CD.
+- **Vercel Environment Variables**: configuración del frontend y la landing por entorno (Production / Preview / Development).
+- **Railway Variables**: configuración de cada microservicio backend y de sus bases de datos por entorno.
+- **Repositorio Git**: nunca se commitean archivos `.env` ni claves; el `.gitignore` incluye `.env`, `.env.*` y `*.pem`. Cada repositorio incluye un archivo `.env.example` con los nombres de variables requeridas y valores ficticios.
 
+Adicionalmente, el equipo planifica la rotación periódica de los pares de claves JWT (RSA-256, conforme a DD-09 del Capítulo IV) y de los tokens de acceso a Railway y Vercel, manteniendo un registro de la fecha de la última rotación en la documentación interna.
 
+**Estrategia de release y rollback**
 
-#### 5.3.1.7. Team Collaboration Insights during Sprint
+El procedimiento de *release* del producto Talki sigue los siguientes pasos:
 
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
+1. Cuando `develop` reúne un conjunto cohesivo de features estables, se crea una rama `release/vX.X.X` para estabilización.
+2. En esa rama se actualizan los archivos de versión (`pom.xml`, `package.json`) y se generan las notas de release.
+3. La rama `release/vX.X.X` se fusiona a `main` mediante PR; al cerrarse, se crea un *tag* anotado `vX.X.X` que dispara el despliegue de producción.
+4. El mismo `release/vX.X.X` se fusiona de regreso a `develop` para preservar los cambios de estabilización en la línea de desarrollo.
+5. Ante un fallo en producción, el *rollback* se realiza re-desplegando el *tag* anterior estable desde el panel de Railway y de Vercel, sin necesidad de revertir commits en `main`.
 
-#### 5.3.1.8. Kanban Board
+Esta estrategia mantiene la rama `main` siempre consistente con un *tag* desplegable, garantizando que cualquier punto del historial principal pueda restaurarse como versión activa del producto.
 
-<hr class="page-break">
-
-### 5.3.2. Sprint 2
-
-#### 5.3.2.1. Sprint Backlog 2
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 2 |            |                  |             |                   |            |        |
-
-#### 5.3.2.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.2.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.2.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.2.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.2.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.2.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.2.8. Kanban Board
-
-<hr class="page-break">
-
-### 5.3.3. Sprint 3
-
-#### 5.3.3.1. Sprint Backlog 3
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 3 |            |                  |             |                   |            |        |
-
-#### 5.3.3.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.3.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.3.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.3.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.3.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.3.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.3.8. Kanban Board
-
-<hr class="page-break">
-
-### 5.3.4. Sprint 4
-
-#### 5.3.4.1. Sprint Backlog 4
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 4 |            |                  |             |                   |            |        |
-
-#### 5.3.4.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.4.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.4.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.4.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.4.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.4.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.4.8. Kanban Board
-
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 5.4. Microservices Deployment
 
+Esta sección describe la materialización del despliegue de Talki en infraestructura cloud, partiendo de la configuración general establecida en la sección 5.2.4 y del *Container Diagram* C4 (Nivel 2) del Capítulo IV. Se documenta tanto la vista estática de los componentes desplegados como la dinámica de su interacción en tiempo de ejecución.
+
 ### 5.4.1. Cloud Architecture Diagram
 
+La arquitectura cloud de Talki sigue una topología de **microservicios desplegados de forma independiente** sobre plataformas *Platform-as-a-Service* (PaaS), conservando los límites de los cinco *Bounded Contexts* definidos en el Capítulo IV. La distribución de los componentes en proveedores cloud se resume en el siguiente diagrama lógico.
 
+**Vista lógica del despliegue**
+
+| Capa | Componente desplegado | Plataforma | Tecnología | Acceso |
+|---|---|---|---|---|
+| Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.app`) |
+| Edge / CDN | `talki-frontend` | Vercel | Angular + TypeScript | Público (`https://app.talki.app`) |
+| API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.app`) |
+| Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `session-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `speech-analysis-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `progress-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `notification-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Datos | PostgreSQL × 5 (una por servicio) | Railway | PostgreSQL 16 gestionado | Privado (vínculo por servicio) |
+| Almacenamiento | Bucket de audios | AWS S3 | S3 Standard + Lifecycle Policy | Privado (acceso por *signed URL*) |
+| IA externa | Servicio de transcripción y análisis | Proveedor IA (OpenAI / Whisper) | API HTTPS | Acceso saliente desde `speech-analysis-service` |
+| Identidad | Proveedor de email transaccional | Servicio externo (Resend / SendGrid) | API HTTPS | Acceso saliente desde `notification-service` |
+
+**Conexiones principales del diagrama**
+
+El siguiente listado representa los flujos de comunicación entre los componentes desplegados, complementando la tabla anterior:
+
+1. El **usuario final** accede a `talki-landing` y a `talki-frontend` desde su navegador, ambos servidos por la red CDN global de Vercel.
+2. El **frontend** consume exclusivamente el **API Gateway** público de Railway mediante HTTPS, autenticando cada solicitud con un *bearer token* JWT emitido por el `identity-service`.
+3. El **API Gateway** enruta las solicitudes a los microservicios correspondientes a través de la red privada interna de Railway, sin exposición pública.
+4. Cada **microservicio** se conecta exclusivamente a **su propia base de datos PostgreSQL** (patrón *database-per-service*), prohibiendo accesos cruzados.
+5. El `session-service` sube los audios al **bucket S3** mediante credenciales gestionadas por GitHub Secrets y emite una *signed URL* de subida al frontend cuando aplica.
+6. El `speech-analysis-service` consume el **proveedor de IA externo** para transcripción y análisis del audio, recibiendo la respuesta de forma asíncrona mediante eventos.
+7. El `notification-service` envía correos transaccionales mediante el **proveedor de email externo** ante eventos de negocio (registro, recuperación de contraseña, hito de progreso).
+
+> _Figura: Diagrama de arquitectura cloud de Talki._ El diagrama formal en notación cloud (íconos oficiales de AWS, Vercel y Railway) se elaborará en una herramienta de diagramación cloud y se incorporará en el directorio `assets/images/cloud-architecture.png` durante la implementación del primer sprint.
 
 ### 5.4.2. Cloud Architecture Deployment
 
+Esta subsección describe los aspectos operacionales del despliegue de la arquitectura presentada: dominios, redes, exposición de servicios, observabilidad y costos asociados al modelo PaaS adoptado.
 
+**Estrategia de dominios y DNS**
 
-<hr class="page-break">
+| Dominio | Apunta a | Propósito |
+|---|---|---|
+| `talki.app` | Vercel (`talki-landing`) | Landing pública del producto. |
+| `app.talki.app` | Vercel (`talki-frontend`) | Aplicación web principal autenticada. |
+| `api.talki.app` | Railway (API Gateway) | Endpoint público de la API REST. |
+| `*.preview.talki.app` | Vercel Previews | Subdominios automáticos por *pull request* para validación. |
+
+La gestión del DNS se realiza mediante un proveedor externo (Cloudflare o similar) configurado con registros `CNAME` hacia los *endpoints* públicos de Vercel y Railway, y certificados TLS gestionados automáticamente por cada plataforma.
+
+**Exposición de servicios y red privada**
+
+- **Servicios públicos**: únicamente la landing, el frontend y el API Gateway están expuestos a Internet. El resto de microservicios y las bases de datos permanecen en la red privada de Railway.
+- **Comunicación interna**: los microservicios se descubren entre sí mediante variables de entorno con las URLs internas (`http://session-service.railway.internal:8080`), evitando dependencia de un *service discovery* dedicado en esta etapa.
+- **Política de CORS**: el API Gateway acepta solicitudes desde los dominios `app.talki.app`, `talki.app` y los subdominios `*.preview.talki.app`, rechazando cualquier otro origen.
+- **TLS extremo a extremo**: todo el tráfico externo se cifra con TLS 1.3 mediante los certificados gestionados por Vercel y Railway.
+
+**Observabilidad y monitoreo**
+
+| Aspecto | Configuración |
+|---|---|
+| Logs centralizados | Logs estructurados en formato JSON emitidos por cada servicio y agregados por la consola nativa de Railway. |
+| Métricas | Spring Boot Actuator expone `/actuator/metrics` y `/actuator/prometheus`; Railway captura uso de CPU, memoria y latencia. |
+| Trazas distribuidas | OpenTelemetry con propagación W3C Trace Context (DD-13 del Capítulo IV) para correlacionar peticiones entre microservicios. |
+| Health checks | Endpoint `GET /actuator/health` consultado periódicamente por Railway; reinicio automático ante respuestas no saludables. |
+| Alertas | Reglas configuradas en Railway por umbrales de CPU > 80 %, memoria > 85 % y *error rate* > 5 % en ventanas de 5 minutos. |
+
+**Procedimiento operativo de despliegue**
+
+El despliegue de un nuevo *release* en producción sigue los siguientes pasos, automatizados por GitHub Actions y la integración nativa de cada plataforma:
+
+1. Se publica el *tag* `vX.X.X` desde la rama `main` (ver sección 5.2.4).
+2. GitHub Actions construye las imágenes Docker de cada microservicio modificado y las publica en el registro interno de Railway.
+3. Railway despliega secuencialmente los servicios actualizados ejecutando *rolling updates* sin tiempo de inactividad observable, gracias a los *health checks* configurados.
+4. Vercel detecta el *push* a `main` y publica las nuevas versiones del frontend y la landing en su CDN global.
+5. Tras el despliegue, las pruebas *smoke* automatizadas verifican el estado del API Gateway y de los endpoints críticos (`POST /v1/auth/login`, `POST /v1/sessions`).
+6. Si las pruebas *smoke* fallan, el equipo realiza un *rollback* re-desplegando el *tag* anterior estable desde el panel de Railway y de Vercel.
+
+**Modelo de costos**
+
+El equipo prioriza los planes gratuitos y académicos de cada plataforma para sostener la operación durante la fase de validación del MVP:
+
+- **Vercel**: plan *Hobby* (gratuito) suficiente para landing y frontend en validación inicial; migración planificada al plan *Pro* al superar los 100 GB de *bandwidth* mensual.
+- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los nueve microservicios, el *broker* RabbitMQ y sus bases de datos se ajustan a los límites del plan durante la validación, escalando al plan *Pro* si la carga del MVP lo demanda.
+- **AWS S3**: tier gratuito (5 GB) para los primeros meses; transición a *Standard* con políticas de *lifecycle* para mover audios a *Glacier Deep Archive* tras 90 días de inactividad (DD-15 del Capítulo IV).
+- **Proveedor de IA**: facturación por uso, controlada mediante *rate limiting* en el `speech-analysis-service` para acotar el costo por usuario.
+
+Esta combinación permite operar el producto durante la fase de validación con un costo mensual estimado inferior a USD 50, escalando linealmente con la adopción de usuarios reales.
+
+<div style="page-break-after: always;"></div>
 
 # Conclusiones y recomendaciones
 
@@ -4153,6 +4397,13 @@ Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectón
 - **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono) y la Iteration 2 (Identidad, Seguridad y Observabilidad Transversal) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
 - **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
 
+Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
+
+- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintisiete herramientas seleccionadas (Trello, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, OpenTelemetry, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
+- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan nueve microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
+- **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
+- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los nueve microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con OpenTelemetry y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
+
 ## Recomendaciones
 
 El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
@@ -4163,19 +4414,16 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 - **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
 - **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
 
-Al cierre del segundo avance (TB2), el equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe en el siguiente entregable (TP1), tomando como base las decisiones de diseño consolidadas en el Capítulo IV:
+Tras el cierre del TP1, el equipo identifica las siguientes acciones para preparar la entrada al Sprint 1 sin acumular deuda de configuración:
 
-- **Iniciar la implementación del camino crítico de la Iteration 1.** Materializar primero los contratos REST y AMQP del `session-service`, `transcription-service` y `ai-feedback-service` definidos en 4.3.1.5, junto con las decisiones DD-01 a DD-10, garantiza que el MVP entregue valor a los User Personas desde el primer sprint y permite validar empíricamente los SLO de QAS-01 (latencia ≤ 1.5 s) y QAS-02 (finalize ≤ 500 ms).
-- **Configurar el entorno de desarrollo y CI/CD antes del Sprint 1.** Establecer GitFlow, convenciones de código, contenedores Docker, pipelines de CI con tests unitarios y un primer despliegue de prueba antes de iniciar la implementación funcional evita la deuda de infraestructura y prepara el camino para la rúbrica TP1 (Software Configuration Management, Web Services RESTful API, Backend Application Core Testing Suite).
-- **Externalizar los prompts del LLM y los umbrales de análisis desde el primer sprint.** La decisión DD-09 (Spring Cloud Config) solo es valiosa si se aplica en la implementación; codificarla desde el inicio permite ajustar las reglas de análisis sprint a sprint sin redeploy, alineado con AC-03.
-- **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories ya tienen criterios Given-When-Then formulados; convertirlos en pruebas automatizadas con Cucumber o equivalente desde el Sprint 1 cubre el ítem 4 de la rúbrica TB3 (testing microservices) y refuerza la trazabilidad requerimientos → código → pruebas.
-- **Mantener actualizado el Registro de Versiones y el Student Outcome con cada incorporación.** Documentar las modificaciones en el momento de realizarlas, en lugar de consolidarlas al final, refuerza el ítem 9 (Evolution) de la rúbrica y permite al equipo recibir retroalimentación temprana del docente durante las asesorías quincenales.
-
-# Video About-The-Team
+- **Consolidar los siete repositorios listados en 5.2.2.** Completar bajo la organización `upc-pre-202601-si657-7940-thropic` el `README` mínimo, el `.gitignore` específico del stack, el *workflow* base de GitHub Actions y el archivo `.env.example` en cada repositorio (informe, landing, frontend y los cuatro mono-repos backend), de modo que cualquier integrante pueda clonar y levantar el `docker-compose.dev.yml` antes de tomar la primera User Story.
+- **Generar el diagrama formal de arquitectura cloud.** Construir el diagrama referido en la sección 5.4.1 con íconos oficiales de Vercel, Railway y AWS (en Lucidchart, draw.io o Excalidraw) y publicarlo en `assets/images/cloud-architecture.png` para sustituir la nota provisional, completando la evidencia visual del despliegue planificado.
+- **Validar las convenciones del 5.2.3 con linters automáticos.** Configurar Spotless o Checkstyle en los repositorios backend, ESLint + Prettier en el frontend, y Stylelint en la landing, integrados al *pipeline* CI/CD para que las convenciones documentadas no dependan de la disciplina manual del equipo.
+- **Reservar los dominios de la sección 5.4.2.** Adquirir y configurar `talki.app` con sus subdominios `app` y `api` antes del Sprint 1, anticipando los tiempos de propagación DNS y de emisión de certificados TLS para no bloquear los despliegues del MVP.
 
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Referencias Bibliográficas
 
@@ -4201,7 +4449,7 @@ Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends
 
 Wojcik, R., Bachmann, F., Bass, L., Clements, P., Merson, P., Nord, R., & Wood, B. (2006). *Attribute-Driven Design (ADD), Version 2.0* (Technical Report CMU/SEI-2006-TR-023). Software Engineering Institute, Carnegie Mellon University. https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=8147
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Anexos
 
