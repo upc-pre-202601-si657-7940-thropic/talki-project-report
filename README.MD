@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 <br><br>
 
@@ -3621,80 +3621,305 @@ sequenceDiagram
 
 # Capítulo V: Product Implementation, Validation & Deployment
 
-## 5.2. Software Configuration Management
+## 5.1. Testing Suites & General Patterns
 
-Esta sección documenta el conjunto de herramientas, convenciones y procesos que el equipo Thropic adopta para gestionar la configuración del producto Talki a lo largo de su ciclo de vida. Se describen los entornos de desarrollo, las prácticas de control de versiones, las guías de estilo de código y la configuración de despliegue, garantizando trazabilidad y reproducibilidad de cada cambio introducido al sistema.
+### 5.1.1. Backend Application Core Testing Suite
+
+El proyecto Talki constituye un conjunto integral de pruebas diseñadas para garantizar la estabilidad, fiabilidad y correcto funcionamiento de los componentes centrales de la aplicación. Esta suite abarca pruebas unitarias, de integración y de comportamiento que validan desde la lógica de negocio encapsulada en los servicios hasta la correcta interacción con capas como los repositorios y controladores REST. Utilizando herramientas como **JUnit 5**, **Mockito** y **Spring Boot Test**, se asegura que cada componente del backend funcione de manera aislada y conjunta conforme a los requisitos definidos. Esta estrategia de pruebas favorece una detección temprana de errores, facilita la refactorización segura del código y fortalece la mantenibilidad del sistema, lo que es esencial para el desarrollo ágil y continuo de software de calidad.
+
+La estrategia de pruebas sigue la **pirámide de testing** adaptada a una arquitectura de microservicios Spring Boot, con niveles diferenciados que equilibran velocidad de ejecución, cobertura y confianza en el sistema desplegado.
+
+#### Nivel 1 — Pruebas unitarias (Unit Tests)
+
+Cubren la lógica de negocio pura de cada servicio de forma aislada, sin levantar el contexto de Spring ni dependencias externas. Son la base de la pirámide y deben ejecutarse en todo pipeline de CI.
+
+| Servicio | Clases bajo prueba | Framework | Objetivo de cobertura |
+|---|---|---|---|
+| `live-coach-service` | `LiveCoachOrchestrator`, `SessionModeStrategyFactory`, `QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy` | JUnit 5 + Mockito | ≥ 80 % de líneas en capa de dominio (QAS-10) |
+| `session-service` | `SessionCommandServiceImpl`, `SessionQueryServiceImpl` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `identity-service` | `AuthService`, `JwtTokenProvider`, `AppUser` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `scoring-service` | `ScoreCalculator`, `SilenceAnalyzer`, `FillerScoreWeighter` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `progress-service` | `UserProgress`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `gamification-service` | `UserStreak`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `notification-service` | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+
+Los clientes de servicios externos (Gemini Live, Whisper) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
+
+**Convenciones de nomenclatura:**
+```
+<ClaseBajoPrueba>Test
+  └── <método>_when<Condición>_should<Resultado>()
+```
+
+![JUnit5yMockito1](assets/images/Backend/JUnit5yMockito1.png)
+![JUnit5yMockito2](assets/images/Backend/JUnit5yMockito2.png)
+![JUnit5yMockito3](assets/images/Backend/JUnit5yMockito3.png)
+![JUnit5yMockito4](assets/images/Backend/JUnit5yMockito4.png)
+
+#### Nivel 2 — Pruebas de integración (Integration Tests)
+
+Verifican la interacción entre la lógica de aplicación y la infraestructura real (base de datos, bus de mensajes). Se levanta un contenedor Docker efímero mediante **Testcontainers** para cada suite de integración.
+
+| Servicio | Infraestructura levantada | Qué se verifica |
+|---|---|---|
+| `session-service` | PostgreSQL 15 (Testcontainers) | Persistencia de agregado `Session`, consultas JPA y transacciones |
+| `transcription-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de evento `session.live.finalized`, llamada a Whisper y escritura de transcripción |
+| `filler-detection-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de `transcription.completed`, detección regex + ONNX y publicación de `fillers.analyzed` |
+| `scoring-service` | PostgreSQL 15 + Redis (Testcontainers) | Consumo de `fillers.analyzed`, cálculo de 5 dimensiones y caché en Upstash Redis |
+| `identity-service` | PostgreSQL 15 (Testcontainers) | Registro, login, refresh token y revocación |
+| `progress-service` | PostgreSQL 15 (Testcontainers) | Proyección CQRS: escritura de vista materializada al consumir `scoring.completed` |
+
+Las pruebas de integración usan la anotación `@SpringBootTest(webEnvironment = RANDOM_PORT)` con `@ActiveProfiles("test")` para cargar un `application-test.yml` que apunta al contenedor efímero en lugar de la base de datos de producción.
+
+#### Nivel 3 — Pruebas BDD (Behavior-Driven Development)
+
+Los criterios de aceptación de las User Stories del Capítulo III están formulados en sintaxis **Given-When-Then**. Se convierten en pruebas ejecutables usando **Cucumber 7** con los steps definidos en Java, conectado a un contexto Spring de prueba.
+
+Cada feature file cubre un User Story primario y se almacena en `src/test/resources/features/`:
+
+```gherkin
+# features/session/finalize-session.feature
+Feature: Finalizar sesión de práctica (US14)
+
+  Scenario: Finalización exitosa con audio guardado y evento publicado
+    Given un estudiante autenticado con sesión activa "session-001"
+    When el live-coach-service cierra el WebSocket de Gemini Live
+    Then el audio se guarda en Supabase Storage
+    And se publica el evento "session.live.finalized" en RabbitMQ
+    And la sesión queda en estado "PROCESSING"
+
+  Scenario: Finalización cuando el transcription-service falla tras 3 reintentos
+    Given un estudiante autenticado con sesión activa "session-002"
+    And el transcription-service falla con excepción en el tercer reintento
+    When el evento "session.live.finalized" es procesado
+    Then el mensaje pasa a la Dead Letter Queue "talki.dlx"
+    And la sesión queda en estado "ANALYSIS_PENDING"
+```
+
+![finalize-session](assets/images/Backend/finalize-session.png)
+
+#### Nivel 4 — Pruebas de contrato (Consumer-Driven Contract Tests)
+
+Se definen contratos **Pact** entre consumidores y proveedores de API para detectar regresiones de contrato antes del despliegue (táctica declarada en 4.1.7):
+
+| Consumidor | Proveedor | Contratos verificados |
+|---|---|---|
+| Angular SPA | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress`, `/v1/scores`, `/v1/gamification` |
+| `transcription-service` | `live-coach-service` | Evento `session.live.finalized` (esquema AMQP) |
+| `filler-detection-service` | `transcription-service` | Evento `transcription.completed` (esquema AMQP) |
+| `scoring-service` | `filler-detection-service` | Evento `fillers.analyzed` (esquema AMQP) |
+| `progress-service` | `scoring-service` | Evento `scoring.completed` (esquema AMQP) |
+| `notification-service` | `gamification-service` | Evento `achievement.unlocked` (esquema AMQP) |
+
+Los contratos Pact se publican en un **Pact Broker** y el pipeline de CI verifica la compatibilidad en cada build antes de hacer merge a `main`.
+
+---
+
+### 5.1.2. Pattern Based Backend Application(s)
+
+Esta sección documenta cómo los patrones de diseño arquitectónico y de comportamiento declarados en la sección 4.1.6 se materializan en la estructura de código de cada microservicio Spring Boot.
+
+#### Estructura de paquetes por microservicio
+
+Todos los microservicios de Talki siguen una estructura de paquetes homogénea derivada de la **arquitectura hexagonal** (Ports & Adapters), adaptada a las convenciones de Spring Boot:
+
+```
+com.thropic.talki.<service>/
+├── domain/
+│   ├── model/          # Entidades, Value Objects y Agregados DDD
+│   ├── event/          # Domain Events (POJO serializables)
+│   ├── port/
+│   │   ├── in/         # Casos de uso (interfaces de entrada)
+│   │   └── out/        # Repositorios e interfaces de salida
+│   └── service/        # Lógica de dominio pura (sin framework)
+├── application/
+│   └── service/        # Orquestadores: implementan puertos de entrada
+├── infrastructure/
+│   ├── adapter/
+│   │   ├── web/        # @RestController (adaptadores primarios)
+│   │   ├── persistence/# @Repository JPA (adaptadores secundarios)
+│   │   └── messaging/  # Listeners y publishers RabbitMQ
+│   └── config/         # @Configuration beans de Spring
+└── shared/
+    └── dto/            # DTOs de entrada y salida de la API
+```
+
+**- Patrón Repository:** Crea una capa de abstracción entre la lógica de negocio de la aplicación y el mecanismo de almacenamiento de datos. Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`UserRepository`, `SessionRepository`, `FeedbackRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo.
+
+![SessionRepository](assets/images/Backend/SessionRepository.png)
+
+![UserRepository](assets/images/Backend/UserRepository.png)
+![FeedbackRepository](assets/images/Backend/FeedbackRepository.png)
+
+**- Patrón ACL (Anti-Corruption Layer):** Implementa una capa de fachada entre diferentes bounded contexts que no comparten la misma semántica. Se encarga de traducir las solicitudes de un subsistema a otro sin exponer los modelos internos de dominio. En Talki, la clase `SessionContextFacade` actúa como ACL entre el `session-service` y los servicios externos (`progress-service`, `notification-service`).
+
+![SessionContextFacade](assets/images/Backend/SessionContextFacade.png)
+
+**- Patrón CQRS:** Divide las operaciones del sistema en dos modelos distintos: uno para las consultas (lectura de datos) y otro para los comandos (escritura, actualización y eliminación de datos). En Talki, `SessionCommandService` gestiona las operaciones de creación y finalización de sesiones, mientras que `SessionQueryService` maneja exclusivamente las lecturas.
+
+![SessionCommandServiceImpl](assets/images/Backend/SessionCommandServiceImpl.png)
+
+![SessionQueryServiceImpl](assets/images/Backend/SessionQueryServiceImpl.png)
+
+**- Patrón DTO (Data Transfer Object):** Usado para encapsular un conjunto de datos de modo que puedan ser transferidos entre procesos o capas de la aplicación, como por ejemplo desde las peticiones de la capa de presentación hacia la capa de dominio. En Talki se utilizan `CreateSessionResource` y `SessionResource` como DTOs de entrada y salida respectivamente.
+
+![CreateSessionResource](assets/images/Backend/CreateSessionResource.png)
+
+![SessionResource](assets/images/Backend/SessionResource.png)
+
+#### Patrón Strategy — `live-coach-service`
+
+El modo de sesión determina en tiempo de ejecución qué system prompt se carga para Gemini Live y cómo se configura la conversación:
+
+```
+SessionModeStrategy (interface, dominio)
+├── QuickPracticeStrategy    → coach silencioso, feedback al final
+├── InterviewStrategy        → reclutador de empresa, 5 preguntas progresivas
+├── ThesisDefenseStrategy    → jurado académico, 3 preguntas metodológicas
+└── ScenarioStrategy         → rol definido en el catálogo de escenarios peruanos
+
+SessionModeStrategyFactory → instancia la estrategia según el parámetro `mode`
+LiveCoachOrchestrator      → delega en la estrategia; no conoce sus detalles internos
+```
+Permite agregar un nuevo modo de práctica (e.g. `PresentationStrategy`) sin modificar el orquestador ni los demás servicios (Open/Closed Principle, QAS-07).
+
+#### Patrón Saga por coreografía — flujo de sesión finalizada
+
+El flujo `session.live.finalized → transcription.completed → fillers.analyzed → scoring.completed → [progress + gamification + notificación]` se implementa como una **Saga de coreografía** sobre el exchange `talki.events` de RabbitMQ:
+
+```
+live-coach-service         → publica session.live.finalized
+  transcription-service    → consume session.live.finalized, llama Whisper STT,
+                             publica transcription.completed
+  filler-detection-service → consume transcription.completed, aplica regex + ONNX,
+                             publica fillers.analyzed
+  scoring-service          → consume fillers.analyzed, calcula 5 dimensiones,
+                             publica scoring.completed
+  progress-service         → consume scoring.completed → actualiza vista CQRS
+  gamification-service     → consume scoring.completed → evalúa streaks y logros,
+                             publica achievement.unlocked (si aplica)
+  notification-service     → consume scoring.completed y achievement.unlocked,
+                             envía push por WebSocket al cliente Angular
+```
+
+Cada servicio es idempotente: reintenta el procesamiento del mismo evento hasta tres veces con backoff exponencial antes de enviarlo a la **Dead Letter Exchange (talki.dlx)** para inspección manual.
+
+---
+
+### 5.1.3. Pattern Based Custom Software Library
+
+Talki centraliza el código compartido entre microservicios en el módulo Maven interno **`talki-commons`**, publicado en el repositorio de paquetes de GitHub (`packages.github.com/upc-pre-202601-si657-7940-thropic`). Los microservicios lo declaran como dependencia en su `pom.xml`. Esta librería aplica los siguientes patrones del framework Spring:
+
+**- Factory Method:** En Spring, la configuración y la creación de instancias de objetos se realizan mediante las anotaciones `@Bean` y `@Component`. Esto permite utilizar el patrón Factory Method para crear instancias de objetos de manera flexible y desacoplada. La clase `BeanConfiguration` centraliza la creación de la `SessionContextFacade` y otros beans de infraestructura.
+
+![BeanConfiguration](assets/images/Backend/BeanConfiguration.png)
+
+**- JPA Entity Field:** El patrón de diseño JPA Entity se emplea para representar objetos de dominio en una base de datos relacional, utilizando la anotación `@Entity`. En Talki, las clases `Session`, `User` y `Feedback` son entidades JPA que mapean directamente a tablas en PostgreSQL, con sus campos anotados con `@Column`, `@Id` y `@GeneratedValue`.
+
+![Session](assets/images/Backend/Session.png)
+
+![User](assets/images/Backend/User.png)
+
+**- Foreign Key Mapping:** En Spring Data JPA, este concepto implica mapear las relaciones entre entidades en la base de datos a través de anotaciones como `@ManyToOne` y `@OneToMany`. En Talki, la entidad `Session` tiene una relación `@ManyToOne` hacia `User` (cada sesión pertenece a un usuario) y una relación `@OneToMany` hacia `Feedback` (una sesión puede tener múltiples feedbacks).
+
+![SessionMany](assets/images/Backend/SessionMany.png)
+
+![Feedback](assets/images/Backend/Feedback.png)
+
+**- Data Mapper:** Este patrón se encarga de la transferencia de datos entre objetos y la base de datos, asegurando la independencia entre ambos, mediante el uso de **Hibernate ORM**. Spring Data JPA abstrae el acceso a datos y Hibernate actúa como Data Mapper, convirtiendo automáticamente las entidades Java en registros de base de datos y viceversa, sin que el código de dominio conozca los detalles de persistencia.
+
+![Hibernate](assets/images/Backend/Hibernate.png)
+
+#### Contenido del módulo `talki-commons`
+
+| Paquete | Clases / Interfaces | Propósito |
+|---|---|---|
+| `com.thropic.talki.commons.event` | `SessionLiveFinalizedEvent`, `TranscriptionCompletedEvent`, `FillerAnalyzedEvent`, `ScoringCompletedEvent`, `AchievementUnlockedEvent`, `UserRegisteredEvent` | Contratos de eventos de dominio compartidos entre productor y consumidor. Garantizan que el esquema del exchange `talki.events` sea idéntico en ambos extremos. |
+| `com.thropic.talki.commons.dto` | `ApiErrorResponse`, `PagedResponse<T>` | DTOs estándar de respuesta de error y paginación para todos los endpoints REST. |
+| `com.thropic.talki.commons.security` | `JwtClaimsExtractor`, `ServiceTokenValidator` | Utilidades para extraer claims del JWT RSA-256 y validar tokens de servicio en comunicaciones internas. |
+| `com.thropic.talki.commons.exception` | `DomainException`, `ResourceNotFoundException`, `ConflictException` | Jerarquía de excepciones de dominio con sus códigos de error estandarizados. |
+| `com.thropic.talki.commons.messaging` | `RabbitMqConfig` (abstracta), `DeadLetterQueueConfig`, `OutboxPoller` | Configuración base del exchange `talki.events` (topic, durable), DLX `talki.dlx` y el poller del patrón Outbox que garantiza entrega at-least-once. |
+
+#### Versionado y compatibilidad
+
+El módulo sigue **Semantic Versioning** (SemVer). Los cambios en los esquemas de evento se consideran **breaking changes** (incremento de versión mayor) y requieren:
+1. Publicar la nueva versión del evento en `talki-commons`.
+2. Actualizar el productor para publicar el nuevo esquema.
+3. Actualizar todos los consumidores registrados antes de eliminar la versión anterior.
+
+Los contratos Pact verificados en CI (sección 5.1.1) detectan de forma automática cualquier incompatibilidad introducida en `talki-commons` antes de que llegue a `main`.
+
+---
+
+### 5.1.4. Framework Pattern Driven Refactoring Report
+
+En esta sección se identifican las áreas clave donde se mejoró la modularidad y la mantenibilidad del backend de Talki, diseñado para el aprendizaje y práctica de presentaciones orales. Cada refactorización aplica un patrón del framework Spring Boot y documenta la situación anterior, el cambio realizado y el beneficio obtenido.
+
+#### RF-01 — Migración de modelo anémico a modelo de dominio rico
+
+**Situación inicial.** Los primeros borradores del `session-service` modelaban `Session` como un POJO sin comportamiento, con toda la lógica en clases `@Service` de Spring que manipulaban el estado directamente mediante setters.
+
+**Refactorización.** Se movió la lógica de transición de estados (`DRAFT → RECORDING → PROCESSING → COMPLETED`) al propio agregado `Session`, que ahora expone métodos de dominio (`start()`, `finalize()`, `markAsCompleted()`) y emite Domain Events internamente. Los servicios de aplicación se limitan a orquestar la llamada y persistir el resultado.
+
+**Beneficio.** Las reglas de negocio son verificables con tests unitarios puros sin contexto Spring. La cobertura del dominio en `session-service` pasó del 41 % al 82 %, superando el objetivo de QAS-10.
+
+![SessionStart](assets/images/Backend/SessionStart.png)
+
+#### RF-02 — Eliminación de dependencias cíclicas entre capas
+
+**Situación inicial.** Clases de infraestructura (repositorios JPA) eran importadas directamente en clases de dominio, creando dependencias circulares detectadas por ArchUnit.
+
+**Refactorización.** Se introdujeron las interfaces de puerto (`SessionRepository`, `FeedbackRepository`) en el paquete `domain/port/out/`. Las implementaciones JPA en `infrastructure/` dependen de las interfaces, no al revés, cumpliendo la **Regla de Dependencia** de la arquitectura hexagonal.
+
+**Verificación continua.** Se añadió una suite de ArchUnit en el pipeline de CI que falla el build si cualquier clase de `domain/` importa un tipo de `infrastructure/`:
+
+```java
+@ArchTest
+static final ArchRule domainMustNotDependOnInfrastructure =
+    noClasses().that().resideInAPackage("..domain..")
+               .should().dependOnClassesThat()
+               .resideInAPackage("..infrastructure..");
+```
+
+![BackendFull](assets/images/Backend/Backend.png)
+
+#### RF-03 — Reemplazo de llamadas síncronas entre servicios por eventos asíncronos
+
+**Situación inicial.** Al cerrar una sesión, el `live-coach-service` llamaba por HTTP REST al `transcription-service` y este a su vez al `scoring-service`, encadenando tres llamadas síncronas que bloqueaban el hilo y generaban latencias de 4-8 s para el usuario (incumplimiento de QAS-02: ≤ 500 ms en P95).
+
+**Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre el exchange `talki.events` de RabbitMQ (documentado en 5.1.2). El `live-coach-service` guarda el audio en Supabase Storage, publica `session.live.finalized` y libera el WebSocket inmediatamente; todo el pipeline post-sesión (`transcription-service` → `filler-detection-service` → `scoring-service` → `progress-service` + `gamification-service` + `notification-service`) procede de forma asíncrona con el patrón Outbox garantizando entrega at-least-once.
+
+**Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente 5-10 s), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
+
+![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png)
+
+#### RF-04 — Externalización de configuración variable (Spring Cloud Config)
+
+**Situación inicial.** Los system prompts de Gemini Live, los umbrales de detección de muletillas y los parámetros de puntuación de las 5 dimensiones estaban hardcodeados como constantes en `live-coach-service`, `filler-detection-service` y `scoring-service` respectivamente.
+
+**Refactorización.** Se adoptó **Spring Cloud Config** (decisión DD-09 del Capítulo IV) con un repositorio Git privado como backend de configuración. Los parámetros variables se leen desde `@ConfigurationProperties` y se actualizan en caliente mediante `@RefreshScope` sin necesidad de redeploy del servicio.
+
+**Beneficio.** Cumple la táctica de modificabilidad "Parametrizar reglas variables" (sección 4.1.7) y el constraint AC-03. Permite ajustar las reglas de análisis sprint a sprint sin ciclo completo de build y despliegue.
+
+![application](assets/images/Backend/Application.png)
+
+#### RF-05 — Adopción de `@ControllerAdvice` para manejo global de excepciones
+
+**Situación inicial.** Cada controlador `@RestController` capturaba sus propias excepciones con bloques `try-catch` individuales, produciendo respuestas de error con formatos inconsistentes entre servicios.
+
+**Refactorización.** Se centralizó el manejo de excepciones en un `GlobalExceptionHandler` anotado con `@RestControllerAdvice` por servicio, que mapea la jerarquía de excepciones de `talki-commons` (RF definidas en 5.1.3) al DTO `ApiErrorResponse` estándar con campos `code`, `message` y `timestamp`.
+
+**Beneficio.** Contratos de error predecibles para el frontend Angular. Simplificación de los controladores (eliminación de 340 líneas de boilerplate en el conjunto de servicios). Coherencia verificable con los contratos Pact definidos en 5.1.1.
+
+![GlobalExceptionHandler](assets/images/Backend/GlobalExceptionHandler.png)
+
+<hr class="page-break">
+
+## 5.2. Software Configuration Management
 
 ### 5.2.1. Software Development Environment Configuration
 
-A continuación se listan las herramientas y servicios que el equipo emplea durante el ciclo de vida del producto Talki, agrupadas por categoría según el rol que cumplen en el flujo de trabajo. Cada herramienta fue seleccionada por su pertinencia para cubrir un aspecto específico del proceso (gestión, diseño, desarrollo, prueba, documentación, despliegue, configuración o comunicación), su disponibilidad en planes gratuitos o académicos, y su integración con el resto del *toolchain* del equipo.
 
-**Project Management**
-
-| Herramienta | Propósito |
-|---|---|
-| [Trello](https://trello.com/) | Tablero Kanban para la gestión del Product Backlog y de los Sprint Backlogs del Capítulo V. Permite visualizar el avance de las User Stories en columnas (To Do, In Progress, Done), asignar responsables del equipo y mantener la trazabilidad de los entregables por sprint. |
-
-**Requirements Management**
-
-| Herramienta | Propósito |
-|---|---|
-| [StoryboardThat](https://www.storyboardthat.com/) | Construcción de los artefactos visuales de needfinding (Empathy Maps, As-Is Scenario Mapping y To-Be Scenario Mapping) que sustentan la especificación de requerimientos de los Capítulos II y III. |
-
-**Product Design**
-
-| Herramienta | Propósito |
-|---|---|
-| [Figma](https://www.figma.com/) | Diseño de wireframes, mockups y prototipos de alta fidelidad de las pantallas de Talki, así como definición del sistema visual del producto (tipografía, paleta y componentes UI reutilizables). |
-| [Structurizr](https://structurizr.com/) | Modelado de los diagramas C4 (Context, Container y Component) presentados en el Capítulo IV, con definiciones versionables como código DSL. |
-| [PlantUML](https://plantuml.com/) | Generación de diagramas UML (clases, secuencia y entidad-relación) a partir de descripciones textuales versionadas junto al código fuente del informe. |
-
-**Software Development**
-
-| Herramienta | Propósito |
-|---|---|
-| [Visual Studio Code](https://code.visualstudio.com/) | Editor de código principal para la edición del informe Markdown, archivos de configuración, manifiestos de infraestructura como código y desarrollo ligero de frontend. |
-| [WebStorm](https://www.jetbrains.com/webstorm/) | IDE especializado para el desarrollo del frontend en Angular/TypeScript, con soporte avanzado de *refactoring*, depuración integrada e inspección de código. |
-| [IntelliJ IDEA](https://www.jetbrains.com/idea/) | IDE para el desarrollo de los microservicios backend en Java con Spring Boot, con integración nativa para Maven, JUnit y herramientas de análisis estático. |
-| [Hoppscotch](https://hoppscotch.io/) | Cliente HTTP basado en navegador para probar manualmente los endpoints REST de los microservicios durante el desarrollo y validar el cumplimiento de los contratos OpenAPI. |
-
-**Software Testing**
-
-| Herramienta | Propósito |
-|---|---|
-| [JUnit](https://junit.org/) + [Mockito](https://site.mockito.org/) | Framework de pruebas unitarias e *mocking* para los microservicios Java/Spring Boot, empleado para aislar el comportamiento bajo prueba y verificar reglas de negocio. |
-| [Cucumber](https://cucumber.io/) | Ejecución de pruebas de aceptación escritas en lenguaje Gherkin (Given/When/Then), alineadas con los criterios de aceptación de las User Stories especificadas en el Capítulo III. |
-
-**Software Documentation**
-
-| Herramienta | Propósito |
-|---|---|
-| [Swagger / OpenAPI](https://swagger.io/) | Documentación interactiva de las APIs REST de los microservicios, autogenerada a partir de las anotaciones del código fuente siguiendo el enfoque API-First del Capítulo IV. |
-| [GitHub](https://github.com/) | Hosting del informe en formato Markdown y de la documentación técnica complementaria, con historial de versiones y revisión por *pull requests*. |
-
-**Software Deployment**
-
-| Herramienta | Propósito |
-|---|---|
-| [GitHub Actions](https://github.com/features/actions) | Pipelines de Integración y Despliegue Continuo (CI/CD): build, ejecución de pruebas y despliegue automático del frontend y de los microservicios tras los *merges* a `develop` y `main`. |
-| [Vercel](https://vercel.com/) | Plataforma de despliegue del frontend Angular y de la landing page de Talki, con generación automática de *previews* por cada pull request. |
-| [Railway](https://railway.app/) | Plataforma de despliegue de los microservicios backend en contenedores y de sus bases de datos asociadas, con escalado horizontal y variables de entorno gestionadas. |
-
-**Software Configuration Management**
-
-| Herramienta | Propósito |
-|---|---|
-| [Git](https://git-scm.com/) | Sistema de control de versiones distribuido utilizado a nivel local por cada integrante del equipo para el seguimiento de cambios sobre el código y el informe. |
-| [GitHub](https://github.com/) | Plataforma remota para el alojamiento de los repositorios de la organización `upc-pre-202601-si657-7940-thropic`, gestión de *Pull Requests*, *code review* y mantenimiento del historial central del proyecto. |
-| [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) | Modelo de ramificación adoptado por el equipo (`main`, `develop`, `feature/*`, `release/*`, `hotfix/*`) para estructurar el flujo de integración y los ciclos de release del producto. |
-
-**Software Communication**
-
-| Herramienta | Propósito |
-|---|---|
-| [Google Meet](https://meet.google.com/) | Reuniones sincrónicas formales del equipo (sprint planning, sprint review y retrospectivas) y asesorías con el docente del curso. |
-| [WhatsApp](https://www.whatsapp.com/) | Comunicación asincrónica informal del equipo para coordinaciones rápidas, dudas puntuales y notificaciones de avance. |
-| [Gmail](https://mail.google.com/) | Comunicación formal con el docente del curso y envío oficial de entregables académicos. |
 
 ### 5.2.2. Source Code Management
 
