@@ -3919,7 +3919,82 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 ### 5.2.1. Software Development Environment Configuration
 
+El entorno de desarrollo del producto Talki se compone de un *toolchain* unificado que el equipo Thropic adopta para cubrir todo el ciclo de vida del software, desde la planificación de Sprints hasta la operación de los microservicios en cloud. La selección está alineada con las decisiones técnicas declaradas en la sección 5.1 (suite de pruebas en cuatro niveles, librería compartida `talki-commons`, patrones de framework Spring) y prioriza herramientas gratuitas o con plan académico, integración nativa con GitHub y reproducibilidad del entorno local mediante contenedores. La siguiente tabla resume las diez categorías y las veintisiete herramientas seleccionadas, con su propósito y enlace oficial.
 
+| # | Categoría | Herramienta | Propósito | Enlace |
+|---|---|---|---|---|
+| 1 | Gestión de proyecto | Trello | Tablero Kanban para Product Backlog y Sprint Backlog (Capítulo V). | [trello.com](https://trello.com) |
+| 2 | Diseño UX/UI | Figma | Wireframes, mockups y prototipos navegables del frontend y la landing (Capítulo III). | [figma.com](https://www.figma.com) |
+| 3 | Modelado de arquitectura | Structurizr DSL | Diagramas C4 (Contexto, Contenedor, Componente) versionados como código (Capítulo IV). | [structurizr.com](https://structurizr.com) |
+| 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los nueve microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
+| 4 | IDEs y editores | WebStorm | IDE para el frontend Angular + TypeScript (`talki-frontend`). | [jetbrains.com/webstorm](https://www.jetbrains.com/webstorm/) |
+| 4 | IDEs y editores | Visual Studio Code | Editor para la landing page y para edición rápida del informe Markdown. | [code.visualstudio.com](https://code.visualstudio.com) |
+| 5 | Control de versiones | Git | Sistema de control de versiones distribuido. | [git-scm.com](https://git-scm.com) |
+| 5 | Control de versiones | GitHub | Plataforma de hosting de los repositorios y registro de paquetes de la organización `upc-pre-202601-si657-7940-thropic` (publicación del módulo `talki-commons`). | [github.com](https://github.com) |
+| 6 | API testing | Hoppscotch | Cliente HTTP/REST liviano para validar endpoints durante el desarrollo. | [hoppscotch.io](https://hoppscotch.io) |
+| 6 | API testing | Postman | Colecciones compartidas del equipo y pruebas manuales más complejas. | [postman.com](https://www.postman.com) |
+| 7 | Pruebas automatizadas | JUnit 5 | Framework base de pruebas unitarias del Nivel 1 de la pirámide (ver 5.1.1). | [junit.org/junit5](https://junit.org/junit5/) |
+| 7 | Pruebas automatizadas | Mockito | Dobles de prueba para clientes externos (Whisper, Gemini Live) inyectados por constructor. | [site.mockito.org](https://site.mockito.org) |
+| 7 | Pruebas automatizadas | Spring Boot Test | Anotación `@SpringBootTest` para pruebas de slice y de integración con contexto Spring. | [docs.spring.io/spring-boot/.../testing](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing) |
+| 7 | Pruebas automatizadas | Testcontainers | Contenedores efímeros (PostgreSQL 15, RabbitMQ 3, Redis) para el Nivel 2 de pruebas de integración. | [testcontainers.com](https://testcontainers.com) |
+| 7 | Pruebas automatizadas | Cucumber 7 | Ejecución de criterios de aceptación en Gherkin (Nivel 3, BDD) con `@language: es`. | [cucumber.io](https://cucumber.io) |
+| 7 | Pruebas automatizadas | Pact + Pact Broker | Consumer-Driven Contract Tests (Nivel 4) entre frontend / API Gateway y entre productores y consumidores de eventos AMQP. | [pact.io](https://pact.io) |
+| 7 | Pruebas automatizadas | ArchUnit | Validación de la regla de dependencia hexagonal (`domain/` no depende de `infrastructure/`) en cada build (RF-02). | [archunit.org](https://www.archunit.org) |
+| 7 | Pruebas automatizadas | k6 | Pruebas de carga del flujo end-to-end de sesión finalizada (RF-03, QAS-02). | [k6.io](https://k6.io) |
+| 8 | Documentación y configuración | Swagger / OpenAPI 3 | Especificación y exploración interactiva de los contratos REST de cada microservicio. | [swagger.io](https://swagger.io) |
+| 8 | Documentación y configuración | Spring Cloud Config | *Config server* con backend Git para parametrizar reglas variables (system prompts, umbrales) sin redeploy (DD-09 / RF-04). | [spring.io/projects/spring-cloud-config](https://spring.io/projects/spring-cloud-config) |
+| 9 | Observabilidad | Spring Boot Actuator | Endpoints `/actuator/health`, `/actuator/metrics`, `/actuator/prometheus` expuestos por cada microservicio. | [docs.spring.io/spring-boot/.../actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html) |
+| 9 | Observabilidad | OpenTelemetry | Trazas distribuidas con propagación W3C Trace Context entre microservicios (DD-13 del Capítulo IV). | [opentelemetry.io](https://opentelemetry.io) |
+| 10 | CI/CD y despliegue | GitHub Actions | Orquestador de los *pipelines* de integración y entrega continua. | [github.com/features/actions](https://github.com/features/actions) |
+| 10 | CI/CD y despliegue | Docker | Contenerización de cada microservicio mediante `Dockerfile` versionado (`eclipse-temurin:17-jre-alpine`). | [docker.com](https://www.docker.com) |
+| 10 | CI/CD y despliegue | Docker Compose | Orquestación local de los microservicios y RabbitMQ vía `docker-compose.dev.yml` por mono-repo backend. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
+| 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Angular. | [vercel.com](https://vercel.com) |
+| 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los nueve microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
+
+**Configuración del entorno de desarrollo por stack**
+
+Cada integrante del equipo replica un entorno local idéntico mediante el siguiente *baseline* de versiones, alineado con los `pom.xml` y los `Dockerfile` versionados en cada repositorio y consistente con la suite de pruebas descrita en 5.1.1.
+
+| Stack | Componente | Versión requerida | Notas |
+|---|---|---|---|
+| Backend (microservicios) | JDK | Eclipse Temurin 17 (LTS) | Coincide con el `<java.version>` declarado en cada `pom.xml` y con el `eclipse-temurin:17-jre-alpine` del `Dockerfile`. |
+| Backend (microservicios) | Apache Maven | 3.9+ | Build tool de los nueve microservicios; cada repo backend publica su `mvnw` (Maven Wrapper). |
+| Backend (microservicios) | Spring Boot | 3.2.5 | Versión declarada en el `parent` de cada `pom.xml`. |
+| Backend (microservicios) | Spring Cloud | 2023.0.x | Compatible con Spring Boot 3.2.x para el API Gateway (Spring Cloud Gateway) y para Spring Cloud Config. |
+| Backend (microservicios) | `talki-commons` | Versión publicada en GitHub Packages | Librería interna con contratos de eventos AMQP, DTOs estándar (`ApiErrorResponse`, `PagedResponse<T>`), utilidades de seguridad JWT y configuración base de RabbitMQ + DLX (ver 5.1.3). Cada microservicio la declara como dependencia en su `pom.xml`. |
+| Frontend principal | Node.js | 20 LTS | Coincide con `actions/setup-node@v4` del *workflow* de CI/CD. |
+| Frontend principal | npm | 10.x | Gestor de paquetes; `package-lock.json` versionado y cacheado en CI. |
+| Frontend principal | Angular CLI | 17.x | Coincide con la versión del `package.json` del `talki-frontend`. |
+| Landing | Node.js | 20 LTS | Solo necesario para el build estático y herramientas de linting. |
+| Contenedores | Docker Engine | 24+ | Requisito para levantar el `docker-compose.dev.yml` en local. |
+| Contenedores | Docker Compose | v2 | Plugin integrado a Docker Desktop; comando `docker compose up`. |
+| Mensajería local | RabbitMQ (vía Docker) | 3.12-management | Imagen `rabbitmq:3.12-management` levantada por Docker Compose en cada mono-repo backend, con UI en `http://localhost:15672` (`guest`/`guest`). El exchange `talki.events` y la *Dead Letter Exchange* `talki.dlx` los crea `talki-commons` al arrancar (ver 5.1.3). |
+| Persistencia local | H2 in-memory | Embebido en Spring Boot | Perfil `dev` de los microservicios para acelerar el arranque local; PostgreSQL 15 solo en *staging* y producción (ver 5.2.4). |
+| Caché local | Redis (vía Docker) | 7-alpine | Levantada bajo demanda por `scoring-service` para validar el caché de resultados; en producción se utiliza Upstash Redis gestionado. |
+| Almacenamiento de objetos | Supabase Storage (cloud) | — | Bucket compartido para los audios subidos por el `live-coach-service`; en local se accede directamente al *bucket* de desarrollo mediante credenciales en `.env.local` (no se mockea). |
+| IA generativa | Gemini 2.0 Flash Live | API HTTPS | Modelo configurado vía variable `GEMINI_MODEL=gemini-2.0-flash-live-001` en el `live-coach-service`. Las pruebas unitarias sustituyen el cliente por un `Mockito.mock`. |
+| IA generativa | Whisper STT | API HTTPS | Cliente del `transcription-service` para transcribir el audio guardado en Supabase. Mockeado en pruebas unitarias y reemplazado por *fake* en pruebas de integración. |
+
+**Levantamiento del entorno local**
+
+Cada uno de los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) incluye un `docker-compose.dev.yml` que orquesta sus microservicios junto con un *broker* RabbitMQ compartido del mono-repo. El procedimiento de arranque para un nuevo integrante es:
+
+1. Clonar el repositorio backend de interés (por ejemplo, `git clone <repo-url>`).
+2. Instalar JDK 17, Maven 3.9+ y Docker Desktop.
+3. Configurar las credenciales de GitHub Packages en `~/.m2/settings.xml` para resolver la dependencia `talki-commons`.
+4. Copiar `.env.example` a `.env` y completar las claves (`SUPABASE_URL`, `SUPABASE_KEY`, `GEMINI_API_KEY`, `WHISPER_API_KEY` cuando aplique al servicio).
+5. Compilar cada microservicio con `./mvnw -B clean package -DskipTests`.
+6. Ejecutar `docker compose -f docker-compose.dev.yml up --build` desde la raíz del mono-repo.
+7. Validar el arranque consultando el endpoint `/actuator/health` de cada servicio en su puerto asignado (ver tabla de la sección 5.2.2) y la consola de RabbitMQ en `http://localhost:15672`.
+
+Para el frontend principal y la landing, el levantamiento es independiente y no requiere Docker:
+
+1. Clonar el repositorio (`talki-frontend` o `talki-landing`).
+2. Instalar Node 20 LTS.
+3. Ejecutar `npm install` y luego `npm run start` (Angular) o `npm run dev` (landing).
+4. Configurar el archivo `.env.local` a partir de `.env.example`, apuntando `API_BASE_URL` al API Gateway local o al *staging* en Railway.
+
+Esta configuración garantiza que cualquier integrante del equipo pueda reproducir el entorno completo en menos de quince minutos a partir de un clon limpio, sin depender de servicios cloud activos para el desarrollo y la prueba unitaria.
 
 ### 5.2.2. Source Code Management
 
