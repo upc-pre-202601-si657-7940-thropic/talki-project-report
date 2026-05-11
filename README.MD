@@ -3259,7 +3259,7 @@ Talki centraliza el código compartido entre microservicios en el módulo Maven 
 
 **- Factory Method:** En Spring, la configuración y la creación de instancias de objetos se realizan mediante las anotaciones `@Bean` y `@Component`. Esto permite utilizar el patrón Factory Method para crear instancias de objetos de manera flexible y desacoplada. Cada microservicio expone una clase `@Configuration` que centraliza la creación de sus beans de infraestructura (clientes de RabbitMQ, configuración de seguridad, fachadas ACL, propiedades externalizadas).
 
-<!-- Captura pendiente (sprint evidencia): ![BeanConfiguration](assets/images/Backend/BeanConfiguration.png) -->
+![BeanConfiguration](assets/images/Backend/BeanConfiguration.png)
 
 **- JPA Entity Field:** El patrón de diseño JPA Entity se emplea para representar objetos de dominio en una base de datos relacional, utilizando la anotación `@Entity`. En Talki, las clases `AppUser` (en `identity-service`), `Session` y `Feedback` (en `session-service`) y `ScoreResult` (en `scoring-service`) son entidades JPA que mapean directamente a tablas en PostgreSQL, con sus campos anotados con `@Column`, `@Id` y `@GeneratedValue`. Cada entidad reside en el schema del bounded context al que pertenece (database-per-service).
 
@@ -3271,9 +3271,11 @@ Talki centraliza el código compartido entre microservicios en el módulo Maven 
 
 ![SessionMany](assets/images/Backend/SessionMany.png)
 
+![ScoreResult](assets/images/Backend/Feedback.png)
+
 **- Data Mapper:** Este patrón se encarga de la transferencia de datos entre objetos y la base de datos, asegurando la independencia entre ambos, mediante el uso de **Hibernate ORM**. Spring Data JPA abstrae el acceso a datos y Hibernate actúa como Data Mapper, convirtiendo automáticamente las entidades Java en registros de base de datos y viceversa, sin que el código de dominio conozca los detalles de persistencia.
 
-<!-- Captura pendiente (sprint evidencia): ![Hibernate](assets/images/Backend/Hibernate.png) -->
+![Hibernate](assets/images/Backend/Hibernate.png)
 
 #### Contenido del módulo `talki-commons`
 
@@ -3326,7 +3328,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
                .resideInAPackage("..infrastructure..");
 ```
 
-<!-- Captura pendiente (sprint evidencia): ![BackendFull](assets/images/Backend/Backend.png) -->
+![BackendFull](assets/images/Backend/Backend.png)
 
 #### RF-03 — Reemplazo de llamadas síncronas entre servicios por eventos asíncronos
 
@@ -3346,7 +3348,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 **Beneficio.** Cumple la táctica de modificabilidad "Parametrizar reglas variables" (sección 4.1.7) y el constraint AC-03. Permite ajustar las reglas de análisis sprint a sprint sin ciclo completo de build y despliegue.
 
-<!-- Captura pendiente (sprint evidencia): ![application](assets/images/Backend/Application.png) -->
+![application](assets/images/Backend/Application.png)
 
 #### RF-05 — Adopción de `@ControllerAdvice` para manejo global de excepciones
 
@@ -3356,7 +3358,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 **Beneficio.** Contratos de error predecibles para el frontend Angular. Simplificación de los controladores (eliminación de 340 líneas de boilerplate en el conjunto de servicios). Coherencia verificable con los contratos Pact definidos en 5.1.1.
 
-<!-- Captura pendiente (sprint evidencia): ![GlobalExceptionHandler](assets/images/Backend/GlobalExceptionHandler.png) -->
+![GlobalExceptionHandler](assets/images/Backend/GlobalExceptionHandler.png)
 
 <hr class="page-break">
 
