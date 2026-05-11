@@ -3142,7 +3142,7 @@ Feature: Finalizar sesión de práctica (US14)
     And la sesión queda en estado "ANALYSIS_PENDING"
 ```
 
-<!-- Captura pendiente (sprint evidencia): ![finalize-session](assets/images/Backend/finalize-session.png) -->
+![finalize-session](assets/images/Backend/finalize-session.png)
 
 #### Nivel 4 — Pruebas de contrato (Consumer-Driven Contract Tests)
 
@@ -3193,26 +3193,27 @@ com.thropic.talki.<service>/
 
 **- Patrón Repository:** Crea una capa de abstracción entre la lógica de negocio de la aplicación y el mecanismo de almacenamiento de datos. Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`AppUserRepository` en `identity-service`, `SessionRepository` y `FeedbackRepository` en `session-service`, `ScoreResultRepository` en `scoring-service`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo.
 
-<!-- Captura pendiente (sprint evidencia): ![SessionRepository](assets/images/Backend/SessionRepository.png) -->
+![SessionRepository](assets/images/Backend/SessionRepository.png)
 
 ![AppUserRepository](assets/images/Backend/UserRepository.png)
-<!-- Captura pendiente (sprint evidencia): ![FeedbackRepository](assets/images/Backend/FeedbackRepository.png) -->
+
+![FeedbackRepository](assets/images/Backend/FeedbackRepository.png)
 
 **- Patrón ACL (Anti-Corruption Layer):** Implementa una capa de fachada entre diferentes bounded contexts que no comparten la misma semántica. Se encarga de traducir las solicitudes de un subsistema a otro sin exponer los modelos internos de dominio. En Talki, la clase `SessionContextFacade` actúa como ACL entre el `session-service` y los servicios externos (`progress-service`, `notification-service`).
 
-<!-- Captura pendiente (sprint evidencia): ![SessionContextFacade](assets/images/Backend/SessionContextFacade.png) -->
+![SessionContextFacade](assets/images/Backend/SessionContextFacade.png)
 
 **- Patrón CQRS:** Divide las operaciones del sistema en dos modelos distintos: uno para las consultas (lectura de datos) y otro para los comandos (escritura, actualización y eliminación de datos). En Talki, `SessionCommandService` gestiona las operaciones de creación y finalización de sesiones, mientras que `SessionQueryService` maneja exclusivamente las lecturas.
 
-<!-- Captura pendiente (sprint evidencia): ![SessionCommandServiceImpl](assets/images/Backend/SessionCommandServiceImpl.png) -->
+![SessionCommandServiceImpl](assets/images/Backend/SessionCommandServiceImpl.png)
 
-<!-- Captura pendiente (sprint evidencia): ![SessionQueryServiceImpl](assets/images/Backend/SessionQueryServiceImpl.png) -->
+![SessionQueryServiceImpl](assets/images/Backend/SessionQueryServiceImpl.png)
 
-**- Patrón DTO (Data Transfer Object):** Usado para encapsular un conjunto de datos de modo que puedan ser transferidos entre procesos o capas de la aplicación, como por ejemplo desde las peticiones de la capa de presentación hacia la capa de dominio. En Talki se utilizan `CreateSessionResource` y `SessionResource` como DTOs de entrada y salida respectivamente.
+**- Patrón DTO (Data Transfer Object):** Usado para encapsular un conjunto de datos de modo que puedan ser transferidos entre procesos o capas de la aplicación, como por ejemplo desde las peticiones de la capa de presentación hacia la capa de dominio. En Talki se utilizan `CreateSessionRequest` como DTO de entrada y los endpoints del `SessionController` devuelven la entidad `Session` como respuesta JSON.
 
-<!-- Captura pendiente (sprint evidencia): ![CreateSessionResource](assets/images/Backend/CreateSessionResource.png) -->
+![CreateSessionRequest](assets/images/Backend/CreateSessionRequest.png)
 
-<!-- Captura pendiente (sprint evidencia): ![SessionResource](assets/images/Backend/SessionResource.png) -->
+![SessionController](assets/images/Backend/SessionController.png)
 
 #### Patrón Strategy — `live-coach-service`
 
@@ -3262,15 +3263,13 @@ Talki centraliza el código compartido entre microservicios en el módulo Maven 
 
 **- JPA Entity Field:** El patrón de diseño JPA Entity se emplea para representar objetos de dominio en una base de datos relacional, utilizando la anotación `@Entity`. En Talki, las clases `AppUser` (en `identity-service`), `Session` y `Feedback` (en `session-service`) y `ScoreResult` (en `scoring-service`) son entidades JPA que mapean directamente a tablas en PostgreSQL, con sus campos anotados con `@Column`, `@Id` y `@GeneratedValue`. Cada entidad reside en el schema del bounded context al que pertenece (database-per-service).
 
-<!-- Captura pendiente (sprint evidencia): ![Session](assets/images/Backend/Session.png) -->
+![Session](assets/images/Backend/Session.png)
 
 ![AppUser](assets/images/Backend/User.png)
 
 **- Foreign Key Mapping:** En Spring Data JPA, este concepto implica mapear las relaciones entre entidades **dentro del mismo bounded context** mediante anotaciones como `@ManyToOne` y `@OneToMany`. En Talki, la entidad `Session` tiene una relación `@OneToMany` hacia `Feedback` dentro del mismo schema del `session-service` (una sesión puede tener múltiples feedbacks intra-BC). Las correlaciones entre bounded contexts (por ejemplo, `Session` ↔ `ScoreResult` en `scoring-service`) **no** se modelan con JPA: se realizan por `session_id` propagado en los eventos del exchange `talki.events`, respetando el patrón *database-per-service*.
 
-<!-- Captura pendiente (sprint evidencia): ![SessionMany](assets/images/Backend/SessionMany.png) -->
-
-<!-- Captura pendiente (sprint evidencia): ![ScoreResult](assets/images/Backend/Feedback.png) -->
+![SessionMany](assets/images/Backend/SessionMany.png)
 
 **- Data Mapper:** Este patrón se encarga de la transferencia de datos entre objetos y la base de datos, asegurando la independencia entre ambos, mediante el uso de **Hibernate ORM**. Spring Data JPA abstrae el acceso a datos y Hibernate actúa como Data Mapper, convirtiendo automáticamente las entidades Java en registros de base de datos y viceversa, sin que el código de dominio conozca los detalles de persistencia.
 
@@ -3309,7 +3308,7 @@ En esta sección se identifican las áreas clave donde se mejoró la modularidad
 
 **Beneficio.** Las reglas de negocio son verificables con tests unitarios puros sin contexto Spring. La cobertura del dominio en `session-service` pasó del 41 % al 82 %, superando el objetivo de QAS-10.
 
-<!-- Captura pendiente (sprint evidencia): ![SessionStart](assets/images/Backend/SessionStart.png) -->
+![SessionStart](assets/images/Backend/SessionStart.png)
 
 #### RF-02 — Eliminación de dependencias cíclicas entre capas
 
@@ -3337,7 +3336,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 **Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente ≤ 1 s gracias a la eliminación del paso STT post-sesión), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
 
-<!-- Captura pendiente (sprint evidencia): ![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png) -->
+![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png)
 
 #### RF-04 — Externalización de configuración variable (Spring Cloud Config)
 
