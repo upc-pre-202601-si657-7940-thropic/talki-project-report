@@ -95,6 +95,7 @@
 | 2.29 | 12/05/2026 | Alejandro | Adición de requerimientos complementarios solicitados por el docente: (a) tablero público de User Stories con estados en GitHub Projects v2 vinculado en 3.4 (reemplaza Trello en 5.2.1 fila 1); (b) subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y justificación de la combinación adoptada; (c) subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki; (d) subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus 6 reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %) |
 | 2.30 | 12/05/2026 | Alejandro | Refuerzo del informe con prácticas estándares de arquitectura de microservicios: (a) reescritura de la sección 4.1.5 con tabla resumen del modelo por microservicio (8 filas) y 13 diagramas Mermaid embebidos (Class + ER por servicio) para hacer trazable la propiedad de cada concepto del modelo dentro de su bounded context; (b) nueva sección 5.3 "Microservices Documentation (API Reference)" con tabla de endpoints OpenAPI por servicio y tabla de endpoints REST principales que permite al frontend y a los contratos Pact consumir cada API de forma autocontenida; (c) actualización de conteos: 123 → 128 unit tests verdes (scoring agregó GlobalExceptionHandlerTest +5), 27 → 28 herramientas (SonarCloud sumada como fila 28 del toolchain); (d) springdoc-openapi 2.3.0 incorporado en los 8 microservicios (PRs talki-user-services#2, talki-session-services#3, talki-analysis-services#4, talki-engagement-services#2) |
 | 2.31 | 12/05/2026 | Alejandro, Gael, Manuel | Cierre del entregable TP1: actualización del Student Outcome (Criterios 1 y 2) reflejando las contribuciones de cada integrante durante la fase de refuerzo del Capítulo IV y V; actualización de las Conclusiones del TP1 con dos nuevos logros (API Reference autocontenida vía springdoc y modelo trazable por microservicio en 4.1.5); corrección de menciones residuales del conteo de tests (123 → 128) en la conclusión grupal del Criterio 2; reformulación del tono de las nuevas secciones para destacar la mejora de prácticas de arquitectura por encima de la lectura "rubrica-céntrica" del avance; e incorporación de la subsección 2.3.5 "User Journey Maps" con los Journey Maps de Valeria Ríos y Rodrigo Sánchez (assets ya existentes en `assets/images/personas/`), completando la fase de Research del Lean UX Process descrita en el statement del proyecto |
+| 2.32 | 12/05/2026 | Alejandro | Alineación del informe con el dominio real adquirido por el equipo Thropic: reemplazo de todas las menciones del dominio aspiracional `talki.app` por el dominio efectivamente registrado **`talki.lat`** en las secciones 5.4.1 (Vista lógica del despliegue), 5.4.2 (Estrategia de dominios y DNS · Política de CORS) y en las Conclusiones del TP1; reformulación de la recomendación "Reservar los dominios" del cierre, que pasa de ser una acción pendiente a una acción de configuración DNS específica (registros `CNAME` para `app.talki.lat`, `api.talki.lat` y `*.preview.talki.lat` en Cloudflare) ahora que el dominio raíz ya está bajo control del equipo |
 
 <div style="page-break-after: always;"></div>
 
@@ -4279,9 +4280,9 @@ La arquitectura cloud de Talki sigue una topología de **microservicios desplega
 
 | Capa | Componente desplegado | Plataforma | Tecnología | Acceso |
 |---|---|---|---|---|
-| Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.app`) |
-| Edge / CDN | `talki-frontend` | Vercel | Angular + TypeScript | Público (`https://app.talki.app`) |
-| API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.app`) |
+| Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.lat`) |
+| Edge / CDN | `talki-frontend` | Vercel | Angular + TypeScript | Público (`https://app.talki.lat`) |
+| API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.lat`) |
 | Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Servicios | `session-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Servicios | `live-coach-service` | Railway | Java + Spring Boot | Privado (red interna; WebSocket expuesto vía API Gateway) |
@@ -4318,10 +4319,10 @@ Esta subsección describe los aspectos operacionales del despliegue de la arquit
 
 | Dominio | Apunta a | Propósito |
 |---|---|---|
-| `talki.app` | Vercel (`talki-landing`) | Landing pública del producto. |
-| `app.talki.app` | Vercel (`talki-frontend`) | Aplicación web principal autenticada. |
-| `api.talki.app` | Railway (API Gateway) | Endpoint público de la API REST. |
-| `*.preview.talki.app` | Vercel Previews | Subdominios automáticos por *pull request* para validación. |
+| `talki.lat` | Vercel (`talki-landing`) | Landing pública del producto. |
+| `app.talki.lat` | Vercel (`talki-frontend`) | Aplicación web principal autenticada. |
+| `api.talki.lat` | Railway (API Gateway) | Endpoint público de la API REST. |
+| `*.preview.talki.lat` | Vercel Previews | Subdominios automáticos por *pull request* para validación. |
 
 La gestión del DNS se realiza mediante un proveedor externo (Cloudflare o similar) configurado con registros `CNAME` hacia los *endpoints* públicos de Vercel y Railway, y certificados TLS gestionados automáticamente por cada plataforma.
 
@@ -4329,7 +4330,7 @@ La gestión del DNS se realiza mediante un proveedor externo (Cloudflare o simil
 
 - **Servicios públicos**: únicamente la landing, el frontend y el API Gateway están expuestos a Internet. El resto de microservicios y las bases de datos permanecen en la red privada de Railway.
 - **Comunicación interna**: los microservicios se descubren entre sí mediante variables de entorno con las URLs internas (`http://session-service.railway.internal:8080`), evitando dependencia de un *service discovery* dedicado en esta etapa.
-- **Política de CORS**: el API Gateway acepta solicitudes desde los dominios `app.talki.app`, `talki.app` y los subdominios `*.preview.talki.app`, rechazando cualquier otro origen.
+- **Política de CORS**: el API Gateway acepta solicitudes desde los dominios `app.talki.lat`, `talki.lat` y los subdominios `*.preview.talki.lat`, rechazando cualquier otro origen.
 - **TLS extremo a extremo**: todo el tráfico externo se cifra con TLS 1.3 mediante los certificados gestionados por Vercel y Railway.
 
 **Observabilidad y monitoreo**
@@ -4429,7 +4430,7 @@ Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa de
 - **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintiocho herramientas seleccionadas (GitHub Projects v2, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, Zipkin + Spring Sleuth, SonarCloud, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
 - **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan ocho microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
 - **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
-- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los ocho microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con Zipkin + Spring Sleuth y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
+- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los ocho microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.lat` (adquirido por el equipo Thropic durante el TP1), la observabilidad con Zipkin + Spring Sleuth y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
 
 Adicionalmente, durante el ciclo de alineamiento previo a la entrega final, el equipo ejecutó una refactorización integral del backend para que la implementación coincida exactamente con el diseño documentado en los Capítulos IV y V. Los logros concretos son:
 
@@ -4452,7 +4453,7 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 - **Generar el diagrama formal de arquitectura cloud.** Construir la versión visual referida en 5.4.1 con íconos oficiales de Vercel, Railway, Supabase, Upstash y Google Cloud (en Lucidchart, draw.io o Excalidraw) y publicarla en `assets/images/cloud-architecture.png` para completar la evidencia visual del despliegue.
 - **Completar las evidencias visuales del código pendientes en 5.1.2.** Los screenshots del IDE para cada patrón implementado (repositorios JPA, fachada ACL, servicios CQRS, entidades de dominio, refactors RF-01 a RF-05) deben generarse de forma sistemática (capturas etiquetadas con el nombre exacto de la clase Java) para ser incrustadas en la sección 5.1.2 e ilustrar al lector la materialización concreta de los patrones declarados en el Capítulo IV.
 - **Configurar Spotless / Checkstyle y los linters frontend en el pipeline de CI.** Las convenciones del 5.2.3 hoy dependen de la disciplina manual; automatizarlas evita drift entre integrantes y mantiene el estilo del repositorio homogéneo sin requerir code reviews dedicados a formato.
-- **Reservar los dominios `talki.app`, `app.talki.app` y `api.talki.app`.** La adquisición temprana evita bloqueos por propagación DNS y emisión de certificados TLS cuando el frontend esté listo para despliegue público.
+- **Configurar los registros DNS de `talki.lat` (dominio ya adquirido por el equipo Thropic).** El dominio raíz está reservado; queda pendiente configurar en Cloudflare los registros `CNAME` para `app.talki.lat` (Vercel — frontend), `api.talki.lat` (Railway — API Gateway) y `*.preview.talki.lat` (Vercel Previews por *pull request*), y emitir los certificados TLS automáticos de cada plataforma. Hacerlo antes del despliegue evita esperar por propagación DNS al momento de salir a producción.
 - **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories tienen criterios Given-When-Then formulados; convertirlos en pruebas Cucumber 7 cierra el Nivel 3 de la pirámide (5.1.1) y mantiene trazabilidad explícita requerimientos → código → pruebas.
 
 # Video About-The-Team
