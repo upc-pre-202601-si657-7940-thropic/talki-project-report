@@ -93,6 +93,7 @@
 | 2.27 | 11/05/2026 | Alejandro | Actualización integral de Conclusiones (agregado párrafo TP1 con logros de implementación: pipeline sin Whisper, 8 microservicios operativos, 123 unit tests pasando, patrones DDD/CQRS/ACL aplicados) y Recomendaciones (reescritas para apuntar al siguiente sprint: completar scenario-catalog/media, integrar cliente Gemini real, migrar a PostgreSQL gestionado, Testcontainers Nivel 2, frontend Angular contra contratos REST/AMQP) |
 | 2.28 | 11/05/2026 | Alejandro, Gael, Manuel | Incorporación de la columna TP1 al Student Outcome (Criterios 1 y 2) reflejando contribuciones individuales de la fase de implementación y alineamiento de los tres integrantes |
 | 2.29 | 12/05/2026 | Alejandro | Adición de requerimientos complementarios solicitados por el docente: (a) tablero público de User Stories con estados en GitHub Projects v2 vinculado en 3.4 (reemplaza Trello en 5.2.1 fila 1); (b) subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y justificación de la combinación adoptada; (c) subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki; (d) subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus 6 reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %) |
+| 2.30 | 12/05/2026 | Alejandro | Refuerzo de la rúbrica oficial TP1: (a) reescritura de la sección 4.1.5 con tabla resumen del modelo por microservicio (8 filas) y 16 diagramas Mermaid embebidos (Class + ER por servicio) para cumplir el criterio #2 "Class Diagram y Database Diagram de cada servicio"; (b) nueva sección 5.3 "Microservices Documentation (API Reference)" con tabla de endpoints OpenAPI por servicio y tabla de endpoints REST principales para cumplir el criterio #3 "RESTful API con documentación de cada servicio" (4 pts); (c) actualización de conteos: 123 → 128 unit tests verdes (scoring agregó GlobalExceptionHandlerTest +5), 27 → 28 herramientas (SonarCloud sumada como fila 28 del toolchain); (d) springdoc-openapi 2.3.0 incorporado en los 8 microservicios (PRs talki-user-services#2, talki-session-services#3, talki-analysis-services#4, talki-engagement-services#2) |
 
 <div style="page-break-after: always;"></div>
 
@@ -172,6 +173,7 @@
       - [5.2.3. Source Code Style Guide & Conventions](#523-source-code-style-guide--conventions)
       - [5.2.4. Software Deployment Configuration](#524-software-deployment-configuration)
       - [5.2.5. Quality Gate y Revisión de Calidad de Código](#525-quality-gate-y-revisión-de-calidad-de-código)
+   - [5.3. Microservices Documentation (API Reference)](#53-microservices-documentation-api-reference)
    - [5.4. Microservices Deployment](#54-microservices-deployment)
       - [5.4.0. Opciones de Deployment Evaluadas](#540-opciones-de-deployment-evaluadas)
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
@@ -203,14 +205,14 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
       <td rowspan="3"><b>AV1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.<br><br><b>AV2:</b> El equipo comunicó de manera efectiva el diseño arquitectónico de Talki en el Capítulo IV combinando narrativa técnica, diagramas C4 (contexto, contenedores y componentes), diagramas entidad-relación, tablas de drivers con identificadores trazables y matrices de tácticas por atributo de calidad, adaptando el formato a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> El equipo comunicó la transición del diseño arquitectónico (Capítulo IV) a la implementación operativa (Capítulo V) mediante tablas de pruebas unitarias por servicio (5.1.1), tablas de patrones aplicados con referencia al código real (5.1.2), tabla de mono-repos con asignación de puertos por microservicio (5.2.2), descripción del despliegue cloud por proveedor (5.4) y un Registro de Versiones que documenta cronológicamente las decisiones de alineamiento, garantizando que cualquier afirmación del informe se pueda verificar contra el código publicado en la organización GitHub del proyecto.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.<br><br><b>TP1:</b> Redacté las secciones 5.1.1 a 5.2.4 del Capítulo V comunicando la operativa de implementación del backend mediante tablas de niveles de pruebas (Nivel 1 unitarias, Nivel 2 integración con Testcontainers, Nivel 3 BDD con Cucumber, Nivel 4 contract testing con Pact), tablas de patrones de framework Spring por capa hexagonal, descripción del toolchain del equipo con veintisiete herramientas seleccionadas y catorce convenciones de estilo de código por lenguaje, adaptando el formato a evaluadores académicos del curso y al equipo de desarrollo que toma las decisiones operativas día a día.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.<br><br><b>TP1:</b> Redacté las secciones 5.1.1 a 5.2.4 del Capítulo V comunicando la operativa de implementación del backend mediante tablas de niveles de pruebas (Nivel 1 unitarias, Nivel 2 integración con Testcontainers, Nivel 3 BDD con Cucumber, Nivel 4 contract testing con Pact), tablas de patrones de framework Spring por capa hexagonal, descripción del toolchain del equipo con veintiocho herramientas seleccionadas (incluyendo SonarCloud sumada en TP1) y catorce convenciones de estilo de código por lenguaje, adaptando el formato a evaluadores académicos del curso y al equipo de desarrollo que toma las decisiones operativas día a día.</td>
     </tr>
     <tr>
       <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.<br><br><b>AV2:</b> Redacté las secciones 4.1.1 a 4.1.7 del Capítulo IV, comunicando las decisiones de diseño arquitectónico mediante narrativa técnica estructurada, diagramas C4 de contexto, contenedores y componentes, un Context Map DDD, el diagrama de clases consolidado de los cinco bounded contexts con atributos y métodos representativos, el diagrama entidad-relación de los esquemas de base de datos por servicio, y tablas de patrones de diseño y tácticas arquitectónicas alineadas con los drivers del sistema, adaptando el nivel de abstracción a audiencias técnicas del equipo de desarrollo y evaluadores académicos.<br><br><b>TP1:</b> Documenté la implementación del `identity-service` y del `notification-service` mediante capturas de tests JUnit5+Mockito (`AuthServiceTest`, `JwtTokenProviderTest`, `ScoreNotificationConsumerTest`, `AchievementNotificationConsumerTest`) referenciadas en la tabla 5.1.1 del informe, comunicando al equipo y al docente la evidencia verificable del cumplimiento de la cobertura prometida (≥ 75 %) para los componentes de seguridad y notificación; coordiné con el equipo la asignación de capturas de pantalla del IDE para la sección 5.1.2 (Pattern Based Backend Application) siguiendo una matriz que asigna cada imagen al integrante dueño del repositorio correspondiente.</td>
     </tr>
     <tr>
       <td rowspan="3"><strong>Criterio 2: ABET-EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).<br><br><b>AV2:</b> Apliqué el método Attribute-Driven Design (Wojcik et al., SEI 2006) para resolver el problema del diseño iterativo e incremental de la arquitectura de Talki (sección 4.3), formulando dos iteraciones que descomponen el sistema en elementos refinados a partir de drivers priorizados por matriz Importance × Difficulty, seleccionando conceptos de diseño (Event-Driven Architecture, Saga por coreografía, Strategy + Factory, Circuit Breaker con Retry, JWT RSA-256 con JWKS, Zipkin + Spring Sleuth con propagación X-B3-TraceId, Supabase Storage sin persistencia de audio) frente a alternativas descartadas con justificación trazable, instanciando 25 elementos arquitectónicos con responsabilidades e interfaces API-First, y registrando 18 decisiones de diseño con trazabilidad a User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, garantizando que cada decisión técnica responde a un problema de ingeniería de software identificable y verificable.<br><br><b>TP1:</b> Resolví el problema de divergencia entre el diseño arquitectónico documentado y la implementación inicial del backend ejecutando una refactorización integral en los cuatro mono-repos del equipo: eliminé el servicio intermedio `transcription-service` (Whisper STT) tras detectar que Gemini Live ya provee el transcript nativo, reconecté `filler-detection-service` directamente al evento `session.live.finalized` (queue `filler.session-finalized`, routing key `session.live.finalized`), extendí el contrato del evento con los campos `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`, propagué estas métricas end-to-end hasta `ScoreCalculator` (eliminando los magic numbers hardcodeados `silenceRatio=0.08` y `volume=70` que invalidaban parcialmente el Voice Coach Score), e implementé idempotencia robusta en `FillerAnalyzedConsumer` envolviendo el `save()` en `try/catch DataIntegrityViolationException` sobre la unique constraint de `session_id` para tratar las race conditions entre consumers concurrentes como duplicados en lugar de redirigir el mensaje al DLX. Apliqué los patrones de diseño declarados en el Capítulo IV — DDD (entidad `Feedback` con relación `@OneToMany` intra-BC en `session-service`, value object `SessionUserContext`, entidad persistente `ScoreResult` con índice único sobre `session_id` en `scoring-service`), CQRS (interfaces `SessionCommandService`/`SessionQueryService` con sus implementaciones transaccionales `@Transactional` y `@Transactional(readOnly=true)` respectivamente), y Anti-Corruption Layer (`SessionContextFacade` con métodos `fromJwtClaims(Map)` y `fromLocalUserId(Long)` para aislar al `session-service` del shape upstream del JWT) — y consolidé una suite de 123 unit tests con JUnit 5 + Mockito + AssertJ que cubre happy path, edge cases (tokens JWT forjados por otro secret, expirados o con tipos incorrectos en los claims), invariantes de dominio (transiciones ilegales del agregado `Session`, validaciones 0-100 en cada dimensión del `VoiceScore`, score perfecto vs cruce de 1000 XP), y race conditions de idempotencia at-least-once sobre el bus de eventos.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).<br><br><b>AV2:</b> Apliqué el método Attribute-Driven Design (Wojcik et al., SEI 2006) para resolver el problema del diseño iterativo e incremental de la arquitectura de Talki (sección 4.3), formulando dos iteraciones que descomponen el sistema en elementos refinados a partir de drivers priorizados por matriz Importance × Difficulty, seleccionando conceptos de diseño (Event-Driven Architecture, Saga por coreografía, Strategy + Factory, Circuit Breaker con Retry, JWT RSA-256 con JWKS, Zipkin + Spring Sleuth con propagación X-B3-TraceId, Supabase Storage sin persistencia de audio) frente a alternativas descartadas con justificación trazable, instanciando 25 elementos arquitectónicos con responsabilidades e interfaces API-First, y registrando 18 decisiones de diseño con trazabilidad a User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, garantizando que cada decisión técnica responde a un problema de ingeniería de software identificable y verificable.<br><br><b>TP1:</b> Resolví el problema de divergencia entre el diseño arquitectónico documentado y la implementación inicial del backend ejecutando una refactorización integral en los cuatro mono-repos del equipo: eliminé el servicio intermedio `transcription-service` (Whisper STT) tras detectar que Gemini Live ya provee el transcript nativo, reconecté `filler-detection-service` directamente al evento `session.live.finalized` (queue `filler.session-finalized`, routing key `session.live.finalized`), extendí el contrato del evento con los campos `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`, propagué estas métricas end-to-end hasta `ScoreCalculator` (eliminando los magic numbers hardcodeados `silenceRatio=0.08` y `volume=70` que invalidaban parcialmente el Voice Coach Score), e implementé idempotencia robusta en `FillerAnalyzedConsumer` envolviendo el `save()` en `try/catch DataIntegrityViolationException` sobre la unique constraint de `session_id` para tratar las race conditions entre consumers concurrentes como duplicados en lugar de redirigir el mensaje al DLX. Apliqué los patrones de diseño declarados en el Capítulo IV — DDD (entidad `Feedback` con relación `@OneToMany` intra-BC en `session-service`, value object `SessionUserContext`, entidad persistente `ScoreResult` con índice único sobre `session_id` en `scoring-service`), CQRS (interfaces `SessionCommandService`/`SessionQueryService` con sus implementaciones transaccionales `@Transactional` y `@Transactional(readOnly=true)` respectivamente), y Anti-Corruption Layer (`SessionContextFacade` con métodos `fromJwtClaims(Map)` y `fromLocalUserId(Long)` para aislar al `session-service` del shape upstream del JWT) — y consolidé una suite de 128 unit tests con JUnit 5 + Mockito + AssertJ que cubre happy path, edge cases (tokens JWT forjados por otro secret, expirados o con tipos incorrectos en los claims), invariantes de dominio (transiciones ilegales del agregado `Session`, validaciones 0-100 en cada dimensión del `VoiceScore`, score perfecto vs cruce de 1000 XP), race conditions de idempotencia at-least-once sobre el bus de eventos, y el `GlobalExceptionHandler` del scoring-service con DTOs `ApiErrorResponse` que materializa el refactor RF-05.</td>
       <td rowspan="3"><b>AV1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.<br><br><b>AV2:</b> El equipo aplicó principios de ingeniería de software para resolver el problema del diseño arquitectónico de Talki, descomponiendo la solución en bounded contexts mediante DDD, formulando drivers arquitectónicos medibles (Quality Attribute Scenarios, Constraints y Concerns) y seleccionando estilos, patrones y tácticas justificados a partir de los requerimientos del AV1, garantizando trazabilidad entre cada decisión técnica y su problema de origen.<br><br><b>TP1:</b> El equipo materializó la arquitectura del Capítulo IV en código Java + Spring Boot 3 funcionando: ocho microservicios desplegables en Railway con bases PostgreSQL gestionadas por Supabase, un bus de eventos RabbitMQ con exchange topic `talki.events` y Dead Letter Exchange `talki.dlx`, una librería compartida `talki-commons` con los contratos de eventos AMQP versionados, y una suite de pruebas unitarias verificable con `mvn test` (123/123 verdes). El equipo aplicó principios reales de ingeniería de software (DDD, CQRS, ACL, Saga de coreografía, Outbox Pattern, Circuit Breaker, idempotencia at-least-once con unique constraint + manejo de excepciones de integridad) para resolver problemas no triviales como la propagación de métricas acústicas end-to-end sin pérdida de fidelidad, el aislamiento del modelo upstream del JWT mediante un ACL, y el cumplimiento *by-design* de la Ley 29733 al evitar toda persistencia del audio biométrico.</td>
     </tr>
     <tr>
@@ -1949,28 +1951,389 @@ _Diagrama de Componentes C4 — Live Coach Service. Elaboración propia (2026)._
 
 ### 4.1.5. Architecture Overview: Class Diagram & Database Diagram
 
-#### Diagrama de Clases
+#### Vista consolidada — Class Diagram global
 
-El diagrama de clases consolida las entidades de dominio de los cinco Bounded Contexts de Talki, mostrando atributos, métodos representativos y relaciones estructurales. Las clases están agrupadas por contexto para reflejar la separación de responsabilidades del diseño DDD.
+El diagrama de clases consolidado integra las entidades de dominio de los cinco Bounded Contexts de Talki en una sola vista, mostrando atributos, métodos representativos y relaciones estructurales. Las clases están agrupadas por contexto para reflejar la separación de responsabilidades del diseño DDD.
 
 ![ClassDiagram](assets/images/DiagramsUML/ClassDiagram.png)
 
-_Diagrama de Clases — Bounded Contexts de Talki (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics). Elaboración propia (2026)._
+_Diagrama de Clases consolidado — Bounded Contexts de Talki (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics). Elaboración propia (2026)._
 
----
+#### Vista consolidada — Entity-Relationship global
 
-#### Diagrama Entidad-Relación (Base de Datos Relacional)
+Talki utiliza un esquema de **base de datos por servicio** (Database per Service), donde cada microservicio gestiona su propio almacenamiento relacional (PostgreSQL). El siguiente diagrama entidad-relación consolida los esquemas principales en una vista única para apreciar la cardinalidad inter-servicios sin perder de vista la autonomía de despliegue.
 
-Talki utiliza un esquema de **base de datos por servicio** (Database per Service), donde cada microservicio gestiona su propio almacenamiento relacional (PostgreSQL). A continuación se presenta el diagrama entidad-relación consolidado de los esquemas principales.
-
-**Decisiones de modelado:**
+**Decisiones de modelado transversales:**
 - Se usa **PostgreSQL** como base de datos relacional principal para todos los servicios, dado que los datos de sesión, feedback y progreso tienen estructura predecible y requieren consistencia transaccional.
-- Los campos `filler_words_analysis`, `keywords_analysis`, `lexicon_suggestions` y `section_feedback` en la tabla `session_feedback` se almacenan como JSONB de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados sin sacrificar las garantías ACID.
-- Las relaciones entre servicios se modelan mediante `user_id` como clave foránea lógica (no referencial entre bases de datos), lo que preserva la autonomía de cada esquema.
+- Los campos de feedback estructurado se almacenan como **JSONB** de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados sin sacrificar las garantías ACID.
+- Las relaciones entre servicios se modelan mediante `user_id` y `session_id` como **claves foráneas lógicas** (no referenciales entre bases de datos), lo que preserva la autonomía de cada esquema (P4 — Database per Service).
 
 ![EntityRelations](assets/images/DiagramsUML/Entity-Relation.png)
 
-_Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
+_Diagrama Entidad-Relación consolidado — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
+
+---
+
+#### Resumen del modelo por microservicio
+
+Para cumplir el criterio de **trazabilidad por servicio** (rúbrica TP1 oficial del curso), la siguiente tabla resume —para cada microservicio Spring Boot del producto Talki— el bounded context al que pertenece, las entidades de dominio que mantiene, las tablas físicas en su base de datos PostgreSQL y los eventos AMQP que produce o consume sobre el exchange `talki.events`. Esta vista evita la doble lectura del diagrama consolidado y permite localizar la propiedad de cada concepto del modelo.
+
+| # | Microservicio | Bounded Context | Agregado raíz | Entidades / Value Objects | Tablas BD | Eventos publicados | Eventos consumidos |
+|---|---|---|---|---|---|---|---|
+| 1 | `identity-service` | Identity & Access | `AppUser` | `AppUser`, `UserRole` (enum), `RefreshToken` | `app_users`, `refresh_tokens` | `user.registered` | — |
+| 2 | `session-service` | Practice Session | `Session` | `Session`, `Feedback` (`@OneToMany` intra-BC), `SessionUserContext` (VO ACL) | `sessions`, `session_feedback` | `session.live.finalized` | `user.registered` |
+| 3 | `live-coach-service` | Practice Session (orquestador) | — *(stateless)* | `SessionModeStrategy` y sus 4 implementaciones, `LiveCoachOrchestrator` | *(sin BD propia)* | `session.live.finalized` | — |
+| 4 | `filler-detection-service` | Speech Analysis | — *(stateless)* | `FillerDetector` (servicio de dominio), `FillerAnalyzedEvent` | *(sin BD propia)* | `fillers.analyzed` | `session.live.finalized` |
+| 5 | `scoring-service` | Speech Analysis | `ScoreResult` | `ScoreResult`, `VoiceScore` (VO con 5 dimensiones 0-100) | `score_results` (unique constraint sobre `session_id`) | `scoring.completed` | `fillers.analyzed` |
+| 6 | `progress-service` | Progress & Metrics | `UserProgress` | `UserProgress`, `SessionMetrics` | `user_progress`, `session_metrics` | — | `scoring.completed` |
+| 7 | `gamification-service` | Progress & Metrics (engagement) | `UserStreak` | `UserStreak`, `Achievement` | `user_streaks`, `achievements` | `achievement.unlocked` | `scoring.completed` |
+| 8 | `notification-service` | Notification | — *(stateless consumer)* | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` | *(sin BD propia)* | — | `scoring.completed`, `achievement.unlocked` |
+
+**Notas de lectura:**
+- Los servicios marcados *(stateless)* no persisten estado propio: actúan como **orquestadores** (`live-coach-service`) o **transformadores idempotentes** sobre eventos (`filler-detection-service`, `notification-service`), de modo que su Database Diagram se materializa como "sin esquema persistente; el estado lo aporta el evento entrante".
+- Los agregados raíz delimitan la frontera de consistencia transaccional dentro de cada servicio (DDD).
+- Los nombres de los eventos respetan el contrato versionado publicado en la librería compartida `talki-commons` (sección 5.1.3).
+
+---
+
+#### Diagramas por microservicio (Class + ER)
+
+Para cumplir literal con el requisito de la rúbrica TP1 "Class Diagram y Database Diagram **de cada servicio**", se incluyen a continuación los **diagramas Mermaid renderizables en GitHub** de cada uno de los 8 microservicios. Esta notación viva permite mantener los diagramas alineados al código sin depender de imágenes exportadas que pueden desfasarse.
+
+##### 1) `identity-service` — Identity & Access
+
+```mermaid
+classDiagram
+    class AppUser {
+        +Long id
+        +String email
+        +String passwordHash
+        +String fullName
+        +UserRole role
+        +Instant createdAt
+        +register(email, password) AppUser
+        +rotateRefreshToken() RefreshToken
+    }
+    class UserRole {
+        <<enumeration>>
+        STUDENT
+        ADMIN
+    }
+    class RefreshToken {
+        +Long id
+        +Long userId
+        +String tokenHash
+        +Instant expiresAt
+        +boolean revoked
+    }
+    AppUser "1" *-- "*" RefreshToken : owns
+    AppUser --> UserRole : has
+```
+
+```mermaid
+erDiagram
+    APP_USERS ||--o{ REFRESH_TOKENS : owns
+    APP_USERS {
+        bigint id PK
+        varchar email UK
+        varchar password_hash
+        varchar full_name
+        varchar role
+        timestamp created_at
+    }
+    REFRESH_TOKENS {
+        bigint id PK
+        bigint user_id FK
+        varchar token_hash UK
+        timestamp expires_at
+        boolean revoked
+    }
+```
+
+##### 2) `session-service` — Practice Session
+
+```mermaid
+classDiagram
+    class Session {
+        +UUID id
+        +Long userId
+        +String title
+        +SessionMode mode
+        +SessionState state
+        +Instant startedAt
+        +Instant finalizedAt
+        +start() void
+        +finalize() void
+        +markAsCompleted() void
+        +markAsAnalysisPending() void
+    }
+    class Feedback {
+        +UUID id
+        +UUID sessionId
+        +String content
+        +Instant createdAt
+    }
+    class SessionUserContext {
+        <<Value Object - ACL>>
+        +Long localUserId
+        +String email
+        +UserRole role
+    }
+    Session "1" *-- "*" Feedback : intra-BC
+    Session ..> SessionUserContext : reads from JWT
+```
+
+```mermaid
+erDiagram
+    SESSIONS ||--o{ SESSION_FEEDBACK : has
+    SESSIONS {
+        uuid id PK
+        bigint user_id
+        varchar title
+        varchar mode
+        varchar state
+        timestamp started_at
+        timestamp finalized_at
+    }
+    SESSION_FEEDBACK {
+        uuid id PK
+        uuid session_id FK
+        text content
+        jsonb structured_data
+        timestamp created_at
+    }
+```
+
+##### 3) `live-coach-service` — Practice Session (orquestador)
+
+Servicio **stateless**: orquesta la conexión WebSocket con Gemini Live durante toda la sesión, calcula métricas acústicas en memoria y publica el evento al cerrar. No persiste estado propio.
+
+```mermaid
+classDiagram
+    class LiveCoachOrchestrator {
+        +start(sessionId, mode) void
+        +finalize(sessionId) SessionLiveFinalizedEvent
+    }
+    class SessionModeStrategyFactory {
+        +forMode(SessionMode) SessionModeStrategy
+    }
+    class SessionModeStrategy {
+        <<interface>>
+        +buildSystemPrompt() String
+        +configureTurnTaking() Config
+    }
+    class QuickPracticeStrategy
+    class InterviewStrategy
+    class ThesisDefenseStrategy
+    class ScenarioStrategy
+    class GeminiLiveClient {
+        +connect(prompt) WebSocketSession
+        +closeAndCollectTranscript() String
+    }
+    SessionModeStrategy <|.. QuickPracticeStrategy
+    SessionModeStrategy <|.. InterviewStrategy
+    SessionModeStrategy <|.. ThesisDefenseStrategy
+    SessionModeStrategy <|.. ScenarioStrategy
+    LiveCoachOrchestrator --> SessionModeStrategyFactory
+    LiveCoachOrchestrator --> GeminiLiveClient
+```
+
+> _Database Diagram: **N/A**. El servicio no persiste estado; el resultado de la sesión viaja en el evento `session.live.finalized` y queda almacenado en `session-service` y `scoring-service` aguas abajo._
+
+##### 4) `filler-detection-service` — Speech Analysis
+
+Servicio **stateless transformador**: consume `session.live.finalized` con el `transcript_gemini`, detecta muletillas (regex + ONNX opcional) y publica `fillers.analyzed`. No persiste estado propio.
+
+```mermaid
+classDiagram
+    class SessionLiveFinalizedConsumer {
+        +handle(SessionLiveFinalizedEvent) void
+    }
+    class FillerDetector {
+        +detect(String transcript) FillerResult
+    }
+    class FillerResult {
+        +int totalFillers
+        +Map byType
+        +double fillerRatio
+    }
+    class FillerAnalyzedPublisher {
+        +publish(FillerAnalyzedEvent) void
+    }
+    SessionLiveFinalizedConsumer --> FillerDetector
+    SessionLiveFinalizedConsumer --> FillerAnalyzedPublisher
+    FillerDetector --> FillerResult
+```
+
+> _Database Diagram: **N/A**. El servicio no persiste estado; las métricas viajan en el evento publicado._
+
+##### 5) `scoring-service` — Speech Analysis (resultado del análisis)
+
+```mermaid
+classDiagram
+    class ScoreResult {
+        +UUID id
+        +UUID sessionId
+        +Long userId
+        +VoiceScore score
+        +Instant computedAt
+    }
+    class VoiceScore {
+        <<Value Object>>
+        +int fluency
+        +int clarity
+        +int volume
+        +int vocabulary
+        +int confidence
+        +overall() int
+    }
+    class ScoreCalculator {
+        +calculate(FillerAnalyzedEvent) VoiceScore
+    }
+    class FillerAnalyzedConsumer {
+        +handle(FillerAnalyzedEvent) void
+    }
+    ScoreResult *-- VoiceScore : embedded
+    FillerAnalyzedConsumer --> ScoreCalculator
+    FillerAnalyzedConsumer --> ScoreResult : persists
+```
+
+```mermaid
+erDiagram
+    SCORE_RESULTS {
+        uuid id PK
+        uuid session_id UK
+        bigint user_id
+        int fluency
+        int clarity
+        int volume
+        int vocabulary
+        int confidence
+        timestamp computed_at
+    }
+```
+
+##### 6) `progress-service` — Progress & Metrics (CQRS)
+
+```mermaid
+classDiagram
+    class UserProgress {
+        +Long userId
+        +int totalSessions
+        +double avgOverall
+        +int xpTotal
+        +Instant updatedAt
+        +recordSession(VoiceScore) void
+    }
+    class SessionMetrics {
+        +UUID sessionId
+        +Long userId
+        +int overall
+        +Instant occurredAt
+    }
+    class ScoringCompletedConsumer {
+        +handle(ScoringCompletedEvent) void
+    }
+    class UserProgressQueryService {
+        +getDashboard(Long userId) UserProgressView
+        +compareSessions(UUID a, UUID b) ComparisonView
+    }
+    ScoringCompletedConsumer --> UserProgress : updates
+    ScoringCompletedConsumer --> SessionMetrics : appends
+    UserProgressQueryService ..> UserProgress : reads
+```
+
+```mermaid
+erDiagram
+    USER_PROGRESS ||--o{ SESSION_METRICS : aggregates
+    USER_PROGRESS {
+        bigint user_id PK
+        int total_sessions
+        double avg_overall
+        int xp_total
+        timestamp updated_at
+    }
+    SESSION_METRICS {
+        uuid session_id PK
+        bigint user_id FK
+        int overall
+        timestamp occurred_at
+    }
+```
+
+##### 7) `gamification-service` — Progress & Metrics (engagement)
+
+```mermaid
+classDiagram
+    class UserStreak {
+        +Long userId
+        +int currentStreakDays
+        +int longestStreakDays
+        +int xp
+        +Instant lastSessionAt
+        +incrementOrReset(Instant) void
+        +addXp(int delta) void
+    }
+    class Achievement {
+        +Long id
+        +Long userId
+        +String code
+        +String title
+        +Instant unlockedAt
+    }
+    class ScoringCompletedConsumer {
+        +handle(ScoringCompletedEvent) void
+    }
+    class AchievementUnlockedPublisher {
+        +publish(AchievementUnlockedEvent) void
+    }
+    ScoringCompletedConsumer --> UserStreak : updates
+    ScoringCompletedConsumer --> Achievement : creates
+    ScoringCompletedConsumer --> AchievementUnlockedPublisher
+```
+
+```mermaid
+erDiagram
+    USER_STREAKS ||--o{ ACHIEVEMENTS : earns
+    USER_STREAKS {
+        bigint user_id PK
+        int current_streak_days
+        int longest_streak_days
+        int xp
+        timestamp last_session_at
+    }
+    ACHIEVEMENTS {
+        bigint id PK
+        bigint user_id FK
+        varchar code
+        varchar title
+        timestamp unlocked_at
+    }
+```
+
+##### 8) `notification-service` — Notification
+
+Servicio **stateless consumer**: convierte eventos AMQP en notificaciones push al frontend Angular vía WebSocket. No persiste estado propio.
+
+```mermaid
+classDiagram
+    class ScoreNotificationConsumer {
+        +handle(ScoringCompletedEvent) void
+    }
+    class AchievementNotificationConsumer {
+        +handle(AchievementUnlockedEvent) void
+    }
+    class NotificationPushService {
+        <<interface>>
+        +push(Long userId, String message) void
+    }
+    class WebSocketPushAdapter
+    NotificationPushService <|.. WebSocketPushAdapter
+    ScoreNotificationConsumer --> NotificationPushService
+    AchievementNotificationConsumer --> NotificationPushService
+```
+
+> _Database Diagram: **N/A**. El servicio no persiste estado; las notificaciones se entregan al cliente Angular vía WebSocket y, opcionalmente, vía proveedor de email externo (Resend/SendGrid)._
 
 ---
 
@@ -3181,7 +3544,7 @@ Los contratos Pact se publican en un **Pact Broker** y el pipeline de CI verific
 
 Esta sección documenta cómo los patrones de diseño arquitectónico y de comportamiento declarados en la sección 4.1.6 se materializan en la estructura de código de cada microservicio Spring Boot.
 
-> _**Nota sobre evidencias visuales.** Las capturas de pantalla del código de cada patrón (repositorios, fachadas ACL, servicios CQRS, entidades JPA, refactors RF-01 a RF-05) se incorporarán en el sprint de evidencia correspondiente al entregable TB3. El código referenciado ya está implementado y verificado en los repos `talki-user-services`, `talki-session-services`, `talki-analysis-services` y `talki-engagement-services` bajo la organización `upc-pre-202601-si657-7940-thropic`, con 123 unit tests pasando._
+> _**Nota sobre evidencias visuales.** Las capturas de pantalla del código de cada patrón (repositorios, fachadas ACL, servicios CQRS, entidades JPA, refactors RF-01 a RF-05) se incorporarán en el sprint de evidencia correspondiente al entregable TB3. El código referenciado ya está implementado y verificado en los repos `talki-user-services`, `talki-session-services`, `talki-analysis-services` y `talki-engagement-services` bajo la organización `upc-pre-202601-si657-7940-thropic`, con **128 unit tests pasando**._
 
 #### Estructura de paquetes por microservicio
 
@@ -3383,7 +3746,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 ### 5.2.1. Software Development Environment Configuration
 
-El entorno de desarrollo del producto Talki se compone de un *toolchain* unificado que el equipo Thropic adopta para cubrir todo el ciclo de vida del software, desde la planificación de Sprints hasta la operación de los microservicios en cloud. La selección está alineada con las decisiones técnicas declaradas en la sección 5.1 (suite de pruebas en cuatro niveles, librería compartida `talki-commons`, patrones de framework Spring) y prioriza herramientas gratuitas o con plan académico, integración nativa con GitHub y reproducibilidad del entorno local mediante contenedores. La siguiente tabla resume las diez categorías y las veintisiete herramientas seleccionadas, con su propósito y enlace oficial.
+El entorno de desarrollo del producto Talki se compone de un *toolchain* unificado que el equipo Thropic adopta para cubrir todo el ciclo de vida del software, desde la planificación de Sprints hasta la operación de los microservicios en cloud. La selección está alineada con las decisiones técnicas declaradas en la sección 5.1 (suite de pruebas en cuatro niveles, librería compartida `talki-commons`, patrones de framework Spring) y prioriza herramientas gratuitas o con plan académico, integración nativa con GitHub y reproducibilidad del entorno local mediante contenedores. La siguiente tabla resume las diez categorías y las veintiocho herramientas seleccionadas, con su propósito y enlace oficial.
 
 | # | Categoría | Herramienta | Propósito | Enlace |
 |---|---|---|---|---|
@@ -3414,6 +3777,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 | 10 | CI/CD y despliegue | Docker Compose | Orquestación local de los microservicios y RabbitMQ vía `docker-compose.dev.yml` por mono-repo backend. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
 | 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Angular. | [vercel.com](https://vercel.com) |
 | 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los ocho microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
+| 7 | Pruebas automatizadas | SonarCloud | *Quality gate* automático sobre cada Pull Request con reglas Reliability A, Security A, Maintainability A, Coverage ≥ 75 % y Duplication ≤ 3 % (ver detalle en 5.2.5). | [sonarcloud.io](https://sonarcloud.io) |
 
 **Configuración del entorno de desarrollo por stack**
 
@@ -3790,6 +4154,80 @@ Al cierre del TP1 (12 de mayo de 2026), SonarCloud queda **investigada y aprobad
 
 <div style="page-break-after: always;"></div>
 
+## 5.3. Microservices Documentation (API Reference)
+
+Esta sección documenta los **endpoints REST publicados por cada microservicio** del producto Talki mediante **OpenAPI 3 vía springdoc-openapi 2.3.0**, cumpliendo el criterio "Web Services RESTful API con documentación de cada servicio" de la rúbrica TP1 oficial del curso. La elección de springdoc sobre alternativas como el legacy `springfox` responde a la compatibilidad nativa con Spring Boot 3.2 declarada en el toolchain de la sección 5.2.1.
+
+Cada uno de los 8 microservicios expone dos endpoints estándar:
+
+- `GET /v3/api-docs` — devuelve la especificación **OpenAPI 3** en formato JSON, consumible por clientes generados automáticamente, contratos Pact (sección 5.1.1 Nivel 4) y herramientas de API testing (Hoppscotch, Postman).
+- `GET /swagger-ui.html` — devuelve la **UI interactiva de Swagger** que permite explorar los endpoints, los esquemas de DTO y ejecutar llamadas de prueba directamente desde el navegador.
+
+La configuración del springdoc en cada microservicio se realiza en tres archivos siguiendo el patrón homogéneo del toolchain:
+
+1. `pom.xml` declara la dependencia `org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0`.
+2. `application.yml` configura los paths (`springdoc.api-docs.path`, `springdoc.swagger-ui.path`) y el orden de presentación (`operations-sorter: method`, `tags-sorter: alpha`).
+3. Una clase `OpenApiConfig` con `@Configuration` y un bean `OpenAPI` que aporta los metadatos del servicio (`title`, `description`, `version`, `contact`, `license`) y la lista de `servers` (entorno local + producción).
+
+**Tabla resumen — endpoints OpenAPI por microservicio**
+
+| # | Microservicio | Puerto local | Spec OpenAPI 3 | UI Swagger | Bounded Context |
+|---|---|---|---|---|---|
+| 1 | `identity-service` | 8081 | `http://localhost:8081/v3/api-docs` | `http://localhost:8081/swagger-ui.html` | Identity & Access |
+| 2 | `session-service` | 8082 | `http://localhost:8082/v3/api-docs` | `http://localhost:8082/swagger-ui.html` | Practice Session |
+| 3 | `live-coach-service` | 8083 | `http://localhost:8083/v3/api-docs` | `http://localhost:8083/swagger-ui.html` | Practice Session (orquestador) |
+| 4 | `filler-detection-service` | 8087 | `http://localhost:8087/v3/api-docs` | `http://localhost:8087/swagger-ui.html` | Speech Analysis |
+| 5 | `scoring-service` | 8088 | `http://localhost:8088/v3/api-docs` | `http://localhost:8088/swagger-ui.html` | Speech Analysis |
+| 6 | `progress-service` | 8089 | `http://localhost:8089/v3/api-docs` | `http://localhost:8089/swagger-ui.html` | Progress & Metrics |
+| 7 | `gamification-service` | 8090 | `http://localhost:8090/v3/api-docs` | `http://localhost:8090/swagger-ui.html` | Progress & Metrics |
+| 8 | `notification-service` | 8091 | `http://localhost:8091/v3/api-docs` | `http://localhost:8091/swagger-ui.html` | Notification |
+
+**Tabla — endpoints REST principales por microservicio**
+
+A continuación se listan los endpoints REST más relevantes para el TP1, los cuales quedan automáticamente documentados por springdoc al levantar cada servicio. Los endpoints de Actuator (`/actuator/health`, `/actuator/metrics`) están disponibles en todos los servicios y se documentan en la sección 5.4.2 (Observabilidad y monitoreo).
+
+| Microservicio | Endpoint | Verbo | Propósito |
+|---|---|---|---|
+| `identity-service` | `/v1/auth/register` | POST | Registro de cuenta con bcrypt cost ≥ 12 (DD-11). Publica `user.registered`. |
+| `identity-service` | `/v1/auth/login` | POST | Login con email + password. Devuelve JWT RSA-256 y refresh token. |
+| `identity-service` | `/v1/auth/refresh` | POST | Rotación del refresh token (refresh token rotation). |
+| `identity-service` | `/.well-known/jwks.json` | GET | Clave pública JWKS para validación distribuida del JWT. |
+| `session-service` | `/v1/sessions` | POST | Crear sesión de práctica (US09). Pasa el agregado a estado `DRAFT`. |
+| `session-service` | `/v1/sessions/{id}` | GET | Obtener detalle de sesión (Query Service del CQRS). |
+| `session-service` | `/v1/sessions/{id}/feedback` | GET | Listar feedbacks intra-BC (`@OneToMany` Session → Feedback). |
+| `live-coach-service` | `/v1/coach/{sessionId}/start` | POST | Abre WebSocket Gemini Live con system prompt seleccionado por Strategy. |
+| `live-coach-service` | `/v1/coach/{sessionId}/finalize` | POST | Cierra el WebSocket y publica `session.live.finalized` con métricas (RF-03). |
+| `scoring-service` | `/v1/scores/{sessionId}` | GET | Obtener Voice Coach Score calculado (5 dimensiones 0-100). |
+| `progress-service` | `/v1/progress/dashboard` | GET | Dashboard agregado del usuario autenticado (vista CQRS materializada). |
+| `progress-service` | `/v1/progress/sessions/compare` | GET | Comparar dos sesiones (US22). |
+| `gamification-service` | `/v1/gamification/streak` | GET | Racha actual y mejor racha del usuario. |
+| `gamification-service` | `/v1/gamification/achievements` | GET | Logros desbloqueados del usuario. |
+| `notification-service` | `/v1/notifications/stream` | WSS | WebSocket para push de notificaciones al cliente Angular. |
+| **Todos** | `/v3/api-docs` | GET | Spec OpenAPI 3 JSON (springdoc). |
+| **Todos** | `/swagger-ui.html` | GET | UI interactiva Swagger. |
+| **Todos** | `/actuator/health` | GET | Health check consumido por Railway (sección 4.1.7). |
+
+**Verificación**
+
+La generación correcta de la spec OpenAPI por servicio se valida en el pipeline de CI de cada mono-repo (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) mediante la ejecución de `mvn test`, que arranca el contexto Spring de cada microservicio y verifica que el bean `OpenAPI` se inicialice correctamente sin colisiones de configuración con Spring Security ni con el filtro JWT del `identity-service`. La suite agregada al cierre del TP1 contabiliza **128 unit tests verdes** distribuidos así:
+
+| Servicio | Tests | Servicio | Tests |
+|---|---|---|---|
+| `identity-service` | 15 | `scoring-service` | 33 |
+| `notification-service` | 7 | `progress-service` | 9 |
+| `session-service` | 27 | `gamification-service` | 13 |
+| `live-coach-service` | 13 | `filler-detection-service` | 11 |
+
+**Total: 128 / 128 verdes en `mvn test`.**
+
+**Trazabilidad**
+
+- Pulls Request mergeados a `main` en los 4 mono-repos que materializan esta sección: `talki-user-services#2`, `talki-session-services#3`, `talki-analysis-services#4`, `talki-engagement-services#2`.
+- Herramienta declarada en la tabla 5.2.1 (Swagger / OpenAPI 3, categoría #8 Documentación y configuración).
+- Cumple el criterio #3 de la rúbrica TP1 oficial del curso SI657 (Microservice architecture — Web Services RESTful API con documentación de cada servicio, 4 pts).
+
+<div style="page-break-after: always;"></div>
+
 ## 5.4. Microservices Deployment
 
 Esta sección describe la materialización del despliegue de Talki en infraestructura cloud, partiendo de la configuración general establecida en la sección 5.2.4 y del *Container Diagram* C4 (Nivel 2) del Capítulo IV. Se documenta tanto la vista estática de los componentes desplegados como la dinámica de su interacción en tiempo de ejecución.
@@ -3969,7 +4407,7 @@ Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectón
 
 Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
 
-- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintisiete herramientas seleccionadas (Trello, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, Zipkin + Spring Sleuth, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
+- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintiocho herramientas seleccionadas (GitHub Projects v2, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, Zipkin + Spring Sleuth, SonarCloud, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
 - **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan ocho microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
 - **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
 - **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los ocho microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con Zipkin + Spring Sleuth y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
@@ -3978,7 +4416,8 @@ Adicionalmente, durante el ciclo de alineamiento previo a la entrega final, el e
 
 - **Pipeline alineado con Gemini Live nativo.** Se eliminó el servicio intermedio `transcription-service` (Whisper STT) y se reconectó `filler-detection-service` directamente al evento `session.live.finalized`, que ahora viaja con `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`. El tiempo del pipeline post-sesión bajó de ~45 s (con STT) a ≤ 1 s, el costo operativo de ~USD 82/mes a ~USD 72/mes, y se eliminó toda persistencia de audio (DD-15 / ADB-22 cumplidos *by-design*).
 - **Patrones de diseño aplicados en código.** Se materializaron los patrones declarados en el Capítulo IV: DDD (entidades `AppUser`, `Session`, `Feedback`, `ScoreResult`, `UserProgress`, `UserStreak`), CQRS (`SessionCommandService` + `SessionQueryService` en `session-service`, vistas materializadas en `progress-service`), ACL (`SessionContextFacade` traduciendo JWT claims al modelo local), Saga por coreografía sobre RabbitMQ, Outbox Pattern e idempotencia at-least-once con manejo robusto de `DataIntegrityViolationException` sobre la unique constraint de `session_id`.
-- **Suite de tests unitarios completa.** Cada microservicio cuenta con tests JUnit 5 + Mockito + AssertJ que cubren happy path, edge cases e invariantes de dominio. Los hitos son: `identity-service` (15 tests: AuthService + JwtTokenProvider con casos de tokens forjados/expirados), `session-service` (27 tests: Command/Query services, ACL Facade, transiciones de estado del agregado `Session`), `live-coach-service` (13 tests: Orchestrator + Factory + 4 strategies), `filler-detection-service` (11 tests), `scoring-service` (28 tests: `ScoreCalculator`, `VoiceScore` con invariantes 0-100, race condition de idempotencia), `progress-service` (9 tests), `gamification-service` (13 tests: streaks, achievements, XP), `notification-service` (7 tests). Total: **123 unit tests pasando en los 8 microservicios** (`mvn test` verde).
+- **Suite de tests unitarios completa.** Cada microservicio cuenta con tests JUnit 5 + Mockito + AssertJ que cubren happy path, edge cases e invariantes de dominio. Los hitos son: `identity-service` (15 tests: AuthService + JwtTokenProvider con casos de tokens forjados/expirados), `session-service` (27 tests: Command/Query services, ACL Facade, transiciones de estado del agregado `Session`), `live-coach-service` (13 tests: Orchestrator + Factory + 4 strategies), `filler-detection-service` (11 tests), `scoring-service` (33 tests: `ScoreCalculator`, `VoiceScore` con invariantes 0-100, race condition de idempotencia, `GlobalExceptionHandler` con DTOs `ApiErrorResponse`), `progress-service` (9 tests), `gamification-service` (13 tests: streaks, achievements, XP), `notification-service` (7 tests). Total: **128 unit tests pasando en los 8 microservicios** (`mvn test` verde).
+- **API Reference documentada con OpenAPI 3 en los 8 microservicios.** La sección 5.3 materializa `springdoc-openapi 2.3.0` en `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service`, publicando la spec en `/v3/api-docs` y la UI interactiva en `/swagger-ui.html` por servicio. Cumple el criterio "RESTful API con documentación de cada servicio" (4 pts) de la rúbrica TP1 oficial del curso SI657.
 - **Coherencia documento-código verificada.** Cada clase listada en la tabla 5.1.1 (Nivel 1 de pruebas) tiene test correspondiente y verificable; cada Decision Log entry (DD-01 a DD-18) tiene una sola decisión consistente entre las secciones del documento; el Architectural Design Backlog (ADB-01 a ADB-22) no tiene huecos ni referencias rotas; los conteos de microservicios, eventos, puertos y dimensiones del Voice Coach Score son idénticos en el informe y en el código.
 
 ## Recomendaciones
