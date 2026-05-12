@@ -92,6 +92,7 @@
 | 2.26 | 11/05/2026 | Alejandro | Polishing final: unificación del título de Iteration 2 ("Identidad, Seguridad, Engagement y Observabilidad") en TOC, registro y conclusiones; nota explicativa de capturas pendientes en 5.1.2 con comentarios HTML para evitar imágenes rotas |
 | 2.27 | 11/05/2026 | Alejandro | Actualización integral de Conclusiones (agregado párrafo TP1 con logros de implementación: pipeline sin Whisper, 8 microservicios operativos, 123 unit tests pasando, patrones DDD/CQRS/ACL aplicados) y Recomendaciones (reescritas para apuntar al siguiente sprint: completar scenario-catalog/media, integrar cliente Gemini real, migrar a PostgreSQL gestionado, Testcontainers Nivel 2, frontend Angular contra contratos REST/AMQP) |
 | 2.28 | 11/05/2026 | Alejandro, Gael, Manuel | Incorporación de la columna TP1 al Student Outcome (Criterios 1 y 2) reflejando contribuciones individuales de la fase de implementación y alineamiento de los tres integrantes |
+| 2.29 | 12/05/2026 | Alejandro | Adición de requerimientos complementarios solicitados por el docente: (a) tablero público de User Stories con estados en GitHub Projects v2 vinculado en 3.4 (reemplaza Trello en 5.2.1 fila 1); (b) subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y justificación de la combinación adoptada; (c) subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki; (d) subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus 6 reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %) |
 
 <div style="page-break-after: always;"></div>
 
@@ -170,9 +171,12 @@
       - [5.2.2. Source Code Management](#522-source-code-management)
       - [5.2.3. Source Code Style Guide & Conventions](#523-source-code-style-guide--conventions)
       - [5.2.4. Software Deployment Configuration](#524-software-deployment-configuration)
+      - [5.2.5. Quality Gate y Revisión de Calidad de Código](#525-quality-gate-y-revisión-de-calidad-de-código)
    - [5.4. Microservices Deployment](#54-microservices-deployment)
+      - [5.4.0. Opciones de Deployment Evaluadas](#540-opciones-de-deployment-evaluadas)
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
       - [5.4.2. Cloud Architecture Deployment](#542-cloud-architecture-deployment)
+      - [5.4.3. Investigación de Herramientas de Logs y Monitoreo](#543-investigación-de-herramientas-de-logs-y-monitoreo)
 
 - [Conclusiones](#conclusiones)
 - [Referencias Bibliográficas](#referencias-bibliográficas)
@@ -1567,6 +1571,19 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
 ## 3.4. Product Backlog
 
 El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Should* / *Could* / *Won't*), basado en el valor que aporta cada User Story al MVP y la dependencia funcional entre ellas. Las User Stories *Must* son bloqueantes del MVP y cubren autenticación, sesión de práctica, grabación, feedback básico y adaptación por segmento. Las *Should* aportan valor crítico pero pueden esperar un sprint; incluyen tipos de sesión, análisis detallado, historial y progreso. Las *Could* son mejoras incrementales (landing page, exportación, metas personales) que se pueden desarrollar después del MVP sin afectar la propuesta de valor inicial.
+
+**Herramienta de gestión y visualización de estados.** El equipo Thropic mantiene el Product Backlog completo (las 28 User Stories detalladas en la sección 3.2) como ítems en el proyecto público **[Talki — Product Backlog (TB1)](https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1)** alojado en **GitHub Projects (v2)** bajo la organización académica `upc-pre-202601-si657-7940-thropic`. La elección de GitHub Projects sobre un tablero Kanban tradicional (Trello, Jira) responde a tres criterios verificables: integración nativa con los repositorios del producto (issues ↔ pull requests ↔ commits), gratuidad ilimitada para organizaciones académicas y trazabilidad bidireccional entre cada User Story y los Pull Requests que la implementan (visible en el campo *Linked pull requests* del ítem). Cumple el requerimiento del docente de utilizar una herramienta que incluya estados de avance, sin requerir Kanban como única notación.
+
+Cada User Story se materializa como un *draft issue* del proyecto con título `[USXX] <Título>` y se desplaza entre cuatro estados del campo *Status* del proyecto, alineados con el flujo *GitFlow* del equipo descrito en la sección 5.2.2:
+
+| Estado | Significado operativo | Condición de transición |
+|---|---|---|
+| **Todo** | Historia priorizada en el backlog, sin desarrollo iniciado. | Asignación a un sprint pendiente. |
+| **In Progress** | Rama `feature/<nombre>` abierta y commits del backend o frontend en curso. | Apertura del *Pull Request* asociado. |
+| **Review** | Pull Request abierto contra `develop` esperando revisión del equipo o validación end-to-end de la pirámide de pruebas (5.1.1). | Aprobación de la revisión y merge. |
+| **Done** | Merge a `develop` confirmado, suite de pruebas verde y verificación de los criterios de aceptación Given-When-Then de la sección 3.2. | — |
+
+La distribución actual del tablero refleja el estado real del producto al cierre del TP1 (12 de mayo de 2026): **4 User Stories en Done** (autenticación completa del `identity-service` con 15 unit tests verdes, incluyendo logout con revocación de refresh token), **4 en Review** (componentes backend del `session-service` y campos de personalización del `AppUser` listos para validación con el frontend), **10 en In Progress** (historias con backend operativo en `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service` pero pendientes de integración con el cliente Angular) y **10 en Todo** (landing page de Talki, exportación que depende del `media-service` aún no implementado, y recomendaciones que dependen del `scenario-catalog-service` pendiente). La tabla siguiente lista el backlog priorizado por MoSCoW; las prioridades y order numbers son los mismos que se reflejan en el tablero público.
 
 <table>
   <thead>
@@ -3370,7 +3387,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 
 | # | Categoría | Herramienta | Propósito | Enlace |
 |---|---|---|---|---|
-| 1 | Gestión de proyecto | Trello | Tablero Kanban para Product Backlog y Sprint Backlog (Capítulo V). | [trello.com](https://trello.com) |
+| 1 | Gestión de proyecto | GitHub Projects (v2) | Tablero Kanban del Product Backlog y Sprint Backlog con estados *Todo → In Progress → Review → Done*. Las 28 User Stories de la sección 3.2 son ítems del proyecto público [Talki — Product Backlog (TB1)](https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1) bajo la organización académica. Coherente con la integración nativa Issues ↔ Pull Requests del repositorio. | [github.com/features/projects](https://github.com/features/issues#project-management) |
 | 2 | Diseño UX/UI | Figma | Wireframes, mockups y prototipos navegables del frontend y la landing (Capítulo III). | [figma.com](https://www.figma.com) |
 | 3 | Modelado de arquitectura | Structurizr DSL | Diagramas C4 (Contexto, Contenedor, Componente) versionados como código (Capítulo IV). | [structurizr.com](https://structurizr.com) |
 | 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los ocho microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
@@ -3726,11 +3743,76 @@ El procedimiento de *release* del producto Talki sigue los siguientes pasos:
 
 Esta estrategia mantiene la rama `main` siempre consistente con un *tag* desplegable, garantizando que cualquier punto del historial principal pueda restaurarse como versión activa del producto.
 
+### 5.2.5. Quality Gate y Revisión de Calidad de Código
+
+Como parte de la disciplina de aseguramiento de calidad operativa del producto Talki, el equipo investigó herramientas de **análisis estático automatizado** que complementen los *linters* de estilo declarados en 5.2.3 (Checkstyle/Spotless para Java, ESLint + Prettier para TypeScript) con métricas semánticas: detección de bugs probabilísticos, vulnerabilidades de seguridad, *code smells* y cobertura de pruebas. La sección documenta la herramienta seleccionada, sus reglas principales y los umbrales del *quality gate* que bloquean un merge a `develop` si no se cumplen.
+
+**Herramienta seleccionada: SonarCloud (SonarSource)**
+
+El equipo selecciona **[SonarCloud](https://sonarcloud.io)** —la versión SaaS de SonarQube operada por SonarSource— por tres razones verificables alineadas con los drivers del Capítulo IV:
+
+1. **Gratuidad para proyectos open source** alojados en GitHub bajo organizaciones públicas (caso de `upc-pre-202601-si657-7940-thropic`), eliminando cualquier costo operativo durante la fase académica.
+2. **Integración nativa con GitHub Actions y con Pull Requests**: cada PR recibe automáticamente un *check* de SonarCloud que comenta en línea los issues encontrados y bloquea el merge si el *quality gate* falla, materializando la táctica de detección temprana del 4.1.7.
+3. **Cobertura multi-lenguaje en un solo dashboard**: analiza tanto Java + Spring Boot (los 8 microservicios) como TypeScript + Angular (`talki-frontend`) y HTML/CSS (`talki-landing`) sin requerir agentes separados, cumpliendo el principio P7 (consistencia transversal del toolchain).
+
+**Reglas principales del Quality Gate**
+
+El equipo configura el *quality gate* de SonarCloud con los siguientes umbrales aplicados al **código nuevo** introducido por cada pull request (estrategia *clean as you code*, recomendada por SonarSource para evitar la "deuda técnica congelada"):
+
+| # | Métrica | Umbral configurado | Justificación / trazabilidad |
+|---|---|---|---|
+| 1 | **Reliability Rating** (bugs) | A | Cero bugs detectados en el código nuevo. Las severidades *Blocker* y *Critical* bloquean el merge. Refuerza QAS-10 (estabilidad). |
+| 2 | **Security Rating** (vulnerabilidades) | A | Cero vulnerabilidades en el código nuevo. Las reglas *OWASP Top 10* y *CWE Top 25* están habilitadas por defecto. Refuerza QAS-05 (cumplimiento Ley 29733). |
+| 3 | **Security Hotspots Reviewed** | 100 % | Todos los *security hotspots* introducidos deben revisarse manualmente y marcarse como *safe* o *fixed*. Detecta uso inseguro de hashing, deserialización, regex `ReDoS` y similares. |
+| 4 | **Maintainability Rating** (code smells) | A | Cero *code smells* de severidad *Blocker* o *Critical* en código nuevo. Cubre olores como métodos > 50 líneas, complejidad ciclomática > 15 y *cognitive complexity* elevada. |
+| 5 | **Coverage on New Code** | ≥ 75 % | Aplica a Java tests (JUnit 5 + Mockito, Nivel 1 de la pirámide 5.1.1) y a TypeScript tests (Jasmine/Karma). Idéntico al objetivo de la sección 5.1.1 — los reportes JaCoCo / lcov los publica Maven y npm al pipeline. |
+| 6 | **Duplicated Lines on New Code** | ≤ 3 % | Detecta copia-pega entre archivos del mismo módulo. Coherente con el principio DRY y con el refactor RF-04 (externalización de configuración variable). |
+
+**Configuración técnica prevista por repositorio**
+
+Cada uno de los seis repositorios listados en 5.2.2 mantiene un archivo `sonar-project.properties` en su raíz con la siguiente plantilla, parametrizada por servicio:
+
+```properties
+sonar.projectKey=upc-pre-202601-si657-7940-thropic_<repo-name>
+sonar.organization=upc-pre-202601-si657-7940-thropic
+sonar.sources=src/main/java
+sonar.tests=src/test/java
+sonar.java.binaries=target/classes
+sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+sonar.exclusions=**/dto/**,**/config/**,**/Application.java
+```
+
+El *workflow* de GitHub Actions descrito en 5.2.4 incorpora un *job* `sonarcloud-scan` que se ejecuta tras la etapa *Test*, consume el reporte JaCoCo generado por Maven y publica los resultados antes de la etapa *Image*. Las credenciales (`SONAR_TOKEN`) se administran como GitHub Secrets, siguiendo la misma política de gestión de secretos declarada en 5.2.4.
+
+**Estado actual y plan de adopción**
+
+Al cierre del TP1 (12 de mayo de 2026), SonarCloud queda **investigada y aprobada como herramienta del toolchain** (sumándola como herramienta #28 en la tabla 5.2.1 categoría "Pruebas automatizadas"), con sus reglas y *quality gate* documentadas formalmente en esta subsección. La configuración técnica (`sonar-project.properties` y el *job* `sonarcloud-scan` en cada *workflow*) se incorpora como tarea del próximo Sprint del backlog, registrada como ítem nuevo del proyecto público de la sección 3.4. Esta planificación responde al criterio del docente que admite herramientas opcionales investigadas sin requerir integración inmediata.
+
 <div style="page-break-after: always;"></div>
 
 ## 5.4. Microservices Deployment
 
 Esta sección describe la materialización del despliegue de Talki en infraestructura cloud, partiendo de la configuración general establecida en la sección 5.2.4 y del *Container Diagram* C4 (Nivel 2) del Capítulo IV. Se documenta tanto la vista estática de los componentes desplegados como la dinámica de su interacción en tiempo de ejecución.
+
+### 5.4.0. Opciones de Deployment Evaluadas
+
+Antes de seleccionar la infraestructura concreta del producto Talki, el equipo evaluó los **cuatro modelos canónicos de despliegue en la nube** definidos por la taxonomía del *NIST Special Publication 800-145* y consolidados por la literatura académica de arquitectura de sistemas distribuidos. Cada modelo se diferencia por el nivel de responsabilidad operativa que asume el proveedor frente al equipo de desarrollo. La siguiente tabla compara los cuatro modelos y registra la decisión del equipo, justificada con trazabilidad a los drivers arquitectónicos del Capítulo IV.
+
+| # | Modelo | Definición | Responsabilidad del equipo | Ejemplos del mercado | Adopción en Talki |
+|---|---|---|---|---|---|
+| 1 | **IaaS** — *Infrastructure as a Service* | El proveedor entrega máquinas virtuales, redes y almacenamiento crudos; el equipo administra el sistema operativo, el runtime y la aplicación. | Sistema operativo, parches de seguridad, runtime de Java/Node, balanceadores, networking, escalado manual. | AWS EC2, Google Compute Engine, Azure VM. | **Descartado.** Sobrecarga operativa incompatible con la restricción C-13 del Capítulo IV (capacidad limitada del equipo académico) y con el ciclo de TP1. |
+| 2 | **PaaS** — *Platform as a Service* | El proveedor administra la infraestructura, el runtime y el *autoscaling*; el equipo solo aporta el código y la configuración. | Código fuente, variables de entorno, dependencias declaradas. | Railway, Vercel, Heroku, Google App Engine, Fly.io. | **Adoptado para los 8 microservicios backend + frontend + landing.** Railway aloja Java + Spring Boot, RabbitMQ y bases PostgreSQL; Vercel aloja Angular + landing estática. Cumple QAS-09 (despliegue continuo) y permite *rolling updates* sin tiempo de inactividad observable. |
+| 3 | **SaaS / BaaS** — *Software / Backend as a Service* | El proveedor entrega un servicio terminado vía API; el equipo consume funcionalidad sin administrar código del backend del servicio. | Únicamente las credenciales de acceso y la integración cliente. | Supabase Storage, Upstash Redis, Google Gemini Live API, Resend, SendGrid. | **Adoptado para capacidades transversales.** Supabase Storage gestiona materiales del usuario (CV, plantillas) con presigned URLs sin operar buckets propios; Upstash Redis provee el caché de scoring y *rate limiting*; Gemini Live API entrega el `transcript_gemini` en tiempo real evitando un *transcription-service* propio (DD-15, ADB-22, Ley 29733). |
+| 4 | **FaaS / Serverless / Edge** — *Function as a Service* | El proveedor ejecuta funciones cortas bajo demanda con escalado a cero; el equipo escribe únicamente la función. | Lógica de la función y *trigger* (HTTP, eventos). | Vercel Edge Functions, AWS Lambda, Cloudflare Workers, Google Cloud Functions. | **Adoptado parcialmente para el edge del frontend.** Vercel Edge Network distribuye los assets estáticos de `talki-landing` y `talki-frontend` con CDN global y caché por región; los microservicios Java se mantienen en PaaS por incompatibilidad de tiempos de *cold start* del JVM con FaaS para los flujos de QAS-02 (≤ 500 ms P95). |
+
+**Justificación de la combinación.** Talki adopta una arquitectura híbrida **PaaS + SaaS/BaaS + Edge/FaaS** en lugar de un único modelo, por las siguientes razones trazables a los drivers:
+
+1. **PaaS como base operativa** (Railway + Vercel): es el único modelo que permite al equipo académico desplegar ocho microservicios Java + Spring Boot junto con su *broker* RabbitMQ y bases PostgreSQL sin operar máquinas virtuales propias. Cumple la restricción C-13 (capacidad limitada del equipo, 5.2.1) y el principio P5 (despliegue continuo).
+2. **SaaS/BaaS para capacidades transversales** (Supabase, Upstash, Gemini Live): externalizar el almacenamiento de objetos, el caché y la IA conversacional reduce el costo operativo en ~USD 10 mensuales frente al diseño original con STT post-sesión (sección 5.4.2 *Modelo de costos*) y elimina por diseño la persistencia de audio biométrico (DD-15, cumplimiento nativo de la Ley 29733).
+3. **Edge/FaaS para el frontend público** (Vercel Edge Network): la distribución por CDN global cumple QAS-08 (Time-to-First-Byte ≤ 200 ms desde Lima) sin requerir réplicas geográficas explícitas. Las *Preview Deployments* por *pull request* materializan el principio P4 (validación temprana en el ciclo de CI/CD).
+4. **IaaS descartado explícitamente**: la sobrecarga operativa de administrar sistemas operativos, parches y *autoscaling* es incompatible con el cronograma académico y con la prioridad del equipo de invertir tiempo en la lógica de negocio del análisis de voz, no en la infraestructura subyacente.
+
+Esta combinación queda reflejada en el diagrama de arquitectura cloud de la siguiente subsección (5.4.1), donde cada componente se etiqueta con el modelo de despliegue que lo aloja.
 
 ### 5.4.1. Cloud Architecture Diagram
 
@@ -3825,6 +3907,41 @@ El equipo prioriza los planes gratuitos y académicos de cada plataforma para so
 - **Google Gemini Live**: facturación por uso (~USD 0.50 por 1M tokens de audio entrada / USD 2 por 1M de salida); rate limiting en el `live-coach-service` y por usuario para acotar el costo.
 
 Esta combinación permite operar el producto durante la fase de validación con un costo mensual estimado de ~USD 72 (frente a los ~USD 82 del diseño original con STT post-sesión), escalando linealmente con la adopción de usuarios reales.
+
+### 5.4.3. Investigación de Herramientas de Logs y Monitoreo
+
+Como parte del diseño operativo del producto, el equipo realizó una investigación comparativa de herramientas para resolver los dos pilares de la observabilidad declarados en el principio P6 del Capítulo IV (sección 4.1.1) y verificables contra el escenario QAS-11 (*"diagnosticar la causa raíz de un incidente productivo en ≤ 5 minutos"*): **trazabilidad distribuida** (correlación de una petición a través de múltiples microservicios) y **métricas operativas** (CPU, memoria, latencia, *error rate*). A continuación se documentan las alternativas evaluadas y la justificación de la elección, conforme al requerimiento del docente de investigar al menos dos herramientas por categoría.
+
+**Categoría 1 — Trazabilidad distribuida (correlación end-to-end)**
+
+| Herramienta | Madurez y modelo | Integración con Spring Boot 3.2 | Pros | Contras | Decisión |
+|---|---|---|---|---|---|
+| **Zipkin + Spring Sleuth (Micrometer Tracing)** | Open source, gestionado por OpenZipkin desde 2012. Modelo *pull* sobre HTTP / *push* sobre Kafka. | Auto-instrumentación nativa via dependencia `spring-boot-starter-actuator` + `micrometer-tracing-bridge-brave`; propagación del header `X-B3-TraceId` lista de fábrica. | Configuración mínima (≤ 10 líneas en `application.yml`). UI ligera. Plan gratuito ilimitado en autohosted. Integración nativa con RabbitMQ vía `talki-commons`. | UI menos rica que Jaeger para *flame graphs*. | **Adoptada** (DD-13 del Capítulo IV, ADB-21). Propaga `X-B3-TraceId` en HTTP y `trace_id` en eventos AMQP. |
+| **Jaeger** | Open source, gestionado por la CNCF desde 2017 (graduado). Modelo *push* sobre gRPC / Thrift. UI más rica con análisis de *dependency graphs*. | Auto-instrumentación vía OpenTelemetry; requiere bridge adicional para B3 propagation (Spring Sleuth-compatible). | UI superior con *service dependency graph* y *flame graphs*. Mejor para sistemas con > 50 servicios. Soporte oficial CNCF. | Configuración más compleja (Collector + Agent + Query). Spring Sleuth tiene mejor integración con Zipkin por defecto. | Descartada — *overkill* para 8 microservicios; añadiría 3 contenedores adicionales (Collector, Agent, Query) sin beneficio incremental en el rango de carga del MVP. |
+
+**Justificación final (trazabilidad).** La integración nativa de Zipkin con Spring Sleuth/Micrometer Tracing reduce el código de instrumentación a una sola dependencia Maven y dos propiedades de configuración por microservicio. Para un sistema de 8 microservicios con un pipeline asíncrono lineal (RabbitMQ saga), la UI de Zipkin cubre los casos de uso operativos sin requerir las capacidades avanzadas de Jaeger. La elección queda registrada como DD-13 en el Decision Log del Capítulo IV.
+
+**Categoría 2 — Métricas operativas y logs centralizados**
+
+| Herramienta | Categoría | Pros | Contras | Decisión |
+|---|---|---|---|---|
+| **Spring Boot Actuator** | Framework de métricas embebido. Expone `/actuator/health`, `/actuator/metrics` y `/actuator/prometheus` con formato Prometheus. | Cero instrumentación manual. Integra con Micrometer y exporta directamente a Railway Metrics, Prometheus, Grafana Cloud o Datadog si el equipo migra. | Requiere un *scraper* externo para retención a largo plazo (Railway lo provee de forma gratuita en el plan Hobby). | **Adoptada.** Solución nativa Spring Boot 3.2, gratuita y consistente con el toolchain Maven del equipo. |
+| **ELK Stack (Elasticsearch + Logstash + Kibana)** | Suite enterprise de logs centralizados con búsqueda full-text. | UI de Kibana muy rica para análisis exploratorio de logs. Estándar de la industria. | Requiere 3 contenedores adicionales (Elasticsearch, Logstash, Kibana) con > 4 GB de RAM combinados, incompatibles con el plan *Hobby* de Railway (512 MB por servicio). Costo operativo alto. | Descartada — incompatible con la restricción C-13 (capacidad limitada del equipo académico) y con el modelo de costos del 5.4.2 (~USD 72/mes). Se reconsidera para un futuro plan *Pro* si la carga lo justifica. |
+| **Grafana Loki** | Stack de logs ligero diseñado para plataformas cloud (LogQL similar a PromQL). | 10× menos consumo de RAM que Elasticsearch. Integración natural con Grafana. | Aún requiere desplegar un contenedor adicional (Loki + Promtail). Para 8 microservicios resulta innecesario porque Railway ya agrega los logs del *stdout* en formato estructurado nativo. | Descartada — alternativa válida para una fase posterior. Por ahora la consola nativa de Railway con logs JSON estructurados cubre el caso de uso operativo. |
+
+**Justificación final (métricas y logs).** Spring Boot Actuator más la consola nativa de logs de Railway resuelven los dos casos de uso operativos del MVP (verificación de *health checks* y consulta retrospectiva de logs) sin sumar costos ni contenedores. La combinación cumple el escenario QAS-11 al permitir filtrar logs por `traceId` (propagado por Sleuth) y correlacionarlos con las trazas de Zipkin en una ventana de tiempo común, alcanzando un *mean-time-to-diagnose* objetivo ≤ 5 minutos. Si la carga del producto justifica una observabilidad más sofisticada en una fase posterior, **Grafana Loki** queda preseleccionada como evolución natural por su menor costo operativo frente a ELK.
+
+**Resumen de la decisión de observabilidad para el MVP**
+
+| Pilar | Herramienta elegida | Alternativa evaluada y descartada | Referencia |
+|---|---|---|---|
+| Trazas distribuidas | Zipkin + Spring Sleuth (Micrometer Tracing) | Jaeger (CNCF) | DD-13, ADB-21 |
+| Métricas operativas | Spring Boot Actuator + Railway Metrics | Grafana Cloud / Prometheus autohosted | Sección 5.2.1 #9, 5.4.2 |
+| Logs centralizados | Consola nativa de Railway (JSON estructurado) | ELK Stack, Grafana Loki | Sección 5.4.2 |
+| Health checks | `GET /actuator/health` consumido por Railway | — | Sección 4.1.7 (táctica *Monitor*) |
+| Alertas | Reglas Railway sobre CPU, memoria y *error rate* | — | Sección 5.4.2 |
+
+Esta combinación constituye un *quality gate* operativo: ningún despliegue a producción se promueve si un microservicio falla su `/actuator/health` durante el *rolling update*, y cualquier incremento de *error rate* > 5 % en una ventana de 5 minutos genera una alerta accionable por el equipo, garantizando el cumplimiento del escenario QAS-11 desde el primer despliegue.
 
 <div style="page-break-after: always;"></div>
 
