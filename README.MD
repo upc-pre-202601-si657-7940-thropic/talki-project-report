@@ -94,7 +94,7 @@
 | 2.28 | 11/05/2026 | Alejandro, Gael, Manuel | Incorporación de la columna TP1 al Student Outcome (Criterios 1 y 2) reflejando contribuciones individuales de la fase de implementación y alineamiento de los tres integrantes |
 | 2.29 | 12/05/2026 | Alejandro | Adición de requerimientos complementarios solicitados por el docente: (a) tablero público de User Stories con estados en GitHub Projects v2 vinculado en 3.4 (reemplaza Trello en 5.2.1 fila 1); (b) subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y justificación de la combinación adoptada; (c) subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki; (d) subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus 6 reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %) |
 | 2.30 | 12/05/2026 | Alejandro | Refuerzo del informe con prácticas estándares de arquitectura de microservicios: (a) reescritura de la sección 4.1.5 con tabla resumen del modelo por microservicio (8 filas) y 13 diagramas Mermaid embebidos (Class + ER por servicio) para hacer trazable la propiedad de cada concepto del modelo dentro de su bounded context; (b) nueva sección 5.3 "Microservices Documentation (API Reference)" con tabla de endpoints OpenAPI por servicio y tabla de endpoints REST principales que permite al frontend y a los contratos Pact consumir cada API de forma autocontenida; (c) actualización de conteos: 123 → 128 unit tests verdes (scoring agregó GlobalExceptionHandlerTest +5), 27 → 28 herramientas (SonarCloud sumada como fila 28 del toolchain); (d) springdoc-openapi 2.3.0 incorporado en los 8 microservicios (PRs talki-user-services#2, talki-session-services#3, talki-analysis-services#4, talki-engagement-services#2) |
-| 2.31 | 12/05/2026 | Alejandro, Gael, Manuel | Cierre del entregable TP1: actualización del Student Outcome (Criterios 1 y 2) reflejando las contribuciones de cada integrante durante la fase de refuerzo del Capítulo IV y V; actualización de las Conclusiones del TP1 con dos nuevos logros (API Reference autocontenida vía springdoc y modelo trazable por microservicio en 4.1.5); corrección de menciones residuales del conteo de tests (123 → 128) en la conclusión grupal del Criterio 2 y reformulación del tono de las nuevas secciones para destacar la mejora de prácticas de arquitectura por encima de la lectura "rubrica-céntrica" del avance |
+| 2.31 | 12/05/2026 | Alejandro, Gael, Manuel | Cierre del entregable TP1: actualización del Student Outcome (Criterios 1 y 2) reflejando las contribuciones de cada integrante durante la fase de refuerzo del Capítulo IV y V; actualización de las Conclusiones del TP1 con dos nuevos logros (API Reference autocontenida vía springdoc y modelo trazable por microservicio en 4.1.5); corrección de menciones residuales del conteo de tests (123 → 128) en la conclusión grupal del Criterio 2; reformulación del tono de las nuevas secciones para destacar la mejora de prácticas de arquitectura por encima de la lectura "rubrica-céntrica" del avance; e incorporación de la subsección 2.3.5 "User Journey Maps" con los Journey Maps de Valeria Ríos y Rodrigo Sánchez (assets ya existentes en `assets/images/personas/`), completando la fase de Research del Lean UX Process descrita en el statement del proyecto |
 
 <div style="page-break-after: always;"></div>
 
@@ -122,6 +122,7 @@
       - [2.3.2. User Task Matrix](#232-user-task-matrix)
       - [2.3.3. Empathy Maps](#233-empathy-maps)
       - [2.3.4. As-is Scenario Mapping](#234-as-is-scenario-mapping)
+      - [2.3.5. User Journey Maps](#235-user-journey-maps)
 
 - [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
    - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
@@ -954,6 +955,23 @@ Segmento 2
 Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario Mapping para el segundo segmento. Este escenario describe cómo los estudiantes de ciclos superiores con experiencia laboral se preparan hoy en día para sustentaciones importantes y entrevistas de trabajo, evidenciando las limitaciones de las herramientas digitales actuales, los métodos de práctica poco objetivos a los que recurren y la incertidumbre que sienten al no poder medir su progreso de forma concreta.
 
 ![As-Is Scenario Mapping del Segmento 2 (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/As-Is_Segmento2.png)
+
+
+### 2.3.5. User Journey Maps
+
+Para complementar los artefactos anteriores y completar la fase de Research descrita en el Lean UX Process, el equipo elaboró los **User Journey Maps** de los dos User Personas identificados en la sección 2.3.1. Cada Journey Map traza la experiencia completa de Valeria y Rodrigo desde el momento en que reconocen su necesidad de mejorar la comunicación oral hasta el momento en que reciben el feedback de su sesión de práctica, identificando los puntos de fricción, las emociones predominantes en cada fase y las oportunidades de intervención donde Talki aporta valor diferencial frente a las alternativas actuales.
+
+- Segmento 1:
+
+El Journey Map de Valeria evidencia que sus puntos de mayor fricción se concentran en la **fase de preparación de la exposición** (no sabe cómo practicar de forma objetiva ni cómo medir su progreso) y en la **fase posterior a la sustentación** (no recibe feedback estructurado del docente, lo que la deja sin saber exactamente qué mejorar para la siguiente vez). Talki interviene precisamente en estos dos momentos: durante la práctica, brindando retroalimentación inmediata mediante Gemini Live; y tras la sesión, entregando el Voice Coach Score con sus cinco dimensiones (fluency, clarity, volume, vocabulary, confidence) accionables.
+
+![User Journey Map de Valeria Ríos (Segmento 1, ciclos 1 al 5)](assets/images/personas/JourneyPersona1.jpg)
+
+- Segmento 2:
+
+El Journey Map de Rodrigo refleja una experiencia más madura y orientada a resultados profesionales: sus puntos de fricción se concentran en la **fase de preparación para entrevistas y sustentaciones de alto impacto** (ensaya frente a familiares que no le aportan feedback técnico) y en la **fase de autocrítica post-entrevista** (graba sus presentaciones pero no tiene tiempo de revisarlas exhaustivamente). Talki interviene ofreciendo simulación de entrevistas con `InterviewStrategy` y `ThesisDefenseStrategy` del `live-coach-service`, junto con un dashboard de progreso a lo largo del tiempo en el `progress-service` que permite comparar dos sesiones (US22) y visualizar la evolución de cada dimensión del Voice Coach Score.
+
+![User Journey Map de Rodrigo Sánchez (Segmento 2, ciclos 6 al 10)](assets/images/personas/JourneyPersona2.jpg)
 
 
 <div style="page-break-after: always;"></div>
