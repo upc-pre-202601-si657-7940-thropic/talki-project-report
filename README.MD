@@ -3078,7 +3078,7 @@ flowchart TB
     GW --> MS
     GW --> SCS
     LCS -->|WSS bidireccional| GEMINI
-    LCS -->|publica session.live.finalized<br/>(transcript_gemini + métricas)| MQ
+    LCS -->|"publica session.live.finalized<br/>con transcript_gemini + métricas"| MQ
     MQ -->|consume| FDS
     FDS --> SUPA_DB
     FDS -->|publica fillers.analyzed| MQ
