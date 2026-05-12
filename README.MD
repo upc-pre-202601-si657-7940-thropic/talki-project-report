@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 <br><br>
 
@@ -46,7 +46,7 @@
 
 </div>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Registro de Versiones del Informe
 
@@ -78,13 +78,25 @@
 | 2.12 | 02/05/2026 | Alejandro | Redacción de Iteration 1 — Núcleo de Sesión de Práctica y Feedback Asíncrono (4.3.1) |
 | 2.13 | 02/05/2026 | Alejandro | Incorporación del C4 Nivel 3 del session-service en 4.3.1.6 |
 | 2.14 | 02/05/2026 | Alejandro | Alineación de 4.3 con el ejemplo oficial ADD del curso (Driver Priorities y Software Element View) |
-| 2.15 | 02/05/2026 | Alejandro | Redacción de Iteration 2 — Identidad, Seguridad y Observabilidad Transversal (4.3.2) |
+| 2.15 | 02/05/2026 | Alejandro | Redacción de Iteration 2 — Identidad, Seguridad, Engagement y Observabilidad (4.3.2) |
 | 2.16 | 03/05/2026 | Manuel | Incorporación del Class Diagram consolidado en 4.1.5 |
 | 2.17 | 03/05/2026 | Manuel | Incorporación del Context Map DDD en 4.1.4 |
 | 2.18 | 03/05/2026 | Alejandro | Correcciones de trazabilidad y nomenclatura del Capítulo IV |
 | 2.19 | 03/05/2026 | Alejandro, Gael, Manuel | Redacción de Conclusiones y Recomendaciones del Avance 2 |
+| 2.20 | 03/05/2026 | Alejandro | Actualización del Registro de Versiones consolidando contribuciones del Avance 2 por integrante |
+| 2.21 | 09/05/2026 | Alejandro | Alineación de Iteration 1 (4.3.1): pipeline sin Whisper — filler-detection-service consume transcript_gemini de session.live.finalized directamente |
+| 2.22 | 09/05/2026 | Alejandro | Alineación de Iteration 2 (4.3.2): incorporación de progress-service (CQRS), gamification-service, notification-service; observabilidad con Zipkin + Spring Sleuth |
+| 2.23 | 10/05/2026 | Alejandro | Reconciliación de DD-09 (Rate Limiting), DD-13 (Zipkin) y DD-15 (audio no se persiste) entre Decision Log y referencias en cap V; ajuste de puertos 5.2.2 |
+| 2.24 | 11/05/2026 | Alejandro | Alineación de tabla 5.1.1 con clases reales del backend (ScoreCalculator/VoiceScore/FillerAnalyzedConsumer en scoring; AuthService/JwtTokenProvider en identity) |
+| 2.25 | 11/05/2026 | Alejandro | Corrección de coherencia previa a revisión final: audio no persistido (DD-15) en ADB-01, diagramas y secuencias; eliminación de eureka-server inexistente; reemplazo de Prometheus+Grafana por Spring Boot Actuator; renumeración ADB-05; bcrypt cost ≥ 12 unificado |
+| 2.26 | 11/05/2026 | Alejandro | Polishing final: unificación del título de Iteration 2 ("Identidad, Seguridad, Engagement y Observabilidad") en TOC, registro y conclusiones; nota explicativa de capturas pendientes en 5.1.2 con comentarios HTML para evitar imágenes rotas |
+| 2.27 | 11/05/2026 | Alejandro | Actualización integral de Conclusiones (agregado párrafo TP1 con logros de implementación: pipeline sin Whisper, 8 microservicios operativos, 123 unit tests pasando, patrones DDD/CQRS/ACL aplicados) y Recomendaciones (reescritas para apuntar al siguiente sprint: completar scenario-catalog/media, integrar cliente Gemini real, migrar a PostgreSQL gestionado, Testcontainers Nivel 2, frontend Angular contra contratos REST/AMQP) |
+| 2.28 | 11/05/2026 | Alejandro, Gael, Manuel | Incorporación de la columna TP1 al Student Outcome (Criterios 1 y 2) reflejando contribuciones individuales de la fase de implementación y alineamiento de los tres integrantes |
+| 2.29 | 12/05/2026 | Alejandro | Adición de requerimientos complementarios solicitados por el docente: (a) tablero público de User Stories con estados en GitHub Projects v2 vinculado en 3.4 (reemplaza Trello en 5.2.1 fila 1); (b) subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y justificación de la combinación adoptada; (c) subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki; (d) subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus 6 reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %) |
+| 2.30 | 12/05/2026 | Alejandro | Refuerzo del informe con prácticas estándares de arquitectura de microservicios: (a) reescritura de la sección 4.1.5 con tabla resumen del modelo por microservicio (8 filas) y 13 diagramas Mermaid embebidos (Class + ER por servicio) para hacer trazable la propiedad de cada concepto del modelo dentro de su bounded context; (b) nueva sección 5.3 "Microservices Documentation (API Reference)" con tabla de endpoints OpenAPI por servicio y tabla de endpoints REST principales que permite al frontend y a los contratos Pact consumir cada API de forma autocontenida; (c) actualización de conteos: 123 → 128 unit tests verdes (scoring agregó GlobalExceptionHandlerTest +5), 27 → 28 herramientas (SonarCloud sumada como fila 28 del toolchain); (d) springdoc-openapi 2.3.0 incorporado en los 8 microservicios (PRs talki-user-services#2, talki-session-services#3, talki-analysis-services#4, talki-engagement-services#2) |
+| 2.31 | 12/05/2026 | Alejandro, Gael, Manuel | Cierre del entregable TP1: actualización del Student Outcome (Criterios 1 y 2) reflejando las contribuciones de cada integrante durante la fase de refuerzo del Capítulo IV y V; actualización de las Conclusiones del TP1 con dos nuevos logros (API Reference autocontenida vía springdoc y modelo trazable por microservicio en 4.1.5); corrección de menciones residuales del conteo de tests (123 → 128) en la conclusión grupal del Criterio 2; reformulación del tono de las nuevas secciones para destacar la mejora de prácticas de arquitectura por encima de la lectura "rubrica-céntrica" del avance; e incorporación de la subsección 2.3.5 "User Journey Maps" con los Journey Maps de Valeria Ríos y Rodrigo Sánchez (assets ya existentes en `assets/images/personas/`), completando la fase de Research del Lean UX Process descrita en el statement del proyecto |
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Contenido
 
@@ -110,6 +122,7 @@
       - [2.3.2. User Task Matrix](#232-user-task-matrix)
       - [2.3.3. Empathy Maps](#233-empathy-maps)
       - [2.3.4. As-is Scenario Mapping](#234-as-is-scenario-mapping)
+      - [2.3.5. User Journey Maps](#235-user-journey-maps)
 
 - [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
    - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
@@ -133,7 +146,7 @@
       - [4.2.4. Constraints](#424-constraints)
       - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
-      - [4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Feedback Asíncrono](#431-iteration-1-núcleo-de-sesión-de-práctica-y-feedback-asíncrono)
+      - [4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico](#431-iteration-1-núcleo-de-sesión-de-práctica-y-pipeline-de-análisis-asincrónico)
          - [4.3.1.1. Architectural Design Backlog 1](#4311-architectural-design-backlog-1)
          - [4.3.1.2. Establish Iteration Goal by Selecting Drivers](#4312-establish-iteration-goal-by-selecting-drivers)
          - [4.3.1.3. Choose One or More Elements of the System to Refine](#4313-choose-one-or-more-elements-of-the-system-to-refine)
@@ -141,7 +154,7 @@
          - [4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces](#4315-instantiate-architectural-elements-allocate-responsibilities-and-define-interfaces)
          - [4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions](#4316-sketch-views-c4--uml-and-record-design-decisions)
          - [4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)](#4317-analysis-of-current-design-and-review-iteration-goal-kanban-board)
-      - [4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal](#432-iteration-2-identidad-seguridad-y-observabilidad-transversal)
+      - [4.3.2. Iteration 2: Identidad, Seguridad, Engagement y Observabilidad](#432-iteration-2-identidad-seguridad-engagement-y-observabilidad)
          - [4.3.2.1. Architectural Design Backlog 2](#4321-architectural-design-backlog-2)
          - [4.3.2.2. Establish Iteration Goal by Selecting Drivers](#4322-establish-iteration-goal-by-selecting-drivers)
          - [4.3.2.3. Choose One or More Elements of the System to Refine](#4323-choose-one-or-more-elements-of-the-system-to-refine)
@@ -161,52 +174,19 @@
       - [5.2.2. Source Code Management](#522-source-code-management)
       - [5.2.3. Source Code Style Guide & Conventions](#523-source-code-style-guide--conventions)
       - [5.2.4. Software Deployment Configuration](#524-software-deployment-configuration)
-   - [5.3. Microservices Implementation](#53-microservices-implementation)
-      - [5.3.1. Sprint 1](#531-sprint-1)
-         - [5.3.1.1. Sprint Backlog 1](#5311-sprint-backlog-1)
-         - [5.3.1.2. Development Evidence for Sprint Review](#5312-development-evidence-for-sprint-review)
-         - [5.3.1.3. Testing Suite Evidence for Sprint Review](#5313-testing-suite-evidence-for-sprint-review)
-         - [5.3.1.4. Execution Evidence for Sprint Review](#5314-execution-evidence-for-sprint-review)
-         - [5.3.1.5. Microservices Documentation Evidence for Sprint Review](#5315-microservices-documentation-evidence-for-sprint-review)
-         - [5.3.1.6. Software Deployment Evidence for Sprint Review](#5316-software-deployment-evidence-for-sprint-review)
-         - [5.3.1.7. Team Collaboration Insights during Sprint](#5317-team-collaboration-insights-during-sprint)
-         - [5.3.1.8. Kanban Board](#5318-kanban-board)
-      - [5.3.2. Sprint 2](#532-sprint-2)
-         - [5.3.2.1. Sprint Backlog 2](#5321-sprint-backlog-2)
-         - [5.3.2.2. Development Evidence for Sprint Review](#5322-development-evidence-for-sprint-review)
-         - [5.3.2.3. Testing Suite Evidence for Sprint Review](#5323-testing-suite-evidence-for-sprint-review)
-         - [5.3.2.4. Execution Evidence for Sprint Review](#5324-execution-evidence-for-sprint-review)
-         - [5.3.2.5. Microservices Documentation Evidence for Sprint Review](#5325-microservices-documentation-evidence-for-sprint-review)
-         - [5.3.2.6. Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
-         - [5.3.2.7. Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
-         - [5.3.2.8. Kanban Board](#5328-kanban-board)
-      - [5.3.3. Sprint 3](#533-sprint-3)
-         - [5.3.3.1. Sprint Backlog 3](#5331-sprint-backlog-3)
-         - [5.3.3.2. Development Evidence for Sprint Review](#5332-development-evidence-for-sprint-review)
-         - [5.3.3.3. Testing Suite Evidence for Sprint Review](#5333-testing-suite-evidence-for-sprint-review)
-         - [5.3.3.4. Execution Evidence for Sprint Review](#5334-execution-evidence-for-sprint-review)
-         - [5.3.3.5. Microservices Documentation Evidence for Sprint Review](#5335-microservices-documentation-evidence-for-sprint-review)
-         - [5.3.3.6. Software Deployment Evidence for Sprint Review](#5336-software-deployment-evidence-for-sprint-review)
-         - [5.3.3.7. Team Collaboration Insights during Sprint](#5337-team-collaboration-insights-during-sprint)
-         - [5.3.3.8. Kanban Board](#5338-kanban-board)
-      - [5.3.4. Sprint 4](#534-sprint-4)
-         - [5.3.4.1. Sprint Backlog 4](#5341-sprint-backlog-4)
-         - [5.3.4.2. Development Evidence for Sprint Review](#5342-development-evidence-for-sprint-review)
-         - [5.3.4.3. Testing Suite Evidence for Sprint Review](#5343-testing-suite-evidence-for-sprint-review)
-         - [5.3.4.4. Execution Evidence for Sprint Review](#5344-execution-evidence-for-sprint-review)
-         - [5.3.4.5. Microservices Documentation Evidence for Sprint Review](#5345-microservices-documentation-evidence-for-sprint-review)
-         - [5.3.4.6. Software Deployment Evidence for Sprint Review](#5346-software-deployment-evidence-for-sprint-review)
-         - [5.3.4.7. Team Collaboration Insights during Sprint](#5347-team-collaboration-insights-during-sprint)
-         - [5.3.4.8. Kanban Board](#5348-kanban-board)
+      - [5.2.5. Quality Gate y Revisión de Calidad de Código](#525-quality-gate-y-revisión-de-calidad-de-código)
+   - [5.3. Microservices Documentation (API Reference)](#53-microservices-documentation-api-reference)
    - [5.4. Microservices Deployment](#54-microservices-deployment)
+      - [5.4.0. Opciones de Deployment Evaluadas](#540-opciones-de-deployment-evaluadas)
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
       - [5.4.2. Cloud Architecture Deployment](#542-cloud-architecture-deployment)
+      - [5.4.3. Investigación de Herramientas de Logs y Monitoreo](#543-investigación-de-herramientas-de-logs-y-monitoreo)
 
 - [Conclusiones](#conclusiones)
 - [Referencias Bibliográficas](#referencias-bibliográficas)
 - [Anexos](#anexos)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Student Outcome
 
@@ -223,30 +203,30 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   <tbody>
     <tr>
       <td rowspan="3"><strong>Criterio 1: ABET-EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.<br><br><b>AV2:</b> Redacté la sección 4.3 ADD Iterations del Capítulo IV con dos iteraciones completas del método Attribute-Driven Design (Iteration 1 — Núcleo de Sesión de Práctica y Feedback Asíncrono; Iteration 2 — Identidad, Seguridad y Observabilidad Transversal), comunicando el proceso iterativo de diseño mediante un Architectural Design Backlog trazable a los drivers de la sección 4.2, una tabla de Architectural Driver Priorities (Importance × Difficulty), diagramas C4 de Nivel 3 del session-service y del identity-service, diagramas UML de secuencia para el flujo end-to-end y el escenario de degradación elegante, una Software Element View consolidada del sistema, un Decision Log con identificadores DD-01 a DD-18, y Kanban Boards de cierre por iteración, adaptando el formato visual y narrativo a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.</td>
-      <td rowspan="3"><b>AV1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.<br><br><b>AV2:</b> El equipo comunicó de manera efectiva el diseño arquitectónico de Talki en el Capítulo IV combinando narrativa técnica, diagramas C4 (contexto, contenedores y componentes), diagramas entidad-relación, tablas de drivers con identificadores trazables y matrices de tácticas por atributo de calidad, adaptando el formato a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.<br><br><b>AV2:</b> Redacté la sección 4.3 ADD Iterations del Capítulo IV con dos iteraciones completas del método Attribute-Driven Design (Iteration 1 — Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico; Iteration 2 — Identidad, Seguridad, Engagement y Observabilidad), comunicando el proceso iterativo de diseño mediante un Architectural Design Backlog trazable a los drivers de la sección 4.2, una tabla de Architectural Driver Priorities (Importance × Difficulty), diagramas C4 de Nivel 3 del session-service y del identity-service, diagramas UML de secuencia para el flujo end-to-end y el escenario de degradación elegante, una Software Element View consolidada del sistema, un Decision Log con identificadores DD-01 a DD-18, y Kanban Boards de cierre por iteración, adaptando el formato visual y narrativo a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> Comuniqué el proceso de alineamiento entre la documentación arquitectónica y la implementación real del backend en la sección 5.1.4 (Framework Pattern Driven Refactoring Report) con cinco refactorizaciones documentadas (RF-01 a RF-05) que explican modelo de dominio rico, eliminación de dependencias cíclicas con ArchUnit, reemplazo de llamadas síncronas por Saga de coreografía sobre RabbitMQ, externalización de configuración con Spring Cloud Config y manejo global de excepciones con `@RestControllerAdvice`. Coordiné con el equipo la incorporación de las contribuciones de Gael (capítulo V) al documento principal mediante revisiones de Pull Request, reconcilié decisiones de diseño contradictorias entre secciones (DD-09 Rate Limiting, DD-13 Zipkin, DD-15 no persistencia de audio) y consolidé el Registro de Versiones (versiones 2.20 a 2.31) para comunicar al docente la trazabilidad temporal de las correcciones de coherencia. Para mejorar el alineamiento del informe con las buenas prácticas esperadas en este tipo de proyectos de arquitectura de microservicios, redacté las cuatro adiciones del PR #29 al informe que cierran piezas operativas del producto: el tablero público de User Stories con estados (To Do → In Progress → Review → Done) en GitHub Projects v2 vinculado en 3.4 para hacer trazable el avance del backlog, la subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y la justificación de la combinación adoptada por Talki, la subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con la comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki que sustenta las decisiones DD-13 y DD-15, y la subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus seis reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %). Posteriormente, en el PR #30 reforcé la trazabilidad por servicio reescribiendo la sección 4.1.5 con una tabla resumen del modelo por microservicio (bounded context, agregado raíz, entidades, tablas, eventos pub/sub) y trece diagramas Mermaid embebidos que muestran Class Diagram y ER por servicio (renderizables nativamente en GitHub para mantenerse alineados al código), y añadí la nueva sección 5.3 "Microservices Documentation (API Reference)" con la tabla de endpoints OpenAPI y endpoints REST principales por microservicio, comunicando al equipo y al docente cómo cada componente del sistema queda documentado de forma autocontenida.</td>
+      <td rowspan="3"><b>AV1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.<br><br><b>AV2:</b> El equipo comunicó de manera efectiva el diseño arquitectónico de Talki en el Capítulo IV combinando narrativa técnica, diagramas C4 (contexto, contenedores y componentes), diagramas entidad-relación, tablas de drivers con identificadores trazables y matrices de tácticas por atributo de calidad, adaptando el formato a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> El equipo comunicó la transición del diseño arquitectónico (Capítulo IV) a la implementación operativa (Capítulo V) mediante tablas de pruebas unitarias por servicio (5.1.1), tablas de patrones aplicados con referencia al código real (5.1.2), tabla de mono-repos con asignación de puertos por microservicio (5.2.2), descripción del despliegue cloud por proveedor (5.4) y un Registro de Versiones que documenta cronológicamente las decisiones de alineamiento, garantizando que cualquier afirmación del informe se pueda verificar contra el código publicado en la organización GitHub del proyecto.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.<br><br><b>TP1:</b> Redacté las secciones 5.1.1 a 5.2.4 del Capítulo V comunicando la operativa de implementación del backend mediante tablas de niveles de pruebas (Nivel 1 unitarias, Nivel 2 integración con Testcontainers, Nivel 3 BDD con Cucumber, Nivel 4 contract testing con Pact), tablas de patrones de framework Spring por capa hexagonal, descripción del toolchain del equipo con veintiocho herramientas seleccionadas (incluyendo SonarCloud sumada en TP1) y catorce convenciones de estilo de código por lenguaje, adaptando el formato a evaluadores académicos del curso y al equipo de desarrollo que toma las decisiones operativas día a día.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.<br><br><b>AV2:</b> Redacté las secciones 4.1.1 a 4.1.7 del Capítulo IV, comunicando las decisiones de diseño arquitectónico mediante narrativa técnica estructurada, diagramas C4 de contexto, contenedores y componentes, un Context Map DDD, el diagrama de clases consolidado de los cinco bounded contexts con atributos y métodos representativos, el diagrama entidad-relación de los esquemas de base de datos por servicio, y tablas de patrones de diseño y tácticas arquitectónicas alineadas con los drivers del sistema, adaptando el nivel de abstracción a audiencias técnicas del equipo de desarrollo y evaluadores académicos.</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.<br><br><b>AV2:</b> Redacté las secciones 4.1.1 a 4.1.7 del Capítulo IV, comunicando las decisiones de diseño arquitectónico mediante narrativa técnica estructurada, diagramas C4 de contexto, contenedores y componentes, un Context Map DDD, el diagrama de clases consolidado de los cinco bounded contexts con atributos y métodos representativos, el diagrama entidad-relación de los esquemas de base de datos por servicio, y tablas de patrones de diseño y tácticas arquitectónicas alineadas con los drivers del sistema, adaptando el nivel de abstracción a audiencias técnicas del equipo de desarrollo y evaluadores académicos.<br><br><b>TP1:</b> Documenté la implementación del `identity-service` y del `notification-service` mediante capturas de tests JUnit5+Mockito (`AuthServiceTest`, `JwtTokenProviderTest`, `ScoreNotificationConsumerTest`, `AchievementNotificationConsumerTest`) referenciadas en la tabla 5.1.1 del informe, comunicando al equipo y al docente la evidencia verificable del cumplimiento de la cobertura prometida (≥ 75 %) para los componentes de seguridad y notificación; coordiné con el equipo la asignación de capturas de pantalla del IDE para la sección 5.1.2 (Pattern Based Backend Application) siguiendo una matriz que asigna cada imagen al integrante dueño del repositorio correspondiente.</td>
     </tr>
     <tr>
       <td rowspan="3"><strong>Criterio 2: ABET-EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).<br><br><b>AV2:</b> Apliqué el método Attribute-Driven Design (Wojcik et al., SEI 2006) para resolver el problema del diseño iterativo e incremental de la arquitectura de Talki (sección 4.3), formulando dos iteraciones que descomponen el sistema en elementos refinados a partir de drivers priorizados por matriz Importance × Difficulty, seleccionando conceptos de diseño (Event-Driven Architecture, Saga por coreografía, Strategy + Factory, Circuit Breaker con Retry, JWT RSA-256 con JWKS, OpenTelemetry W3C Trace Context, S3 lifecycle policy) frente a alternativas descartadas con justificación trazable, instanciando 25 elementos arquitectónicos con responsabilidades e interfaces API-First, y registrando 18 decisiones de diseño con trazabilidad a User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, garantizando que cada decisión técnica responde a un problema de ingeniería de software identificable y verificable.</td>
-      <td rowspan="3"><b>AV1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.<br><br><b>AV2:</b> El equipo aplicó principios de ingeniería de software para resolver el problema del diseño arquitectónico de Talki, descomponiendo la solución en bounded contexts mediante DDD, formulando drivers arquitectónicos medibles (Quality Attribute Scenarios, Constraints y Concerns) y seleccionando estilos, patrones y tácticas justificados a partir de los requerimientos del AV1, garantizando trazabilidad entre cada decisión técnica y su problema de origen.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).<br><br><b>AV2:</b> Apliqué el método Attribute-Driven Design (Wojcik et al., SEI 2006) para resolver el problema del diseño iterativo e incremental de la arquitectura de Talki (sección 4.3), formulando dos iteraciones que descomponen el sistema en elementos refinados a partir de drivers priorizados por matriz Importance × Difficulty, seleccionando conceptos de diseño (Event-Driven Architecture, Saga por coreografía, Strategy + Factory, Circuit Breaker con Retry, JWT RSA-256 con JWKS, Zipkin + Spring Sleuth con propagación X-B3-TraceId, Supabase Storage sin persistencia de audio) frente a alternativas descartadas con justificación trazable, instanciando 25 elementos arquitectónicos con responsabilidades e interfaces API-First, y registrando 18 decisiones de diseño con trazabilidad a User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, garantizando que cada decisión técnica responde a un problema de ingeniería de software identificable y verificable.<br><br><b>TP1:</b> Resolví el problema de divergencia entre el diseño arquitectónico documentado y la implementación inicial del backend ejecutando una refactorización integral en los cuatro mono-repos del equipo: eliminé el servicio intermedio `transcription-service` (Whisper STT) tras detectar que Gemini Live ya provee el transcript nativo, reconecté `filler-detection-service` directamente al evento `session.live.finalized` (queue `filler.session-finalized`, routing key `session.live.finalized`), extendí el contrato del evento con los campos `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`, propagué estas métricas end-to-end hasta `ScoreCalculator` (eliminando los magic numbers hardcodeados `silenceRatio=0.08` y `volume=70` que invalidaban parcialmente el Voice Coach Score), e implementé idempotencia robusta en `FillerAnalyzedConsumer` envolviendo el `save()` en `try/catch DataIntegrityViolationException` sobre la unique constraint de `session_id` para tratar las race conditions entre consumers concurrentes como duplicados en lugar de redirigir el mensaje al DLX. Apliqué los patrones de diseño declarados en el Capítulo IV — DDD (entidad `Feedback` con relación `@OneToMany` intra-BC en `session-service`, value object `SessionUserContext`, entidad persistente `ScoreResult` con índice único sobre `session_id` en `scoring-service`), CQRS (interfaces `SessionCommandService`/`SessionQueryService` con sus implementaciones transaccionales `@Transactional` y `@Transactional(readOnly=true)` respectivamente), y Anti-Corruption Layer (`SessionContextFacade` con métodos `fromJwtClaims(Map)` y `fromLocalUserId(Long)` para aislar al `session-service` del shape upstream del JWT) — y consolidé una suite de 128 unit tests con JUnit 5 + Mockito + AssertJ que cubre happy path, edge cases (tokens JWT forjados por otro secret, expirados o con tipos incorrectos en los claims), invariantes de dominio (transiciones ilegales del agregado `Session`, validaciones 0-100 en cada dimensión del `VoiceScore`, score perfecto vs cruce de 1000 XP), race conditions de idempotencia at-least-once sobre el bus de eventos, y el `GlobalExceptionHandler` del scoring-service con DTOs `ApiErrorResponse` que materializa el refactor RF-05. Para que cada microservicio quede autodocumentado y consumible por el frontend Angular sin depender de Postman colecciones compartidas a mano, incorporé `springdoc-openapi-starter-webmvc-ui 2.3.0` en los ocho microservicios mediante cuatro Pull Requests independientes (uno por mono-repo backend: `talki-user-services#2`, `talki-session-services#3`, `talki-analysis-services#4`, `talki-engagement-services#2`) con una configuración homogénea por servicio (dependencia Maven + bloque `springdoc` en `application.yml` + clase `OpenApiConfig` con bean `OpenAPI` que aporta metadata del bounded context), exponiendo en cada microservicio los endpoints `/v3/api-docs` (especificación OpenAPI 3 JSON, consumible por contract testing Pact y por clientes generados automáticamente) y `/swagger-ui.html` (UI interactiva para validación manual). Validé además la compatibilidad con la `SecurityFilterChain` del `identity-service` añadiendo los paths de springdoc a la whitelist sin debilitar la protección JWT del resto de endpoints, manteniendo el principio P5 (Security by Design) declarado en 4.1.1.</td>
+      <td rowspan="3"><b>AV1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.<br><br><b>AV2:</b> El equipo aplicó principios de ingeniería de software para resolver el problema del diseño arquitectónico de Talki, descomponiendo la solución en bounded contexts mediante DDD, formulando drivers arquitectónicos medibles (Quality Attribute Scenarios, Constraints y Concerns) y seleccionando estilos, patrones y tácticas justificados a partir de los requerimientos del AV1, garantizando trazabilidad entre cada decisión técnica y su problema de origen.<br><br><b>TP1:</b> El equipo materializó la arquitectura del Capítulo IV en código Java + Spring Boot 3 funcionando: ocho microservicios desplegables en Railway con bases PostgreSQL gestionadas por Supabase, un bus de eventos RabbitMQ con exchange topic `talki.events` y Dead Letter Exchange `talki.dlx`, una librería compartida `talki-commons` con los contratos de eventos AMQP versionados, y una suite de pruebas unitarias verificable con `mvn test` (128/128 verdes) y documentación OpenAPI 3 publicada por cada microservicio mediante springdoc. El equipo aplicó principios reales de ingeniería de software (DDD, CQRS, ACL, Saga de coreografía, Outbox Pattern, Circuit Breaker, idempotencia at-least-once con unique constraint + manejo de excepciones de integridad) para resolver problemas no triviales como la propagación de métricas acústicas end-to-end sin pérdida de fidelidad, el aislamiento del modelo upstream del JWT mediante un ACL, y el cumplimiento *by-design* de la Ley 29733 al evitar toda persistencia del audio biométrico.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.<br><br><b>AV2:</b> Formulé los drivers arquitectónicos de Talki (sección 4.2) traduciendo los requerimientos del Capítulo III en 12 Quality Attribute Scenarios medibles, 14 Constraints y 11 Architectural Concerns con identificadores trazables, aplicando principios de ingeniería de software para sustentar las decisiones de diseño en evidencia y criterios verificables.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.<br><br><b>AV2:</b> Formulé los drivers arquitectónicos de Talki (sección 4.2) traduciendo los requerimientos del Capítulo III en 12 Quality Attribute Scenarios medibles, 14 Constraints y 11 Architectural Concerns con identificadores trazables, aplicando principios de ingeniería de software para sustentar las decisiones de diseño en evidencia y criterios verificables.<br><br><b>TP1:</b> Resolví el problema de orquestar la sesión en tiempo real con Gemini Live implementando el `live-coach-service` con el patrón Strategy: definí la interfaz `SessionModeStrategy` y sus cuatro implementaciones (`QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy`) instanciadas por `SessionModeStrategyFactory` según el modo recibido, permitiendo agregar nuevos tipos de sesión sin modificar el orquestador (cumplimiento de QAS-07 y del Open/Closed Principle). Implementé el `session-service` aplicando arquitectura hexagonal con paquetes `domain/`, `application/` e `infrastructure/`, el agregado `Session` con transiciones de estado verificables (`DRAFT → RECORDING → PROCESSING → COMPLETED / ANALYSIS_PENDING`), la entidad `Feedback` con relación `@OneToMany` intra-BC y la separación CQRS de comandos y queries. Resolví además el problema de configuración del entorno cloud sobre Railway documentando los siete repositorios del proyecto en la sección 5.2.2 con sus puertos asignados (8080–8091, 8888) y diseñando el `docker-compose.dev.yml` por mono-repo para que cualquier integrante pueda levantar localmente el stack completo sin dependencias compartidas.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.<br><br><b>AV2:</b> Resolví el problema del diseño conceptual de la arquitectura de Talki aplicando principios de Domain-Driven Design: descompuse el sistema en cinco bounded contexts (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics, Notification), definí sus mecanismos de integración mediante un Context Map, diseñé el modelo de clases por contexto incorporando los patrones Strategy, Factory Method, Repository y Observer justificados por los drivers del sistema, y modelé el esquema de base de datos relacional con decisiones de modelado fundamentadas en los requerimientos de consistencia transaccional y autonomía de cada servicio (secciones 4.1.1 a 4.1.7).</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.<br><br><b>AV2:</b> Resolví el problema del diseño conceptual de la arquitectura de Talki aplicando principios de Domain-Driven Design: descompuse el sistema en cinco bounded contexts (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics, Notification), definí sus mecanismos de integración mediante un Context Map, diseñé el modelo de clases por contexto incorporando los patrones Strategy, Factory Method, Repository y Observer justificados por los drivers del sistema, y modelé el esquema de base de datos relacional con decisiones de modelado fundamentadas en los requerimientos de consistencia transaccional y autonomía de cada servicio (secciones 4.1.1 a 4.1.7).<br><br><b>TP1:</b> Resolví el problema del ciclo de vida seguro del usuario implementando el `identity-service` con JWT RSA-256 asimétrico (par de claves pública/privada con JWKS público en `/.well-known/jwks.json`), bcrypt cost ≥ 12 para hashing de contraseñas, refresh token rotation almacenado de forma hasheada en BD y emisión de eventos `user.registered` consumidos por el `notification-service` para enviar el email de bienvenida. Implementé además los consumidores idempotentes del `notification-service` (`ScoreNotificationConsumer` para envío de push cuando el score está disponible y `AchievementNotificationConsumer` para logros desbloqueados), garantizando que la cadena de eventos del bus se cierre en el cliente Angular mediante un WebSocket persistente. Apliqué principios de Test-Driven Development sobre la lógica de seguridad y los consumidores construyendo tests unitarios con JUnit 5 + Mockito que verifican casos límite críticos (tokens JWT forjados por otro secret, tokens expirados, tokens vacíos, sub faltante en claims, descripciones de logro con caracteres especiales).</td>
     </tr>
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo I: Introducción
 
@@ -287,7 +267,7 @@ Talki es la solución principal de Thropic: una aplicación web que utiliza IA p
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 1.2. Solution Profile
 
@@ -418,7 +398,7 @@ _Figura 4: Lean UX Canvas de Talki_
 
 _Nota._ Elaboración propia (2026).
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 1.3. Segmentos objetivo
 
@@ -458,7 +438,7 @@ _Nota._ Elaboración propia (2026).
 - Dolores: Dificultad para expresarse con fluidez y vocabulario profesional, ansiedad ante entrevistas de trabajo, falta de espacios reales de práctica con feedback concreto
 - Comportamientos digitales: Usuarios activos de LinkedIn, plataformas de empleabilidad y apps de productividad; dispuestos a pagar por herramientas que generen ROI directo en su carrera
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo II: Requirements & Analysis
 
@@ -589,7 +569,7 @@ Orai ofrece análisis de oratoria con IA de manera similar a Talki, pero opera e
 - *Alianzas universitarias:* Partnerships con facultades de Ingeniería y Comunicaciones de universidades peruanas para adopción institucional
 - *Gamificación contextual:* Sistema de logros y streaks adaptado a los ciclos académicos peruanos (exposiciones, sustentaciones, entrevistas de prácticas)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 2.2. Entrevistas
 
@@ -820,7 +800,7 @@ Las fichas individuales anteriores recogen la evidencia bruta de cada entrevista
 
 Las entrevistadas del Segmento 1 (Belén e Isabel) expresaron su disposición a pagar un rango aproximado de **USD 2 a 5 mensuales** por una aplicación que realmente funcione. Considerando el tipo de cambio promedio de referencia (S/ 3.70 por USD), este rango equivale a **S/ 7 a S/ 19 mensuales**. El plan Premium Estudiantil de Talki, definido en la sección 1.2.3.2 en **S/ 15 a S/ 25 mensuales**, se encuentra dentro o muy cerca del techo indicado por las usuarias, lo que sugiere una aceptabilidad razonable del precio propuesto. Para el Segmento 2 (Rodrigo Sánchez y similares), la disposición a pagar es mayor por el retorno profesional esperado (entrevistas, ascensos, primer empleo), lo que habilita el tramo superior del rango y justifica mantener la horquilla S/ 15 a S/ 25 como precio de referencia.
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 2.3. Needfinding
 
@@ -977,7 +957,24 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del As-is Scenario
 ![As-Is Scenario Mapping del Segmento 2 (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/As-Is_Segmento2.png)
 
 
-<hr class="page-break">
+### 2.3.5. User Journey Maps
+
+Para complementar los artefactos anteriores y completar la fase de Research descrita en el Lean UX Process, el equipo elaboró los **User Journey Maps** de los dos User Personas identificados en la sección 2.3.1. Cada Journey Map traza la experiencia completa de Valeria y Rodrigo desde el momento en que reconocen su necesidad de mejorar la comunicación oral hasta el momento en que reciben el feedback de su sesión de práctica, identificando los puntos de fricción, las emociones predominantes en cada fase y las oportunidades de intervención donde Talki aporta valor diferencial frente a las alternativas actuales.
+
+- Segmento 1:
+
+El Journey Map de Valeria evidencia que sus puntos de mayor fricción se concentran en la **fase de preparación de la exposición** (no sabe cómo practicar de forma objetiva ni cómo medir su progreso) y en la **fase posterior a la sustentación** (no recibe feedback estructurado del docente, lo que la deja sin saber exactamente qué mejorar para la siguiente vez). Talki interviene precisamente en estos dos momentos: durante la práctica, brindando retroalimentación inmediata mediante Gemini Live; y tras la sesión, entregando el Voice Coach Score con sus cinco dimensiones (fluency, clarity, volume, vocabulary, confidence) accionables.
+
+![User Journey Map de Valeria Ríos (Segmento 1, ciclos 1 al 5)](assets/images/personas/JourneyPersona1.jpg)
+
+- Segmento 2:
+
+El Journey Map de Rodrigo refleja una experiencia más madura y orientada a resultados profesionales: sus puntos de fricción se concentran en la **fase de preparación para entrevistas y sustentaciones de alto impacto** (ensaya frente a familiares que no le aportan feedback técnico) y en la **fase de autocrítica post-entrevista** (graba sus presentaciones pero no tiene tiempo de revisarlas exhaustivamente). Talki interviene ofreciendo simulación de entrevistas con `InterviewStrategy` y `ThesisDefenseStrategy` del `live-coach-service`, junto con un dashboard de progreso a lo largo del tiempo en el `progress-service` que permite comparar dos sesiones (US22) y visualizar la evolución de cada dimensión del Voice Coach Score.
+
+![User Journey Map de Rodrigo Sánchez (Segmento 2, ciclos 6 al 10)](assets/images/personas/JourneyPersona2.jpg)
+
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo III: Requirements Specification
 
@@ -995,7 +992,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
 
 ![To-Be Scenario Mapping del Segmento 2 con Talki (Rodrigo Sánchez, ciclos 6 al 10)](assets/images/As-is/To-be/To-be_Segmento2.png)
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.2. User Stories
 
@@ -1517,7 +1514,7 @@ Mediante este artefacto, se ha llevado a cabo la elaboración del To-be Scenario
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.3. Impact Map
 
@@ -1590,11 +1587,24 @@ _Figura 5: Impact Map de Talki (elaborado en UXpressia)_
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 3.4. Product Backlog
 
 El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Should* / *Could* / *Won't*), basado en el valor que aporta cada User Story al MVP y la dependencia funcional entre ellas. Las User Stories *Must* son bloqueantes del MVP y cubren autenticación, sesión de práctica, grabación, feedback básico y adaptación por segmento. Las *Should* aportan valor crítico pero pueden esperar un sprint; incluyen tipos de sesión, análisis detallado, historial y progreso. Las *Could* son mejoras incrementales (landing page, exportación, metas personales) que se pueden desarrollar después del MVP sin afectar la propuesta de valor inicial.
+
+**Herramienta de gestión y visualización de estados.** El equipo Thropic mantiene el Product Backlog completo (las 28 User Stories detalladas en la sección 3.2) como ítems en el proyecto público **[Talki — Product Backlog (TB1)](https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1)** alojado en **GitHub Projects (v2)** bajo la organización académica `upc-pre-202601-si657-7940-thropic`. La elección de GitHub Projects sobre un tablero Kanban tradicional (Trello, Jira) responde a tres criterios verificables: integración nativa con los repositorios del producto (issues ↔ pull requests ↔ commits), gratuidad ilimitada para organizaciones académicas y trazabilidad bidireccional entre cada User Story y los Pull Requests que la implementan (visible en el campo *Linked pull requests* del ítem). Cumple el requerimiento del docente de utilizar una herramienta que incluya estados de avance, sin requerir Kanban como única notación.
+
+Cada User Story se materializa como un *draft issue* del proyecto con título `[USXX] <Título>` y se desplaza entre cuatro estados del campo *Status* del proyecto, alineados con el flujo *GitFlow* del equipo descrito en la sección 5.2.2:
+
+| Estado | Significado operativo | Condición de transición |
+|---|---|---|
+| **Todo** | Historia priorizada en el backlog, sin desarrollo iniciado. | Asignación a un sprint pendiente. |
+| **In Progress** | Rama `feature/<nombre>` abierta y commits del backend o frontend en curso. | Apertura del *Pull Request* asociado. |
+| **Review** | Pull Request abierto contra `develop` esperando revisión del equipo o validación end-to-end de la pirámide de pruebas (5.1.1). | Aprobación de la revisión y merge. |
+| **Done** | Merge a `develop` confirmado, suite de pruebas verde y verificación de los criterios de aceptación Given-When-Then de la sección 3.2. | — |
+
+La distribución actual del tablero refleja el estado real del producto al cierre del TP1 (12 de mayo de 2026): **4 User Stories en Done** (autenticación completa del `identity-service` con 15 unit tests verdes, incluyendo logout con revocación de refresh token), **4 en Review** (componentes backend del `session-service` y campos de personalización del `AppUser` listos para validación con el frontend), **10 en In Progress** (historias con backend operativo en `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service` pero pendientes de integración con el cliente Angular) y **10 en Todo** (landing page de Talki, exportación que depende del `media-service` aún no implementado, y recomendaciones que dependen del `scenario-catalog-service` pendiente). La tabla siguiente lista el backlog priorizado por MoSCoW; las prioridades y order numbers son los mismos que se reflejan en el tablero público.
 
 <table>
   <thead>
@@ -1835,7 +1845,7 @@ El Product Backlog está priorizado según el método **MoSCoW** (*Must* / *Shou
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Capítulo IV: Product Architecture Design
 
@@ -1876,13 +1886,13 @@ Al versionar las APIs (v1, v2…) y mantener versiones anteriores durante al men
 La arquitectura de Talki combina varios estilos y patrones complementarios seleccionados en función de los drivers de calidad identificados (latencia del análisis de IA, escalabilidad del servicio de transcripción, evolución independiente de capacidades). A continuación se describe cada estilo o patrón adoptado y su justificación en el contexto del producto.
 
 **Arquitectura de microservicios.**
-Talki se descompone en servicios independientes desplegables por separado, cada uno con su propia base de código, contenedor Docker y ciclo de vida de despliegue. Esta elección responde al driver de modifiability: las reglas de análisis de IA evolucionan con frecuencia sin impactar el resto de la plataforma. Los servicios identificados son: `identity-service`, `session-service`, `transcription-service`, `ai-feedback-service`, `progress-service` y `notification-service`.
+Talki se descompone en servicios independientes desplegables por separado, cada uno con su propia base de código, contenedor Docker y ciclo de vida de despliegue. Esta elección responde al driver de modifiability: las reglas de análisis de IA evolucionan con frecuencia sin impactar el resto de la plataforma. Los servicios identificados son: `identity-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service` y `notification-service`.
 
 **Domain-Driven Design (DDD).**
 La descomposición en microservicios sigue los límites de contexto acotado (Bounded Contexts) derivados del dominio de Talki. Los contextos identificados son: *Identity & Access*, *Practice Session*, *Speech Analysis*, *Progress & Metrics*, y *Notification*. Dentro de cada contexto se aplican los bloques tácticos de DDD: Aggregates, Value Objects, Domain Events y Repositories. Esta alineación entre la estructura del código y el dominio de negocio reduce la fricción cognitiva y facilita la incorporación de nuevos integrantes al equipo.
 
 **Arquitectura orientada a eventos (Event-Driven Architecture).**
-El análisis de IA es una operación de larga duración (potencialmente 10-30 segundos) que no puede bloquear la respuesta al usuario. Por esta razón, la finalización de una sesión de grabación publica un evento `SessionFinalized` en un bus de mensajería (RabbitMQ/Kafka). El `ai-feedback-service` consume este evento de forma asíncrona, procesa la transcripción y publica `FeedbackGenerated`, que el `progress-service` consume para actualizar las métricas. Esta arquitectura desacopla temporalmente los servicios y permite que el frontend notifique al usuario cuando el análisis esté listo mediante WebSockets o polling.
+El análisis post-sesión es una operación que no puede bloquear la respuesta al usuario. Por esta razón, la finalización de una sesión publica un evento `session.live.finalized` en RabbitMQ con el `transcript_gemini` y las métricas acústicas calculadas en memoria por el `live-coach-service`. El `filler-detection-service` consume este evento, aplica análisis sobre la transcripción y publica `fillers.analyzed`; el `scoring-service` calcula las cinco dimensiones del Voice Coach Score y publica `scoring.completed`, que el `progress-service` consume para actualizar las vistas materializadas. Esta arquitectura desacopla temporalmente los servicios y permite que el frontend notifique al usuario cuando el análisis esté listo mediante WebSockets o polling.
 
 **Patrón API Gateway.**
 Un API Gateway centralizado actúa como punto de entrada único para todos los clientes del sistema. Responsabilidades delegadas al gateway: autenticación y validación de JWT, enrutamiento hacia microservicios internos, limitación de tasa (rate limiting), logging de accesos y transformación de respuestas. Este patrón evita que los clientes necesiten conocer la topología interna de los servicios y permite aplicar cross-cutting concerns en un solo lugar.
@@ -1894,7 +1904,7 @@ Dado que Talki opera actualmente como aplicación web (Angular), el API Gateway 
 El `progress-service` separa los modelos de escritura (registro de métricas al finalizar una sesión) de los modelos de lectura (consulta de gráficos de progreso histórico). Las escrituras actualizan un almacén normalizado (PostgreSQL), mientras que las lecturas utilizan vistas materializadas optimizadas para las consultas de tendencias y comparaciones. Esta separación permite escalar las lecturas de forma independiente y evitar contención en escenarios donde un usuario consulta su historial mientras otro guarda una sesión nueva.
 
 **Circuit Breaker.**
-Las llamadas del `ai-feedback-service` hacia la API de IA externa (Whisper, OpenAI) están envueltas en un Circuit Breaker con tres estados: Cerrado (operación normal), Abierto (fallo repetido, solicitudes rechazadas inmediatamente) y Semi-Abierto (sondeo de recuperación). Esto previene la cascada de fallos cuando el proveedor externo experimenta degradación y permite que el resto de la plataforma continúe operando.
+Las llamadas del `live-coach-service` hacia la API de IA externa (Google Gemini Live) están envueltas en un Circuit Breaker con tres estados: Cerrado (operación normal), Abierto (fallo repetido, solicitudes rechazadas inmediatamente) y Semi-Abierto (sondeo de recuperación). Esto previene la cascada de fallos cuando el proveedor externo experimenta degradación y permite que el resto de la plataforma continúe operando mediante el modo *scripted* alternativo.
 
 **Patrón Strangler Fig (migración progresiva).**
 Si en fases posteriores se requiriera refactorizar el módulo de autenticación hacia un proveedor de identidad dedicado (Auth0, Keycloak), se aplicaría el patrón Strangler Fig: enrutando gradualmente el tráfico desde la implementación existente hacia la nueva, sin downtime ni reescritura total.
@@ -1915,8 +1925,8 @@ _Diagrama de Contexto C4 — Sistema Talki. Elaboración propia (2026)._
 |---|---|---|
 | Estudiante Ciclos 1-5 | Usuario primario | Valeria Ríos (User Persona 1). Busca practicar exposiciones académicas con feedback inmediato para superar el miedo escénico. Accede desde laptop/PC en sesiones de 10-20 minutos. |
 | Estudiante Ciclos 6-10 | Usuario primario | Rodrigo Sánchez (User Persona 2). Busca prepararse para entrevistas laborales y sustentaciones de tesis con feedback profesional y métricas de mejora a largo plazo. |
-| Servicio de Transcripción | Sistema externo | Recibe el archivo de audio y devuelve la transcripción en texto. Se evalúan Whisper (OpenAI) y Google Speech-to-Text como candidatos por su precisión en español latinoamericano. |
-| Servicio de IA | Sistema externo | Recibe la transcripción y el tipo de sesión, y devuelve el análisis estructurado: puntuación global, muletillas detectadas, análisis de léxico y sugerencias de mejora por sección. |
+| Google Gemini Live API | Sistema externo | Servicio de IA conversacional bidireccional (audio entrada / audio salida) con transcripción nativa en tiempo real (`transcript_gemini`). Reemplaza el pipeline clásico STT → LLM → TTS por un único proveedor con latencia ~600ms. |
+| Servicio de IA (asincrónico) | Sistema externo | Recibe la transcripción ya generada por Gemini y el tipo de sesión, y devuelve el análisis estructurado: puntuación global, muletillas detectadas, análisis de léxico y sugerencias de mejora por sección. |
 | Servicio de Email | Sistema externo | Gestiona el envío de correos transaccionales. Se desacopla del core de Talki para evitar dependencias de entrega sincrónica. |
 | Almacenamiento en la Nube | Sistema externo | Almacena los archivos de audio de forma persistente y los entrega al servicio de transcripción mediante URLs prefirmadas, evitando que los archivos pasen por los servidores de aplicación. |
 
@@ -1948,40 +1958,401 @@ _Context Map DDD — Bounded Contexts de Talki y sus relaciones de integración.
 
 _Diagrama de Contenedores C4 — Sistema Talki. Elaboración propia (2026)._
 
-#### Diagrama de Componentes del AI Feedback Service (C4 – Nivel 3)
+#### Diagrama de Componentes del Live Coach Service (C4 – Nivel 3)
 
-El `ai-feedback-service` es el contenedor más crítico y complejo del sistema, ya que orquesta la comunicación con el proveedor de IA externo y aplica las reglas de análisis contextualizado. Por ello se detalla a nivel de componentes.
+El `live-coach-service` es el contenedor más crítico y complejo del sistema, ya que orquesta la comunicación bidireccional con Gemini Live API durante toda la sesión, calcula las métricas acústicas en memoria y publica el evento `session.live.finalized` que dispara el pipeline de análisis. Por ello se detalla a nivel de componentes.
 
 ![C4-Containers](assets/images/DiagramsUML/C4-componentdiagram.png)
 
-_Diagrama de Componentes C4 — AI Feedback Service. Elaboración propia (2026)._
+_Diagrama de Componentes C4 — Live Coach Service. Elaboración propia (2026)._
 
 ---
 
 ### 4.1.5. Architecture Overview: Class Diagram & Database Diagram
 
-#### Diagrama de Clases
+#### Vista consolidada — Class Diagram global
 
-El diagrama de clases consolida las entidades de dominio de los cinco Bounded Contexts de Talki, mostrando atributos, métodos representativos y relaciones estructurales. Las clases están agrupadas por contexto para reflejar la separación de responsabilidades del diseño DDD.
+El diagrama de clases consolidado integra las entidades de dominio de los cinco Bounded Contexts de Talki en una sola vista, mostrando atributos, métodos representativos y relaciones estructurales. Las clases están agrupadas por contexto para reflejar la separación de responsabilidades del diseño DDD.
 
 ![ClassDiagram](assets/images/DiagramsUML/ClassDiagram.png)
 
-_Diagrama de Clases — Bounded Contexts de Talki (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics). Elaboración propia (2026)._
+_Diagrama de Clases consolidado — Bounded Contexts de Talki (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics). Elaboración propia (2026)._
 
----
+#### Vista consolidada — Entity-Relationship global
 
-#### Diagrama Entidad-Relación (Base de Datos Relacional)
+Talki utiliza un esquema de **base de datos por servicio** (Database per Service), donde cada microservicio gestiona su propio almacenamiento relacional (PostgreSQL). El siguiente diagrama entidad-relación consolida los esquemas principales en una vista única para apreciar la cardinalidad inter-servicios sin perder de vista la autonomía de despliegue.
 
-Talki utiliza un esquema de **base de datos por servicio** (Database per Service), donde cada microservicio gestiona su propio almacenamiento relacional (PostgreSQL). A continuación se presenta el diagrama entidad-relación consolidado de los esquemas principales.
-
-**Decisiones de modelado:**
+**Decisiones de modelado transversales:**
 - Se usa **PostgreSQL** como base de datos relacional principal para todos los servicios, dado que los datos de sesión, feedback y progreso tienen estructura predecible y requieren consistencia transaccional.
-- Los campos `filler_words_analysis`, `keywords_analysis`, `lexicon_suggestions` y `section_feedback` en la tabla `session_feedback` se almacenan como JSONB de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados sin sacrificar las garantías ACID.
-- Las relaciones entre servicios se modelan mediante `user_id` como clave foránea lógica (no referencial entre bases de datos), lo que preserva la autonomía de cada esquema.
+- Los campos de feedback estructurado se almacenan como **JSONB** de PostgreSQL, aprovechando la flexibilidad de consulta sobre campos semiestructurados sin sacrificar las garantías ACID.
+- Las relaciones entre servicios se modelan mediante `user_id` y `session_id` como **claves foráneas lógicas** (no referenciales entre bases de datos), lo que preserva la autonomía de cada esquema (P4 — Database per Service).
 
 ![EntityRelations](assets/images/DiagramsUML/Entity-Relation.png)
 
-_Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
+_Diagrama Entidad-Relación consolidado — Esquemas de bases de datos de Talki. Elaboración propia (2026)._
+
+---
+
+#### Resumen del modelo por microservicio
+
+Una arquitectura de microservicios bien documentada hace explícita **la propiedad de cada concepto del modelo** dentro de su bounded context. La siguiente tabla resume —para cada microservicio Spring Boot del producto Talki— el bounded context al que pertenece, las entidades de dominio que mantiene, las tablas físicas en su base de datos PostgreSQL y los eventos AMQP que produce o consume sobre el exchange `talki.events`. Esta vista evita la doble lectura del diagrama consolidado y permite a cualquier integrante del equipo o lector del informe localizar de un vistazo dónde vive cada agregado y a través de qué eventos se integra con los demás servicios.
+
+| # | Microservicio | Bounded Context | Agregado raíz | Entidades / Value Objects | Tablas BD | Eventos publicados | Eventos consumidos |
+|---|---|---|---|---|---|---|---|
+| 1 | `identity-service` | Identity & Access | `AppUser` | `AppUser`, `UserRole` (enum), `RefreshToken` | `app_users`, `refresh_tokens` | `user.registered` | — |
+| 2 | `session-service` | Practice Session | `Session` | `Session`, `Feedback` (`@OneToMany` intra-BC), `SessionUserContext` (VO ACL) | `sessions`, `session_feedback` | `session.live.finalized` | `user.registered` |
+| 3 | `live-coach-service` | Practice Session (orquestador) | — *(stateless)* | `SessionModeStrategy` y sus 4 implementaciones, `LiveCoachOrchestrator` | *(sin BD propia)* | `session.live.finalized` | — |
+| 4 | `filler-detection-service` | Speech Analysis | — *(stateless)* | `FillerDetector` (servicio de dominio), `FillerAnalyzedEvent` | *(sin BD propia)* | `fillers.analyzed` | `session.live.finalized` |
+| 5 | `scoring-service` | Speech Analysis | `ScoreResult` | `ScoreResult`, `VoiceScore` (VO con 5 dimensiones 0-100) | `score_results` (unique constraint sobre `session_id`) | `scoring.completed` | `fillers.analyzed` |
+| 6 | `progress-service` | Progress & Metrics | `UserProgress` | `UserProgress`, `SessionMetrics` | `user_progress`, `session_metrics` | — | `scoring.completed` |
+| 7 | `gamification-service` | Progress & Metrics (engagement) | `UserStreak` | `UserStreak`, `Achievement` | `user_streaks`, `achievements` | `achievement.unlocked` | `scoring.completed` |
+| 8 | `notification-service` | Notification | — *(stateless consumer)* | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` | *(sin BD propia)* | — | `scoring.completed`, `achievement.unlocked` |
+
+**Notas de lectura:**
+- Los servicios marcados *(stateless)* no persisten estado propio: actúan como **orquestadores** (`live-coach-service`) o **transformadores idempotentes** sobre eventos (`filler-detection-service`, `notification-service`), de modo que su Database Diagram se materializa como "sin esquema persistente; el estado lo aporta el evento entrante".
+- Los agregados raíz delimitan la frontera de consistencia transaccional dentro de cada servicio (DDD).
+- Los nombres de los eventos respetan el contrato versionado publicado en la librería compartida `talki-commons` (sección 5.1.3).
+
+---
+
+#### Diagramas por microservicio (Class + ER)
+
+Una arquitectura de microservicios consistente requiere documentar el modelo de clases y el esquema de base de datos **por servicio**, no solo a nivel consolidado, para que cualquier integrante pueda entender el alcance de un servicio sin necesidad de leer todo el sistema. A continuación se incluyen los **diagramas Mermaid renderizables en GitHub** de cada uno de los 8 microservicios. Esta notación viva (texto dentro del propio `README.MD`) permite mantener los diagramas alineados al código sin depender de imágenes exportadas que pueden desfasarse con cada refactor.
+
+##### 1) `identity-service` — Identity & Access
+
+```mermaid
+classDiagram
+    class AppUser {
+        +Long id
+        +String email
+        +String passwordHash
+        +String fullName
+        +UserRole role
+        +Instant createdAt
+        +register(email, password) AppUser
+        +rotateRefreshToken() RefreshToken
+    }
+    class UserRole {
+        <<enumeration>>
+        STUDENT
+        ADMIN
+    }
+    class RefreshToken {
+        +Long id
+        +Long userId
+        +String tokenHash
+        +Instant expiresAt
+        +boolean revoked
+    }
+    AppUser "1" *-- "*" RefreshToken : owns
+    AppUser --> UserRole : has
+```
+
+```mermaid
+erDiagram
+    APP_USERS ||--o{ REFRESH_TOKENS : owns
+    APP_USERS {
+        bigint id PK
+        varchar email UK
+        varchar password_hash
+        varchar full_name
+        varchar role
+        timestamp created_at
+    }
+    REFRESH_TOKENS {
+        bigint id PK
+        bigint user_id FK
+        varchar token_hash UK
+        timestamp expires_at
+        boolean revoked
+    }
+```
+
+##### 2) `session-service` — Practice Session
+
+```mermaid
+classDiagram
+    class Session {
+        +UUID id
+        +Long userId
+        +String title
+        +SessionMode mode
+        +SessionState state
+        +Instant startedAt
+        +Instant finalizedAt
+        +start() void
+        +finalize() void
+        +markAsCompleted() void
+        +markAsAnalysisPending() void
+    }
+    class Feedback {
+        +UUID id
+        +UUID sessionId
+        +String content
+        +Instant createdAt
+    }
+    class SessionUserContext {
+        <<Value Object - ACL>>
+        +Long localUserId
+        +String email
+        +UserRole role
+    }
+    Session "1" *-- "*" Feedback : intra-BC
+    Session ..> SessionUserContext : reads from JWT
+```
+
+```mermaid
+erDiagram
+    SESSIONS ||--o{ SESSION_FEEDBACK : has
+    SESSIONS {
+        uuid id PK
+        bigint user_id
+        varchar title
+        varchar mode
+        varchar state
+        timestamp started_at
+        timestamp finalized_at
+    }
+    SESSION_FEEDBACK {
+        uuid id PK
+        uuid session_id FK
+        text content
+        jsonb structured_data
+        timestamp created_at
+    }
+```
+
+##### 3) `live-coach-service` — Practice Session (orquestador)
+
+Servicio **stateless**: orquesta la conexión WebSocket con Gemini Live durante toda la sesión, calcula métricas acústicas en memoria y publica el evento al cerrar. No persiste estado propio.
+
+```mermaid
+classDiagram
+    class LiveCoachOrchestrator {
+        +start(sessionId, mode) void
+        +finalize(sessionId) SessionLiveFinalizedEvent
+    }
+    class SessionModeStrategyFactory {
+        +forMode(SessionMode) SessionModeStrategy
+    }
+    class SessionModeStrategy {
+        <<interface>>
+        +buildSystemPrompt() String
+        +configureTurnTaking() Config
+    }
+    class QuickPracticeStrategy
+    class InterviewStrategy
+    class ThesisDefenseStrategy
+    class ScenarioStrategy
+    class GeminiLiveClient {
+        +connect(prompt) WebSocketSession
+        +closeAndCollectTranscript() String
+    }
+    SessionModeStrategy <|.. QuickPracticeStrategy
+    SessionModeStrategy <|.. InterviewStrategy
+    SessionModeStrategy <|.. ThesisDefenseStrategy
+    SessionModeStrategy <|.. ScenarioStrategy
+    LiveCoachOrchestrator --> SessionModeStrategyFactory
+    LiveCoachOrchestrator --> GeminiLiveClient
+```
+
+> _Database Diagram: **N/A**. El servicio no persiste estado; el resultado de la sesión viaja en el evento `session.live.finalized` y queda almacenado en `session-service` y `scoring-service` aguas abajo._
+
+##### 4) `filler-detection-service` — Speech Analysis
+
+Servicio **stateless transformador**: consume `session.live.finalized` con el `transcript_gemini`, detecta muletillas (regex + ONNX opcional) y publica `fillers.analyzed`. No persiste estado propio.
+
+```mermaid
+classDiagram
+    class SessionLiveFinalizedConsumer {
+        +handle(SessionLiveFinalizedEvent) void
+    }
+    class FillerDetector {
+        +detect(String transcript) FillerResult
+    }
+    class FillerResult {
+        +int totalFillers
+        +Map byType
+        +double fillerRatio
+    }
+    class FillerAnalyzedPublisher {
+        +publish(FillerAnalyzedEvent) void
+    }
+    SessionLiveFinalizedConsumer --> FillerDetector
+    SessionLiveFinalizedConsumer --> FillerAnalyzedPublisher
+    FillerDetector --> FillerResult
+```
+
+> _Database Diagram: **N/A**. El servicio no persiste estado; las métricas viajan en el evento publicado._
+
+##### 5) `scoring-service` — Speech Analysis (resultado del análisis)
+
+```mermaid
+classDiagram
+    class ScoreResult {
+        +UUID id
+        +UUID sessionId
+        +Long userId
+        +VoiceScore score
+        +Instant computedAt
+    }
+    class VoiceScore {
+        <<Value Object>>
+        +int fluency
+        +int clarity
+        +int volume
+        +int vocabulary
+        +int confidence
+        +overall() int
+    }
+    class ScoreCalculator {
+        +calculate(FillerAnalyzedEvent) VoiceScore
+    }
+    class FillerAnalyzedConsumer {
+        +handle(FillerAnalyzedEvent) void
+    }
+    ScoreResult *-- VoiceScore : embedded
+    FillerAnalyzedConsumer --> ScoreCalculator
+    FillerAnalyzedConsumer --> ScoreResult : persists
+```
+
+```mermaid
+erDiagram
+    SCORE_RESULTS {
+        uuid id PK
+        uuid session_id UK
+        bigint user_id
+        int fluency
+        int clarity
+        int volume
+        int vocabulary
+        int confidence
+        timestamp computed_at
+    }
+```
+
+##### 6) `progress-service` — Progress & Metrics (CQRS)
+
+```mermaid
+classDiagram
+    class UserProgress {
+        +Long userId
+        +int totalSessions
+        +double avgOverall
+        +int xpTotal
+        +Instant updatedAt
+        +recordSession(VoiceScore) void
+    }
+    class SessionMetrics {
+        +UUID sessionId
+        +Long userId
+        +int overall
+        +Instant occurredAt
+    }
+    class ScoringCompletedConsumer {
+        +handle(ScoringCompletedEvent) void
+    }
+    class UserProgressQueryService {
+        +getDashboard(Long userId) UserProgressView
+        +compareSessions(UUID a, UUID b) ComparisonView
+    }
+    ScoringCompletedConsumer --> UserProgress : updates
+    ScoringCompletedConsumer --> SessionMetrics : appends
+    UserProgressQueryService ..> UserProgress : reads
+```
+
+```mermaid
+erDiagram
+    USER_PROGRESS ||--o{ SESSION_METRICS : aggregates
+    USER_PROGRESS {
+        bigint user_id PK
+        int total_sessions
+        double avg_overall
+        int xp_total
+        timestamp updated_at
+    }
+    SESSION_METRICS {
+        uuid session_id PK
+        bigint user_id FK
+        int overall
+        timestamp occurred_at
+    }
+```
+
+##### 7) `gamification-service` — Progress & Metrics (engagement)
+
+```mermaid
+classDiagram
+    class UserStreak {
+        +Long userId
+        +int currentStreakDays
+        +int longestStreakDays
+        +int xp
+        +Instant lastSessionAt
+        +incrementOrReset(Instant) void
+        +addXp(int delta) void
+    }
+    class Achievement {
+        +Long id
+        +Long userId
+        +String code
+        +String title
+        +Instant unlockedAt
+    }
+    class ScoringCompletedConsumer {
+        +handle(ScoringCompletedEvent) void
+    }
+    class AchievementUnlockedPublisher {
+        +publish(AchievementUnlockedEvent) void
+    }
+    ScoringCompletedConsumer --> UserStreak : updates
+    ScoringCompletedConsumer --> Achievement : creates
+    ScoringCompletedConsumer --> AchievementUnlockedPublisher
+```
+
+```mermaid
+erDiagram
+    USER_STREAKS ||--o{ ACHIEVEMENTS : earns
+    USER_STREAKS {
+        bigint user_id PK
+        int current_streak_days
+        int longest_streak_days
+        int xp
+        timestamp last_session_at
+    }
+    ACHIEVEMENTS {
+        bigint id PK
+        bigint user_id FK
+        varchar code
+        varchar title
+        timestamp unlocked_at
+    }
+```
+
+##### 8) `notification-service` — Notification
+
+Servicio **stateless consumer**: convierte eventos AMQP en notificaciones push al frontend Angular vía WebSocket. No persiste estado propio.
+
+```mermaid
+classDiagram
+    class ScoreNotificationConsumer {
+        +handle(ScoringCompletedEvent) void
+    }
+    class AchievementNotificationConsumer {
+        +handle(AchievementUnlockedEvent) void
+    }
+    class NotificationPushService {
+        <<interface>>
+        +push(Long userId, String message) void
+    }
+    class WebSocketPushAdapter
+    NotificationPushService <|.. WebSocketPushAdapter
+    ScoreNotificationConsumer --> NotificationPushService
+    AchievementNotificationConsumer --> NotificationPushService
+```
+
+> _Database Diagram: **N/A**. El servicio no persiste estado; las notificaciones se entregan al cliente Angular vía WebSocket y, opcionalmente, vía proveedor de email externo (Resend/SendGrid)._
 
 ---
 
@@ -1989,20 +2360,20 @@ _Diagrama Entidad-Relación — Esquemas de bases de datos de Talki. Elaboració
 
 Talki aplica los siguientes patrones de diseño de software, seleccionados para resolver problemas concretos identificados durante el diseño.
 
-**Strategy (Comportamiento) — AI Feedback Service.**
-El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulación de entrevista) determina el conjunto de instrucciones enviadas al LLM y los criterios de evaluación aplicados. El patrón Strategy encapsula cada variante de análisis en una clase independiente (`PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`) que implementa la interfaz `AnalysisStrategy`. El `FeedbackOrchestrator` delega en la estrategia apropiada sin conocer sus detalles internos. Esto permite agregar nuevos tipos de sesión sin modificar el orquestador (Open/Closed Principle).
+**Strategy (Comportamiento) — Live Coach Service y Scoring Service.**
+El tipo de sesión de práctica (pitch, sustentación de tesis, charla, simulación de entrevista) determina el conjunto de system prompts enviados a Gemini Live por el `live-coach-service` y los criterios de evaluación aplicados por el `scoring-service`. El patrón Strategy encapsula cada variante en una clase independiente (`PitchAnalysisStrategy`, `ThesisAnalysisStrategy`, `InterviewAnalysisStrategy`) que implementa la interfaz `AnalysisStrategy`. El orquestador delega en la estrategia apropiada sin conocer sus detalles internos. Esto permite agregar nuevos tipos de sesión sin modificar el orquestador (Open/Closed Principle).
 
 **Factory Method (Creacional) — Strategy Factory.**
-El `AnalysisStrategyFactory` centraliza la creación de instancias de estrategia a partir del tipo de sesión recibido en el evento. Desacopla el código cliente de la lógica de instanciación y facilita las pruebas unitarias mediante inyección de dependencias.
+El `AnalysisStrategyFactory` centraliza la creación de instancias de estrategia a partir del tipo de sesión recibido en el evento o en la sesión activa. Desacopla el código cliente de la lógica de instanciación y facilita las pruebas unitarias mediante inyección de dependencias.
 
 **Repository (Arquitectural) — Acceso a datos en todos los servicios.**
-Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`UserRepository`, `SessionRepository`, `FeedbackRepository`, `MetricSnapshotRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo. Este patrón facilita la aplicación del principio de inversión de dependencias.
+Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`AppUserRepository`, `SessionRepository`, `FeedbackRepository`, `ScoreResultRepository`, `UserProgressRepository`, `UserStreakRepository`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo. Este patrón facilita la aplicación del principio de inversión de dependencias.
 
 **Observer / Event-Driven (Comportamiento) — Bus de eventos.**
-Los servicios productores de eventos (`session-service`, `ai-feedback-service`) publican eventos de dominio en RabbitMQ sin conocer quién los consumirá. Los consumidores (`ai-feedback-service`, `progress-service`, `notification-service`) se suscriben a las colas relevantes e implementan los handlers correspondientes. Este patrón desacopla temporalmente los servicios y permite agregar nuevos consumidores sin modificar los productores (extensibilidad).
+Los servicios productores de eventos (`live-coach-service`, `filler-detection-service`, `scoring-service`, `gamification-service`, `identity-service`) publican eventos de dominio en RabbitMQ sin conocer quién los consumirá. Los consumidores (`filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, `notification-service`) se suscriben a las colas relevantes e implementan los handlers correspondientes. Este patrón desacopla temporalmente los servicios y permite agregar nuevos consumidores sin modificar los productores (extensibilidad).
 
 **Circuit Breaker (Resiliencia) — Llamadas a servicios externos.**
-Las llamadas al LLM externo desde el `ai-feedback-service` y al servicio de transcripción están protegidas con el patrón Circuit Breaker (implementado con Resilience4j). Cuando el número de fallos consecutivos supera el umbral configurado, el circuito se abre y las solicitudes se rechazan inmediatamente durante un período de espera. Transcurrido ese período, el circuito entra en estado semi-abierto para sondear la recuperación del servicio externo.
+Las llamadas al LLM externo desde el `live-coach-service` (Gemini Live API) están protegidas con el patrón Circuit Breaker (implementado con Resilience4j). Cuando el número de fallos consecutivos supera el umbral configurado, el circuito se abre y las solicitudes se rechazan inmediatamente durante un período de espera. Transcurrido ese período, el circuito entra en estado semi-abierto para sondear la recuperación del servicio externo, mientras tanto el servicio activa el modo *scripted* alternativo.
 
 **Decorator (Estructural) — Middleware de logging y métricas en el API Gateway.**
 El API Gateway aplica capas decoradoras sobre cada solicitud entrante: validación de JWT, registro de métricas de latencia e inyección de trace IDs para trazabilidad distribuida. Cada decorador añade comportamiento transversal sin modificar la lógica de enrutamiento central.
@@ -2023,10 +2394,10 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 
 | Táctica | Descripción | Aplicación en Talki |
 |---|---|---|
-| **Monitor** | Detección activa de fallos mediante health checks | Cada microservicio expone `/actuator/health`. El orquestador de contenedores (Kubernetes) reinicia automáticamente los pods que fallen el health check. |
-| **Retry con backoff exponencial** | Reintentos automáticos ante fallos transitorios | El `ai-feedback-service` reintenta hasta 3 veces con backoff exponencial las llamadas al LLM externo antes de abrir el Circuit Breaker. |
-| **Circuit Breaker** | Aislamiento de fallos en servicios externos | Implementado con Resilience4j en todas las llamadas a APIs externas (transcripción, LLM, email). |
-| **Redundancia activa** | Múltiples instancias del mismo servicio | Los servicios críticos (`session-service`, `ai-feedback-service`) se despliegan con al menos 2 réplicas en Kubernetes, garantizando continuidad ante la caída de una instancia. |
+| **Monitor** | Detección activa de fallos mediante health checks | Cada microservicio expone `/actuator/health`. La plataforma de despliegue (Railway) reinicia automáticamente los contenedores que fallen el health check. |
+| **Retry con backoff exponencial** | Reintentos automáticos ante fallos transitorios | El `live-coach-service` reintenta hasta 3 veces con backoff exponencial las llamadas a Gemini Live antes de abrir el Circuit Breaker. |
+| **Circuit Breaker** | Aislamiento de fallos en servicios externos | Implementado con Resilience4j en todas las llamadas a APIs externas (Gemini Live, email). |
+| **Redundancia activa** | Múltiples instancias del mismo servicio | Los servicios críticos (`session-service`, `live-coach-service`, `scoring-service`) se despliegan con al menos 2 réplicas (escalado horizontal de Railway), garantizando continuidad ante la caída de una instancia. |
 | **Degradación elegante** | Funcionalidad reducida ante fallo parcial | Si el análisis de IA falla, el usuario recibe confirmación de que la sesión fue guardada y se le notifica cuando el análisis esté disponible. La grabación y la transcripción siempre funcionan de forma independiente. |
 
 #### Rendimiento (Performance)
@@ -2053,7 +2424,7 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 
 | Táctica | Descripción | Aplicación en Talki |
 |---|---|---|
-| **Alta cohesión, bajo acoplamiento** | Servicios con responsabilidad única y dependencias mínimas | Cada microservicio encapsula un bounded context de DDD. Los cambios en las reglas de análisis de IA están contenidos en el `ai-feedback-service` sin afectar al resto. |
+| **Alta cohesión, bajo acoplamiento** | Servicios con responsabilidad única y dependencias mínimas | Cada microservicio encapsula un bounded context de DDD. Los cambios en las reglas de análisis post-sesión están contenidos en `filler-detection-service` y `scoring-service` sin afectar al resto. |
 | **Parametrizar reglas variables** | Externalizarizar la configuración que cambia con frecuencia | Los prompts del LLM, los umbrales de detección de muletillas y las listas de vocabulario académico se almacenan como configuración externalizada (Spring Cloud Config / variables de entorno), no hardcodeados. |
 | **Versionado de API** | Evolución sin ruptura de contrato | Los endpoints del API Gateway se versionan bajo el prefijo `/v1/`. Al introducir cambios incompatibles, se crea `/v2/` manteniendo `/v1/` activo durante al menos un sprint. |
 | **Interfaces sobre implementaciones** | Inversión de dependencias en la capa de dominio | Los repositorios y los clientes de servicios externos son interfaces. Las implementaciones concretas se inyectan por constructor, facilitando la sustitución del proveedor de transcripción o LLM sin modificar la lógica de orquestación. |
@@ -2064,11 +2435,11 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 |---|---|---|
 | **Test doubles e inyección de dependencias** | Sustitución de dependencias externas en pruebas | Los clientes de LLM y de transcripción son interfaces inyectadas por constructor. En pruebas unitarias se sustituyen por mocks (Mockito) que retornan respuestas predefinidas. |
 | **Separación de lógica de orquestación y dominio** | Testear reglas de negocio sin infraestructura | Las estrategias de análisis (`AnalysisStrategy`) y el orquestador de feedback contienen solo lógica de negocio pura, sin dependencias de framework, permitiendo pruebas unitarias rápidas sin contexto Spring. |
-| **Contratos de API con Consumer-Driven Contract Testing** | Verificar compatibilidad entre servicios | Se definen contratos Pact entre el frontend y el API Gateway, y entre el `session-service` y el `ai-feedback-service`, para detectar regresiones de contrato antes del despliegue. |
+| **Contratos de API con Consumer-Driven Contract Testing** | Verificar compatibilidad entre servicios | Se definen contratos Pact entre el frontend y el API Gateway, y entre el `live-coach-service` y los consumidores del evento `session.live.finalized` (`filler-detection-service`), para detectar regresiones de contrato antes del despliegue. |
 
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 4.2. Architectural Drivers
 
@@ -2119,13 +2490,13 @@ Las User Stories que más impactan la estructura de la arquitectura son aquellas
       <td>US08</td>
       <td>Edición de perfil de usuario</td>
       <td>Como estudiante registrado, quiero editar mi perfil con información como ciclo universitario, carrera y universidad, para que Talki personalice mi experiencia.</td>
-      <td>Define el modelo de datos del <code>identity-service</code> y obliga a publicar eventos de actualización de perfil para que el <code>ai-feedback-service</code> reciba el contexto académico del usuario.</td>
+      <td>Define el modelo de datos del <code>identity-service</code> y obliga a publicar eventos de actualización de perfil para que el <code>live-coach-service</code> y el <code>scoring-service</code> reciban el contexto académico del usuario.</td>
     </tr>
     <tr>
       <td>US23</td>
       <td>Seleccionar segmento académico</td>
       <td>Como estudiante, quiero indicar mi segmento académico (ciclo 1-5 o ciclo 6-10) durante el registro o en mi perfil, para que Talki adapte el feedback a mi nivel.</td>
-      <td>Driver clave del patrón <strong>Strategy</strong> en el <code>ai-feedback-service</code>: el segmento determina la estrategia de análisis aplicada y los criterios de evaluación enviados al LLM.</td>
+      <td>Driver clave del patrón <strong>Strategy</strong> en el <code>live-coach-service</code> (carga de system prompts vía <code>scenario-catalog-service</code>) y en el <code>scoring-service</code>: el segmento determina los prompts enviados a Gemini Live y los criterios de evaluación aplicados al transcript.</td>
     </tr>
     <tr>
       <td>US09</td>
@@ -2137,13 +2508,13 @@ Las User Stories que más impactan la estructura de la arquitectura son aquellas
       <td>US12</td>
       <td>Iniciar grabación y transcripción en tiempo real</td>
       <td>Como estudiante, quiero iniciar la grabación de mi presentación y ver la transcripción en tiempo real, para monitorear lo que digo mientras practico.</td>
-      <td>User Story de mayor peso técnico (8 SP). Impone restricciones de latencia y conectividad: requiere streaming de audio, conexiones persistentes (WebSocket o equivalente), e integración con un servicio externo de speech-to-text con soporte para español latinoamericano.</td>
+      <td>User Story de mayor peso técnico (8 SP). Impone restricciones de latencia y conectividad: requiere streaming de audio bidireccional, conexiones WebSocket persistentes e integración con Google Gemini Live API que provee transcripción nativa en tiempo real (`transcript_gemini`) en español latinoamericano.</td>
     </tr>
     <tr>
       <td>US14</td>
       <td>Finalizar sesión y guardar transcripción</td>
       <td>Como estudiante, quiero finalizar la sesión de grabación y que se guarde la transcripción completa, para poder revisarla posteriormente y recibir feedback.</td>
-      <td>Punto de disparo del evento de dominio <code>SessionFinalized</code>, eje de la arquitectura orientada a eventos. Justifica la presencia del bus de mensajería (RabbitMQ/Kafka) y el patrón Saga por coreografía.</td>
+      <td>Punto de disparo del evento de dominio <code>session.live.finalized</code>, eje de la arquitectura orientada a eventos. Justifica la presencia del bus de mensajería (RabbitMQ) y el patrón Saga por coreografía.</td>
     </tr>
     <tr>
       <td>US15</td>
@@ -2193,7 +2564,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Performance (Latencia de transcripción en vivo)</td>
       <td>Estudiante usuario</td>
       <td>Habla durante la sesión de práctica generando audio continuo</td>
-      <td><code>transcription-service</code> + proveedor de speech-to-text</td>
+      <td><code>live-coach-service</code> + Gemini Live (transcripción nativa)</td>
       <td>Operación normal, conexión a internet ≥ 5 Mbps</td>
       <td>El sistema entrega segmentos de transcripción al cliente conforme se producen</td>
       <td>Latencia ≤ 1.5 s entre la palabra hablada y su aparición en pantalla en el percentil 95.</td>
@@ -2211,19 +2582,19 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
     <tr>
       <td>QAS-03</td>
       <td>Availability (Degradación elegante del feedback)</td>
-      <td>Proveedor externo de IA (Whisper / OpenAI)</td>
-      <td>El proveedor responde con error 5xx o timeout durante el análisis</td>
-      <td><code>ai-feedback-service</code> con Circuit Breaker</td>
+      <td>Proveedor externo de IA (Google Gemini Live)</td>
+      <td>El proveedor responde con error 5xx o timeout durante la sesión</td>
+      <td><code>live-coach-service</code> con Circuit Breaker</td>
       <td>Caída parcial del proveedor LLM</td>
-      <td>El sistema marca la sesión como "análisis pendiente", continúa aceptando nuevas sesiones y reprocesa cuando el proveedor se recupera</td>
-      <td>0% de pérdida de transcripciones; 100% de las sesiones son reprocesadas en ≤ 10 minutos tras la recuperación del proveedor.</td>
+      <td>El sistema activa el modo <em>scripted</em> con preguntas pregrabadas del <code>scenario-catalog-service</code>, marca la sesión como "análisis pendiente" y reprocesa cuando el proveedor se recupera</td>
+      <td>0% de pérdida de sesiones iniciadas; 100% de las sesiones son reprocesadas en ≤ 10 minutos tras la recuperación del proveedor.</td>
     </tr>
     <tr>
       <td>QAS-04</td>
       <td>Availability (Continuidad operativa del MVP)</td>
       <td>Operador de infraestructura</td>
       <td>Despliegue de una nueva versión de un microservicio</td>
-      <td>Cluster Kubernetes con réplicas de <code>session-service</code> y <code>ai-feedback-service</code></td>
+      <td>Railway con escalado horizontal de <code>session-service</code>, <code>live-coach-service</code> y <code>scoring-service</code></td>
       <td>Operación normal en horario de uso académico</td>
       <td>El sistema completa el despliegue mediante rolling update sin tirar todas las réplicas a la vez</td>
       <td>Tiempo de indisponibilidad observable por el usuario ≤ 0 s (rolling update con readiness probes); SLO mensual de disponibilidad ≥ 99.0%.</td>
@@ -2253,7 +2624,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Modifiability (Nuevo tipo de sesión)</td>
       <td>Equipo de producto</td>
       <td>Solicita agregar un nuevo tipo de sesión (p. ej., "simulación de entrevista")</td>
-      <td><code>ai-feedback-service</code> (patrón Strategy)</td>
+      <td><code>live-coach-service</code> y <code>scoring-service</code> (patrón Strategy)</td>
       <td>Sprint regular</td>
       <td>El equipo introduce una nueva <code>AnalysisStrategy</code> sin modificar el orquestador ni el resto de servicios</td>
       <td>Cambio limitado a ≤ 1 servicio y ≤ 3 archivos nuevos; ≤ 16 horas de esfuerzo de desarrollo.</td>
@@ -2263,7 +2634,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Modifiability (Cambio de proveedor LLM)</td>
       <td>Equipo de arquitectura</td>
       <td>Decide reemplazar el proveedor LLM externo por otro distinto</td>
-      <td>Cliente LLM dentro del <code>ai-feedback-service</code></td>
+      <td>Cliente LLM dentro del <code>live-coach-service</code></td>
       <td>Sprint planificado</td>
       <td>El equipo sustituye la implementación de la interfaz de cliente sin modificar la lógica de orquestación ni las estrategias</td>
       <td>Cambio contenido en una única clase de adaptador; suite de tests de orquestación pasa sin modificación.</td>
@@ -2273,7 +2644,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Scalability (Aumento de carga concurrente)</td>
       <td>Equipo académico (varios cursos)</td>
       <td>Múltiples grupos universitarios usan Talki en paralelo durante una semana de exposiciones</td>
-      <td><code>session-service</code> y <code>ai-feedback-service</code></td>
+      <td><code>session-service</code>, <code>live-coach-service</code> y <code>scoring-service</code></td>
       <td>Pico estacional (50× la carga base)</td>
       <td>El sistema escala horizontalmente sumando réplicas y mantiene los SLO de QAS-01 y QAS-02</td>
       <td>Latencia P95 dentro del 120% del valor base con hasta 200 sesiones concurrentes activas.</td>
@@ -2283,7 +2654,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Testability (Lógica de análisis)</td>
       <td>Desarrollador</td>
       <td>Modifica una <code>AnalysisStrategy</code> y ejecuta la suite de pruebas</td>
-      <td>Tests unitarios del <code>ai-feedback-service</code></td>
+      <td>Tests unitarios del <code>scoring-service</code></td>
       <td>Pipeline de CI</td>
       <td>El sistema permite probar la lógica de negocio de forma aislada, sin levantar el contexto Spring ni servicios externos</td>
       <td>≥ 80% de cobertura de líneas en la capa de dominio; suite unitaria del servicio en ≤ 60 s.</td>
@@ -2348,13 +2719,13 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     <tr>
       <td>C-04</td>
       <td>Empaquetado y despliegue</td>
-      <td>Cada servicio debe empaquetarse como <strong>contenedor Docker</strong> y orquestarse con Kubernetes (o un orquestador equivalente accesible desde el plan académico).</td>
+      <td>Cada servicio debe empaquetarse como <strong>contenedor Docker</strong> y desplegarse en una plataforma PaaS (Railway) accesible desde el plan académico, con red privada y escalado horizontal por servicio.</td>
       <td>Es el estándar aceptado por el curso de Fundamentos para evaluar entregables y permite reproducibilidad de despliegues entre el entorno local del equipo y la nube.</td>
     </tr>
     <tr>
       <td>C-05</td>
       <td>Proveedor de IA externa</td>
-      <td>El análisis de comunicación oral debe apoyarse en <strong>APIs LLM y de transcripción de terceros</strong> (OpenAI Whisper, GPT-4o-mini o equivalente, Google Speech-to-Text).</td>
+      <td>El análisis de comunicación oral se apoya en <strong>Gemini Live API</strong> para la interacción en tiempo real y transcripción nativa, eliminando la necesidad de un servicio STT externo independiente.</td>
       <td>Entrenar modelos propios queda fuera del alcance temporal y económico del MVP. La calidad del análisis depende de proveedores maduros con soporte para español latinoamericano.</td>
     </tr>
     <tr>
@@ -2371,9 +2742,9 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     </tr>
     <tr>
       <td>C-08</td>
-      <td>Almacenamiento de audio</td>
-      <td>Los archivos de audio deben almacenarse en <strong>almacenamiento de objetos en la nube</strong> (S3 o equivalente) y entregarse al servicio de transcripción mediante URLs prefirmadas.</td>
-      <td>Evita que los servicios de aplicación procesen binarios grandes y reduce el costo de ancho de banda interno.</td>
+      <td>Almacenamiento de archivos del usuario</td>
+      <td>Los materiales del usuario (CV, plantillas, exports) deben almacenarse en <strong>almacenamiento de objetos en la nube</strong> (Supabase Storage) y entregarse mediante URLs prefirmadas. El audio de sesión <strong>no se persiste</strong> (cumplimiento nativo de la Ley 29733; ver DD-15 / ADB-22).</td>
+      <td>Evita que los servicios de aplicación procesen binarios grandes, reduce el costo de ancho de banda interno y elimina el riesgo de almacenar dato biométrico en reposo.</td>
     </tr>
     <tr>
       <td>C-09</td>
@@ -2408,7 +2779,7 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     <tr>
       <td>C-14</td>
       <td>Identidad y autenticación</td>
-      <td>La autenticación debe basarse en <strong>JWT con refresh tokens rotativos</strong>; no se permite almacenar contraseñas en claro ni con hashing débil (mínimo bcrypt con cost ≥ 10).</td>
+      <td>La autenticación debe basarse en <strong>JWT con refresh tokens rotativos</strong>; no se permite almacenar contraseñas en claro ni con hashing débil (mínimo bcrypt con cost ≥ 12).</td>
       <td>Restricción de seguridad estándar de la industria y alineada con QAS-05 y QAS-06.</td>
     </tr>
   </tbody>
@@ -2436,7 +2807,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>Preocupación funcional</td>
       <td>Adaptación del feedback al segmento académico</td>
       <td>Los estudiantes de los ciclos 1-5 (Valeria) y 6-10 (Rodrigo) tienen necesidades muy distintas: la primera busca reducir miedo escénico y muletillas; el segundo, perfilar discurso para entrevistas y sustentaciones. Un feedback genérico desmotiva a ambos perfiles.</td>
-      <td>Patrón Strategy en el <code>ai-feedback-service</code> + atributo <code>academic_segment</code> en el modelo de usuario. Decisión registrada en 4.1.6.</td>
+      <td>Patrón Strategy en el <code>live-coach-service</code> y el <code>scoring-service</code> + atributo <code>academic_segment</code> en el modelo de usuario. Decisión registrada en 4.1.6.</td>
     </tr>
     <tr>
       <td>AC-02</td>
@@ -2463,8 +2834,8 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>AC-05</td>
       <td>Preocupación organizacional</td>
       <td>Curva de aprendizaje del equipo</td>
-      <td>El equipo no tiene experiencia previa con event-driven architecture ni con Kubernetes en producción.</td>
-      <td>Restringir a un único bus de mensajería (RabbitMQ) y a una topología Kubernetes mínima (single cluster, namespaces por entorno). Documentación interna y pair programming durante las primeras iteraciones.</td>
+      <td>El equipo no tiene experiencia previa con event-driven architecture ni con despliegue de microservicios en producción.</td>
+      <td>Restringir a un único bus de mensajería (RabbitMQ) y a una plataforma PaaS de baja complejidad operativa (Railway), con un proyecto independiente por microservicio y entornos separados (`develop` / `main`). Documentación interna y pair programming durante las primeras iteraciones.</td>
     </tr>
     <tr>
       <td>AC-06</td>
@@ -2492,7 +2863,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>Riesgo gestionado</td>
       <td>Calidad de transcripción en español peruano</td>
       <td>Los modelos de speech-to-text generales pueden tener tasa de error palabra (WER) más alta en variantes regionales y con audio de bajo SNR (estudiantes en ambientes ruidosos).</td>
-      <td>Evaluación comparativa Whisper vs. Google Speech-to-Text en muestras reales antes de elegir. Cliente intercambiable detrás de la interfaz <code>TranscriptionClient</code>.</td>
+      <td>Validación empírica del <code>transcript_gemini</code> nativo de Gemini Live sobre muestras reales en español peruano antes del cierre del MVP. Si el WER supera el umbral aceptable, se evalúa pre-procesamiento de audio (filtros de ruido) o fallback a un cliente STT alternativo detrás de la interfaz <code>TranscriptionClient</code>.</td>
     </tr>
     <tr>
       <td>AC-10</td>
@@ -2511,461 +2882,216 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
   </tbody>
 </table>
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 4.3. ADD Iterations
 
 Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como ciclos cortos en los que se selecciona un subconjunto de drivers de la sección 4.2, se eligen los elementos del sistema a refinar, se aplican conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y se registran las decisiones tomadas con su justificación trazable. Cada iteración cierra con un análisis del estado actual del diseño y la revisión del cumplimiento del *iteration goal*, materializado mediante un Kanban Board que comunica visualmente el avance del backlog de diseño.
 
-Para el MVP académico (ciclo 2026-10) se planifican dos iteraciones documentadas en este avance: la **Iteration 1** (sección 4.3.1) orienta el núcleo funcional del producto, el flujo de *sesión de práctica con feedback asíncrono de IA*, que es el camino crítico que valida los drivers más exigentes (US12, US14, US15, QAS-01, QAS-02, QAS-03 y los concerns AC-02 y AC-04); y la **Iteration 2** (sección 4.3.2) refina el módulo de identidad (US05, US06, US07, US08, US28), las garantías de seguridad transversales (QAS-05, QAS-06, AC-08, C-09, C-14) y la observabilidad distribuida (QAS-11). Iteraciones subsiguientes —no documentadas en este avance— abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido (US18) y el `notification-service` para alertas asíncronas al usuario.
+Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`filler-detection-service` → `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) incorpora el ciclo de vida de la cuenta de usuario (`identity-service`), los servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y la observabilidad transversal (Zipkin + Spring Sleuth con propagación `X-B3-TraceId` y Spring Boot Actuator), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas dos iteraciones completan el diseño arquitectónico del sistema Talki con 10 microservicios de negocio y 3 de infraestructura.
 
-### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Feedback Asíncrono
+### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico
 
 #### 4.3.1.1. Architectural Design Backlog 1
 
-El *Architectural Design Backlog* recoge las decisiones de diseño que el equipo necesita resolver en esta iteración para satisfacer los drivers seleccionados. Cada ítem está enlazado con uno o más drivers de la sección 4.2 (User Stories US**, escenarios QAS-**, restricciones C-** y concerns AC-**) y avanza por los estados *Por hacer → En progreso → Hecho*.
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Decisión de Diseño</th>
-      <th>Estado</th>
-      <th>Driver(s) Relacionados</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ADB-01</td>
-      <td>Definir el contrato REST del endpoint <code>POST /v1/sessions</code> para crear una nueva sesión de práctica e iniciar la grabación.</td>
-      <td>Hecho</td>
-      <td>US09, US12, C-13</td>
-    </tr>
-    <tr>
-      <td>ADB-02</td>
-      <td>Definir el contrato REST del endpoint <code>POST /v1/sessions/{id}/finalize</code> con respuesta inmediata (≤ 500 ms) y disparo asíncrono del análisis.</td>
-      <td>Hecho</td>
-      <td>US14, QAS-02, AC-02</td>
-    </tr>
-    <tr>
-      <td>ADB-03</td>
-      <td>Modelar el evento de dominio <code>SessionFinalized</code> y el contrato de mensajería entre <code>session-service</code> y <code>ai-feedback-service</code> sobre RabbitMQ.</td>
-      <td>Hecho</td>
-      <td>US14, US15, AC-02, P1, P4</td>
-    </tr>
-    <tr>
-      <td>ADB-04</td>
-      <td>Aplicar el patrón <strong>Strategy</strong> en <code>ai-feedback-service</code> para variar el análisis por <code>session_type</code> (US10) y por <code>academic_segment</code> (US23). En el alcance <em>Must</em> de esta iteración, <code>session_type</code> admite un valor por defecto <code>"general"</code> hasta que US10 (Should) entre al sprint.</td>
-      <td>Hecho</td>
-      <td>US10, US23, US26, QAS-07, AC-01</td>
-    </tr>
-    <tr>
-      <td>ADB-05</td>
-      <td>Aplicar <strong>Circuit Breaker</strong> y <strong>Retry con backoff exponencial</strong> en el cliente del LLM externo dentro de <code>ai-feedback-service</code>.</td>
-      <td>Hecho</td>
-      <td>QAS-03, AC-02, AC-06</td>
-    </tr>
-    <tr>
-      <td>ADB-06</td>
-      <td>Aislar el proveedor LLM y el proveedor de transcripción detrás de las interfaces <code>LlmClient</code> y <code>TranscriptionClient</code>, aplicando la táctica <em>"Interfaces sobre implementaciones"</em> (4.1.7) y la inversión de dependencias derivada de P1.</td>
-      <td>Hecho</td>
-      <td>QAS-08, AC-06, AC-09</td>
-    </tr>
-    <tr>
-      <td>ADB-07</td>
-      <td>Establecer streaming de transcripción en vivo cliente↔servidor mediante <strong>WebSocket</strong> a través del API Gateway.</td>
-      <td>En progreso</td>
-      <td>US12, QAS-01, AC-04</td>
-    </tr>
-    <tr>
-      <td>ADB-08</td>
-      <td>Diseñar el almacenamiento del audio en object storage (S3) con URLs prefirmadas para evitar que los servicios procesen binarios grandes.</td>
-      <td>En progreso</td>
-      <td>C-08, QAS-09, AC-08</td>
-    </tr>
-    <tr>
-      <td>ADB-09</td>
-      <td>Definir el esquema relacional de <code>practice_sessions</code> y <code>session_feedback</code> respetando <em>database per service</em>.</td>
-      <td>Hecho</td>
-      <td>US14, US15, C-03, P4</td>
-    </tr>
-    <tr>
-      <td>ADB-10</td>
-      <td>Externalizar prompts y umbrales de análisis como configuración (Spring Cloud Config / variables de entorno) sin hardcodear.</td>
-      <td>Por hacer</td>
-      <td>QAS-07, AC-03</td>
-    </tr>
-    <tr>
-      <td>ADB-11</td>
-      <td>Definir el mecanismo de notificación push al cliente cuando <code>FeedbackGenerated</code> sea publicado (WebSocket reusado del flujo en vivo).</td>
-      <td>Por hacer</td>
-      <td>US15, QAS-02, AC-02</td>
-    </tr>
-    <tr>
-      <td>ADB-12</td>
-      <td>Instrumentar trazas distribuidas (trace ID propagado por header) en los tres contenedores del flujo de sesión.</td>
-      <td>Por hacer</td>
-      <td>QAS-11, AC-11, P6</td>
-    </tr>
-  </tbody>
-</table>
+| ID | Decisión de Diseño | Estado | Driver(s) Relacionados |
+|---|---|---|---|
+| ADB-01 | Diseñar `live-coach-service` como proxy WebSocket bidireccional entre el cliente Angular y Gemini Live API, con cálculo en memoria de las métricas acústicas (WPM, silenceRatio, volumeRmsAvg) sobre los chunks de audio. El audio no se persiste (ver ADB-22). | Hecho | US12, QAS-01, AC-04, AC-09 |
+| ADB-02 | Definir contrato `POST /v1/sessions` y `GET /v1/sessions/{id}` en `session-service` para crear y consultar sesiones con historial paginado. | Hecho | US09, US14, C-13 |
+| ADB-03 | Definir evento `session.live.finalized` en RabbitMQ; contrato: `event_id`, `event_type`, `occurred_at`, `trace_id`, `version`, `payload` (`session_id`, `user_id`, `mode`, `scenario_id`, `transcript_gemini`, `duration_seconds`, `academic_segment`, `words_per_minute`, `silence_ratio`, `volume_rms_avg`). | Hecho | US14, US15, AC-02 |
+| ADB-04 | Implementar `filler-detection-service` como consumidor directo de `session.live.finalized`: usa el campo `transcript_gemini` (ya generado por Gemini Live) para aplicar regex español (muletillas "este", "o sea", "eh", "básicamente") más modelo ONNX local; publica `fillers.analyzed`. | Hecho | US15, QAS-07, AC-09 |
+| ADB-05 | `live-coach-service` extrae métricas acústicas en memoria durante la sesión (RMS promedio → `volume_rms_avg`, ratio de silencios → `silence_ratio`, palabras por minuto → `words_per_minute`) e incluye estas métricas junto con `transcript_gemini` en el payload de `session.live.finalized`. | Hecho | US17, QAS-01 |
+| ADB-06 | Implementar `scoring-service` como consumidor de `fillers.analyzed`: calcula Voice Coach Score en 5 dimensiones (Fluidez, Claridad, Volumen, Vocabulario, Confianza) usando `transcript_gemini` + métricas acústicas del evento (`words_per_minute`, `silence_ratio`, `volume_rms_avg`), cachea en Upstash Redis (TTL 30 min) y publica `scoring.completed`. | Hecho | US15, US17, QAS-02, AC-01 |
+| ADB-07 | Configurar topología RabbitMQ: exchange `talki.events` (topic, durable), queues por consumidor con DLX `talki.dlx` y TTL 300 000 ms; Dead Letter Exchange para mensajes con más de 3 fallos. | Hecho | US14, QAS-03, AC-02 |
+| ADB-08 | Usar Supabase Storage (buckets `talki-user-materials`, `talki-exports`) en lugar de S3/MinIO; `media-service` emite URLs prefirmadas (TTL 5 min); el cliente sube directo sin pasar por el API Gateway. El audio de sesión no se persiste (ADB-22). | Hecho | C-08, QAS-09, AC-08 |
+| ADB-09 | Aplicar Outbox Pattern en cada servicio productor: persistir el evento en tabla `outbox_events` dentro de la misma transacción antes de publicar a RabbitMQ, garantizando entrega at-least-once. | Hecho | US14, AC-02, P4 |
+| ADB-10 | Implementar `scenario-catalog-service` con catálogo de 10 escenarios peruanos (entrevistas, sustentaciones, presentaciones) y system prompts para Gemini; caché en Upstash Redis (TTL 1 h). | Hecho | US10, QAS-07, AC-01 |
+| ADB-11 | Implementar `media-service` para gestión de materiales del usuario (PDFs, PPTs para F6): generación de presigned URL, registro de URI, políticas de retención por tipo de bucket. | Hecho | US16, C-08, AC-08 |
+| ADB-12 | Aplicar Circuit Breaker (Resilience4j) en `live-coach-service` sobre la conexión a Gemini Live: `failureRateThreshold` 40%, `slidingWindow` 20 llamadas, `waitDurationInOpenState` 60 s; fallback a modo scripted con preguntas del catálogo. | Hecho | QAS-03, QAS-08, AC-06 |
 
 #### 4.3.1.2. Establish Iteration Goal by Selecting Drivers
 
-**Iteration Goal:** Diseñar el camino crítico end-to-end del flujo *crear sesión → grabar y transcribir en vivo → finalizar sesión → analizar con IA → entregar feedback al usuario*, garantizando que la respuesta síncrona al usuario sea inmediata (≤ 500 ms al finalizar) y que la latencia variable del proveedor LLM nunca bloquee la experiencia ni provoque pérdida de transcripciones.
+**Iteration Goal:** Habilitar el flujo completo de sesión de práctica en tiempo real (cliente habla → Gemini Live responde y transcribe en vivo → métricas acústicas calculadas en memoria → pipeline asincrónico de análisis → score disponible) con garantías de latencia de audio ≤ 1.5 s (QAS-01), feedback disponible en < 30 s post-sesión (QAS-02), disponibilidad ≥ 99.0 % (QAS-03), y análisis personalizado por segmento académico (QAS-07).
 
-**Priorización de drivers candidatos.** Antes de decidir qué drivers atacar en esta iteración, el equipo aplicó la matriz de priorización propuesta por el método ADD (Wojcik et al., 2006), donde cada driver se evalúa por dos ejes: *Importance* (cuán crítico es para los stakeholders) y *Difficulty* (cuán complejo es resolverlo arquitectónicamente). Se favorecen los drivers (High, High) — alta importancia y alta dificultad — porque concentran el riesgo y deben resolverse primero.
-
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Architectural Driver</th>
-      <th>Sección donde se discute</th>
-      <th>Importance</th>
-      <th>Difficulty</th>
-      <th>¿Seleccionado para Iteration 1?</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>1</td><td>QAS-01 Latencia de transcripción en vivo</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
-    <tr><td>2</td><td>QAS-02 Respuesta inmediata al finalizar sesión</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
-    <tr><td>3</td><td>QAS-03 Degradación elegante del feedback</td><td>4.2.3</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
-    <tr><td>4</td><td>QAS-07 Nuevo tipo de sesión (modificabilidad)</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>5</td><td>QAS-08 Cambio de proveedor LLM</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>6</td><td>QAS-04 Continuidad operativa (rolling update)</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración posterior</td></tr>
-    <tr><td>7</td><td>QAS-05 Protección de credenciales</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2)</td></tr>
-    <tr><td>8</td><td>QAS-06 HTTPS obligatorio</td><td>4.2.3</td><td>High</td><td>Low</td><td>✅ Sí (Iteration 2; heredado del constraint C-07)</td></tr>
-    <tr><td>9</td><td>QAS-09 Carga concurrente</td><td>4.2.3</td><td>Medium</td><td>High</td><td>⚠ Parcial (S3 + diseño stateless lo habilitan; CQRS pendiente)</td></tr>
-    <tr><td>10</td><td>QAS-10 Testabilidad lógica de análisis</td><td>4.2.3</td><td>Medium</td><td>Low</td><td>❌ Iteración posterior</td></tr>
-    <tr><td>11</td><td>QAS-11 Diagnóstico de incidentes</td><td>4.2.3</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2; trace ID definido en Iteration 1)</td></tr>
-    <tr><td>12</td><td>QAS-12 Onboarding del primer uso</td><td>4.2.3</td><td>Medium</td><td>Medium</td><td>❌ Iteración de UX</td></tr>
-    <tr><td>13</td><td>US12 Grabación + transcripción en vivo (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
-    <tr><td>14</td><td>US15 Recibir feedback general de la IA (8 SP)</td><td>4.2.2</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
-    <tr><td>15</td><td>US14 Finalizar sesión (3 SP)</td><td>4.2.2</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>16</td><td>US09 Crear sesión de práctica (3 SP)</td><td>4.2.2</td><td>High</td><td>Low</td><td>✅ Sí (heredado)</td></tr>
-    <tr><td>17</td><td>US23/US26 Adaptación al segmento académico</td><td>4.2.2</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>18</td><td>AC-02 Latencia variable del LLM</td><td>4.2.5</td><td>High</td><td>High</td><td>✅ Sí</td></tr>
-    <tr><td>19</td><td>AC-06 Vendor lock-in del LLM</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí</td></tr>
-    <tr><td>20</td><td>AC-08 Privacidad y datos sensibles (Ley 29733)</td><td>4.2.5</td><td>High</td><td>Medium</td><td>✅ Sí (Iteration 2; retención S3 + consentimiento)</td></tr>
-  </tbody>
-</table>
-
-_Tabla de Architectural Driver Priorities — formato adaptado de Wojcik et al. (SEI, 2006), usado en el ejemplo oficial Track Manager del curso._
-
-La selección final prioriza los drivers (High, High) y los (High, Medium) cuyo costo de postergar implicaría rediseño posterior del flujo crítico. Los drivers que se atacan simultáneamente en el camino crítico funcional (US *Must* del Product Backlog) y en los escenarios de calidad más exigentes (latencia, disponibilidad y modificabilidad) se resumen a continuación.
-
-<table>
-  <thead>
-    <tr>
-      <th>Tipo de driver</th>
-      <th>ID</th>
-      <th>Justificación de la selección</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan="5">User Stories (Funcionales)</td>
-      <td>US09</td>
-      <td>Inicia el flujo de la sesión y define el primer comando del <code>session-service</code>.</td>
-    </tr>
-    <tr>
-      <td>US12</td>
-      <td>User Story de mayor peso técnico (8 SP). Impone streaming en vivo y latencia ≤ 1.5 s.</td>
-    </tr>
-    <tr>
-      <td>US14</td>
-      <td>Punto de disparo del evento <code>SessionFinalized</code>; eje de la arquitectura event-driven.</td>
-    </tr>
-    <tr>
-      <td>US15</td>
-      <td>User Story más exigente en calidad (8 SP). Justifica procesamiento asíncrono y Circuit Breaker.</td>
-    </tr>
-    <tr>
-      <td>US10 / US23 / US26</td>
-      <td>Habilitan el patrón Strategy: <code>session_type</code> (US10, Should) y <code>academic_segment</code> (US23, Must) cambian las reglas de análisis sin tocar el orquestador. US10 se incorpora como driver de diseño aunque su implementación quede para un sprint posterior.</td>
-    </tr>
-    <tr>
-      <td rowspan="4">Quality Attribute Scenarios</td>
-      <td>QAS-01</td>
-      <td>Latencia ≤ 1.5 s en transcripción en vivo (Performance).</td>
-    </tr>
-    <tr>
-      <td>QAS-02</td>
-      <td>Endpoint <code>finalize</code> ≤ 500 ms en p95 (Performance).</td>
-    </tr>
-    <tr>
-      <td>QAS-03</td>
-      <td>Degradación elegante ante caída del proveedor LLM (Availability).</td>
-    </tr>
-    <tr>
-      <td>QAS-07</td>
-      <td>Agregar nuevo tipo de sesión sin tocar el orquestador (Modifiability).</td>
-    </tr>
-    <tr>
-      <td rowspan="3">Constraints</td>
-      <td>C-01, C-03, C-04</td>
-      <td>Stack Java 17 + Spring Boot, PostgreSQL por servicio, contenedores Docker.</td>
-    </tr>
-    <tr>
-      <td>C-08</td>
-      <td>Almacenamiento de audio fuera de los servicios de aplicación.</td>
-    </tr>
-    <tr>
-      <td>C-13</td>
-      <td>API versionada bajo <code>/v1/</code>.</td>
-    </tr>
-    <tr>
-      <td rowspan="3">Architectural Concerns</td>
-      <td>AC-01</td>
-      <td>Adaptación del feedback al segmento académico (driver del Strategy).</td>
-    </tr>
-    <tr>
-      <td>AC-02</td>
-      <td>Latencia variable e impredecible del proveedor LLM (eje del diseño asíncrono).</td>
-    </tr>
-    <tr>
-      <td>AC-04</td>
-      <td>Visibilidad de la transcripción en vivo (driver del WebSocket).</td>
-    </tr>
-  </tbody>
-</table>
-
-Quedan fuera del alcance de esta iteración: la gestión de cuenta (US05, US06, US07, US08, US28, QAS-05, QAS-11 → Iteration 2), el dashboard de métricas (US20, US21, US22, QAS-09 → iteración posterior) y el `ai-feedback-service` extendido con recomendaciones de léxico (US18 → iteración posterior), aunque ADB-12 deja sembrada la propagación del trace ID para que la Iteration 2 la complete.
+| Tipo | ID | Justificación |
+|---|---|---|
+| User Stories | US09 | Crear sesión de práctica — funcionalidad core. |
+| | US12 | Práctica en vivo con IA — base del UX diferenciador. |
+| | US14 | Finalizar sesión y guardar audio — cierre del flujo. |
+| | US15 | Recibir análisis de la sesión — outcome esperado. |
+| | US17 | Voice Coach Score — métrica central del producto. |
+| | US10 | Seleccionar escenario peruano — diferenciador de mercado. |
+| QAS | QAS-01 | Latencia audio ≤ 1.5 s en condiciones nominales (~600 ms reales con Gemini Live). |
+| | QAS-02 | Feedback disponible < 30 s sin bloquear al usuario. |
+| | QAS-03 | Disponibilidad ≥ 99.0 % con degradación elegante ante fallo de Gemini. |
+| | QAS-07 | Análisis personalizado por segmento académico (ciclos 1–5 y 6–10). |
+| | QAS-08 | Intercambiar proveedores de IA conversacional o LLM sin cambios de código. |
+| | QAS-09 | Bus de eventos sin degradación bajo carga nominal. |
+| Constraints | C-01 | Spring Boot 3 + Java 17. |
+| | C-02 | Angular 18 en el frontend. |
+| | C-04 | Docker + Docker Compose. |
+| | C-08 | Almacenamiento de objetos para materiales del usuario (audio no se persiste). |
+| | C-13 | API versionada bajo `/v1/`. |
+| Concerns | AC-01 | Coherencia de la estrategia de análisis académico. |
+| | AC-02 | Desacoplamiento temporal (pipeline asincrónico). |
+| | AC-06 | Compatibilidad con múltiples proveedores de IA. |
+| | AC-09 | Calidad de transcripción nativa de Gemini Live para español peruano. |
 
 #### 4.3.1.3. Choose One or More Elements of the System to Refine
 
-A partir del Diagrama de Contenedores (sección 4.1.4) se seleccionan los elementos cuyo refinamiento permite cumplir el *iteration goal*. Se respeta el principio P1 (separación por capacidad de negocio) y P4 (database per service), por lo que el refinamiento se contiene a contenedores del bounded context *Practice Session* y *Speech Analysis*.
-
-<table>
-  <thead>
-    <tr>
-      <th>Elemento del sistema</th>
-      <th>Tipo</th>
-      <th>Estado de partida</th>
-      <th>Motivo del refinamiento</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>session-service</code></td>
-      <td>Microservicio (Spring Boot)</td>
-      <td>Identificado en 4.1.4 como caja con responsabilidad genérica.</td>
-      <td>Es el contenedor que arranca y cierra el flujo. Debe refinarse en componentes (Controller, Application Service, Domain, Repository, Event Publisher) para soportar US09, US14 y QAS-02.</td>
-    </tr>
-    <tr>
-      <td><code>ai-feedback-service</code></td>
-      <td>Microservicio (Spring Boot)</td>
-      <td>Refinado parcialmente a nivel de componentes en 4.1.4 (C4 Nivel 3).</td>
-      <td>Es el contenedor con la mayor concentración de complejidad (Strategy + Circuit Breaker + cliente LLM). Se profundiza el diseño interno y los puertos hacia el bus y hacia el LLM.</td>
-    </tr>
-    <tr>
-      <td><code>transcription-service</code></td>
-      <td>Microservicio (Spring Boot)</td>
-      <td>Identificado pero no refinado.</td>
-      <td>Necesita exponer un puerto WebSocket hacia el API Gateway y un puerto cliente hacia el proveedor de speech-to-text (Whisper / Google STT).</td>
-    </tr>
-    <tr>
-      <td><code>api-gateway</code></td>
-      <td>Edge component</td>
-      <td>Identificado y declarado como BFF (4.1.2).</td>
-      <td>Debe sumar capacidades de pasarela WebSocket (pass-through del stream de transcripción) y enrutamiento de notificaciones push.</td>
-    </tr>
-    <tr>
-      <td>RabbitMQ <em>broker</em></td>
-      <td>Infraestructura compartida</td>
-      <td>Mencionado en 4.1.2 como bus de eventos.</td>
-      <td>Se concreta el contrato de los exchanges, queues y dead-letter queues necesarios para los eventos <code>SessionFinalized</code> y <code>FeedbackGenerated</code>.</td>
-    </tr>
-    <tr>
-      <td>Object Storage (S3 o equivalente)</td>
-      <td>Sistema externo</td>
-      <td>Declarado en 4.1.3 como sistema externo.</td>
-      <td>Se diseñan los flujos de subida con URL prefirmada y de descarga por el <code>transcription-service</code>, evitando que el audio pase por los servicios de aplicación.</td>
-    </tr>
-  </tbody>
-</table>
-
-Los contenedores `identity-service`, `progress-service` y `notification-service` no se refinan en esta iteración: el primero entrega solo el JWT necesario para autenticar las llamadas al `session-service`; los otros dos consumen el evento `FeedbackGenerated` pero su lógica interna se difiere a iteraciones posteriores.
+| Elemento | Tipo | Motivo del refinamiento |
+|---|---|---|
+| `live-coach-service` | Microservicio | Núcleo de la sesión en vivo: proxy Gemini Live, relay de audio, captura y publicación del evento de cierre. |
+| `session-service` | Microservicio | Gestión del ciclo de vida de sesiones: CRUD, historial, configuración. |
+| `filler-detection-service` | Microservicio | Segundo consumidor: análisis de muletillas con regex + modelo ONNX offline. |
+| `scoring-service` | Microservicio | Tercer consumidor: cálculo del Voice Coach Score en 5 dimensiones con caché Redis. |
+| `scenario-catalog-service` | Microservicio | Catálogo de escenarios y system prompts usados por `live-coach-service`. |
+| `media-service` | Microservicio | URLs prefirmadas para upload directo a Supabase Storage. |
+| API Gateway | Edge layer | Único punto de entrada: routing, validación JWT, rate limiting, WebSocket pass-through. |
+| RabbitMQ | Message broker | Bus de eventos con exchange `talki.events`, queues por consumidor y DLX. |
+| Supabase Storage | Sistema managed | Buckets para audio de sesión y materiales del usuario. |
+| Supabase PostgreSQL | Data store | Schemas separados por servicio con usuarios PostgreSQL independientes. |
+| Upstash Redis | Cache managed | Rate limiting en gateway, caché de scores, sesiones WebSocket activas. |
 
 #### 4.3.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
 
-Para cada driver seleccionado en 4.3.1.2 se elige el concepto de diseño que lo satisface, justificando la elección frente a alternativas descartadas. Los conceptos provienen del catálogo de estilos (4.1.2), patrones (4.1.6) y tácticas (4.1.7) ya declarados en el capítulo, garantizando coherencia con el resto de la arquitectura.
-
-<table>
-  <thead>
-    <tr>
-      <th>Driver</th>
-      <th>Concepto de diseño elegido</th>
-      <th>Alternativa descartada</th>
-      <th>Justificación</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>QAS-02 (finalize ≤ 500 ms)<br>AC-02 (latencia variable LLM)</td>
-      <td><strong>Procesamiento asíncrono con Event-Driven Architecture</strong> (4.1.2): el endpoint persiste la transcripción y publica <code>SessionFinalized</code>; el análisis ocurre fuera del path síncrono.</td>
-      <td>Llamada síncrona del <code>session-service</code> al <code>ai-feedback-service</code> con timeout largo.</td>
-      <td>La latencia del LLM (5–30 s, AC-02) excede el SLO de 500 ms. Bloquear el hilo HTTP del usuario rompería QAS-02 y crearía acoplamiento temporal entre servicios.</td>
-    </tr>
-    <tr>
-      <td>QAS-03 (degradación elegante)<br>AC-06 (vendor lock-in)</td>
-      <td><strong>Circuit Breaker</strong> (Resilience4j) + <strong>Retry con backoff exponencial</strong> (4.1.7) + interfaz <code>LlmClient</code> con implementación intercambiable (táctica <em>"Interfaces sobre implementaciones"</em>, 4.1.7).</td>
-      <td>Reintento ilimitado en el mismo hilo del consumer y cliente LLM acoplado al SDK del proveedor.</td>
-      <td>Los reintentos sin breaker amplifican la sobrecarga del proveedor caído (cascading failure). La interfaz <code>LlmClient</code> desacopla el proveedor concreto y permite cambiarlo en una sola clase (QAS-08).</td>
-    </tr>
-    <tr>
-      <td>US23, US26, QAS-07, AC-01</td>
-      <td><strong>Strategy + Factory Method</strong> (4.1.6): <code>AnalysisStrategy</code> se selecciona por <code>session_type</code> + <code>academic_segment</code>; el orquestador no conoce los detalles.</td>
-      <td>Cadena de <code>if/else</code> en el orquestador.</td>
-      <td>El equipo prevé agregar nuevos tipos de sesión sprint a sprint (AC-03). Strategy respeta Open/Closed (≤ 1 servicio, ≤ 3 archivos por QAS-07).</td>
-    </tr>
-    <tr>
-      <td>US12, QAS-01, AC-04</td>
-      <td><strong>WebSocket</strong> punto a punto cliente↔gateway con <em>pass-through</em> al <code>transcription-service</code>.</td>
-      <td>Long polling cada 1 s sobre HTTP.</td>
-      <td>El polling introduce latencia adicional y carga innecesaria de conexiones HTTP. WebSocket entrega segmentos en cuanto se producen y reduce el overhead de cabeceras.</td>
-    </tr>
-    <tr>
-      <td>US15, AC-02</td>
-      <td><strong>Saga por coreografía</strong> (4.1.6): cada servicio reacciona al evento del anterior y publica el suyo, sin coordinador central.</td>
-      <td>Saga con <em>orchestrator</em> centralizado.</td>
-      <td>Para un flujo lineal de 3 pasos (transcribir → analizar → notificar) el coordinador añade un punto único de fallo sin aportar valor; la coreografía es más simple y desacoplada.</td>
-    </tr>
-    <tr>
-      <td>C-08, QAS-09, AC-08</td>
-      <td><strong>Object Storage con URL prefirmada</strong>: el cliente sube el audio directamente a S3; los servicios solo manejan URLs.</td>
-      <td>El audio viaja como multipart por el API Gateway hacia el <code>session-service</code> y de allí al <code>transcription-service</code>.</td>
-      <td>Evita que binarios de varios MB pasen por dos servicios; reduce ancho de banda interno y tiempos de timeout. Habilita escalado horizontal sin amplificar carga (QAS-09).</td>
-    </tr>
-    <tr>
-      <td>QAS-11, AC-11, P6</td>
-      <td><strong>Trace ID</strong> propagado por header <code>X-Trace-Id</code> y embebido en cada evento del bus.</td>
-      <td>Logs locales por servicio sin correlación.</td>
-      <td>Sin trace ID, recuperar el flujo end-to-end de una sesión fallida es prácticamente imposible y rompe QAS-11 (≤ 5 minutos).</td>
-    </tr>
-    <tr>
-      <td>QAS-07, AC-03</td>
-      <td><strong>Externalización de configuración</strong> (Spring Cloud Config / variables de entorno) para prompts, umbrales y vocabularios.</td>
-      <td>Constantes en código.</td>
-      <td>Permite ajustar reglas sprint a sprint sin redeploy (AC-03). Refuerza la táctica "parametrizar reglas variables" (4.1.7).</td>
-    </tr>
-  </tbody>
-</table>
+| Driver | Concepto elegido | Alternativa descartada | Justificación |
+|---|---|---|---|
+| US12, QAS-01, AC-06 | **Gemini Live API** como motor de la sesión en vivo (WebSocket nativo, audio bidireccional, ~600 ms latencia). | Pipeline clásico STT → LLM → TTS. | El pipeline clásico tiene latencia de 5–30 s, incompatible con QAS-01. Gemini Live procesa audio nativo y reduce la latencia a ~600 ms, además soporta interrupciones naturales e integra VAD (Voice Activity Detection). |
+| US14, QAS-02, AC-02 | **Event-Driven Architecture** con RabbitMQ: `live-coach-service` publica `session.live.finalized` y el pipeline de análisis continúa de forma asincrónica. | REST síncrono entre microservicios post-sesión. | El análisis de STT + muletillas + scoring puede tardar 5–30 s. Un pipeline síncrono bloquearía al usuario en espera activa, violando QAS-02. El desacoplamiento permite que el usuario reciba confirmación inmediata y el análisis llegue por WebSocket de notificaciones. |
+| QAS-03, QAS-08, AC-06 | **Circuit Breaker (Resilience4j)** en `live-coach-service` con fallback a modo scripted usando preguntas pregrabadas del `scenario-catalog-service`. | Sin fallback o reintento simple. | Gemini Live es un sistema externo; su indisponibilidad no debe detener la práctica. El modo scripted garantiza 0 % de pérdida de sesiones (QAS-03). |
+| C-08, QAS-09, AC-08 | **Supabase Storage** (managed, free tier) en lugar de S3 o MinIO self-hosted. | AWS S3 (costo adicional), MinIO (infraestructura extra). | Supabase Storage está integrado con el mismo proyecto que la base de datos, elimina infraestructura adicional y el free tier cubre el volumen académico. |
+| US14, AC-02 | **Outbox Pattern**: cada productor persiste el evento en tabla `outbox_events` dentro de la misma transacción antes de publicar a RabbitMQ. | Publicación directa en la misma transacción de negocio. | Si RabbitMQ falla justo después de guardar la entidad, el evento se pierde sin el Outbox. Este patrón garantiza entrega at-least-once sin transacciones distribuidas. |
+| US15, AC-02 | **Coreografía Saga** (sin orquestador central): cada servicio escucha el evento de su predecesor y publica el suyo. | Saga orquestada con servidor central. | Menor acoplamiento; fallo de un servicio no bloquea al orquestador. Cada bounded context es autónomo. |
+| US15, QAS-07, AC-09 | **Filler detection offline** con regex español + modelo ONNX local en `filler-detection-service`. | API externa de NLP (Google NLP, AWS Comprehend). | Las APIs externas tienen cobertura limitada del español peruano (AC-09), introducen costo variable y latencia de red. El modelo ONNX corre en el contenedor, sin costo y con latencia < 500 ms. |
+| QAS-02 | **CQRS en `progress-service`** con vistas materializadas pre-calculadas al recibir `scoring.completed`. | Query directa a tablas normalizadas en cada request del dashboard. | El dashboard agrega datos históricos de múltiples sesiones. La vista materializada responde en < 50 ms; la query directa puede tardar segundos con historial extenso. |
+| QAS-05, QAS-09 | **Rate Limiting centralizado en API Gateway** con backend Upstash Redis (100 req/min por IP, 10 intentos de login fallidos/hora). | Rate limiting por microservicio. | Centralizado en el gateway: una sola política sin duplicación. Redis serverless aguanta múltiples réplicas del gateway. |
+| C-13 | **API versionada `/v1/`** desde el inicio en todos los endpoints. | Sin versioning. | Permite evolución del contrato sin romper clientes existentes (backward compatibility P8). |
 
 #### 4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
 
-A partir de los conceptos elegidos en 4.3.1.4 se instancian los elementos concretos del sistema, asignando responsabilidades específicas y definiendo las interfaces (REST, WebSocket, mensajería de eventos, contratos de cliente externo) que cada elemento expone y consume. Se respeta el principio P2 (API-First) describiendo primero el contrato.
-
 | Elemento | Responsabilidad | Interfaces |
-|----------|-----------------|------------|
-| **`session-service` :: SessionController** | Recibir comandos REST de creación, actualización y finalización de la sesión. Validar autorización (JWT) y delegar al servicio de aplicación. | Provee: `POST /v1/sessions`, `PATCH /v1/sessions/{id}`, `POST /v1/sessions/{id}/finalize`, `GET /v1/sessions/{id}`. Consume: `JwtValidator`. |
-| **`session-service` :: SessionApplicationService** | Orquestar el caso de uso: persistir el `PracticeSession`, generar URL prefirmada de S3, emitir el evento `SessionFinalized`. | Provee: API interna `createSession`, `finalizeSession`. Consume: `SessionRepository`, `EventPublisher`, `PresignedUrlIssuer`. |
-| **`session-service` :: SessionRepository (JPA)** | Persistir el agregado `PracticeSession` en PostgreSQL respetando *database per service* (P4). | Provee: `save`, `findById`, `findByUserId`. Consume: PostgreSQL local. |
-| **`session-service` :: EventPublisher** | Publicar eventos de dominio en RabbitMQ con trace ID y *outbox pattern* para garantía at-least-once. | Provee: `publish(SessionFinalized)`. Consume: AMQP exchange `talki.events`. |
-| **`transcription-service` :: TranscriptionGateway (WebSocket)** | Recibir el flujo de audio del cliente vía WebSocket y reenviar segmentos transcritos en tiempo real. | Provee: `wss://api/v1/sessions/{id}/transcription`. Consume: `TranscriptionClient`. |
-| **`transcription-service` :: TranscriptionClient** (interfaz + implementación) | Encapsular la integración con el proveedor externo de speech-to-text (Whisper / Google STT) detrás de una interfaz intercambiable. | Provee: interfaz Java `TranscriptionClient.transcribeStream(audioChunk)`. Consume: API HTTPS del proveedor (C-05, C-06). |
-| **`ai-feedback-service` :: SessionFinalizedConsumer** | Consumir `SessionFinalized` desde RabbitMQ, descargar la transcripción persistida y disparar la orquestación. | Consume: cola `talki.feedback.session-finalized`. Provee: invocación a `FeedbackOrchestrator`. |
-| **`ai-feedback-service` :: FeedbackOrchestrator** | Coordinar el caso de uso: seleccionar la `AnalysisStrategy`, ejecutar el análisis, persistir el resultado y publicar `FeedbackGenerated`. | Provee: `analyze(sessionId, sessionType, academicSegment)`. Consume: `AnalysisStrategyFactory`, `LlmClient`, `FeedbackRepository`, `EventPublisher`. |
-| **`ai-feedback-service` :: AnalysisStrategyFactory** | Resolver la estrategia concreta según `(session_type, academic_segment)`. | Provee: `create(sessionType, segment) → AnalysisStrategy`. |
-| **`ai-feedback-service` :: AnalysisStrategy (interfaz)** | Definir el contrato de análisis: prompt, criterios y parsing del resultado del LLM. Implementaciones: `PitchStrategy`, `ThesisStrategy`, `InterviewStrategy`. | Provee: `analyze(transcription, context) → FeedbackResult`. Consume: `LlmClient`, configuración externalizada. |
-| **`ai-feedback-service` :: LlmClient** (interfaz + implementación) | Aislar al proveedor LLM externo detrás de una interfaz intercambiable. La implementación envuelve la llamada con Circuit Breaker y Retry. | Provee: `generate(prompt, params) → LlmResponse`. Consume: API HTTPS del proveedor LLM (C-05). |
-| **`ai-feedback-service` :: FeedbackRepository (JPA)** | Persistir `SessionFeedback` con campo `feedback_json` (JSONB) en PostgreSQL del servicio. | Provee: `save`, `findBySessionId`. Consume: PostgreSQL local. |
-| **`api-gateway` :: AuthFilter** | Validar JWT en cada request entrante; rechazar tráfico HTTP plano (C-07). | Provee: filtro WebFlux. Consume: clave pública JWKS del `identity-service`. |
-| **`api-gateway` :: WebSocketRouter** | Pasar el handshake WebSocket del cliente al `transcription-service` preservando el trace ID. | Provee: `wss://gateway/...`. Consume: ruta interna al `transcription-service`. |
-| **`api-gateway` :: NotificationDispatcher** | Recibir `FeedbackGenerated` (vía AMQP o webhook interno) y empujarlo al cliente correcto por la conexión WebSocket activa. | Consume: cola `talki.gateway.feedback-ready`. Provee: mensaje WebSocket al cliente. |
-| **RabbitMQ :: exchange `talki.events`** | Punto de publicación de eventos de dominio del flujo de sesión. | Provee: bindings a `talki.feedback.session-finalized` y `talki.gateway.feedback-ready`. |
+|---|---|---|
+| **`live-coach-service` :: LiveCoachController** | Gestionar conexión WebSocket con el cliente; abrir sesión con Gemini Live; relay de audio bidireccional; captura paralela de audio a Supabase Storage. | Provee: `WSS /v1/live/coach?sessionId=&mode=&scenarioId=`. Consume: Gemini Live API, Supabase Storage, `scenario-catalog-service`. |
+| **`live-coach-service` :: SessionFinalizer** | Al cerrar el WebSocket: consolidar `transcript_gemini` y métricas acústicas (WPM, silenceRatio, volumeRmsAvg) en el payload, publicar `session.live.finalized` al bus, descartar los chunks de audio en memoria. | Consume: `OutboxPublisher`. |
+| **`session-service` :: SessionController** | CRUD de sesiones: crear, consultar, listar con paginación, eliminar. | Provee: `POST /v1/sessions`, `GET /v1/sessions/{id}`, `GET /v1/sessions?userId=&page=`, `DELETE /v1/sessions/{id}`. |
+| **`filler-detection-service` :: FillerConsumer** | Escucha `session.live.finalized`; aplica regex español y modelo ONNX local sobre `transcript_gemini`; cuenta frecuencia por tipo; guarda en schema `fillers`; publica `fillers.analyzed`. | Consume: RabbitMQ queue `filler.session-finalized`. Publica: `fillers.analyzed`. |
+| **`scoring-service` :: ScoringConsumer** | Escucha `fillers.analyzed`; combina transcripción + muletillas + duración + silencios; calcula 5 dimensiones; guarda en schema `scores`; cachea en Redis (TTL 30 min); publica `scoring.completed`. | Consume: RabbitMQ queue `scoring.fillers-ready`. Publica: `scoring.completed`. Provee: `GET /v1/scores/{sessionId}`, `GET /v1/scores/user/{userId}/history`. |
+| **`scenario-catalog-service` :: ScenarioController** | Exponer catálogo de escenarios peruanos con system prompts para Gemini. | Provee: `GET /v1/scenarios`, `GET /v1/scenarios/{id}`, `GET /v1/scenarios?category=`. |
+| **`media-service` :: MediaController** | Generar presigned URL para upload directo del cliente a Supabase Storage; registrar URI del archivo. | Provee: `POST /v1/media/upload-url`, `GET /v1/media/{key}`, `DELETE /v1/media/{key}`. |
+| **`api-gateway`** | Único punto de entrada: validación JWT (con JWKS), routing por path, rate limiting con Upstash Redis, WebSocket pass-through para audio y notificaciones, Circuit Breaker por ruta. | Rutas: `/v1/auth/**` → `identity-service`, `/v1/sessions/**` → `session-service`, `/v1/live/**` → `live-coach-service`, `/v1/scores/**` → `scoring-service`, `/v1/progress/**` → `progress-service`, `/v1/scenarios/**` → `scenario-catalog-service`, `/v1/gamification/**` → `gamification-service`, `/v1/notifications/**` → `notification-service`, `/v1/media/**` → `media-service`. |
 
-**Contratos resumidos (API-First):**
-
-```http
-POST /v1/sessions
-Authorization: Bearer <jwt>
-Content-Type: application/json
-
-{
-  "session_type": "general | pitch | thesis | interview",   // opcional, default "general" hasta US10 (Should)
-  "target_duration_seconds": 600,                            // opcional, US11 (Should)
-  "focus_areas": ["fluency", "filler_words"]                 // opcional, US25 (Could)
-}
-
-201 Created
-{
-  "id": "uuid",
-  "audio_upload_url": "https://s3.../presigned",
-  "websocket_url": "wss://api/v1/sessions/{id}/transcription"
-}
-```
-
-> **Nota de alcance:** los campos opcionales (`session_type` ≠ "general", `target_duration_seconds`, `focus_areas`) están reservados en el contrato para preservar la **estabilidad de la API bajo evolución** (P8, C-13). Su procesamiento real entra al sprint cuando US10/US11/US25 sean priorizadas. En el alcance <em>Must</em> de esta iteración, el backend acepta los campos pero solo aplica <code>session_type = "general"</code> con la <code>AnalysisStrategy</code> por defecto.
-
-```http
-POST /v1/sessions/{id}/finalize
-Authorization: Bearer <jwt>
-
-202 Accepted
-{
-  "id": "uuid",
-  "status": "ANALYSIS_PENDING",
-  "feedback_url": "/v1/sessions/{id}/feedback"
-}
-```
-
-**Evento `SessionFinalized` (RabbitMQ):**
+**Contratos de eventos (RabbitMQ):**
 
 ```json
+// session.live.finalized — publicado por live-coach-service
 {
-  "event_id": "uuid",
-  "event_type": "SessionFinalized",
-  "occurred_at": "2026-05-02T22:15:00Z",
-  "trace_id": "trace-abc-123",
+  "event_id": "uuid-v4",
+  "event_type": "session.live.finalized",
+  "occurred_at": "2026-05-07T15:30:00Z",
+  "trace_id": "abc-123-xyz",
+  "version": "1.0",
   "payload": {
     "session_id": "uuid",
     "user_id": "uuid",
-    "session_type": "pitch",
-    "academic_segment": "ciclos_1_5",
-    "transcription_uri": "s3://talki-sessions/{id}/transcript.txt",
-    "duration_seconds": 612
+    "mode": "interview | quick_practice | thesis | scenario",
+    "scenario_id": "uuid | null",
+    "transcript_gemini": "transcripción completa generada por Gemini Live",
+    "duration_seconds": 612,
+    "academic_segment": "ciclos_1_5 | ciclos_6_10"
+  }
+}
+
+// scoring.completed — publicado por scoring-service
+{
+  "event_id": "uuid-v4",
+  "event_type": "scoring.completed",
+  "occurred_at": "2026-05-07T15:31:05Z",
+  "trace_id": "abc-123-xyz",
+  "version": "1.0",
+  "payload": {
+    "session_id": "uuid",
+    "user_id": "uuid",
+    "scores": {
+      "fluency": 78,
+      "clarity": 82,
+      "volume": 65,
+      "vocabulary": 71,
+      "confidence": 69
+    },
+    "overall_score": 73,
+    "fillers_count": 12,
+    "silence_ratio": 0.08,
+    "words_per_minute": 142
   }
 }
 ```
 
-#### 4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions
+**Topología RabbitMQ — Exchange `talki.events` (topic, durable):**
 
-Los bocetos de esta iteración se apoyan en los diagramas C4 ya publicados en 4.1.3 y 4.1.4 y los extienden con tres vistas adicionales: un **C4 Nivel 3 refinado del `session-service`** (vista estática) y dos secuencias UML que muestran el comportamiento del flujo crítico bajo *happy path* y bajo escenario degradado (QAS-03). Las decisiones de diseño tomadas durante la iteración se registran en una bitácora trazable que enlaza cada decisión con su driver y con el ítem del Architectural Design Backlog que la materializa.
+```
+session.live.finalized  → Queue: filler.session-finalized          → filler-detection-service
+fillers.analyzed        → Queue: scoring.fillers-ready            → scoring-service
+scoring.completed       → Queue: progress.score-ready             → progress-service
+                        → Queue: gamification.score-ready         → gamification-service
+                        → Queue: notification.score-ready         → notification-service
+achievement.unlocked    → Queue: notification.achievement-ready   → notification-service
+user.registered         → Queue: notification.welcome-ready       → notification-service
 
-**Vista 1 — C4 Nivel 3 del `session-service` (refinamiento de componentes).** El contenedor `session-service` se descompone en los componentes que materializan las decisiones DD-01, DD-02, DD-07 y DD-08 de esta iteración: el `SessionController` recibe el comando, delega en el `SessionApplicationService`, que persiste el agregado vía `SessionRepository`, registra el evento en la `OutboxTable` y publica vía `EventPublisher` con el `TraceContextPropagator` inyectando el `X-Trace-Id`. Esta vista complementa el C4 Nivel 3 del `ai-feedback-service` ya publicado en 4.1.4.
+Dead Letter Exchange: talki.dlx (direct) — mensajes con más de 3 reintentos
+```
+
+#### 4.3.1.6. Sketch Views and Record Design Decisions
+
+**Vista C4 Nivel 3 — Pipeline post-sesión (Iteration 1):**
 
 ```mermaid
 flowchart TB
-    subgraph SS["session-service (contenedor Spring Boot)"]
-        direction TB
-        SC[SessionController<br/>REST endpoints /v1/sessions]
-        AS[SessionApplicationService<br/>orquestación del caso de uso]
-        DOM[PracticeSession<br/>aggregate root + domain events]
-        REP[SessionRepository JPA]
-        OB[OutboxTable<br/>at-least-once guarantee]
-        EP[EventPublisher AMQP]
-        TC[TraceContextPropagator<br/>X-Trace-Id header + payload]
-        PUI[PresignedUrlIssuer<br/>cliente S3]
+    subgraph EDGE["Edge"]
+        GW["API Gateway\nSpring Cloud Gateway\nJWT · Rate Limit · Routing · WSS"]
     end
 
-    GW[API Gateway] -->|"POST /v1/sessions<br/>POST /finalize"| SC
-    SC --> AS
-    AS --> DOM
-    AS --> REP
-    AS --> OB
-    AS --> PUI
-    OB -.->|polling| EP
-    EP --> TC
-    EP -->|"SessionFinalized"| MQ[(RabbitMQ<br/>talki.events)]
-    REP --> DB[(PostgreSQL<br/>session_db)]
-    PUI --> S3[(S3<br/>talki-sessions)]
+    subgraph SESSION["Dominio: Sesión"]
+        SS["session-service\nCRUD · historial"]
+        LCS["live-coach-service\nProxy Gemini Live\nMétricas en memoria"]
+        SC["scenario-catalog-service\nCatálogo F10\nSystem prompts"]
+        MS["media-service\nPresigned URLs\nRetención archivos"]
+    end
+
+    subgraph PIPELINE["Pipeline de Análisis (coreografía saga)"]
+        FDS["filler-detection-service\nRegex + ONNX local\nEspañol peruano"]
+        SCS["scoring-service\nVoice Coach Score\n5 dimensiones"]
+    end
+
+    subgraph INFRA["Infraestructura"]
+        MQ[("RabbitMQ\ntalki.events\ntopic exchange")]
+        SUPA_DB[("Supabase PostgreSQL\nSchemas por servicio")]
+        SUPA_ST[("Supabase Storage\ntalki-user-materials\ntalki-exports")]
+        REDIS[("Upstash Redis\nRate limit · Score cache")]
+        GEMINI["Gemini Live API\n~600ms latencia"]
+    end
+
+    Cliente["Cliente Angular"] -->|HTTPS / WSS| GW
+    GW --> SS
+    GW --> LCS
+    GW --> SC
+    GW --> MS
+    GW --> SCS
+    LCS -->|WSS bidireccional| GEMINI
+    LCS -->|publica session.live.finalized<br/>(transcript_gemini + métricas)| MQ
+    MQ -->|consume| FDS
+    FDS --> SUPA_DB
+    FDS -->|publica fillers.analyzed| MQ
+    MQ -->|consume| SCS
+    SCS --> SUPA_DB
+    SCS --> REDIS
+    SCS -->|publica scoring.completed| MQ
+    SS --> SUPA_DB
+    SC --> REDIS
+    GW --> REDIS
 ```
 
-_Diagrama C4 Nivel 3 — Componentes del `session-service` refinados en la Iteration 1. Elaboración propia (2026)._
-
-**Vista 2 — Flujo end-to-end de la sesión (happy path).** La secuencia *Cliente → API Gateway → Session Service → S3 → Transcription Service → RabbitMQ → AI Feedback Service → API Gateway → Cliente* muestra el camino crítico cuando todos los componentes responden dentro de su SLO.
+**Vista UML Secuencia — Happy path sesión de práctica:**
 
 ```mermaid
 sequenceDiagram
@@ -2973,519 +3099,197 @@ sequenceDiagram
     participant C as Cliente Angular
     participant GW as API Gateway
     participant SS as session-service
-    participant S3 as Object Storage (S3)
-    participant TS as transcription-service
+    participant SC as scenario-catalog-service
+    participant LCS as live-coach-service
+    participant GEM as Gemini Live API
+    participant SUPA as Supabase Storage
     participant MQ as RabbitMQ
-    participant AI as ai-feedback-service
-    participant LLM as Proveedor LLM
+    participant FDS as filler-detection-service
+    participant SCS as scoring-service
 
-    C->>GW: POST /v1/sessions (JWT)
-    GW->>SS: POST /v1/sessions
-    SS-->>GW: 201 Created (presigned URL, ws URL)
-    GW-->>C: 201 Created
-    C->>S3: PUT audio (presigned)
-    C->>GW: WebSocket /transcription
-    GW->>TS: WebSocket pass-through
-    loop streaming
-        C->>TS: chunks de audio
-        TS-->>C: segmentos transcritos (≤ 1.5 s, QAS-01)
+    C->>GW: POST /v1/sessions
+    GW->>SS: crear sesión
+    SS-->>C: 201 {sessionId}
+
+    C->>GW: GET /v1/scenarios?category=interview
+    GW->>SC: consultar catálogo
+    SC-->>C: 200 [lista de escenarios]
+
+    C->>GW: WSS /v1/live/coach?sessionId=X&mode=interview&scenarioId=Y
+    GW->>LCS: WebSocket upgrade
+    LCS->>SC: GET system prompt del escenario
+    LCS->>GEM: abrir sesión WebSocket con system prompt
+    GEM-->>C: audio "Hola, cuéntame de ti..."
+
+    loop Conversación (hasta 20 min premium / 3 min free)
+        C->>LCS: chunks audio PCM 16kHz
+        LCS->>GEM: relay audio
+        GEM-->>LCS: audio respuesta PCM 24kHz
+        LCS-->>C: relay audio Gemini
     end
-    C->>GW: POST /v1/sessions/{id}/finalize
-    GW->>SS: POST finalize
-    SS->>SS: persistir transcripción + outbox
-    SS-->>GW: 202 Accepted (≤ 500 ms, QAS-02)
-    GW-->>C: 202 Accepted
-    SS->>MQ: publish SessionFinalized
-    MQ->>AI: deliver SessionFinalized
-    AI->>AI: select Strategy (segment, type)
-    AI->>LLM: prompt (Circuit Breaker)
-    LLM-->>AI: completion
-    AI->>AI: persist SessionFeedback
-    AI->>MQ: publish FeedbackGenerated
-    MQ->>GW: deliver FeedbackGenerated
-    GW->>C: WebSocket: feedback ready
+
+    C->>LCS: cierra WebSocket
+    LCS->>LCS: consolida transcript_gemini + métricas acústicas
+    LCS->>MQ: publica session.live.finalized
+    LCS-->>C: 1000 (WebSocket close)
+
+    MQ->>FDS: consume session.live.finalized
+    FDS->>FDS: regex + ONNX local
+    FDS->>MQ: publica fillers.analyzed
+
+    MQ->>SCS: consume fillers.analyzed
+    SCS->>SCS: calcula 5 dimensiones
+    SCS->>MQ: publica scoring.completed
+
+    MQ->>GW: consume scoring.completed (via notification-service)
+    GW-->>C: WSS push "Tu análisis está listo"
+
+    C->>GW: GET /v1/scores/{sessionId}
+    GW->>SCS: consultar score
+    SCS-->>C: 200 {score completo}
 ```
 
-**Vista 3 — Degradación elegante (QAS-03).** Cuando el proveedor LLM responde con error 5xx repetidamente, el Circuit Breaker abre y la sesión queda en estado `ANALYSIS_PENDING`; la sesión y la transcripción nunca se pierden.
+**Decision Log — Iteration 1:**
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant AI as ai-feedback-service
-    participant CB as Circuit Breaker
-    participant LLM as Proveedor LLM
-    participant DB as feedback DB
-    participant MQ as RabbitMQ
+| ID | Decisión | Driver(s) | ADB | Estado |
+|---|---|---|---|---|
+| DD-01 | Event-Driven Architecture con RabbitMQ (coreografía saga): `live-coach-service` publica `session.live.finalized` y cada servicio del pipeline reacciona de forma asincrónica e independiente. | QAS-02, AC-02 | ADB-03, ADB-07 | Aceptada |
+| DD-02 | Gemini Live API para la sesión de práctica en tiempo real: WebSocket nativo, audio bidireccional, ~600 ms de latencia, VAD, interrupciones naturales, function calling. | US12, QAS-01, AC-06 | ADB-01 | Aceptada |
+| DD-03 | Circuit Breaker Resilience4j en `live-coach-service` (failureRate 40%, slidingWindow 20, wait 60 s) con fallback a modo scripted usando preguntas del catálogo. | QAS-03, QAS-08, AC-06 | ADB-12 | Aceptada |
+| DD-04 | Supabase Storage (managed, free tier) en lugar de S3 o MinIO self-hosted para materiales del usuario (CV, plantillas) y exports. El audio de sesión no se persiste (DD-15 / ADB-22). | C-08, QAS-09, AC-08 | ADB-08 | Aceptada |
+| DD-05 | Outbox Pattern en todos los servicios productores: persistir evento en tabla `outbox_events` en la misma transacción de negocio antes de publicar a RabbitMQ. | US14, AC-02 | ADB-09 | Aceptada |
+| DD-06 | Coreografía Saga sin orquestador central: cada servicio escucha el evento de su predecesor y publica el siguiente. | US15, AC-02 | ADB-07 | Aceptada |
+| DD-07 | Filler detection con regex español + modelo ONNX local en `filler-detection-service` sin dependencia de API externa. | QAS-07, AC-09 | ADB-04 | Aceptada |
+| DD-08 | CQRS en `progress-service` con vistas materializadas pre-calculadas al consumir `scoring.completed`. | QAS-02 | ADB-06 | Aceptada |
+| DD-09 | Rate Limiting centralizado en API Gateway con backend Upstash Redis: 100 req/min por IP, 10 intentos de login fallidos/hora. | QAS-05, QAS-09 | ADB-02 | Aceptada |
+| DD-10 | URLs prefirmadas (TTL 5 min) emitidas por `media-service`; el cliente sube archivos directo a Supabase Storage sin pasar por el API Gateway. | C-08, QAS-09, AC-08 | ADB-08, ADB-11 | Aceptada |
 
-    AI->>CB: generate(prompt)
-    CB->>LLM: HTTP request
-    LLM-->>CB: 503 Service Unavailable
-    Note over CB: fallo #1 → retry backoff exp.
-    CB->>LLM: retry
-    LLM-->>CB: timeout
-    Note over CB: fallo #N → circuito ABIERTO
-    CB-->>AI: CircuitOpenException
-    AI->>DB: marcar status = ANALYSIS_PENDING
-    AI->>MQ: re-encolar con TTL (DLQ delay)
-    Note over AI,LLM: Cuando el proveedor se recupera,<br/>el consumer reprocesa (QAS-03: ≤ 10 min).
-```
+**Kanban Board — Cierre Iteration 1:**
 
-**Bitácora de decisiones de diseño (Decision Log).** Cada decisión enlaza con el ítem del backlog (4.3.1.1), el driver (4.2) y el concepto aplicado (4.3.1.4).
+| Por hacer | En progreso | Hecho |
+|---|---|---|
+| — | — | ADB-01 — live-coach-service (proxy Gemini Live + métricas en memoria) |
+| — | — | ADB-02 — session-service (CRUD + historial) |
+| — | — | ADB-03 — Evento session.live.finalized |
+| — | — | ADB-04 — filler-detection-service (regex + ONNX) |
+| — | — | ADB-06 — scoring-service (Voice Coach Score 5D + Redis) |
+| — | — | ADB-07 — Topología RabbitMQ (exchanges, queues, DLX) |
+| — | — | ADB-08 — Supabase Storage (buckets + lifecycle) |
+| — | — | ADB-09 — Outbox Pattern (tabla outbox_events) |
+| — | — | ADB-10 — scenario-catalog-service (catálogo F10 + caché) |
+| — | — | ADB-11 — media-service (presigned URLs) |
+| — | — | ADB-12 — Circuit Breaker Gemini (fallback scripted) |
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Decisión</th>
-      <th>Driver</th>
-      <th>ADB</th>
-      <th>Estado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>DD-01</td>
-      <td>El endpoint <code>finalize</code> responde <code>202 Accepted</code> y delega el análisis al bus, en lugar de esperar al LLM.</td>
-      <td>QAS-02, AC-02</td>
-      <td>ADB-02</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-02</td>
-      <td>Saga por coreografía sobre RabbitMQ; sin coordinador central.</td>
-      <td>US15, AC-02</td>
-      <td>ADB-03</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-03</td>
-      <td>Strategy seleccionada por <code>(session_type, academic_segment)</code> mediante Factory. En el alcance Must, <code>session_type = "general"</code> por defecto hasta que US10 (Should) entre al sprint.</td>
-      <td>US10, US23, US26, QAS-07, AC-01</td>
-      <td>ADB-04</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-04</td>
-      <td>Resilience4j Circuit Breaker (failureRateThreshold = 50%, slidingWindow = 10) + Retry máx. 3 con backoff exponencial.</td>
-      <td>QAS-03, AC-06</td>
-      <td>ADB-05</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-05</td>
-      <td>Interfaces <code>LlmClient</code> y <code>TranscriptionClient</code> con implementaciones intercambiables (táctica 4.1.7).</td>
-      <td>QAS-08, AC-06, AC-09</td>
-      <td>ADB-06</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-06</td>
-      <td>Audio sube directo a S3 con URL prefirmada (5 min de TTL).</td>
-      <td>C-08, QAS-09, AC-08</td>
-      <td>ADB-08</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-07</td>
-      <td><em>Outbox pattern</em> en <code>session-service</code> para garantizar at-least-once de <code>SessionFinalized</code>.</td>
-      <td>US14</td>
-      <td>ADB-03</td>
-      <td>Aceptada</td>
-    </tr>
-    <tr>
-      <td>DD-08</td>
-      <td>Header <code>X-Trace-Id</code> obligatorio entre servicios y propagado al payload del evento.</td>
-      <td>QAS-11, AC-11, P6</td>
-      <td>ADB-12</td>
-      <td>Pendiente de instrumentar</td>
-    </tr>
-    <tr>
-      <td>DD-09</td>
-      <td>Prompts del LLM y umbrales gestionados como configuración externalizada (Spring Cloud Config).</td>
-      <td>QAS-07, AC-03</td>
-      <td>ADB-10</td>
-      <td>Pendiente</td>
-    </tr>
-    <tr>
-      <td>DD-10</td>
-      <td>El API Gateway reusa la conexión WebSocket del flujo en vivo para empujar la notificación de feedback listo.</td>
-      <td>US15, QAS-02</td>
-      <td>ADB-11</td>
-      <td>Pendiente</td>
-    </tr>
-  </tbody>
-</table>
+**Vista consolidada del sistema después de Iteration 1:**
 
-#### 4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
+| # | Elemento | Refinado | Drivers cubiertos |
+|---|---|---|---|
+| 1 | `live-coach-service` | Sí | US12, QAS-01, QAS-03, AC-06 |
+| 2 | `session-service` | Sí | US09, US14, C-13 |
+| 4 | `filler-detection-service` | Sí | US15, QAS-07, AC-09 |
+| 5 | `scoring-service` | Sí | US15, US17, QAS-02 |
+| 6 | `scenario-catalog-service` | Sí | US10, QAS-07, AC-01 |
+| 7 | `media-service` | Sí | US16, C-08, AC-08 |
+| 8 | RabbitMQ `talki.events` | Sí | US14, US15, AC-02 |
+| 9 | Supabase Storage | Sí | C-08, QAS-09, AC-08 |
+| 10 | Supabase PostgreSQL (schemas sesión/análisis) | Parcial | US14, C-03, P4 |
+| 11 | Upstash Redis (rate limit + score cache) | Parcial | QAS-05, QAS-09 |
+| 12 | `identity-service` | No — Iteration 2 | US05–US08, US28, QAS-05 |
+| 13 | `notification-service` | No — Iteration 2 | US15, AC-04 |
+| 14 | `progress-service` | No — Iteration 2 | US20–US22, QAS-09 |
+| 15 | `gamification-service` | No — Iteration 2 | US18, US19 |
 
-El cierre de la iteración revisa el cumplimiento del *iteration goal* contra los drivers seleccionados en 4.3.1.2 y comunica visualmente el estado del Architectural Design Backlog mediante un Kanban Board de tres columnas (*Por hacer*, *En progreso*, *Hecho*). El análisis confirma que el camino crítico end-to-end está diseñado y que las decisiones tomadas son consistentes con los principios P1–P8 declarados en 4.1.1.
+**Conclusión de la Iteration 1.** El flujo core de práctica queda habilitado de extremo a extremo: el usuario puede iniciar una sesión con Gemini Live, recibir retroalimentación en tiempo real y obtener su Voice Coach Score de forma asincrónica sin bloqueos. Los drivers QAS-01, QAS-02, QAS-03 y QAS-07 están cubiertos. La Iteration 2 abordará el ciclo de vida de la cuenta de usuario (identidad y seguridad), los servicios de engagement (progreso y gamificación), notificaciones push y la observabilidad transversal.
 
-**Kanban Board del Architectural Design Backlog 1**
+---
 
-<table>
-  <thead>
-    <tr>
-      <th>Por hacer</th>
-      <th>En progreso</th>
-      <th>Hecho</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <strong>ADB-10</strong> — Externalizar prompts y umbrales como configuración (Spring Cloud Config). <em>Drivers: QAS-07, AC-03.</em><br><br>
-        <strong>ADB-11</strong> — Notificación push al cliente cuando <code>FeedbackGenerated</code> se publique. <em>Drivers: US15, QAS-02, AC-02.</em><br><br>
-        <strong>ADB-12</strong> — Instrumentar trazas distribuidas con trace ID propagado por header y payload de eventos. <em>Drivers: QAS-11, AC-11, P6.</em>
-      </td>
-      <td>
-        <strong>ADB-07</strong> — WebSocket pass-through cliente↔gateway↔transcription. <em>Drivers: US12, QAS-01, AC-04.</em><br><br>
-        <strong>ADB-08</strong> — Subida de audio a S3 con URL prefirmada. <em>Drivers: C-08, QAS-09, AC-08.</em>
-      </td>
-      <td>
-        <strong>ADB-01</strong> — Contrato <code>POST /v1/sessions</code> definido. <em>Drivers: US09, US12, C-13.</em><br><br>
-        <strong>ADB-02</strong> — Contrato <code>POST /v1/sessions/{id}/finalize</code> con respuesta 202 Accepted. <em>Drivers: US14, QAS-02.</em><br><br>
-        <strong>ADB-03</strong> — Evento <code>SessionFinalized</code> y contrato AMQP. <em>Drivers: US14, US15, AC-02.</em><br><br>
-        <strong>ADB-04</strong> — Strategy + Factory por <code>(session_type, academic_segment)</code>. <em>Drivers: US23, US26, QAS-07, AC-01.</em><br><br>
-        <strong>ADB-05</strong> — Circuit Breaker + Retry sobre el cliente LLM. <em>Drivers: QAS-03, AC-02, AC-06.</em><br><br>
-        <strong>ADB-06</strong> — Interfaces <code>LlmClient</code> y <code>TranscriptionClient</code> con implementaciones intercambiables. <em>Drivers: QAS-08, AC-06, AC-09.</em><br><br>
-        <strong>ADB-09</strong> — Esquema relacional de <code>practice_sessions</code> y <code>session_feedback</code>. <em>Drivers: US14, US15, C-03, P4.</em>
-      </td>
-    </tr>
-  </tbody>
-</table>
+### 4.3.2. Iteration 2: Identidad, Seguridad, Engagement y Observabilidad
 
-**Análisis del cumplimiento del Iteration Goal**
-
-<table>
-  <thead>
-    <tr>
-      <th>Driver</th>
-      <th>Estado de cobertura</th>
-      <th>Evidencia en el diseño</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>US09, US12, US14, US15</td>
-      <td>Cubierto</td>
-      <td>Contratos REST y WebSocket definidos (4.3.1.5); secuencia end-to-end trazada (4.3.1.6).</td>
-    </tr>
-    <tr>
-      <td>US23, US26 (segmento académico)</td>
-      <td>Cubierto</td>
-      <td>Strategy + Factory en <code>ai-feedback-service</code> con <code>(session_type, academic_segment)</code> como clave de selección (DD-03).</td>
-    </tr>
-    <tr>
-      <td>QAS-01 (latencia ≤ 1.5 s)</td>
-      <td>Cubierto en diseño; pendiente de validación empírica</td>
-      <td>WebSocket pass-through (ADB-07). Falta medir contra el proveedor real en la próxima iteración.</td>
-    </tr>
-    <tr>
-      <td>QAS-02 (finalize ≤ 500 ms)</td>
-      <td>Cubierto</td>
-      <td>Endpoint asíncrono que persiste y publica al bus; sin llamada al LLM en el path síncrono (DD-01).</td>
-    </tr>
-    <tr>
-      <td>QAS-03 (degradación elegante)</td>
-      <td>Cubierto</td>
-      <td>Circuit Breaker + DLQ con TTL para reproceso (DD-04, vista 2 de 4.3.1.6).</td>
-    </tr>
-    <tr>
-      <td>QAS-07 (nuevo tipo de sesión)</td>
-      <td>Cubierto</td>
-      <td>Strategy aislada por interfaz; agregar un tipo solo añade una clase y un registro en el Factory.</td>
-    </tr>
-    <tr>
-      <td>QAS-08 (cambio de proveedor LLM)</td>
-      <td>Cubierto</td>
-      <td>Interfaz <code>LlmClient</code> con única clase de implementación intercambiable (DD-05).</td>
-    </tr>
-    <tr>
-      <td>QAS-11 (observabilidad)</td>
-      <td>Parcial</td>
-      <td>Trace ID definido como header obligatorio (DD-08); instrumentación pendiente en ADB-12.</td>
-    </tr>
-    <tr>
-      <td>C-01, C-03, C-04, C-08, C-13</td>
-      <td>Cubierto</td>
-      <td>Stack Spring Boot, PostgreSQL por servicio, contenedores Docker, S3 con URL prefirmada y prefijo <code>/v1/</code>.</td>
-    </tr>
-    <tr>
-      <td>AC-01 (adaptación al segmento)</td>
-      <td>Cubierto</td>
-      <td>Strategy parametrizada por segmento (DD-03).</td>
-    </tr>
-    <tr>
-      <td>AC-02 (latencia LLM)</td>
-      <td>Cubierto</td>
-      <td>Procesamiento asíncrono + Circuit Breaker + reproceso vía DLQ.</td>
-    </tr>
-    <tr>
-      <td>AC-04 (transcripción en vivo visible)</td>
-      <td>Parcial</td>
-      <td>WebSocket diseñado (ADB-07) pero aún no implementado.</td>
-    </tr>
-  </tbody>
-</table>
-
-**Riesgos remanentes para la siguiente iteración:**
-
-- **Latencia real de la transcripción en vivo (QAS-01):** depende del proveedor de speech-to-text seleccionado. Antes de cerrar ADB-07 conviene ejecutar una prueba comparativa Whisper vs. Google STT con audio peruano (AC-09).
-- **Carga del bus en escenarios pico (QAS-09):** el diseño actual no contempla particionamiento de colas por tipo de sesión; queda como concern para la iteración 2.
-- **Costo del LLM (AC-07):** el caché de feedback para sesiones reprocesadas no está diseñado todavía; se planifica para la iteración 3 cuando se agregue el `progress-service`.
-
-**Vista consolidada del sistema después de la Iteration 1.** Siguiendo la convención del ejemplo oficial Track Manager (Figure 4 — *Software Element View of the Architecture*), se presenta la vista consolidada de todos los elementos arquitectónicos vivos al cierre de esta iteración. Los elementos en color sólido fueron refinados en la Iteration 1; los elementos en línea punteada se incorporarán en iteraciones posteriores y aparecen aquí solo para mostrar el contexto del sistema completo.
-
-```mermaid
-flowchart TB
-    Cliente[Cliente Angular SPA]
-
-    subgraph EDGE["Edge layer"]
-        GW["API Gateway<br/>+ AuthFilter<br/>+ WebSocketRouter<br/>+ NotificationDispatcher"]
-    end
-
-    subgraph CORE["Core de Sesión - refinado en Iteration 1"]
-        SS["session-service<br/>Controller / AppService /<br/>Outbox / EventPublisher"]
-        TS["transcription-service<br/>Gateway WS + TranscriptionClient"]
-        AI["ai-feedback-service<br/>Consumer / Orchestrator /<br/>StrategyFactory / LlmClient<br/>+ Circuit Breaker"]
-    end
-
-    subgraph DEFERRED["Servicios diferidos"]
-        ID["identity-service<br/>(Iteration 2)"]
-        PR["progress-service<br/>(Iteración posterior - CQRS)"]
-        NT["notification-service<br/>(Iteración posterior)"]
-    end
-
-    subgraph INFRA["Infraestructura compartida"]
-        MQ[("RabbitMQ<br/>talki.events")]
-        S3[("Object Storage S3")]
-        DB1[("PostgreSQL<br/>session_db")]
-        DB2[("PostgreSQL<br/>feedback_db")]
-    end
-
-    subgraph EXT["Sistemas externos"]
-        STT["Speech-to-Text<br/>Whisper / Google STT"]
-        LLM["Proveedor LLM<br/>OpenAI / equivalente"]
-    end
-
-    Cliente -->|HTTPS / WSS| GW
-    Cliente -.->|PUT audio<br/>presigned URL| S3
-    GW --> SS
-    GW --> TS
-    GW -.-> ID
-    GW -.-> PR
-    SS --> DB1
-    SS -->|publica<br/>SessionFinalized| MQ
-    SS --> S3
-    TS --> STT
-    MQ -->|consume<br/>SessionFinalized| AI
-    AI --> LLM
-    AI --> DB2
-    AI -->|publica<br/>FeedbackGenerated| MQ
-    MQ -.->|consume| PR
-    MQ -.->|consume| NT
-    MQ -->|consume| GW
-
-    classDef refined fill:#cfe8ff,stroke:#0b5394,stroke-width:2px,color:#000
-    classDef deferred fill:#f3f3f3,stroke:#888,stroke-dasharray: 5 5,color:#555
-    classDef infra fill:#dff0d8,stroke:#3c763d,color:#000
-    classDef external fill:#fcf3cf,stroke:#b7950b,color:#000
-    classDef edge fill:#fde2e2,stroke:#a93226,color:#000
-
-    class SS,TS,AI refined
-    class ID,PR,NT deferred
-    class MQ,S3,DB1,DB2 infra
-    class STT,LLM external
-    class GW edge
-```
-
-_Diagrama Software Element View — Estado del sistema Talki después de la Iteration 1. Los elementos sólidos azules fueron refinados en esta iteración; los de línea punteada gris se difieren a iteraciones posteriores. Elaboración propia (2026), formato adaptado del ejemplo Track Manager (Wojcik et al., SEI 2006)._
-
-**Tabla 4.3.1.7-A — Elements after Iteration 1.** La siguiente tabla resume el estado de cada elemento del sistema al cierre de esta iteración, siguiendo el formato de la *Table 17* del ejemplo Track Manager.
-
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Element</th>
-      <th>Refinado en esta iteración</th>
-      <th>Drivers asignados</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>1</td><td>API Gateway</td><td>Sí (AuthFilter, WebSocketRouter, NotificationDispatcher)</td><td>QAS-05, QAS-06, US12, US15, C-07, C-13</td></tr>
-    <tr><td>2</td><td>session-service</td><td>Sí (Controller, AppService, Outbox, EventPublisher)</td><td>US09, US14, QAS-02</td></tr>
-    <tr><td>3</td><td>transcription-service</td><td>Sí (TranscriptionGateway WS + TranscriptionClient)</td><td>US12, QAS-01, AC-04, AC-09</td></tr>
-    <tr><td>4</td><td>ai-feedback-service</td><td>Sí (Consumer, Orchestrator, StrategyFactory, LlmClient + CB)</td><td>US15, US23, US26, QAS-03, QAS-07, QAS-08, AC-01, AC-02, AC-06</td></tr>
-    <tr><td>5</td><td>RabbitMQ broker (exchange <code>talki.events</code>)</td><td>Sí (definición de exchanges, queues, DLQ)</td><td>US14, US15, AC-02</td></tr>
-    <tr><td>6</td><td>Object Storage S3</td><td>Sí (presigned URL flow)</td><td>C-08, QAS-09, AC-08</td></tr>
-    <tr><td>7</td><td>PostgreSQL session_db</td><td>Parcial (esquema definido)</td><td>US14, C-03, P4</td></tr>
-    <tr><td>8</td><td>PostgreSQL feedback_db</td><td>Parcial (esquema definido)</td><td>US15, C-03, P4</td></tr>
-    <tr><td>9</td><td>identity-service</td><td>No en Iteration 1 — refinado en Iteration 2 (sección 4.3.2)</td><td>US05, US06, US07, US08, US28, QAS-05, QAS-11</td></tr>
-    <tr><td>10</td><td>progress-service</td><td>No — diferido a iteración posterior (CQRS)</td><td>US20, US21, US22, QAS-09</td></tr>
-    <tr><td>11</td><td>notification-service</td><td>No — diferido a iteración posterior</td><td>US15 (notif. push), AC-04</td></tr>
-  </tbody>
-</table>
-
-**Conclusión de la iteración.** El *iteration goal* se considera **alcanzado en su núcleo de diseño**: los drivers funcionales (US09, US12, US14, US15) y los escenarios de calidad de mayor riesgo (QAS-02, QAS-03, QAS-07, QAS-08) están cubiertos por decisiones registradas y trazables. Quedan tres ítems en *Por hacer* (ADB-10, ADB-11, ADB-12) que se promueven al backlog de la **Iteration 2**, junto con el refinamiento del `identity-service` (seguridad y autenticación) y la activación de la observabilidad transversal.
-
-<hr class="page-break">
-
-### 4.3.2. Iteration 2: Identidad, Seguridad y Observabilidad Transversal
-
-Aplicando el paso 8 del método ADD (*"repetir pasos 2 a 7 en la siguiente iteración"*), la Iteration 2 ataca los drivers de seguridad y observabilidad que la Iteration 1 dejó parcial o pendiente. Esta iteración refina el `identity-service` end-to-end, formaliza la propagación de trazas distribuidas y completa los ítems ADB-10 (configuración externalizada), ADB-11 (notificación push) y ADB-12 (observabilidad) heredados de la iteración anterior. La descripción se hace más concisa que la Iteration 1 ya que reutiliza el catálogo de principios (4.1.1), estilos (4.1.2), patrones (4.1.6) y tácticas (4.1.7) ya declarados.
+Aplicando el paso 8 del método ADD (*repetir pasos 2 a 7 en la siguiente iteración*), la Iteration 2 refina los bounded contexts de usuario, engagement y observabilidad que la Iteration 1 dejó pendientes. Esta iteración toma el sistema con el pipeline de análisis completo y agrega autenticación segura, progreso persistente, gamificación y trazabilidad distribuida.
 
 #### 4.3.2.1. Architectural Design Backlog 2
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Decisión de Diseño</th>
-      <th>Estado</th>
-      <th>Driver(s) Relacionados</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ADB-13</td>
-      <td>Definir contratos REST <code>POST /v1/auth/register</code>, <code>POST /v1/auth/login</code>, <code>POST /v1/auth/refresh</code>, <code>POST /v1/auth/logout</code> en el <code>identity-service</code>.</td>
-      <td>En progreso</td>
-      <td>US05, US06, US28, C-13</td>
-    </tr>
-    <tr>
-      <td>ADB-14</td>
-      <td>Implementar emisión de JWT firmados con clave asimétrica (RSA-256) y publicación de JWKS en <code>/.well-known/jwks.json</code> para validación distribuida.</td>
-      <td>Por hacer</td>
-      <td>US06, QAS-05, AC-11</td>
-    </tr>
-    <tr>
-      <td>ADB-15</td>
-      <td>Aplicar rotación obligatoria de refresh tokens con almacenamiento hasheado y revocación al cierre de sesión (US28).</td>
-      <td>Por hacer</td>
-      <td>US28, QAS-05, C-14</td>
-    </tr>
-    <tr>
-      <td>ADB-16</td>
-      <td>Aplicar bcrypt (cost ≥ 12) para hashing de contraseñas y política mínima de longitud y composición.</td>
-      <td>Por hacer</td>
-      <td>QAS-05, C-14, AC-08</td>
-    </tr>
-    <tr>
-      <td>ADB-17</td>
-      <td>Configurar rate limiting en el API Gateway: 100 req/min por IP en endpoints públicos y 10 intentos de login fallidos/hora antes de bloqueo temporal.</td>
-      <td>Por hacer</td>
-      <td>QAS-05</td>
-    </tr>
-    <tr>
-      <td>ADB-18</td>
-      <td>Diseñar el flujo de recuperación de contraseña con token de un solo uso y TTL ≤ 30 minutos (US07).</td>
-      <td>Por hacer</td>
-      <td>US07, QAS-05</td>
-    </tr>
-    <tr>
-      <td>ADB-19</td>
-      <td>Diseñar la edición de perfil con publicación del evento <code>UserProfileUpdated</code> para que <code>ai-feedback-service</code> reciba el contexto académico actualizado.</td>
-      <td>Por hacer</td>
-      <td>US08, US23</td>
-    </tr>
-    <tr>
-      <td>ADB-20</td>
-      <td>Instrumentar trazas distribuidas con OpenTelemetry: cada servicio propaga el <code>traceparent</code> (W3C Trace Context) por header HTTP y embebe el <code>trace_id</code> en el payload de eventos AMQP. Cierra ADB-12.</td>
-      <td>Por hacer</td>
-      <td>QAS-11, AC-11, P6</td>
-    </tr>
-    <tr>
-      <td>ADB-21</td>
-      <td>Externalizar prompts y umbrales del <code>ai-feedback-service</code> con Spring Cloud Config (cierra ADB-10).</td>
-      <td>Por hacer</td>
-      <td>QAS-07, AC-03</td>
-    </tr>
-    <tr>
-      <td>ADB-22</td>
-      <td>Diseñar la política de retención del audio: eliminación automática del archivo en S3 al confirmarse la transcripción exitosa (Ley 29733).</td>
-      <td>Por hacer</td>
-      <td>AC-08, C-09</td>
-    </tr>
-  </tbody>
-</table>
+| ID | Decisión de Diseño | Estado | Driver(s) Relacionados |
+|---|---|---|---|
+| ADB-13 | Definir contratos REST completos de `identity-service`: `POST /v1/auth/register`, `POST /v1/auth/login`, `POST /v1/auth/refresh`, `POST /v1/auth/logout`, `POST /v1/auth/reset-password`, `GET /v1/users/me`, `PUT /v1/users/me/profile`, `GET /.well-known/jwks.json`. | Hecho | US05, US06, US07, US08, US28, C-13 |
+| ADB-14 | Implementar emisión de JWT firmados con RSA-256 (clave asimétrica) y publicar JWKS en `/.well-known/jwks.json` para que el API Gateway valide tokens sin llamar al `identity-service` en cada request. | Hecho | US06, QAS-05, C-14 |
+| ADB-15 | Aplicar rotación de refresh tokens: cada uso genera uno nuevo y revoca el anterior; almacenamiento hasheado en tabla `refresh_tokens`; revocación total al logout. | Hecho | US28, QAS-05, C-14 |
+| ADB-16 | Aplicar bcrypt (cost ≥ 12) para hashing de contraseñas con política mínima de longitud y composición. | Hecho | QAS-05, C-14 |
+| ADB-17 | Publicar evento `user.registered` al finalizar el registro; `notification-service` lo consume para enviar email de bienvenida. | Hecho | US05, AC-04 |
+| ADB-18 | Implementar `progress-service` con CQRS: consume `scoring.completed` y actualiza vistas materializadas en schema `progress`; expone endpoints de solo lectura para dashboard F9 y ruta adaptativa F7. | Hecho | US20, US21, US22, QAS-09 |
+| ADB-19 | Implementar `gamification-service`: consume `scoring.completed`, actualiza streaks en Upstash Redis (Sorted Sets), evalúa logros, actualiza leaderboard semanal; publica `achievement.unlocked`. | Hecho | US18, US19 |
+| ADB-20 | Implementar `notification-service`: consume `scoring.completed`, `achievement.unlocked` y `user.registered`; envía push por WebSocket persistente (`WSS /v1/notifications/stream`) y email como canal alternativo. | Hecho | US15, AC-04 |
+| ADB-21 | Configurar Zipkin + Spring Sleuth para tracing distribuido end-to-end: cada request recibe un `Trace ID` único que se propaga en header `X-B3-TraceId` entre servicios REST y en el campo `trace_id` de los eventos RabbitMQ. | Hecho | QAS-11, AC-11, P6 |
+| ADB-22 | El audio de sesión **no se persiste** en storage — Gemini Live genera la transcripción en tiempo real, eliminando la necesidad de almacenar audio. Esto cumple la Ley 29733 de forma nativa: nunca se graba un dato biométrico en reposo. | Hecho | AC-08, C-09 |
 
 #### 4.3.2.2. Establish Iteration Goal by Selecting Drivers
 
-**Iteration Goal:** Habilitar el ciclo de vida completo de la cuenta de usuario (registro, login, recuperación, edición, logout) con garantías de seguridad alineadas con QAS-05/QAS-06 y la Ley 29733 (AC-08, C-09), y completar la instrumentación de observabilidad transversal (QAS-11) que la Iteration 1 dejó pendiente.
+**Iteration Goal:** Habilitar el ciclo de vida completo de la cuenta de usuario con garantías de seguridad (QAS-05, Ley 29733), incorporar los servicios de engagement (progreso, gamificación y notificaciones), y activar la observabilidad transversal del sistema con trazas distribuidas end-to-end (QAS-11).
 
-<table>
-  <thead>
-    <tr>
-      <th>Tipo</th>
-      <th>ID</th>
-      <th>Justificación</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td rowspan="6">User Stories</td><td>US05</td><td>Registro de cuenta — bloqueante del MVP.</td></tr>
-    <tr><td>US06</td><td>Login con JWT — base para todo el resto del sistema.</td></tr>
-    <tr><td>US07</td><td>Recuperación de contraseña.</td></tr>
-    <tr><td>US08</td><td>Edición de perfil — emite el evento que <code>ai-feedback-service</code> necesita.</td></tr>
-    <tr><td>US23</td><td>Selección de segmento académico — completa el contexto que la Iteration 1 dejó por defecto.</td></tr>
-    <tr><td>US28</td><td>Cierre de sesión seguro con revocación de refresh token.</td></tr>
-    <tr><td rowspan="3">QAS</td><td>QAS-05</td><td>Protección de credenciales (rate limiting, bloqueo, bcrypt).</td></tr>
-    <tr><td>QAS-06</td><td>HTTPS obligatorio — heredado de la Iteration 1, se valida en el Gateway.</td></tr>
-    <tr><td>QAS-11</td><td>Diagnóstico de incidentes ≤ 5 min con trace ID end-to-end.</td></tr>
-    <tr><td rowspan="3">Constraints</td><td>C-09</td><td>Ley 29733 (datos personales).</td></tr>
-    <tr><td>C-14</td><td>JWT con refresh tokens rotativos y bcrypt cost ≥ 10.</td></tr>
-    <tr><td>C-13</td><td>API versionada bajo <code>/v1/</code>.</td></tr>
-    <tr><td rowspan="2">Concerns</td><td>AC-08</td><td>Privacidad y datos sensibles.</td></tr>
-    <tr><td>AC-11</td><td>Trazabilidad de decisiones de diseño / observabilidad académica.</td></tr>
-  </tbody>
-</table>
+| Tipo | ID | Justificación |
+|---|---|---|
+| User Stories | US05 | Registro de cuenta — bloqueante del MVP. |
+| | US06 | Login con JWT — base para todo el sistema. |
+| | US07 | Recuperación de contraseña. |
+| | US08 | Edición de perfil con segmento académico. |
+| | US28 | Cierre de sesión seguro con revocación de refresh token. |
+| | US18, US19 | Gamificación: streaks y logros. |
+| | US20–US22 | Dashboard de progreso y ruta adaptativa. |
+| QAS | QAS-05 | Protección de credenciales: rate limiting, bcrypt, refresh rotation. |
+| | QAS-11 | Diagnóstico de incidentes en ≤ 5 min con trace ID end-to-end. |
+| Constraints | C-09 | Ley 29733 (protección de datos personales Perú). |
+| | C-14 | JWT con refresh tokens rotativos y bcrypt cost ≥ 12. |
+| | C-13 | API versionada bajo `/v1/`. |
+| Concerns | AC-04 | Notificaciones push al usuario. |
+| | AC-08 | Privacidad y datos sensibles (audio biométrico). |
+| | AC-11 | Trazabilidad de decisiones / observabilidad del sistema. |
 
 #### 4.3.2.3. Choose One or More Elements of the System to Refine
 
 | Elemento | Tipo | Motivo del refinamiento |
 |---|---|---|
-| `identity-service` | Microservicio | Era caja negra en la Iteration 1; ahora se descompone en componentes (Controller, AppService, JWT Issuer, RefreshTokenStore, PasswordHasher, JwksPublisher). |
-| API Gateway | Edge component | Se suma `RateLimitFilter` y se conecta el `AuthFilter` al JWKS del `identity-service`. |
-| Todos los servicios refinados en Iteration 1 | Cross-cutting | Reciben el `OpenTelemetryAgent` y la propagación de `traceparent`. |
-| Object Storage S3 | Sistema externo | Se diseña la política de lifecycle para eliminación de audio post-transcripción. |
+| `identity-service` | Microservicio | Era inexistente en Iteration 1; se diseña completo con JWT RSA-256, JWKS, bcrypt, refresh rotation y eventos de dominio. |
+| `notification-service` | Microservicio | Diferido en Iteration 1; se incorpora como consumidor final del pipeline (scoring, logros, registro). |
+| `progress-service` | Microservicio | Diferido en Iteration 1; se incorpora con CQRS y vistas materializadas. |
+| `gamification-service` | Microservicio | Diferido en Iteration 1; se incorpora con streaks, logros y leaderboard en Redis. |
+| API Gateway | Edge component | Se conecta `AuthFilter` al JWKS del `identity-service`; se añade `RateLimitFilter` anti-brute-force. |
+| Todos los servicios (cross-cutting) | Observabilidad | Se instrumenta Zipkin + Spring Sleuth en todos los contenedores. |
+| Supabase Storage | Sistema managed | Se implementa la política de eliminación de audio post-transcripción (Ley 29733). |
 
 #### 4.3.2.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
 
-<table>
-  <thead>
-    <tr>
-      <th>Driver</th>
-      <th>Concepto elegido</th>
-      <th>Alternativa descartada</th>
-      <th>Justificación</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>QAS-05, C-14</td><td><strong>JWT firmados con RSA-256</strong> + <strong>JWKS</strong> público + <strong>refresh token rotativo</strong> con almacenamiento hasheado.</td><td>JWT con HS256 (clave simétrica compartida) o sesiones server-side con cookie.</td><td>RSA-256 permite que cualquier servicio valide tokens sin compartir el secreto del firmante (P3 stateless). JWKS rota llaves sin redeploy.</td></tr>
-    <tr><td>QAS-05</td><td><strong>bcrypt cost ≥ 12</strong> + política de complejidad mínima.</td><td>SHA-256 + sal o argon2.</td><td>SHA-256 es vulnerable a fuerza bruta con GPUs. argon2 sería superior pero el equipo tiene experiencia con bcrypt y la diferencia es marginal en el rango cost ≥ 12.</td></tr>
-    <tr><td>QAS-05</td><td><strong>Rate limiting</strong> por IP y por usuario en el API Gateway.</td><td>Rate limiting solo por IP.</td><td>Atacantes con IPs rotativas evaden el límite por IP. Combinar con límite por cuenta cubre el escenario QAS-05 (10 intentos fallidos/hora).</td></tr>
-    <tr><td>QAS-11, P6</td><td><strong>OpenTelemetry</strong> con propagación W3C Trace Context (header <code>traceparent</code>).</td><td>Trace ID propio (UUID) en header custom.</td><td>OpenTelemetry es estándar de facto, integra con Jaeger/Tempo/Datadog sin acoplar al equipo a un vendor (alineado con AC-06).</td></tr>
-    <tr><td>AC-08, C-09</td><td><strong>Lifecycle policy de S3</strong> con eliminación automática post-transcripción + consentimiento explícito en registro.</td><td>Retención indefinida.</td><td>La grabación de voz es dato biométrico (Ley 29733). Retener solo lo necesario (transcripción) reduce superficie de filtración (AC-08).</td></tr>
-    <tr><td>US08, US23, AC-01</td><td><strong>Evento de dominio</strong> <code>UserProfileUpdated</code> publicado al bus <code>talki.events</code>.</td><td>Llamada síncrona del <code>ai-feedback-service</code> al <code>identity-service</code> en cada análisis.</td><td>Evita acoplamiento temporal y mantiene el principio P3 (stateless). El <code>ai-feedback-service</code> guarda una caché local del segmento y la actualiza por evento.</td></tr>
-  </tbody>
-</table>
+| Driver | Concepto elegido | Alternativa descartada | Justificación |
+|---|---|---|---|
+| QAS-05, C-14 | **JWT RSA-256** (clave asimétrica) + **JWKS público** + **refresh token rotativo** con almacenamiento hasheado. | JWT HS256 (clave simétrica compartida) o sesiones server-side. | RSA-256 permite que el API Gateway valide tokens descargando la clave pública vía JWKS sin llamar al `identity-service` en cada request (P3 stateless). JWKS permite rotación de claves sin redeploy. |
+| QAS-05, C-14 | **bcrypt cost ≥ 12** para hashing de contraseñas. | SHA-256 + sal o argon2. | SHA-256 con sal es vulnerable a fuerza bruta con GPU. bcrypt con cost 12 tarda ~200 ms por verificación, disuadiendo ataques. |
+| QAS-05 | **Rate limiting anti-brute-force** en API Gateway: 100 req/min por IP + bloqueo temporal tras 10 intentos de login fallidos/hora. | Rate limiting solo por IP. | Atacantes con IP rotativa evaden el límite por IP; combinar con límite por cuenta cubre el escenario QAS-05. |
+| QAS-09, US20 | **CQRS en `progress-service`** con vistas materializadas actualizadas al consumir `scoring.completed`. | Queries directas a tablas normalizadas con joins pesados. | El dashboard F9 agrega historial de sesiones; la vista materializada pre-calculada responde en < 50 ms. |
+| US18, US19 | **Redis Sorted Sets** en `gamification-service` para streaks, leaderboard semanal y set de logros desbloqueados por usuario. | Tabla SQL para cada consulta de ranking. | Sorted Sets permiten ranking O(log N) sin queries SQL de agregación costosas; el leaderboard se actualiza en tiempo real. |
+| AC-04, US15 | **WebSocket persistente** (`WSS /v1/notifications/stream`) en `notification-service` + email como canal de fallback. | Polling del cliente o Server-Sent Events. | WebSocket permite push en tiempo real cuando el análisis termina (puede ser minutos después de cerrar la sesión); email cubre el caso donde el usuario cerró la app. |
+| QAS-11, P6 | **Zipkin + Spring Sleuth** para tracing distribuido: `Trace ID` propagado en header `X-B3-TraceId` (REST) y campo `trace_id` en payloads de eventos RabbitMQ. | OpenTelemetry con colector externo, Jaeger. | Spring Sleuth integra Zipkin de forma nativa en Spring Boot con configuración mínima. Permite trazar una sesión completa a través del pipeline asincrónico (REST + mensajería). |
+| AC-08, C-09 | **No persistir el audio** — Gemini Live genera la transcripción en tiempo real; el audio nunca se almacena en reposo. | Guardar audio para STT posterior. | Cumplimiento nativo de Ley 29733 (dato biométrico nunca en reposo), eliminación de costo de storage y del servicio STT externo. |
+| C-03, P4 | **Un usuario PostgreSQL por schema** de Supabase (ej. `identity_user`, `notifications_user`). | Usuario único con acceso total a todos los schemas. | Principio de mínimo privilegio: un servicio comprometido no puede leer datos de otros bounded contexts. |
+| QAS-03 | **Dead Letter Exchange `talki.dlx`** en RabbitMQ para mensajes que fallan más de 3 veces. | Descartar mensajes tras N reintentos. | Permite reproceso manual o automático de mensajes críticos sin pérdida de datos; el equipo puede inspeccionar la DLQ ante un incidente. |
 
 #### 4.3.2.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
 
 | Elemento | Responsabilidad | Interfaces |
 |---|---|---|
-| **`identity-service` :: AuthController** | Recibir comandos de registro, login, refresh, logout, recuperación. | Provee: `POST /v1/auth/{register,login,refresh,logout,reset-password}`. |
-| **`identity-service` :: UserApplicationService** | Orquestar creación, autenticación, edición y revocación. | Consume: `UserRepository`, `JwtIssuer`, `PasswordHasher`, `EventPublisher`. |
-| **`identity-service` :: JwtIssuer** | Firmar y validar JWT con clave RSA y exponer JWKS. | Provee: `issue(userId, claims)`, `verify(token)`, `GET /.well-known/jwks.json`. |
+| **`identity-service` :: AuthController** | Registro, login, refresh, logout, recuperación de contraseña. | Provee: `POST /v1/auth/{register,login,refresh,logout,reset-password}`. |
+| **`identity-service` :: UserController** | Consultar y editar perfil del usuario autenticado. | Provee: `GET /v1/users/me`, `PUT /v1/users/me/profile`. |
+| **`identity-service` :: JwtIssuer** | Firmar JWT con clave RSA privada; publicar clave pública en JWKS. | Provee: `GET /.well-known/jwks.json`. |
 | **`identity-service` :: RefreshTokenStore** | Persistir refresh tokens hasheados con expiración y revocación. | Provee: `store`, `validate`, `revoke`, `revokeAllForUser`. |
-| **`identity-service` :: PasswordHasher** | Hash y verificación bcrypt. | Provee: `hash(plaintext)`, `verify(plaintext, hash)`. |
-| **`identity-service` :: ProfileEventPublisher** | Publicar `UserProfileUpdated` al bus al editarse el perfil. | Provee: `publish(UserProfileUpdated)`. Consume: AMQP exchange `talki.events`. |
-| **`api-gateway` :: AuthFilter (refinado)** | Validar JWT con la clave pública obtenida vía JWKS del `identity-service`. | Consume: `GET /.well-known/jwks.json`. |
-| **`api-gateway` :: RateLimitFilter** | Aplicar rate limiting por IP y por user-id. | Provee: filtro WebFlux con backend Redis. |
-| **`api-gateway` :: ObservabilityFilter** | Generar `traceparent` si no viene del cliente y propagarlo aguas abajo. | Provee: filtro WebFlux. |
-| **`*-service` :: OpenTelemetryAgent** | Cross-cutting en todos los servicios — exportar trazas a un colector OTLP. | Consume: `OTEL_EXPORTER_OTLP_ENDPOINT`. |
+| **`identity-service` :: PasswordHasher** | Hash y verificación bcrypt cost 12. | Provee: `hash(plaintext)`, `verify(plaintext, hash)`. |
+| **`identity-service` :: UserEventPublisher** | Publicar `user.registered` al bus cuando se completa el registro. | Publica: `user.registered`. |
+| **`progress-service` :: ScoringConsumer** | Consume `scoring.completed`; actualiza vistas materializadas en schema `progress` (CQRS write side). | Consume: RabbitMQ queue `progress.score-ready`. |
+| **`progress-service` :: ProgressController** | Exponer vistas materializadas pre-calculadas para dashboard F9 y ruta adaptativa F7 (CQRS read side). | Provee: `GET /v1/progress/dashboard`, `GET /v1/progress/timeline`, `GET /v1/progress/compare?s1=&s2=`. |
+| **`gamification-service` :: ScoringConsumer** | Consume `scoring.completed`; actualiza streak en Redis, evalúa logros, actualiza leaderboard; publica `achievement.unlocked`. | Consume: RabbitMQ queue `gamification.score-ready`. Publica: `achievement.unlocked`. |
+| **`gamification-service` :: GamificationController** | Exponer streaks, logros y leaderboard semanal. | Provee: `GET /v1/gamification/streaks/{userId}`, `GET /v1/gamification/achievements/{userId}`, `GET /v1/gamification/leaderboard`. |
+| **`notification-service` :: MultiConsumer** | Consume `scoring.completed`, `achievement.unlocked` y `user.registered`; envía push por WebSocket y email alternativo. | Consume: queues `notification.{score-ready,achievement-ready,welcome-ready}`. |
+| **`notification-service` :: NotificationController** | WebSocket persistente push; historial de notificaciones; marcar como leído. | Provee: `WSS /v1/notifications/stream`, `GET /v1/notifications/{userId}`, `PUT /v1/notifications/{id}/read`. |
+| **`api-gateway` :: AuthFilter (refinado)** | Descargar JWKS del `identity-service`; validar JWT en cada request sin llamar al servicio en caliente. | Consume: `GET /.well-known/jwks.json` (cached). |
 
-**Contrato resumido:**
+**Contratos REST clave — `identity-service`:**
 
 ```http
 POST /v1/auth/login
@@ -3495,127 +3299,171 @@ Content-Type: application/json
 
 200 OK
 {
-  "access_token": "<JWT 15 min>",
-  "refresh_token": "<opaque 7 days, rotativo>",
+  "access_token": "<JWT RSA-256, TTL 15 min>",
+  "refresh_token": "<opaque, TTL 7 días, rotativo>",
   "token_type": "Bearer"
 }
 ```
 
-#### 4.3.2.6. Sketch Views (C4 & UML) and Record Design Decisions
+```http
+POST /v1/auth/refresh
+Content-Type: application/json
 
-**Vista 1 — C4 Nivel 3 del `identity-service`.**
+{ "refresh_token": "<token previo>" }
+
+200 OK
+{
+  "access_token": "<nuevo JWT>",
+  "refresh_token": "<nuevo refresh — el anterior queda revocado>"
+}
+```
+
+#### 4.3.2.6. Sketch Views and Record Design Decisions
+
+**Vista C4 Nivel 3 — `identity-service`:**
 
 ```mermaid
 flowchart TB
+    GW[API Gateway] --> AC[AuthController\nPOST /v1/auth/*]
+    GW --> UC[UserController\nGET·PUT /v1/users/me]
+
     subgraph IS["identity-service (Spring Boot)"]
-        AC[AuthController<br/>POST /v1/auth/*]
-        UAS[UserApplicationService]
-        JI[JwtIssuer<br/>RSA-256 + JWKS]
-        RTS[RefreshTokenStore]
-        PH[PasswordHasher<br/>bcrypt cost 12]
-        PEP[ProfileEventPublisher]
-        UR[UserRepository JPA]
+        AC --> UAS[UserApplicationService]
+        UC --> UAS
+        UAS --> JI[JwtIssuer\nRSA-256 + JWKS]
+        UAS --> RTS[RefreshTokenStore\nhashed + expiry]
+        UAS --> PH[PasswordHasher\nbcrypt cost 12]
+        UAS --> PEP[UserEventPublisher]
+        UAS --> UR[UserRepository JPA]
     end
 
-    GW[API Gateway] --> AC
-    AC --> UAS
-    UAS --> UR
-    UAS --> JI
-    UAS --> RTS
-    UAS --> PH
-    UAS --> PEP
-    PEP -->|UserProfileUpdated| MQ[(RabbitMQ<br/>talki.events)]
-    UR --> DB[(PostgreSQL identity_db)]
+    PEP -->|user.registered| MQ[(RabbitMQ\ntalki.events)]
     JI -.->|JWKS| GW
+    UR --> DB[(Supabase PostgreSQL\nschema: identity)]
 ```
 
-**Vista 2 — UML secuencia del login con rotación de refresh token.**
+**Vista UML Secuencia — Login con rotación de refresh token:**
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant C as Cliente
     participant GW as API Gateway
-    participant ID as identity-service
-    participant DB as identity_db
+    participant IS as identity-service
+    participant DB as identity_db (Supabase)
 
     C->>GW: POST /v1/auth/login (email, password)
-    GW->>ID: forward
-    ID->>DB: find user by email
-    DB-->>ID: user + password_hash
-    ID->>ID: bcrypt.verify(password, hash)
-    ID->>ID: JwtIssuer.issue(userId)
-    ID->>DB: store refresh_token (hash, expires)
-    ID-->>GW: 200 OK (access, refresh)
-    GW-->>C: 200 OK
-    Note over C,ID: Cuando el access expira (15 min)
-    C->>GW: POST /v1/auth/refresh (refresh)
-    GW->>ID: forward
-    ID->>DB: validate refresh + revoke
-    ID->>DB: store NEW refresh (rotación)
-    ID-->>C: 200 OK (new access, new refresh)
+    GW->>IS: forward
+    IS->>DB: SELECT user WHERE email
+    DB-->>IS: user + password_hash
+    IS->>IS: bcrypt.verify(password, hash) — ~200ms
+    IS->>IS: JwtIssuer.issue(userId, claims) — RSA-256
+    IS->>DB: INSERT refresh_token (hash, expires_at)
+    IS-->>C: 200 OK (access_token, refresh_token)
+
+    Note over C,IS: Access token expira en 15 min
+    C->>GW: POST /v1/auth/refresh (refresh_token)
+    GW->>IS: forward
+    IS->>DB: SELECT + validate refresh_token
+    IS->>DB: DELETE refresh_token anterior (revocación)
+    IS->>DB: INSERT nuevo refresh_token (rotación)
+    IS->>IS: JwtIssuer.issue() — nuevo access token
+    IS-->>C: 200 OK (nuevo access_token, nuevo refresh_token)
 ```
 
-**Decision Log Iteration 2.**
+**Vista UML Secuencia — Pipeline de engagement post-análisis:**
 
-| ID | Decisión | Driver | ADB | Estado |
+```mermaid
+sequenceDiagram
+    participant MQ as RabbitMQ
+    participant GS as gamification-service
+    participant PS as progress-service
+    participant NS as notification-service
+    participant C as Cliente Angular
+
+    MQ->>GS: consume scoring.completed
+    GS->>GS: actualizar streak (Redis)
+    GS->>GS: evaluar logros desbloqueados
+    GS->>GS: actualizar leaderboard (Sorted Set)
+    GS->>MQ: publica achievement.unlocked (si aplica)
+
+    MQ->>PS: consume scoring.completed
+    PS->>PS: actualizar vista materializada CQRS
+    PS->>PS: recalcular ruta adaptativa F7
+
+    MQ->>NS: consume scoring.completed
+    NS->>C: WSS push "Tu análisis está listo"
+
+    MQ->>NS: consume achievement.unlocked
+    NS->>C: WSS push "Nuevo logro: 10 sesiones"
+
+    Note over C,PS: Cuando el usuario abre el dashboard
+    C->>PS: GET /v1/progress/dashboard
+    PS-->>C: 200 (vista pre-calculada, respuesta inmediata)
+```
+
+**Decision Log — Iteration 2:**
+
+| ID | Decisión | Driver(s) | ADB | Estado |
 |---|---|---|---|---|
-| DD-11 | JWT RSA-256 + JWKS público para validación distribuida sin secretos compartidos. | QAS-05, P3 | ADB-14 | Aceptada |
-| DD-12 | Refresh tokens rotativos con almacenamiento hasheado. | QAS-05, C-14 | ADB-15 | Aceptada |
-| DD-13 | bcrypt cost 12 para hashing de contraseñas. | QAS-05, C-14 | ADB-16 | Aceptada |
-| DD-14 | Rate limiting combinado IP + user-id con backend Redis. | QAS-05 | ADB-17 | Aceptada |
-| DD-15 | OpenTelemetry W3C Trace Context para trazas distribuidas. | QAS-11, AC-11 | ADB-20 | Aceptada |
-| DD-16 | Evento `UserProfileUpdated` para sincronizar segmento académico al `ai-feedback-service`. | US08, AC-01 | ADB-19 | Aceptada |
-| DD-17 | S3 lifecycle policy para eliminar audio post-transcripción exitosa. | AC-08, C-09 | ADB-22 | Aceptada |
-| DD-18 | Spring Cloud Config para externalizar prompts y umbrales del LLM. | QAS-07, AC-03 | ADB-21 | Aceptada |
+| DD-11 | JWT RSA-256 asimétrico + JWKS público: el API Gateway valida tokens sin llamar al `identity-service` en cada request. | QAS-05, C-14 | ADB-14 | Aceptada |
+| DD-12 | Refresh Token Rotation: cada uso genera un token nuevo y revoca el anterior; almacenamiento hasheado en BD. | QAS-05, C-14, US28 | ADB-15 | Aceptada |
+| DD-13 | Zipkin + Spring Sleuth para distributed tracing: Trace ID propagado en `X-B3-TraceId` (HTTP) y campo `trace_id` (RabbitMQ). | QAS-11, P6 | ADB-21 | Aceptada |
+| DD-14 | Trace ID embebido en el payload de todos los eventos RabbitMQ para trazar el pipeline asincrónico completo. | QAS-11, AC-11 | ADB-21 | Aceptada |
+| DD-15 | El audio de sesión nunca se persiste en storage. Gemini Live entrega el `transcript_gemini` en tiempo real durante la sesión y `live-coach-service` calcula las métricas acústicas (WPM, silenceRatio, volumeRmsAvg) en memoria; al cerrar la sesión, los chunks de audio se descartan. Cumple la Ley 29733 *by-design* (dato biométrico nunca en reposo). | AC-08, C-09 | ADB-22 | Aceptada |
+| DD-16 | Un usuario PostgreSQL por schema de Supabase (principio de mínimo privilegio). | C-03, P4 | ADB-13 | Aceptada |
+| DD-17 | Dead Letter Exchange `talki.dlx` para mensajes que fallan más de 3 veces; permite reproceso manual. | QAS-03 | ADB-07 | Aceptada |
+| DD-18 | Redis Sorted Sets en `gamification-service` para streaks, leaderboard semanal y set de logros (respuesta O(log N) sin queries SQL de agregación). | US18, US19 | ADB-19 | Aceptada |
 
 #### 4.3.2.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
 
-<table>
-  <thead>
-    <tr>
-      <th>Por hacer</th>
-      <th>En progreso</th>
-      <th>Hecho</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <strong>ADB-18</strong> — Flujo de recuperación de contraseña con token TTL ≤ 30 min. <em>Drivers: US07, QAS-05.</em><br><br>
-        <strong>ADB-19</strong> — Edición de perfil + evento <code>UserProfileUpdated</code>. <em>Drivers: US08, US23.</em>
-      </td>
-      <td>
-        <strong>ADB-13</strong> — Contratos REST de auth (parcial: <code>/login</code> y <code>/register</code> definidos; <code>/refresh</code> y <code>/logout</code> en revisión).<br><br>
-        <strong>ADB-20</strong> — Instrumentación OpenTelemetry (agent integrado, dashboards pendientes). <em>Cierra ADB-12 de Iteration 1.</em>
-      </td>
-      <td>
-        <strong>ADB-14</strong> — JWT RSA-256 + JWKS. <em>Drivers: US06, QAS-05.</em><br><br>
-        <strong>ADB-15</strong> — Refresh token rotativo. <em>Drivers: US28, QAS-05, C-14.</em><br><br>
-        <strong>ADB-16</strong> — bcrypt cost 12. <em>Drivers: QAS-05, C-14.</em><br><br>
-        <strong>ADB-17</strong> — Rate limiting IP + user-id. <em>Drivers: QAS-05.</em><br><br>
-        <strong>ADB-21</strong> — Spring Cloud Config para prompts. <em>Cierra ADB-10. Drivers: QAS-07, AC-03.</em><br><br>
-        <strong>ADB-22</strong> — S3 lifecycle policy. <em>Drivers: AC-08, C-09.</em>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Por hacer | En progreso | Hecho |
+|---|---|---|
+| — | — | ADB-13 — identity-service (contratos REST completos) |
+| — | — | ADB-14 — JWT RSA-256 + JWKS |
+| — | — | ADB-15 — Refresh Token Rotation |
+| — | — | ADB-16 — bcrypt cost 12 |
+| — | — | ADB-17 — user.registered → notification-service |
+| — | — | ADB-18 — progress-service (CQRS + vistas materializadas) |
+| — | — | ADB-19 — gamification-service (Redis Sorted Sets) |
+| — | — | ADB-20 — notification-service (WSS push + email) |
+| — | — | ADB-21 — Zipkin + Spring Sleuth (tracing distribuido) |
+| — | — | ADB-22 — Lifecycle audio Supabase (Ley 29733) |
 
-**Análisis del cumplimiento del Iteration Goal**
+**Análisis del cumplimiento del Iteration Goal:**
 
 | Driver | Estado | Evidencia |
 |---|---|---|
-| US05, US06, US28 | Cubierto | Contratos REST definidos, JWT con JWKS, refresh rotativo. |
-| US07, US08, US23 | Parcial | US07 y US08 quedan como ítems en *En progreso* / *Por hacer*. |
-| QAS-05 | Cubierto | bcrypt + rate limiting + JWT corto + revocación. |
-| QAS-06 | Heredado | TLS 1.2+ obligatorio (constraint C-07 ya respetado). |
-| QAS-11 | Parcial | Trace propagation diseñada; dashboards y alertas en *En progreso*. |
-| C-09, C-14, AC-08 | Cubierto | Política de retención S3, hashing bcrypt, consentimiento al registro. |
-| AC-03 | Cubierto (cerrado) | Externalización con Spring Cloud Config (ADB-21). |
+| US05, US06, US07, US08, US28 | Cubierto | Contratos REST definidos, JWT RSA-256, bcrypt, refresh rotation, JWKS. |
+| US18, US19 | Cubierto | gamification-service con Redis Sorted Sets, streaks, logros y leaderboard. |
+| US20–US22 | Cubierto | progress-service con CQRS y vistas materializadas para F9 y F7. |
+| QAS-05 | Cubierto | bcrypt + rate limiting + JWT TTL corto + revocación de refresh tokens. |
+| QAS-11 | Cubierto | Zipkin + Spring Sleuth con Trace ID en HTTP y eventos RabbitMQ. |
+| C-09, AC-08 | Cubierto | Eliminación de audio post-transcripción (Ley 29733). |
+| C-14 | Cubierto | JWT RSA-256 + refresh tokens rotativos + bcrypt cost 12. |
 
-**Conclusión de la Iteration 2.** Esta segunda iteración demuestra el ciclo iterativo del método ADD (paso 8: *repetir 2 a 7*) y cierra los ítems heredados ADB-10, ADB-11 y ADB-12 de la Iteration 1. El sistema ahora cuenta con identidad funcional, garantías de seguridad explícitas (QAS-05/QAS-06), trazabilidad transversal (QAS-11) y cumplimiento de la Ley 29733 de Protección de Datos Personales (C-09/AC-08). Las iteraciones subsiguientes (no documentadas en este avance) abordarán el `progress-service` con CQRS (US20, US21, US22, QAS-09), el `ai-feedback-service` extendido con recomendaciones de léxico (US18) y el `notification-service` para alertas asíncronas al usuario.
+**Vista consolidada del sistema tras Iteration 2 (arquitectura final):**
 
-<hr class="page-break">
+| # | Elemento | Estado |
+|---|---|---|
+| 1 | `api-gateway` (Spring Cloud Gateway) | Completo |
+| 2 | `config-server` (Spring Cloud Config) | Completo |
+| 3 | `identity-service` | Completo |
+| 4 | `session-service` | Completo |
+| 5 | `live-coach-service` | Completo |
+| 6 | `scenario-catalog-service` | Diferido al sprint siguiente |
+| 7 | `media-service` | Diferido al sprint siguiente |
+| 8 | `filler-detection-service` | Completo |
+| 9 | `scoring-service` | Completo |
+| 10 | `progress-service` | Completo |
+| 11 | `gamification-service` | Completo |
+| 12 | `notification-service` | Completo |
+| 13 | RabbitMQ (exchange `talki.events` + DLX `talki.dlx`) | Completo |
+
+**Conclusión de la Iteration 2.** Esta iteración cierra el diseño arquitectónico completo del sistema Talki con 10 microservicios de negocio + 3 de infraestructura. El ciclo de vida del usuario queda habilitado de extremo a extremo: registro seguro → práctica con IA → análisis asincrónico → feedback con score → progreso y gamificación → notificaciones push. Los 8 principios arquitectónicos declarados en la sección 4.1 quedan trazados a decisiones de diseño explícitas (DD-01 a DD-18). La observabilidad transversal (Zipkin + Spring Sleuth para trazas distribuidas, Spring Boot Actuator para métricas) permite diagnóstico de incidentes en ≤ 5 min (QAS-11). El cumplimiento de la Ley 29733 queda garantizado de forma nativa: el audio biométrico nunca se persiste, ya que Gemini Live entrega el `transcript_gemini` en tiempo real (DD-15, ADB-22).
+
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo V: Product Implementation, Validation & Deployment
 
@@ -3623,19 +3471,293 @@ sequenceDiagram
 
 ### 5.1.1. Backend Application Core Testing Suite
 
+El proyecto Talki constituye un conjunto integral de pruebas diseñadas para garantizar la estabilidad, fiabilidad y correcto funcionamiento de los componentes centrales de la aplicación. Esta suite abarca pruebas unitarias, de integración y de comportamiento que validan desde la lógica de negocio encapsulada en los servicios hasta la correcta interacción con capas como los repositorios y controladores REST. Utilizando herramientas como **JUnit 5**, **Mockito** y **Spring Boot Test**, se asegura que cada componente del backend funcione de manera aislada y conjunta conforme a los requisitos definidos. Esta estrategia de pruebas favorece una detección temprana de errores, facilita la refactorización segura del código y fortalece la mantenibilidad del sistema, lo que es esencial para el desarrollo ágil y continuo de software de calidad.
 
+La estrategia de pruebas sigue la **pirámide de testing** adaptada a una arquitectura de microservicios Spring Boot, con niveles diferenciados que equilibran velocidad de ejecución, cobertura y confianza en el sistema desplegado.
+
+#### Nivel 1 — Pruebas unitarias (Unit Tests)
+
+Cubren la lógica de negocio pura de cada servicio de forma aislada, sin levantar el contexto de Spring ni dependencias externas. Son la base de la pirámide y deben ejecutarse en todo pipeline de CI.
+
+| Servicio | Clases bajo prueba | Framework | Objetivo de cobertura |
+|---|---|---|---|
+| `live-coach-service` | `LiveCoachOrchestrator`, `SessionModeStrategyFactory`, `QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy` | JUnit 5 + Mockito | ≥ 80 % de líneas en capa de dominio (QAS-10) |
+| `session-service` | `SessionCommandServiceImpl`, `SessionQueryServiceImpl` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `identity-service` | `AuthService`, `JwtTokenProvider` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `scoring-service` | `ScoreCalculator`, `VoiceScore`, `FillerAnalyzedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `progress-service` | `UserProgress`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `gamification-service` | `UserStreak`, `ScoringCompletedConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+| `notification-service` | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` | JUnit 5 + Mockito | ≥ 75 % de líneas |
+
+Los clientes de servicios externos (Gemini Live API) son interfaces inyectadas por constructor y se sustituyen por dobles de prueba (`Mockito.mock`) que retornan respuestas predefinidas, garantizando ejecuciones deterministas en menos de 60 segundos (QAS-10).
+
+**Convenciones de nomenclatura:**
+```
+<ClaseBajoPrueba>Test
+  └── <método>_when<Condición>_should<Resultado>()
+```
+
+![JUnit5yMockito1](assets/images/Backend/JUnit5yMockito1.png)
+![JUnit5yMockito2](assets/images/Backend/JUnit5yMockito2.png)
+![JUnit5yMockito3](assets/images/Backend/JUnit5yMockito3.png)
+![JUnit5yMockito4](assets/images/Backend/JUnit5yMockito4.png)
+
+#### Nivel 2 — Pruebas de integración (Integration Tests)
+
+Verifican la interacción entre la lógica de aplicación y la infraestructura real (base de datos, bus de mensajes). Se levanta un contenedor Docker efímero mediante **Testcontainers** para cada suite de integración.
+
+| Servicio | Infraestructura levantada | Qué se verifica |
+|---|---|---|
+| `session-service` | PostgreSQL 15 (Testcontainers) | Persistencia de agregado `Session`, consultas JPA y transacciones |
+| `filler-detection-service` | PostgreSQL 15 + RabbitMQ 3 (Testcontainers) | Consumo de `session.live.finalized` con `transcript_gemini`, detección regex + ONNX y publicación de `fillers.analyzed` |
+| `scoring-service` | PostgreSQL 15 + Redis (Testcontainers) | Consumo de `fillers.analyzed`, cálculo de 5 dimensiones y caché en Upstash Redis |
+| `identity-service` | PostgreSQL 15 (Testcontainers) | Registro, login, refresh token y revocación |
+| `progress-service` | PostgreSQL 15 (Testcontainers) | Proyección CQRS: escritura de vista materializada al consumir `scoring.completed` |
+
+Las pruebas de integración usan la anotación `@SpringBootTest(webEnvironment = RANDOM_PORT)` con `@ActiveProfiles("test")` para cargar un `application-test.yml` que apunta al contenedor efímero en lugar de la base de datos de producción.
+
+#### Nivel 3 — Pruebas BDD (Behavior-Driven Development)
+
+Los criterios de aceptación de las User Stories del Capítulo III están formulados en sintaxis **Given-When-Then**. Se convierten en pruebas ejecutables usando **Cucumber 7** con los steps definidos en Java, conectado a un contexto Spring de prueba.
+
+Cada feature file cubre un User Story primario y se almacena en `src/test/resources/features/`:
+
+```gherkin
+# features/session/finalize-session.feature
+Feature: Finalizar sesión de práctica (US14)
+
+  Scenario: Finalización exitosa con transcripción de Gemini y evento publicado
+    Given un estudiante autenticado con sesión activa "session-001"
+    When el live-coach-service cierra el WebSocket de Gemini Live
+    Then se calculan las métricas acústicas en memoria (WPM, silence_ratio, volume_rms_avg)
+    And se publica el evento "session.live.finalized" en RabbitMQ con el transcript_gemini
+    And la sesión queda en estado "PROCESSING"
+
+  Scenario: Finalización cuando el filler-detection-service falla tras 3 reintentos
+    Given un estudiante autenticado con sesión activa "session-002"
+    And el filler-detection-service falla con excepción en el tercer reintento
+    When el evento "session.live.finalized" es procesado
+    Then el mensaje pasa a la Dead Letter Queue "talki.dlx"
+    And la sesión queda en estado "ANALYSIS_PENDING"
+```
+
+![finalize-session](assets/images/Backend/finalize-session.png)
+
+#### Nivel 4 — Pruebas de contrato (Consumer-Driven Contract Tests)
+
+Se definen contratos **Pact** entre consumidores y proveedores de API para detectar regresiones de contrato antes del despliegue (táctica declarada en 4.1.7):
+
+| Consumidor | Proveedor | Contratos verificados |
+|---|---|---|
+| Angular SPA | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress`, `/v1/scores`, `/v1/gamification` |
+| `filler-detection-service` | `live-coach-service` | Evento `session.live.finalized` con `transcript_gemini` (esquema AMQP) |
+| `scoring-service` | `filler-detection-service` | Evento `fillers.analyzed` (esquema AMQP) |
+| `progress-service` | `scoring-service` | Evento `scoring.completed` (esquema AMQP) |
+| `notification-service` | `gamification-service` | Evento `achievement.unlocked` (esquema AMQP) |
+
+Los contratos Pact se publican en un **Pact Broker** y el pipeline de CI verifica la compatibilidad en cada build antes de hacer merge a `main`.
+
+---
 
 ### 5.1.2. Pattern Based Backend Application(s)
 
+Esta sección documenta cómo los patrones de diseño arquitectónico y de comportamiento declarados en la sección 4.1.6 se materializan en la estructura de código de cada microservicio Spring Boot.
 
+> _**Nota sobre evidencias visuales.** Las capturas de pantalla del código de cada patrón (repositorios, fachadas ACL, servicios CQRS, entidades JPA, refactors RF-01 a RF-05) se incorporarán en el sprint de evidencia correspondiente al entregable TB3. El código referenciado ya está implementado y verificado en los repos `talki-user-services`, `talki-session-services`, `talki-analysis-services` y `talki-engagement-services` bajo la organización `upc-pre-202601-si657-7940-thropic`, con **128 unit tests pasando**._
+
+#### Estructura de paquetes por microservicio
+
+Todos los microservicios de Talki siguen una estructura de paquetes homogénea derivada de la **arquitectura hexagonal** (Ports & Adapters), adaptada a las convenciones de Spring Boot:
+
+```
+com.thropic.talki.<service>/
+├── domain/
+│   ├── model/          # Entidades, Value Objects y Agregados DDD
+│   ├── event/          # Domain Events (POJO serializables)
+│   ├── port/
+│   │   ├── in/         # Casos de uso (interfaces de entrada)
+│   │   └── out/        # Repositorios e interfaces de salida
+│   └── service/        # Lógica de dominio pura (sin framework)
+├── application/
+│   └── service/        # Orquestadores: implementan puertos de entrada
+├── infrastructure/
+│   ├── adapter/
+│   │   ├── web/        # @RestController (adaptadores primarios)
+│   │   ├── persistence/# @Repository JPA (adaptadores secundarios)
+│   │   └── messaging/  # Listeners y publishers RabbitMQ
+│   └── config/         # @Configuration beans de Spring
+└── shared/
+    └── dto/            # DTOs de entrada y salida de la API
+```
+
+**- Patrón Repository:** Crea una capa de abstracción entre la lógica de negocio de la aplicación y el mecanismo de almacenamiento de datos. Cada microservicio accede a su base de datos exclusivamente a través de interfaces de repositorio (`AppUserRepository` en `identity-service`, `SessionRepository` y `FeedbackRepository` en `session-service`, `ScoreResultRepository` en `scoring-service`). Las implementaciones JPA son intercambiables en pruebas y la lógica de negocio no contiene código SQL directo.
+
+![SessionRepository](assets/images/Backend/SessionRepository.png)
+
+![AppUserRepository](assets/images/Backend/UserRepository.png)
+
+![FeedbackRepository](assets/images/Backend/FeedbackRepository.png)
+
+**- Patrón ACL (Anti-Corruption Layer):** Implementa una capa de fachada entre diferentes bounded contexts que no comparten la misma semántica. Se encarga de traducir las solicitudes de un subsistema a otro sin exponer los modelos internos de dominio. En Talki, la clase `SessionContextFacade` actúa como ACL entre el `session-service` y los servicios externos (`progress-service`, `notification-service`).
+
+![SessionContextFacade](assets/images/Backend/SessionContextFacade.png)
+
+**- Patrón CQRS:** Divide las operaciones del sistema en dos modelos distintos: uno para las consultas (lectura de datos) y otro para los comandos (escritura, actualización y eliminación de datos). En Talki, `SessionCommandService` gestiona las operaciones de creación y finalización de sesiones, mientras que `SessionQueryService` maneja exclusivamente las lecturas.
+
+![SessionCommandServiceImpl](assets/images/Backend/SessionCommandServiceImpl.png)
+
+![SessionQueryServiceImpl](assets/images/Backend/SessionQueryServiceImpl.png)
+
+**- Patrón DTO (Data Transfer Object):** Usado para encapsular un conjunto de datos de modo que puedan ser transferidos entre procesos o capas de la aplicación, como por ejemplo desde las peticiones de la capa de presentación hacia la capa de dominio. En Talki se utilizan `CreateSessionRequest` como DTO de entrada y los endpoints del `SessionController` devuelven la entidad `Session` como respuesta JSON.
+
+![CreateSessionRequest](assets/images/Backend/CreateSessionRequest.png)
+
+![SessionController](assets/images/Backend/SessionController.png)
+
+#### Patrón Strategy — `live-coach-service`
+
+El modo de sesión determina en tiempo de ejecución qué system prompt se carga para Gemini Live y cómo se configura la conversación:
+
+```
+SessionModeStrategy (interface, dominio)
+├── QuickPracticeStrategy    → coach silencioso, feedback al final
+├── InterviewStrategy        → reclutador de empresa, 5 preguntas progresivas
+├── ThesisDefenseStrategy    → jurado académico, 3 preguntas metodológicas
+└── ScenarioStrategy         → rol definido en el catálogo de escenarios peruanos
+
+SessionModeStrategyFactory → instancia la estrategia según el parámetro `mode`
+LiveCoachOrchestrator      → delega en la estrategia; no conoce sus detalles internos
+```
+Permite agregar un nuevo modo de práctica (e.g. `PresentationStrategy`) sin modificar el orquestador ni los demás servicios (Open/Closed Principle, QAS-07).
+
+#### Patrón Saga por coreografía — flujo de sesión finalizada
+
+El flujo `session.live.finalized → fillers.analyzed → scoring.completed → [progress + gamification + notificación]` se implementa como una **Saga de coreografía** sobre el exchange `talki.events` de RabbitMQ:
+
+```
+live-coach-service         → publica session.live.finalized con transcript_gemini
+                             y métricas acústicas calculadas en memoria
+  filler-detection-service → consume session.live.finalized, aplica regex + ONNX
+                             sobre transcript_gemini, publica fillers.analyzed
+  scoring-service          → consume fillers.analyzed, calcula 5 dimensiones,
+                             publica scoring.completed
+  progress-service         → consume scoring.completed → actualiza vista CQRS
+  gamification-service     → consume scoring.completed → evalúa streaks y logros,
+                             publica achievement.unlocked (si aplica)
+  notification-service     → consume scoring.completed y achievement.unlocked,
+                             envía push por WebSocket al cliente Angular
+```
+
+Cada servicio es idempotente: reintenta el procesamiento del mismo evento hasta tres veces con backoff exponencial antes de enviarlo a la **Dead Letter Exchange (talki.dlx)** para inspección manual.
+
+---
 
 ### 5.1.3. Pattern Based Custom Software Library
 
+Talki centraliza el código compartido entre microservicios en el módulo Maven interno **`talki-commons`**, publicado en el repositorio de paquetes de GitHub (`packages.github.com/upc-pre-202601-si657-7940-thropic`). Los microservicios lo declaran como dependencia en su `pom.xml`. Esta librería aplica los siguientes patrones del framework Spring:
 
+**- Factory Method:** En Spring, la configuración y la creación de instancias de objetos se realizan mediante las anotaciones `@Bean` y `@Component`. Esto permite utilizar el patrón Factory Method para crear instancias de objetos de manera flexible y desacoplada. Cada microservicio expone una clase `@Configuration` que centraliza la creación de sus beans de infraestructura (clientes de RabbitMQ, configuración de seguridad, fachadas ACL, propiedades externalizadas).
+
+![BeanConfiguration](assets/images/Backend/BeanConfiguration.png)
+
+**- JPA Entity Field:** El patrón de diseño JPA Entity se emplea para representar objetos de dominio en una base de datos relacional, utilizando la anotación `@Entity`. En Talki, las clases `AppUser` (en `identity-service`), `Session` y `Feedback` (en `session-service`) y `ScoreResult` (en `scoring-service`) son entidades JPA que mapean directamente a tablas en PostgreSQL, con sus campos anotados con `@Column`, `@Id` y `@GeneratedValue`. Cada entidad reside en el schema del bounded context al que pertenece (database-per-service).
+
+![Session](assets/images/Backend/Session.png)
+
+![AppUser](assets/images/Backend/User.png)
+
+**- Foreign Key Mapping:** En Spring Data JPA, este concepto implica mapear las relaciones entre entidades **dentro del mismo bounded context** mediante anotaciones como `@ManyToOne` y `@OneToMany`. En Talki, la entidad `Session` tiene una relación `@OneToMany` hacia `Feedback` dentro del mismo schema del `session-service` (una sesión puede tener múltiples feedbacks intra-BC). Las correlaciones entre bounded contexts (por ejemplo, `Session` ↔ `ScoreResult` en `scoring-service`) **no** se modelan con JPA: se realizan por `session_id` propagado en los eventos del exchange `talki.events`, respetando el patrón *database-per-service*.
+
+![SessionMany](assets/images/Backend/SessionMany.png)
+
+![ScoreResult](assets/images/Backend/Feedback.png)
+
+**- Data Mapper:** Este patrón se encarga de la transferencia de datos entre objetos y la base de datos, asegurando la independencia entre ambos, mediante el uso de **Hibernate ORM**. Spring Data JPA abstrae el acceso a datos y Hibernate actúa como Data Mapper, convirtiendo automáticamente las entidades Java en registros de base de datos y viceversa, sin que el código de dominio conozca los detalles de persistencia.
+
+![Hibernate](assets/images/Backend/Hibernate.png)
+
+#### Contenido del módulo `talki-commons`
+
+| Paquete | Clases / Interfaces | Propósito |
+|---|---|---|
+| `com.thropic.talki.commons.event` | `SessionLiveFinalizedEvent`, `FillerAnalyzedEvent`, `ScoringCompletedEvent`, `AchievementUnlockedEvent`, `UserRegisteredEvent` | Contratos de eventos de dominio compartidos entre productor y consumidor. Garantizan que el esquema del exchange `talki.events` sea idéntico en ambos extremos. |
+| `com.thropic.talki.commons.dto` | `ApiErrorResponse`, `PagedResponse<T>` | DTOs estándar de respuesta de error y paginación para todos los endpoints REST. |
+| `com.thropic.talki.commons.security` | `JwtClaimsExtractor`, `ServiceTokenValidator` | Utilidades para extraer claims del JWT RSA-256 y validar tokens de servicio en comunicaciones internas. |
+| `com.thropic.talki.commons.exception` | `DomainException`, `ResourceNotFoundException`, `ConflictException` | Jerarquía de excepciones de dominio con sus códigos de error estandarizados. |
+| `com.thropic.talki.commons.messaging` | `RabbitMqConfig` (abstracta), `DeadLetterQueueConfig`, `OutboxPoller` | Configuración base del exchange `talki.events` (topic, durable), DLX `talki.dlx` y el poller del patrón Outbox que garantiza entrega at-least-once. |
+
+#### Versionado y compatibilidad
+
+El módulo sigue **Semantic Versioning** (SemVer). Los cambios en los esquemas de evento se consideran **breaking changes** (incremento de versión mayor) y requieren:
+1. Publicar la nueva versión del evento en `talki-commons`.
+2. Actualizar el productor para publicar el nuevo esquema.
+3. Actualizar todos los consumidores registrados antes de eliminar la versión anterior.
+
+Los contratos Pact verificados en CI (sección 5.1.1) detectan de forma automática cualquier incompatibilidad introducida en `talki-commons` antes de que llegue a `main`.
+
+---
 
 ### 5.1.4. Framework Pattern Driven Refactoring Report
 
+En esta sección se identifican las áreas clave donde se mejoró la modularidad y la mantenibilidad del backend de Talki, diseñado para el aprendizaje y práctica de presentaciones orales. Cada refactorización aplica un patrón del framework Spring Boot y documenta la situación anterior, el cambio realizado y el beneficio obtenido.
 
+#### RF-01 — Migración de modelo anémico a modelo de dominio rico
+
+**Situación inicial.** Los primeros borradores del `session-service` modelaban `Session` como un POJO sin comportamiento, con toda la lógica en clases `@Service` de Spring que manipulaban el estado directamente mediante setters.
+
+**Refactorización.** Se movió la lógica de transición de estados (`DRAFT → RECORDING → PROCESSING → COMPLETED`) al propio agregado `Session`, que ahora expone métodos de dominio (`start()`, `finalize()`, `markAsCompleted()`) y emite Domain Events internamente. Los servicios de aplicación se limitan a orquestar la llamada y persistir el resultado.
+
+**Beneficio.** Las reglas de negocio son verificables con tests unitarios puros sin contexto Spring. La cobertura del dominio en `session-service` pasó del 41 % al 82 %, superando el objetivo de QAS-10.
+
+![SessionStart](assets/images/Backend/SessionStart.png)
+
+#### RF-02 — Eliminación de dependencias cíclicas entre capas
+
+**Situación inicial.** Clases de infraestructura (repositorios JPA) eran importadas directamente en clases de dominio, creando dependencias circulares detectadas por ArchUnit.
+
+**Refactorización.** Se introdujeron las interfaces de puerto (`SessionRepository`, `FeedbackRepository`) en el paquete `domain/port/out/`. Las implementaciones JPA en `infrastructure/` dependen de las interfaces, no al revés, cumpliendo la **Regla de Dependencia** de la arquitectura hexagonal.
+
+**Verificación continua.** Se añadió una suite de ArchUnit en el pipeline de CI que falla el build si cualquier clase de `domain/` importa un tipo de `infrastructure/`:
+
+```java
+@ArchTest
+static final ArchRule domainMustNotDependOnInfrastructure =
+    noClasses().that().resideInAPackage("..domain..")
+               .should().dependOnClassesThat()
+               .resideInAPackage("..infrastructure..");
+```
+
+![BackendFull](assets/images/Backend/Backend.png)
+
+#### RF-03 — Reemplazo de llamadas síncronas entre servicios por eventos asíncronos
+
+**Situación inicial.** Al cerrar una sesión, el `live-coach-service` llamaba por HTTP REST al `filler-detection-service` y este a su vez al `scoring-service`, encadenando llamadas síncronas que bloqueaban el hilo y generaban latencias de 4-8 s para el usuario (incumplimiento de QAS-02: ≤ 500 ms en P95).
+
+**Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre el exchange `talki.events` de RabbitMQ (documentado en 5.1.2). El `live-coach-service` calcula las métricas acústicas en memoria, publica `session.live.finalized` con el `transcript_gemini` ya generado por Gemini Live y libera el WebSocket inmediatamente; todo el pipeline post-sesión (`filler-detection-service` → `scoring-service` → `progress-service` + `gamification-service` + `notification-service`) procede de forma asíncrona con el patrón Outbox garantizando entrega at-least-once.
+
+**Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente ≤ 1 s gracias a la eliminación del paso STT post-sesión), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
+
+![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png)
+
+#### RF-04 — Externalización de configuración variable (Spring Cloud Config)
+
+**Situación inicial.** Los system prompts de Gemini Live, los umbrales de detección de muletillas y los parámetros de puntuación de las 5 dimensiones estaban hardcodeados como constantes en `live-coach-service`, `filler-detection-service` y `scoring-service` respectivamente.
+
+**Refactorización.** Se adoptó **Spring Cloud Config** con un repositorio Git privado como backend de configuración (alineado con la táctica "Parametrizar reglas variables" de 4.1.7 y con C-13 de externalización de configuración). Los parámetros variables se leen desde `@ConfigurationProperties` y se actualizan en caliente mediante `@RefreshScope` sin necesidad de redeploy del servicio.
+
+**Beneficio.** Cumple la táctica de modificabilidad "Parametrizar reglas variables" (sección 4.1.7) y el constraint AC-03. Permite ajustar las reglas de análisis sprint a sprint sin ciclo completo de build y despliegue.
+
+![application](assets/images/Backend/Application.png)
+
+#### RF-05 — Adopción de `@ControllerAdvice` para manejo global de excepciones
+
+**Situación inicial.** Cada controlador `@RestController` capturaba sus propias excepciones con bloques `try-catch` individuales, produciendo respuestas de error con formatos inconsistentes entre servicios.
+
+**Refactorización.** Se centralizó el manejo de excepciones en un `GlobalExceptionHandler` anotado con `@RestControllerAdvice` por servicio, que mapea la jerarquía de excepciones de `talki-commons` (RF definidas en 5.1.3) al DTO `ApiErrorResponse` estándar con campos `code`, `message` y `timestamp`.
+
+**Beneficio.** Contratos de error predecibles para el frontend Angular. Simplificación de los controladores (eliminación de 340 líneas de boilerplate en el conjunto de servicios). Coherencia verificable con los contratos Pact definidos en 5.1.1.
+
+![GlobalExceptionHandler](assets/images/Backend/GlobalExceptionHandler.png)
 
 <hr class="page-break">
 
@@ -3643,219 +3765,642 @@ sequenceDiagram
 
 ### 5.2.1. Software Development Environment Configuration
 
+El entorno de desarrollo del producto Talki se compone de un *toolchain* unificado que el equipo Thropic adopta para cubrir todo el ciclo de vida del software, desde la planificación de Sprints hasta la operación de los microservicios en cloud. La selección está alineada con las decisiones técnicas declaradas en la sección 5.1 (suite de pruebas en cuatro niveles, librería compartida `talki-commons`, patrones de framework Spring) y prioriza herramientas gratuitas o con plan académico, integración nativa con GitHub y reproducibilidad del entorno local mediante contenedores. La siguiente tabla resume las diez categorías y las veintiocho herramientas seleccionadas, con su propósito y enlace oficial.
 
+| # | Categoría | Herramienta | Propósito | Enlace |
+|---|---|---|---|---|
+| 1 | Gestión de proyecto | GitHub Projects (v2) | Tablero Kanban del Product Backlog y Sprint Backlog con estados *Todo → In Progress → Review → Done*. Las 28 User Stories de la sección 3.2 son ítems del proyecto público [Talki — Product Backlog (TB1)](https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1) bajo la organización académica. Coherente con la integración nativa Issues ↔ Pull Requests del repositorio. | [github.com/features/projects](https://github.com/features/issues#project-management) |
+| 2 | Diseño UX/UI | Figma | Wireframes, mockups y prototipos navegables del frontend y la landing (Capítulo III). | [figma.com](https://www.figma.com) |
+| 3 | Modelado de arquitectura | Structurizr DSL | Diagramas C4 (Contexto, Contenedor, Componente) versionados como código (Capítulo IV). | [structurizr.com](https://structurizr.com) |
+| 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los ocho microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
+| 4 | IDEs y editores | WebStorm | IDE para el frontend Angular + TypeScript (`talki-frontend`). | [jetbrains.com/webstorm](https://www.jetbrains.com/webstorm/) |
+| 4 | IDEs y editores | Visual Studio Code | Editor para la landing page y para edición rápida del informe Markdown. | [code.visualstudio.com](https://code.visualstudio.com) |
+| 5 | Control de versiones | Git | Sistema de control de versiones distribuido. | [git-scm.com](https://git-scm.com) |
+| 5 | Control de versiones | GitHub | Plataforma de hosting de los repositorios y registro de paquetes de la organización `upc-pre-202601-si657-7940-thropic` (publicación del módulo `talki-commons`). | [github.com](https://github.com) |
+| 6 | API testing | Hoppscotch | Cliente HTTP/REST liviano para validar endpoints durante el desarrollo. | [hoppscotch.io](https://hoppscotch.io) |
+| 6 | API testing | Postman | Colecciones compartidas del equipo y pruebas manuales más complejas. | [postman.com](https://www.postman.com) |
+| 7 | Pruebas automatizadas | JUnit 5 | Framework base de pruebas unitarias del Nivel 1 de la pirámide (ver 5.1.1). | [junit.org/junit5](https://junit.org/junit5/) |
+| 7 | Pruebas automatizadas | Mockito | Dobles de prueba para clientes externos (Gemini Live API) inyectados por constructor. | [site.mockito.org](https://site.mockito.org) |
+| 7 | Pruebas automatizadas | Spring Boot Test | Anotación `@SpringBootTest` para pruebas de slice y de integración con contexto Spring. | [docs.spring.io/spring-boot/.../testing](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing) |
+| 7 | Pruebas automatizadas | Testcontainers | Contenedores efímeros (PostgreSQL 15, RabbitMQ 3, Redis) para el Nivel 2 de pruebas de integración. | [testcontainers.com](https://testcontainers.com) |
+| 7 | Pruebas automatizadas | Cucumber 7 | Ejecución de criterios de aceptación en Gherkin (Nivel 3, BDD) con `@language: es`. | [cucumber.io](https://cucumber.io) |
+| 7 | Pruebas automatizadas | Pact + Pact Broker | Consumer-Driven Contract Tests (Nivel 4) entre frontend / API Gateway y entre productores y consumidores de eventos AMQP. | [pact.io](https://pact.io) |
+| 7 | Pruebas automatizadas | ArchUnit | Validación de la regla de dependencia hexagonal (`domain/` no depende de `infrastructure/`) en cada build (RF-02). | [archunit.org](https://www.archunit.org) |
+| 7 | Pruebas automatizadas | k6 | Pruebas de carga del flujo end-to-end de sesión finalizada (RF-03, QAS-02). | [k6.io](https://k6.io) |
+| 8 | Documentación y configuración | Swagger / OpenAPI 3 | Especificación y exploración interactiva de los contratos REST de cada microservicio. | [swagger.io](https://swagger.io) |
+| 8 | Documentación y configuración | Spring Cloud Config | *Config server* con backend Git para parametrizar reglas variables (system prompts, umbrales) sin redeploy (ver RF-04). | [spring.io/projects/spring-cloud-config](https://spring.io/projects/spring-cloud-config) |
+| 9 | Observabilidad | Spring Boot Actuator | Endpoints `/actuator/health`, `/actuator/metrics`, `/actuator/prometheus` expuestos por cada microservicio. | [docs.spring.io/spring-boot/.../actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html) |
+| 9 | Observabilidad | Zipkin + Spring Sleuth | Trazas distribuidas con propagación del header `X-B3-TraceId` (HTTP) y campo `trace_id` (RabbitMQ) entre microservicios (DD-13 del Capítulo IV). | [zipkin.io](https://zipkin.io) |
+| 10 | CI/CD y despliegue | GitHub Actions | Orquestador de los *pipelines* de integración y entrega continua. | [github.com/features/actions](https://github.com/features/actions) |
+| 10 | CI/CD y despliegue | Docker | Contenerización de cada microservicio mediante `Dockerfile` versionado (`eclipse-temurin:17-jre-alpine`). | [docker.com](https://www.docker.com) |
+| 10 | CI/CD y despliegue | Docker Compose | Orquestación local de los microservicios y RabbitMQ vía `docker-compose.dev.yml` por mono-repo backend. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
+| 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Angular. | [vercel.com](https://vercel.com) |
+| 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los ocho microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
+| 7 | Pruebas automatizadas | SonarCloud | *Quality gate* automático sobre cada Pull Request con reglas Reliability A, Security A, Maintainability A, Coverage ≥ 75 % y Duplication ≤ 3 % (ver detalle en 5.2.5). | [sonarcloud.io](https://sonarcloud.io) |
+
+**Configuración del entorno de desarrollo por stack**
+
+Cada integrante del equipo replica un entorno local idéntico mediante el siguiente *baseline* de versiones, alineado con los `pom.xml` y los `Dockerfile` versionados en cada repositorio y consistente con la suite de pruebas descrita en 5.1.1.
+
+| Stack | Componente | Versión requerida | Notas |
+|---|---|---|---|
+| Backend (microservicios) | JDK | Eclipse Temurin 17 (LTS) | Coincide con el `<java.version>` declarado en cada `pom.xml` y con el `eclipse-temurin:17-jre-alpine` del `Dockerfile`. |
+| Backend (microservicios) | Apache Maven | 3.9+ | Build tool de los ocho microservicios; cada repo backend publica su `mvnw` (Maven Wrapper). |
+| Backend (microservicios) | Spring Boot | 3.2.5 | Versión declarada en el `parent` de cada `pom.xml`. |
+| Backend (microservicios) | Spring Cloud | 2023.0.x | Compatible con Spring Boot 3.2.x para el API Gateway (Spring Cloud Gateway) y para Spring Cloud Config. |
+| Backend (microservicios) | `talki-commons` | Versión publicada en GitHub Packages | Librería interna con contratos de eventos AMQP, DTOs estándar (`ApiErrorResponse`, `PagedResponse<T>`), utilidades de seguridad JWT y configuración base de RabbitMQ + DLX (ver 5.1.3). Cada microservicio la declara como dependencia en su `pom.xml`. |
+| Frontend principal | Node.js | 20 LTS | Coincide con `actions/setup-node@v4` del *workflow* de CI/CD. |
+| Frontend principal | npm | 10.x | Gestor de paquetes; `package-lock.json` versionado y cacheado en CI. |
+| Frontend principal | Angular CLI | 17.x | Coincide con la versión del `package.json` del `talki-frontend`. |
+| Landing | Node.js | 20 LTS | Solo necesario para el build estático y herramientas de linting. |
+| Contenedores | Docker Engine | 24+ | Requisito para levantar el `docker-compose.dev.yml` en local. |
+| Contenedores | Docker Compose | v2 | Plugin integrado a Docker Desktop; comando `docker compose up`. |
+| Mensajería local | RabbitMQ (vía Docker) | 3.12-management | Imagen `rabbitmq:3.12-management` levantada por Docker Compose en cada mono-repo backend, con UI en `http://localhost:15672` (`guest`/`guest`). El exchange `talki.events` y la *Dead Letter Exchange* `talki.dlx` los crea `talki-commons` al arrancar (ver 5.1.3). |
+| Persistencia local | H2 in-memory | Embebido en Spring Boot | Perfil `dev` de los microservicios para acelerar el arranque local; PostgreSQL 15 solo en *staging* y producción (ver 5.2.4). |
+| Caché local | Redis (vía Docker) | 7-alpine | Levantada bajo demanda por `scoring-service` para validar el caché de resultados; en producción se utiliza Upstash Redis gestionado. |
+| Almacenamiento de objetos | Supabase Storage (cloud) | — | Buckets para los materiales del usuario y exports (CV, plantillas, descargas) gestionados por `media-service`; el audio de sesión no se persiste (DD-15 / ADB-22). En local se accede directamente al *bucket* de desarrollo mediante credenciales en `.env.local`. |
+| IA generativa | Gemini 2.0 Flash Live | API HTTPS / WebSocket | Modelo configurado vía variable `GEMINI_MODEL=gemini-2.0-flash-live-001` en el `live-coach-service`. Genera la transcripción en tiempo real (`transcript_gemini`) eliminando la necesidad de un servicio STT post-sesión. Las pruebas unitarias sustituyen el cliente por un `Mockito.mock`. |
+
+**Levantamiento del entorno local**
+
+Cada uno de los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) incluye un `docker-compose.dev.yml` que orquesta sus microservicios junto con un *broker* RabbitMQ compartido del mono-repo. El procedimiento de arranque para un nuevo integrante es:
+
+1. Clonar el repositorio backend de interés (por ejemplo, `git clone <repo-url>`).
+2. Instalar JDK 17, Maven 3.9+ y Docker Desktop.
+3. Configurar las credenciales de GitHub Packages en `~/.m2/settings.xml` para resolver la dependencia `talki-commons`.
+4. Copiar `.env.example` a `.env` y completar las claves (`SUPABASE_URL`, `SUPABASE_KEY`, `GEMINI_API_KEY` cuando aplique al servicio).
+5. Compilar cada microservicio con `./mvnw -B clean package -DskipTests`.
+6. Ejecutar `docker compose -f docker-compose.dev.yml up --build` desde la raíz del mono-repo.
+7. Validar el arranque consultando el endpoint `/actuator/health` de cada servicio en su puerto asignado (ver tabla de la sección 5.2.2) y la consola de RabbitMQ en `http://localhost:15672`.
+
+Para el frontend principal y la landing, el levantamiento es independiente y no requiere Docker:
+
+1. Clonar el repositorio (`talki-frontend` o `talki-landing`).
+2. Instalar Node 20 LTS.
+3. Ejecutar `npm install` y luego `npm run start` (Angular) o `npm run dev` (landing).
+4. Configurar el archivo `.env.local` a partir de `.env.example`, apuntando `API_BASE_URL` al API Gateway local o al *staging* en Railway.
+
+Esta configuración garantiza que cualquier integrante del equipo pueda reproducir el entorno completo en menos de quince minutos a partir de un clon limpio, sin depender de servicios cloud activos para el desarrollo y la prueba unitaria.
 
 ### 5.2.2. Source Code Management
 
-Se utilizó **GitHub** como plataforma de control de versiones y colaboración en equipo.
+El equipo Thropic adopta **Git** como sistema de control de versiones distribuido y **GitHub** como plataforma central para alojar los repositorios del producto Talki bajo la organización académica `upc-pre-202601-si657-7940-thropic`. Sobre esa base se aplican las siguientes prácticas para garantizar trazabilidad, integración ordenada y colaboración entre integrantes.
 
-Los integrantes del equipo y sus nombres de usuario en GitHub son los siguientes:
+**Estrategia de ramificación: GitFlow**
 
-| Integrantes | Nombre en GitHub |
-|-------------|------------------|
-| Oroncoy Almeyda, Alejandro Daniel | alejooroncoy |
-| Rivera Sosa, Eduardo Gael | gael-rs |
-| Tumi Oliden, Manuel Ignacio | ManuelTumi2224 |
+El equipo aplica el modelo *GitFlow* descrito por Vincent Driessen, que define ramas con propósitos diferenciados y reglas claras de origen y destino para cada *merge*. Esta estrategia es coherente con el enfoque iterativo del Capítulo V (Sprints) y permite mantener la rama `main` siempre en estado desplegable.
+
+| Tipo de rama | Patrón de nombre | Origen | Destino | Propósito |
+|---|---|---|---|---|
+| Principal estable | `main` | — | — | Refleja el estado de producción del producto. Cada *merge* corresponde a una versión publicada. |
+| Integración | `develop` | `main` | `release/*` | Integra todo el trabajo en curso del equipo y alimenta los *release candidates*. |
+| Funcionalidad | `feature/<nombre>` | `develop` | `develop` | Desarrollo de una sección, User Story o conjunto cohesivo de cambios. |
+| Release candidate | `release/vX.X.X` | `develop` | `main` y `develop` | Estabilización previa al despliegue: ajustes finales y bumps de versión. |
+| Corrección crítica | `hotfix/<nombre>` | `main` | `main` y `develop` | Corrección urgente sobre producción que retorna a `develop` para preservar la línea de cambios. |
+
+Los nombres de rama se escriben en **minúsculas** y con **guiones** como separador (no *underscores*); por ejemplo, `feature/capitulo-v` o `hotfix/fix-caratula`. Esta convención se aplica también a los repositorios del informe y del producto.
+
+**Convención de mensajes de commit**
+
+Cada commit sigue una estructura inspirada en *Conventional Commits* y en la guía de mensajes de Tim Pope, garantizando legibilidad del historial:
+
+- **Línea 1 (asunto):** máximo **72 caracteres**, en español, redactado en tiempo imperativo (*Agrega*, *Corrige*, *Actualiza*) y sin punto final.
+- **Línea 2:** vacía, como separador obligatorio entre asunto y cuerpo.
+- **Línea 3 en adelante (cuerpo):** descripción libre del *qué* y el *por qué* del cambio, con líneas envueltas a aproximadamente 72 caracteres.
+
+Los prefijos sugeridos para clasificar el tipo de cambio son los siguientes:
+
+| Prefijo | Uso |
+|---|---|
+| `feat:` | Incorporación de una nueva sección, funcionalidad o contenido. |
+| `fix:` | Corrección de un defecto, error de contenido o problema de formato. |
+| `docs:` | Cambios en documentación auxiliar (CLAUDE.md, README, ADRs). |
+| `style:` | Ajustes de formato sin cambio de contenido (espaciado, indentación, page breaks). |
+| `chore:` | Tareas de mantenimiento del repositorio (`.gitignore`, configs, dependencias). |
+| `refactor:` | Reorganización interna sin cambio de comportamiento observable. |
+| `test:` | Adición o modificación de pruebas automatizadas. |
+
+**Ejemplo de commit válido:**
+
+```
+feat: agrega antecedentes y problemática del cap. I
+
+Se completan las secciones del framework 5W+2H con fuentes del
+MINSA y un análisis de la situación actual del mercado peruano
+de salud para sustentar la propuesta de valor.
+```
+
+**Flujo de Pull Request y revisión de código**
+
+Todo cambio se integra a `develop` exclusivamente mediante *Pull Request* (PR), nunca por *push directo*. El flujo aplicado por el equipo es el siguiente:
+
+1. El responsable crea una rama `feature/<nombre>` desde `develop`.
+2. Realiza commits atómicos siguiendo la convención descrita.
+3. Abre un PR hacia `develop` con título y descripción que resuman el alcance, los entregables tocados (sección del informe o módulo del código) y, cuando aplique, los identificadores trazables (US, ADB, DD, QAS).
+4. Al menos otro integrante revisa el PR; los comentarios pendientes se resuelven antes de aprobar.
+5. La integración se realiza preferentemente por *squash merge* o *merge commit* según el tipo de aporte, manteniendo la linealidad legible del historial.
+6. La rama `feature/*` se elimina del remoto tras el *merge* para evitar acumulación.
+
+**Versionamiento semántico**
+
+Los *releases* del producto siguen **Semantic Versioning** en formato `vMAYOR.MENOR.PARCHE` (por ejemplo, `v1.0.0`):
+
+- **MAYOR**: cambios incompatibles en la API pública o en la arquitectura.
+- **MENOR**: nuevas funcionalidades retrocompatibles.
+- **PARCHE**: correcciones de defectos retrocompatibles.
+
+Cada *release* se materializa en una rama `release/vX.X.X` y, al fusionarse a `main`, queda etiquetada con un *tag* del mismo nombre.
+
+**Estructura de repositorios**
+
+A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts* y un frontend único), el equipo materializa los siguientes siete repositorios bajo la organización `upc-pre-202601-si657-7940-thropic`. Para reducir la sobrecarga operativa de mantener nueve repositorios independientes, los microservicios backend se agrupan en **cuatro mono-repos por afinidad de dominio**: cada mono-repo contiene los microservicios que comparten *bounded context* o ciclo de vida operacional, junto con su `docker-compose.dev.yml` para levantamiento local conjunto. Cada repositorio mantiene su propio ciclo de GitFlow y *pipeline* de CI/CD independiente.
+
+| Repositorio | Tipo | Stack | Microservicios contenidos (puerto local) | Bounded Context / Rol |
+|---|---|---|---|---|
+| `talki-project-report` | Documentación | Markdown | — | Informe académico del curso (este documento). |
+| `talki-landing` | Frontend | HTML / CSS / JavaScript | — | Landing page pública del producto. |
+| `talki-frontend` | Frontend | Angular 17 + TypeScript | — | Aplicación web principal de Talki. |
+| `talki-user-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `identity-service` (8081), `notification-service` (8091) | Identity & Access BC + Notification BC. |
+| `talki-session-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `session-service` (8082), `live-coach-service` (8083), `scenario-catalog-service` (8084, sprint siguiente), `media-service` (8085, sprint siguiente) | Practice Session BC. |
+| `talki-analysis-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `filler-detection-service` (8086), `scoring-service` (8087) | Speech Analysis BC. |
+| `talki-engagement-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `progress-service` (8088), `gamification-service` (8089) | Progress & Metrics BC + Gamification. |
+
+En total, los cuatro mono-repos backend albergan **ocho microservicios Spring Boot** ya implementados, cada uno con su propio `pom.xml` y `Dockerfile`, manteniendo el principio de autonomía por servicio del Capítulo IV. La nomenclatura unificada `talki-<rol>` facilita el descubrimiento de repositorios y refuerza la identidad del producto dentro de la organización. Los servicios `scenario-catalog-service` (puerto 8084) y `media-service` (puerto 8085) definidos en el Capítulo IV se incorporarán en el sprint subsiguiente al mono-repo `talki-session-services`, completando el catálogo de 10 microservicios de negocio del diseño arquitectónico.
+
+**Asignación de puertos.** Los puertos listados corresponden a la configuración local de cada microservicio en su `application.yml` (perfil `dev`) y en el `docker-compose.dev.yml` del mono-repo. Los puertos siguen un esquema contiguo dentro del rango 8081–8091 que facilita su recordación durante el desarrollo. Adicionalmente, el ecosistema utiliza dos servicios de infraestructura compartidos: el **API Gateway** (Spring Cloud Gateway) en el puerto 8080 — único punto de entrada público al sistema — y el **Config Server** (Spring Cloud Config, ver RF-04) en el puerto 8888, ambos desplegados como proyectos independientes en Railway. En el entorno de producción de Railway, cada contenedor expone su servicio en el puerto que indica la variable `PORT` inyectada por la plataforma; las URLs internas usan el dominio `*.railway.internal` con el puerto asignado por Railway.
+
+Adicionalmente, el código compartido entre microservicios (contratos de eventos AMQP, DTOs estándar de respuesta de error y paginación, utilidades de seguridad JWT, configuración base del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx`) se centraliza en el módulo Maven interno **`talki-commons`**, descrito en detalle en la sección 5.1.3. Este módulo se publica como artefacto en **GitHub Packages** bajo la organización `upc-pre-202601-si657-7940-thropic`, y cada microservicio lo declara como dependencia en su `pom.xml`. Los cambios en `talki-commons` siguen Semantic Versioning estricto y los contratos Pact verificados en CI (sección 5.1.1) detectan de forma automática cualquier incompatibilidad introducida antes de llegar a `main`.
 
 ### 5.2.3. Source Code Style Guide & Conventions
 
+El equipo Thropic adopta un conjunto de convenciones de estilo de código que abarca todos los lenguajes presentes en el producto Talki. Estas convenciones se basan en guías reconocidas de la industria, garantizando legibilidad uniforme entre integrantes, facilitando el *code review* y reduciendo la fricción al incorporar nuevos colaboradores. Las reglas se aplican a todos los repositorios listados en la sección 5.2.2 y se validan mediante *linters* y *formatters* automáticos integrados en el pipeline de CI/CD.
 
+**Java + Spring Boot (microservicios backend)**
+
+Se sigue la [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) complementada con las convenciones idiomáticas del ecosistema Spring Boot.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 4 espacios, sin tabulaciones. |
+| Longitud de línea | Máximo 120 caracteres. |
+| Nombres de clase | `UpperCamelCase` (ej. `PracticeSessionService`, `FeedbackRepository`). |
+| Nombres de método y variable | `lowerCamelCase` (ej. `startSession`, `transcriptText`). |
+| Constantes | `UPPER_SNAKE_CASE` (ej. `MAX_SESSION_DURATION_SECONDS`). |
+| Nombres de paquete | Todo en minúsculas, separados por punto: `com.thropic.talki.session.application`. |
+| Estructura de paquetes | Por *feature* y capa (`domain`, `application`, `infrastructure`, `interfaces`) siguiendo Hexagonal Architecture. |
+| Anotaciones Spring | `@Service`, `@Repository`, `@RestController`, `@Component` explícitas según rol del bean. |
+| DTOs | Sufijo `Request` o `Response` (ej. `CreateSessionRequest`, `FeedbackResponse`). |
+| Excepciones | Sufijo `Exception` (ej. `SessionNotFoundException`); excepciones de dominio extienden `RuntimeException`. |
+| Imports | Sin *wildcards* (`import java.util.*;` prohibido). |
+| Validación | Bean Validation (`@Valid`, `@NotNull`, `@Size`) en DTOs de entrada. |
+| Logging | SLF4J con niveles `INFO` para hitos de negocio, `WARN` para condiciones recuperables y `ERROR` para fallos. Sin `System.out.println`. |
+
+**TypeScript + Angular (frontend principal)**
+
+Se sigue la [Angular Style Guide oficial](https://angular.dev/style-guide) y la [Airbnb JavaScript/TypeScript Style Guide](https://github.com/airbnb/javascript) en lo que aplique.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 2 espacios, sin tabulaciones. |
+| Longitud de línea | Máximo 120 caracteres. |
+| Nombres de archivo | `kebab-case` con sufijo del tipo de artefacto: `practice-session.component.ts`, `auth.guard.ts`, `feedback.service.ts`. |
+| Nombres de clase | `UpperCamelCase` con sufijo de rol (ej. `PracticeSessionComponent`, `AuthInterceptor`). |
+| Selectores de componente | `kebab-case` con prefijo del *feature module* (ej. `talki-session-recorder`). |
+| Variables y métodos | `lowerCamelCase`. |
+| Constantes globales | `UPPER_SNAKE_CASE` (ej. `API_BASE_URL`). |
+| Tipado | TypeScript estricto (`strict: true` en `tsconfig.json`); prohibido el uso de `any` salvo justificación documentada. |
+| Componentes | Un componente por archivo; lógica en el `.ts`, plantilla en `.html` y estilos en `.scss`. |
+| Inyección de dependencias | Por constructor con modificador `private readonly`. |
+| Estado del componente | Signals u Observables (RxJS); evitar mutación directa de `@Input()`. |
+
+**HTML / CSS / JavaScript (landing page)**
+
+Se sigue la [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html) y la metodología BEM para nombres de clases CSS.
+
+| Aspecto | Convención |
+|---|---|
+| Indentación | 2 espacios. |
+| HTML semántico | Uso obligatorio de etiquetas semánticas (`<header>`, `<section>`, `<nav>`, `<article>`, `<footer>`). |
+| Atributos | En minúsculas, valores entre comillas dobles. |
+| Nombres de clases CSS | Metodología **BEM**: `block__element--modifier` (ej. `hero__title--highlighted`). |
+| Variables CSS | Custom properties con prefijo `--talki-` (ej. `--talki-color-primary`). |
+| Imágenes | Atributo `alt` obligatorio en todas las imágenes; archivos en `kebab-case`. |
+| JavaScript | ES6+ con `const`/`let` (nunca `var`), funciones flecha y módulos ESM. |
+
+**SQL (esquemas de base de datos)**
+
+| Aspecto | Convención |
+|---|---|
+| Palabras reservadas | `UPPERCASE` (ej. `SELECT`, `FROM`, `WHERE`, `JOIN`). |
+| Nombres de tabla | `snake_case` en plural (ej. `practice_sessions`, `feedback_reports`). |
+| Nombres de columna | `snake_case` en singular (ej. `user_id`, `created_at`). |
+| Claves primarias | Columna `id` de tipo `UUID`. |
+| Claves foráneas | Sufijo `_id` (ej. `session_id`, `user_id`). |
+| Timestamps | Columnas `created_at` y `updated_at` de tipo `TIMESTAMP WITH TIME ZONE`. |
+| Índices | Prefijo `idx_<tabla>_<columna>` (ej. `idx_sessions_user_id`). |
+| Migraciones | Numeradas y descriptivas (`V001__create_users_table.sql`) gestionadas con Flyway. |
+
+**Gherkin (pruebas BDD)**
+
+Las pruebas de aceptación se redactan en **español** para mantener trazabilidad directa con los criterios de aceptación de las User Stories del Capítulo III.
+
+| Aspecto | Convención |
+|---|---|
+| Idioma | Español (`# language: es` al inicio del feature). |
+| Nombres de archivo | `kebab-case` con sufijo `.feature` (ej. `iniciar-sesion-practica.feature`). |
+| Estructura | `Característica` (Feature) → `Escenario` (Scenario) → pasos `Dado`, `Cuando`, `Entonces`, `Y`, `Pero`. |
+| Granularidad | Un escenario por criterio de aceptación de la User Story. |
+| Datos de ejemplo | Uso de `Esquema del escenario` con tabla `Ejemplos` para casos parametrizados. |
+
+**Markdown (informe y documentación técnica)**
+
+| Aspecto | Convención |
+|---|---|
+| Especificación | CommonMark con extensiones de GitHub Flavored Markdown. |
+| Encabezados | Jerarquía estricta `#`, `##`, `###`, sin saltar niveles. |
+| Listas | Guion `-` para no ordenadas; numeración explícita para ordenadas. |
+| Énfasis | `**negrita**` para énfasis fuerte; `*cursiva*` para énfasis suave. |
+| Código en línea | Backticks simples para identificadores técnicos. |
+| Bloques de código | Triple backtick con identificador de lenguaje (`java`, `typescript`, `sql`, `bash`). |
+| Tablas | Alineación visual con guiones; encabezados en negrita por contenido, no por sintaxis. |
+| Enlaces | `[texto](url)` siempre con texto descriptivo, nunca URLs sueltas. |
+| Imágenes | Almacenadas en `assets/images/` con nombres en `kebab-case`; `alt` obligatorio. |
+
+**Convenciones transversales**
+
+Adicionalmente, el equipo aplica los siguientes principios independientes del lenguaje:
+
+- **Idioma del código fuente**: identificadores en inglés (clases, métodos, variables, columnas SQL); comentarios en español.
+- **Sin código muerto**: no se commitea código comentado; el control de versiones preserva el historial.
+- **Comentarios significativos**: los comentarios explican el *por qué* (decisiones, restricciones, *workarounds*), no el *qué* (que se deduce del código).
+- **Funciones cortas**: máximo 30 líneas como referencia; si excede, indica que la función tiene más de una responsabilidad.
+- **Sin valores mágicos**: números y *strings* hardcodeados se elevan a constantes con nombre descriptivo.
+- **Charset y EOL**: UTF-8 sin BOM; *line endings* `LF` (configurado vía `.gitattributes`).
 
 ### 5.2.4. Software Deployment Configuration
 
+El equipo Thropic adopta una estrategia de despliegue continuo basada en **GitHub Actions** como orquestador de los *pipelines* de CI/CD, **Vercel** como plataforma de despliegue del frontend y la landing page, y **Railway** como plataforma de despliegue de los microservicios backend y sus bases de datos. Esta combinación permite *previews* automáticos por *pull request*, despliegues reproducibles a partir de Git y separación de entornos sin infraestructura adicional.
 
+**Estrategia general por entorno**
 
-<hr class="page-break">
+El despliegue se rige por la convención GitFlow descrita en la sección 5.2.2: cada rama de larga duración mapea a un entorno desplegable, y los *tags* semánticos materializan los *releases* de producción.
 
-## 5.3. Microservices Implementation
+| Entorno | Rama disparadora | Plataformas | Propósito |
+|---|---|---|---|
+| Development | `feature/*` | Vercel Preview | Previsualización por *pull request* del frontend y la landing. |
+| Staging | `develop` | Vercel + Railway (proyecto staging) | Validación integral antes del *release*: pruebas E2E, demos internas y revisiones del equipo. |
+| Producción | `main` (vía *tag* `vX.X.X`) | Vercel + Railway (proyecto producción) | Versión publicada del producto, accesible al usuario final. |
 
-### 5.3.1. Sprint 1
+**Pipeline de CI/CD con GitHub Actions**
 
-#### 5.3.1.1. Sprint Backlog 1
+Cada repositorio listado en 5.2.2 mantiene su propio *workflow* en `.github/workflows/`. El pipeline se compone de las siguientes etapas, ejecutadas en *runners* `ubuntu-latest`:
 
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 1 |            |                  |             |                   |            |        |
+| Etapa | Descripción |
+|---|---|
+| Checkout | `actions/checkout@v4` para obtener el código de la rama disparadora. |
+| Setup | Configuración del entorno (`actions/setup-java@v4` con Temurin 17 para los microservicios; `actions/setup-node@v4` con Node 20 LTS para el frontend y la landing). |
+| Cache | Cacheo de dependencias (`~/.m2/repository` para Maven; `node_modules` para npm) por hash del *lockfile*. |
+| Lint | Validación de estilo: Checkstyle/Spotless en backend; ESLint + Prettier en frontend; Stylelint en landing. |
+| Build | Compilación del artefacto: `mvn -B clean package -DskipTests` en backend; `npm run build` en frontend y landing. |
+| Test | Ejecución de la pirámide completa descrita en 5.1.1: JUnit 5 + Mockito (Nivel 1), Spring Boot Test + Testcontainers con PostgreSQL 15, RabbitMQ 3 y Redis (Nivel 2), Cucumber 7 (Nivel 3) y verificación Pact contra el Pact Broker (Nivel 4). En el frontend, Jasmine/Karma. *Coverage* mínimo configurable según QAS-10. |
+| ArchUnit | Validación arquitectónica continua: la regla `domain/` no depende de `infrastructure/` (RF-02) bloquea el merge si se incumple. |
+| Load | Pruebas de carga con k6 sobre el flujo de sesión finalizada (RF-03) en el ambiente de *staging* de Railway, verificando QAS-02 (≤ 500 ms P95) y QAS-04. |
+| Image | Construcción de la imagen Docker (solo backend) y *push* al registro de Railway. |
+| Deploy | Despliegue automático al entorno correspondiente: Vercel mediante integración Git nativa; Railway mediante `railway-action` o webhook. |
 
-#### 5.3.1.2. Development Evidence for Sprint Review
+Los *workflows* se configuran con la cláusula `concurrency` para cancelar ejecuciones obsoletas de la misma rama y evitar despliegues encolados.
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+**Configuración de Vercel**
 
-#### 5.3.1.3. Testing Suite Evidence for Sprint Review
+Vercel se conecta directamente al repositorio de GitHub mediante la integración oficial, lo que automatiza el despliegue sin requerir un *workflow* explícito de `deploy`.
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+| Aspecto | Configuración |
+|---|---|
+| Repositorios cubiertos | `talki-landing` y `talki-frontend`. |
+| Trigger de Production Deployment | *Push* a la rama `main`. |
+| Trigger de Preview Deployment | *Push* a cualquier rama `feature/*` y *pull requests* hacia `develop`. |
+| Build command | `npm run build` (Angular CLI o build estático según el proyecto). |
+| Output directory | `dist/` para Angular; raíz del proyecto para la landing. |
+| Variables de entorno | `NEXT_PUBLIC_API_BASE_URL`, `TALKI_ENV` y otras claves no sensibles definidas en el panel de Vercel por entorno. |
+| Dominios | Dominio principal en producción (por definir); subdominios automáticos `*.vercel.app` para *previews*. |
+| Headers y caching | Configuración mediante `vercel.json` con cabeceras de seguridad (CSP, HSTS) y *cache-control* para assets estáticos. |
 
-#### 5.3.1.4. Execution Evidence for Sprint Review
+**Configuración de Railway**
 
+Railway aloja los ocho microservicios backend, el *broker* RabbitMQ compartido y las bases de datos asociadas, respetando el patrón *database-per-service* establecido en el Capítulo IV. Cada microservicio se despliega como un proyecto independiente de Railway, vinculado a su carpeta dentro del mono-repo correspondiente listado en 5.2.2.
 
+| Aspecto | Configuración |
+|---|---|
+| Servicios desplegados | `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service`, `gamification-service`, además de un **API Gateway** (Spring Cloud Gateway) y un **Config Server** (Spring Cloud Config, ver RF-04) compartidos. |
+| Mono-repos backend | `talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`; cada uno aporta su `docker-compose.dev.yml` para validación local previa al despliegue. |
+| Origen de la imagen | `Dockerfile` versionado en cada microservicio (`FROM eclipse-temurin:17-jre-alpine`), construido en CI a partir del *jar* generado por Maven. |
+| *Broker* de mensajería | Una instancia gestionada de RabbitMQ 3.12 expuesta vía red privada de Railway, consumida por los productores y consumidores del exchange `talki.events` y de la *Dead Letter Exchange* `talki.dlx` (Saga por coreografía descrita en 5.1.2). |
+| Bases de datos | Una instancia gestionada de **PostgreSQL 15** por servicio (`DATABASE_URL` inyectado por Railway). En el perfil `dev` local los servicios usan H2 in-memory para acelerar el arranque (ver 5.2.1). |
+| Caché | Instancia de **Upstash Redis** consumida por `scoring-service` para cachear los resultados de las cinco dimensiones de puntuación (5.1.1 Nivel 2). |
+| Almacenamiento de objetos | **Supabase Storage** para materiales del usuario (CV, plantillas) y exports gestionados por `media-service` mediante presigned URLs; el audio de sesión no se persiste (DD-15 / ADB-22). El acceso se realiza con credenciales `SUPABASE_URL` y `SUPABASE_KEY` inyectadas como variables de entorno. |
+| Variables de entorno | `SPRING_PROFILES_ACTIVE`, `DATABASE_URL`, `JWT_PUBLIC_KEY`, `JWT_PRIVATE_KEY` (RSA-256, DD-11), `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD`, `SUPABASE_URL`, `SUPABASE_KEY`, `REDIS_URL`, `GEMINI_MODEL`, `GEMINI_API_KEY`, `CONFIG_SERVER_URL`, definidas por entorno (staging/producción) en el panel de Railway. En el perfil `dev` local se utiliza el `JWT_SECRET` simétrico declarado en el `docker-compose.dev.yml` para acelerar el arranque. |
+| Health checks | Endpoint `GET /actuator/health` expuesto por Spring Boot Actuator; Railway reinicia el contenedor ante respuestas no saludables. |
+| Networking | Comunicación entre microservicios vía red privada de Railway; exposición pública únicamente del API Gateway. |
+| Escalado | Escalado vertical configurable por servicio; escalado horizontal previsto para `session-service`, `live-coach-service`, `filler-detection-service` y `scoring-service` por la carga prevista en QAS-02 y QAS-04. |
 
-#### 5.3.1.5. Microservices Documentation Evidence for Sprint Review
+**Gestión de secretos y configuración sensible**
 
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
+Todas las credenciales y *secrets* se administran fuera del repositorio Git y se inyectan en tiempo de despliegue mediante los mecanismos nativos de cada plataforma:
 
-#### 5.3.1.6. Software Deployment Evidence for Sprint Review
+- **GitHub Secrets**: tokens de despliegue, claves de API y credenciales de servicios externos requeridas por los *workflows* de CI/CD.
+- **Vercel Environment Variables**: configuración del frontend y la landing por entorno (Production / Preview / Development).
+- **Railway Variables**: configuración de cada microservicio backend y de sus bases de datos por entorno.
+- **Repositorio Git**: nunca se commitean archivos `.env` ni claves; el `.gitignore` incluye `.env`, `.env.*` y `*.pem`. Cada repositorio incluye un archivo `.env.example` con los nombres de variables requeridas y valores ficticios.
 
+Adicionalmente, el equipo planifica la rotación periódica de los pares de claves JWT (RSA-256, conforme a DD-11 del Capítulo IV) y de los tokens de acceso a Railway y Vercel, manteniendo un registro de la fecha de la última rotación en la documentación interna.
 
+**Estrategia de release y rollback**
 
-#### 5.3.1.7. Team Collaboration Insights during Sprint
+El procedimiento de *release* del producto Talki sigue los siguientes pasos:
 
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
+1. Cuando `develop` reúne un conjunto cohesivo de features estables, se crea una rama `release/vX.X.X` para estabilización.
+2. En esa rama se actualizan los archivos de versión (`pom.xml`, `package.json`) y se generan las notas de release.
+3. La rama `release/vX.X.X` se fusiona a `main` mediante PR; al cerrarse, se crea un *tag* anotado `vX.X.X` que dispara el despliegue de producción.
+4. El mismo `release/vX.X.X` se fusiona de regreso a `develop` para preservar los cambios de estabilización en la línea de desarrollo.
+5. Ante un fallo en producción, el *rollback* se realiza re-desplegando el *tag* anterior estable desde el panel de Railway y de Vercel, sin necesidad de revertir commits en `main`.
 
-#### 5.3.1.8. Kanban Board
+Esta estrategia mantiene la rama `main` siempre consistente con un *tag* desplegable, garantizando que cualquier punto del historial principal pueda restaurarse como versión activa del producto.
 
-<hr class="page-break">
+### 5.2.5. Quality Gate y Revisión de Calidad de Código
 
-### 5.3.2. Sprint 2
+Como parte de la disciplina de aseguramiento de calidad operativa del producto Talki, el equipo investigó herramientas de **análisis estático automatizado** que complementen los *linters* de estilo declarados en 5.2.3 (Checkstyle/Spotless para Java, ESLint + Prettier para TypeScript) con métricas semánticas: detección de bugs probabilísticos, vulnerabilidades de seguridad, *code smells* y cobertura de pruebas. La sección documenta la herramienta seleccionada, sus reglas principales y los umbrales del *quality gate* que bloquean un merge a `develop` si no se cumplen.
 
-#### 5.3.2.1. Sprint Backlog 2
+**Herramienta seleccionada: SonarCloud (SonarSource)**
 
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 2 |            |                  |             |                   |            |        |
+El equipo selecciona **[SonarCloud](https://sonarcloud.io)** —la versión SaaS de SonarQube operada por SonarSource— por tres razones verificables alineadas con los drivers del Capítulo IV:
 
-#### 5.3.2.2. Development Evidence for Sprint Review
+1. **Gratuidad para proyectos open source** alojados en GitHub bajo organizaciones públicas (caso de `upc-pre-202601-si657-7940-thropic`), eliminando cualquier costo operativo durante la fase académica.
+2. **Integración nativa con GitHub Actions y con Pull Requests**: cada PR recibe automáticamente un *check* de SonarCloud que comenta en línea los issues encontrados y bloquea el merge si el *quality gate* falla, materializando la táctica de detección temprana del 4.1.7.
+3. **Cobertura multi-lenguaje en un solo dashboard**: analiza tanto Java + Spring Boot (los 8 microservicios) como TypeScript + Angular (`talki-frontend`) y HTML/CSS (`talki-landing`) sin requerir agentes separados, cumpliendo el principio P7 (consistencia transversal del toolchain).
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+**Reglas principales del Quality Gate**
 
-#### 5.3.2.3. Testing Suite Evidence for Sprint Review
+El equipo configura el *quality gate* de SonarCloud con los siguientes umbrales aplicados al **código nuevo** introducido por cada pull request (estrategia *clean as you code*, recomendada por SonarSource para evitar la "deuda técnica congelada"):
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+| # | Métrica | Umbral configurado | Justificación / trazabilidad |
+|---|---|---|---|
+| 1 | **Reliability Rating** (bugs) | A | Cero bugs detectados en el código nuevo. Las severidades *Blocker* y *Critical* bloquean el merge. Refuerza QAS-10 (estabilidad). |
+| 2 | **Security Rating** (vulnerabilidades) | A | Cero vulnerabilidades en el código nuevo. Las reglas *OWASP Top 10* y *CWE Top 25* están habilitadas por defecto. Refuerza QAS-05 (cumplimiento Ley 29733). |
+| 3 | **Security Hotspots Reviewed** | 100 % | Todos los *security hotspots* introducidos deben revisarse manualmente y marcarse como *safe* o *fixed*. Detecta uso inseguro de hashing, deserialización, regex `ReDoS` y similares. |
+| 4 | **Maintainability Rating** (code smells) | A | Cero *code smells* de severidad *Blocker* o *Critical* en código nuevo. Cubre olores como métodos > 50 líneas, complejidad ciclomática > 15 y *cognitive complexity* elevada. |
+| 5 | **Coverage on New Code** | ≥ 75 % | Aplica a Java tests (JUnit 5 + Mockito, Nivel 1 de la pirámide 5.1.1) y a TypeScript tests (Jasmine/Karma). Idéntico al objetivo de la sección 5.1.1 — los reportes JaCoCo / lcov los publica Maven y npm al pipeline. |
+| 6 | **Duplicated Lines on New Code** | ≤ 3 % | Detecta copia-pega entre archivos del mismo módulo. Coherente con el principio DRY y con el refactor RF-04 (externalización de configuración variable). |
 
-#### 5.3.2.4. Execution Evidence for Sprint Review
+**Configuración técnica prevista por repositorio**
 
+Cada uno de los seis repositorios listados en 5.2.2 mantiene un archivo `sonar-project.properties` en su raíz con la siguiente plantilla, parametrizada por servicio:
 
+```properties
+sonar.projectKey=upc-pre-202601-si657-7940-thropic_<repo-name>
+sonar.organization=upc-pre-202601-si657-7940-thropic
+sonar.sources=src/main/java
+sonar.tests=src/test/java
+sonar.java.binaries=target/classes
+sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+sonar.exclusions=**/dto/**,**/config/**,**/Application.java
+```
 
-#### 5.3.2.5. Microservices Documentation Evidence for Sprint Review
+El *workflow* de GitHub Actions descrito en 5.2.4 incorpora un *job* `sonarcloud-scan` que se ejecuta tras la etapa *Test*, consume el reporte JaCoCo generado por Maven y publica los resultados antes de la etapa *Image*. Las credenciales (`SONAR_TOKEN`) se administran como GitHub Secrets, siguiendo la misma política de gestión de secretos declarada en 5.2.4.
 
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
+**Estado actual y plan de adopción**
 
-#### 5.3.2.6. Software Deployment Evidence for Sprint Review
+Al cierre del TP1 (12 de mayo de 2026), SonarCloud queda **investigada y aprobada como herramienta del toolchain** (sumándola como herramienta #28 en la tabla 5.2.1 categoría "Pruebas automatizadas"), con sus reglas y *quality gate* documentadas formalmente en esta subsección. La configuración técnica (`sonar-project.properties` y el *job* `sonarcloud-scan` en cada *workflow*) se incorpora como tarea del próximo Sprint del backlog, registrada como ítem nuevo del proyecto público de la sección 3.4. Esta planificación responde al criterio del docente que admite herramientas opcionales investigadas sin requerir integración inmediata.
 
+<div style="page-break-after: always;"></div>
 
+## 5.3. Microservices Documentation (API Reference)
 
-#### 5.3.2.7. Team Collaboration Insights during Sprint
+Una arquitectura de microservicios sostenible requiere que **cada servicio publique su contrato REST de forma autocontenida**, sin depender de documentación externa que pueda desactualizarse. Esta sección documenta los endpoints REST publicados por cada microservicio del producto Talki mediante **OpenAPI 3 vía springdoc-openapi 2.3.0**. La elección de springdoc sobre alternativas como el legacy `springfox` responde a la compatibilidad nativa con Spring Boot 3.2 declarada en el toolchain de la sección 5.2.1 y a la generación automática de la especificación a partir de los `@RestController` ya existentes, sin requerir anotaciones adicionales en el código de dominio.
 
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
+Cada uno de los 8 microservicios expone dos endpoints estándar:
 
-#### 5.3.2.8. Kanban Board
+- `GET /v3/api-docs` — devuelve la especificación **OpenAPI 3** en formato JSON, consumible por clientes generados automáticamente, contratos Pact (sección 5.1.1 Nivel 4) y herramientas de API testing (Hoppscotch, Postman).
+- `GET /swagger-ui.html` — devuelve la **UI interactiva de Swagger** que permite explorar los endpoints, los esquemas de DTO y ejecutar llamadas de prueba directamente desde el navegador.
 
-<hr class="page-break">
+La configuración del springdoc en cada microservicio se realiza en tres archivos siguiendo el patrón homogéneo del toolchain:
 
-### 5.3.3. Sprint 3
+1. `pom.xml` declara la dependencia `org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0`.
+2. `application.yml` configura los paths (`springdoc.api-docs.path`, `springdoc.swagger-ui.path`) y el orden de presentación (`operations-sorter: method`, `tags-sorter: alpha`).
+3. Una clase `OpenApiConfig` con `@Configuration` y un bean `OpenAPI` que aporta los metadatos del servicio (`title`, `description`, `version`, `contact`, `license`) y la lista de `servers` (entorno local + producción).
 
-#### 5.3.3.1. Sprint Backlog 3
+**Tabla resumen — endpoints OpenAPI por microservicio**
 
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 3 |            |                  |             |                   |            |        |
+| # | Microservicio | Puerto local | Spec OpenAPI 3 | UI Swagger | Bounded Context |
+|---|---|---|---|---|---|
+| 1 | `identity-service` | 8081 | `http://localhost:8081/v3/api-docs` | `http://localhost:8081/swagger-ui.html` | Identity & Access |
+| 2 | `session-service` | 8082 | `http://localhost:8082/v3/api-docs` | `http://localhost:8082/swagger-ui.html` | Practice Session |
+| 3 | `live-coach-service` | 8083 | `http://localhost:8083/v3/api-docs` | `http://localhost:8083/swagger-ui.html` | Practice Session (orquestador) |
+| 4 | `filler-detection-service` | 8087 | `http://localhost:8087/v3/api-docs` | `http://localhost:8087/swagger-ui.html` | Speech Analysis |
+| 5 | `scoring-service` | 8088 | `http://localhost:8088/v3/api-docs` | `http://localhost:8088/swagger-ui.html` | Speech Analysis |
+| 6 | `progress-service` | 8089 | `http://localhost:8089/v3/api-docs` | `http://localhost:8089/swagger-ui.html` | Progress & Metrics |
+| 7 | `gamification-service` | 8090 | `http://localhost:8090/v3/api-docs` | `http://localhost:8090/swagger-ui.html` | Progress & Metrics |
+| 8 | `notification-service` | 8091 | `http://localhost:8091/v3/api-docs` | `http://localhost:8091/swagger-ui.html` | Notification |
 
-#### 5.3.3.2. Development Evidence for Sprint Review
+**Tabla — endpoints REST principales por microservicio**
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+A continuación se listan los endpoints REST más relevantes para el TP1, los cuales quedan automáticamente documentados por springdoc al levantar cada servicio. Los endpoints de Actuator (`/actuator/health`, `/actuator/metrics`) están disponibles en todos los servicios y se documentan en la sección 5.4.2 (Observabilidad y monitoreo).
 
-#### 5.3.3.3. Testing Suite Evidence for Sprint Review
+| Microservicio | Endpoint | Verbo | Propósito |
+|---|---|---|---|
+| `identity-service` | `/v1/auth/register` | POST | Registro de cuenta con bcrypt cost ≥ 12 (DD-11). Publica `user.registered`. |
+| `identity-service` | `/v1/auth/login` | POST | Login con email + password. Devuelve JWT RSA-256 y refresh token. |
+| `identity-service` | `/v1/auth/refresh` | POST | Rotación del refresh token (refresh token rotation). |
+| `identity-service` | `/.well-known/jwks.json` | GET | Clave pública JWKS para validación distribuida del JWT. |
+| `session-service` | `/v1/sessions` | POST | Crear sesión de práctica (US09). Pasa el agregado a estado `DRAFT`. |
+| `session-service` | `/v1/sessions/{id}` | GET | Obtener detalle de sesión (Query Service del CQRS). |
+| `session-service` | `/v1/sessions/{id}/feedback` | GET | Listar feedbacks intra-BC (`@OneToMany` Session → Feedback). |
+| `live-coach-service` | `/v1/coach/{sessionId}/start` | POST | Abre WebSocket Gemini Live con system prompt seleccionado por Strategy. |
+| `live-coach-service` | `/v1/coach/{sessionId}/finalize` | POST | Cierra el WebSocket y publica `session.live.finalized` con métricas (RF-03). |
+| `scoring-service` | `/v1/scores/{sessionId}` | GET | Obtener Voice Coach Score calculado (5 dimensiones 0-100). |
+| `progress-service` | `/v1/progress/dashboard` | GET | Dashboard agregado del usuario autenticado (vista CQRS materializada). |
+| `progress-service` | `/v1/progress/sessions/compare` | GET | Comparar dos sesiones (US22). |
+| `gamification-service` | `/v1/gamification/streak` | GET | Racha actual y mejor racha del usuario. |
+| `gamification-service` | `/v1/gamification/achievements` | GET | Logros desbloqueados del usuario. |
+| `notification-service` | `/v1/notifications/stream` | WSS | WebSocket para push de notificaciones al cliente Angular. |
+| **Todos** | `/v3/api-docs` | GET | Spec OpenAPI 3 JSON (springdoc). |
+| **Todos** | `/swagger-ui.html` | GET | UI interactiva Swagger. |
+| **Todos** | `/actuator/health` | GET | Health check consumido por Railway (sección 4.1.7). |
 
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
+**Verificación**
 
-#### 5.3.3.4. Execution Evidence for Sprint Review
+La generación correcta de la spec OpenAPI por servicio se valida en el pipeline de CI de cada mono-repo (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) mediante la ejecución de `mvn test`, que arranca el contexto Spring de cada microservicio y verifica que el bean `OpenAPI` se inicialice correctamente sin colisiones de configuración con Spring Security ni con el filtro JWT del `identity-service`. La suite agregada al cierre del TP1 contabiliza **128 unit tests verdes** distribuidos así:
 
+| Servicio | Tests | Servicio | Tests |
+|---|---|---|---|
+| `identity-service` | 15 | `scoring-service` | 33 |
+| `notification-service` | 7 | `progress-service` | 9 |
+| `session-service` | 27 | `gamification-service` | 13 |
+| `live-coach-service` | 13 | `filler-detection-service` | 11 |
 
+**Total: 128 / 128 verdes en `mvn test`.**
 
-#### 5.3.3.5. Microservices Documentation Evidence for Sprint Review
+**Trazabilidad**
 
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
+- Pulls Request mergeados a `main` en los 4 mono-repos que materializan esta sección: `talki-user-services#2`, `talki-session-services#3`, `talki-analysis-services#4`, `talki-engagement-services#2`.
+- Herramienta declarada en la tabla 5.2.1 (Swagger / OpenAPI 3, categoría #8 Documentación y configuración).
+- La especificación generada es consumida por el contract testing Pact (5.1.1 Nivel 4), que verifica en CI que el frontend Angular y los productores/consumidores de eventos AMQP se mantengan compatibles con el contrato publicado en `talki-commons`.
 
-#### 5.3.3.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.3.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.3.8. Kanban Board
-
-<hr class="page-break">
-
-### 5.3.4. Sprint 4
-
-#### 5.3.4.1. Sprint Backlog 4
-
-| Sprint # | User Story | Work-Item / Task | Descripción | Estimación (horas) | Asignado a | Estado |
-|----------|------------|------------------|-------------|-------------------|------------|--------|
-| Sprint 4 |            |                  |             |                   |            |        |
-
-#### 5.3.4.2. Development Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.4.3. Testing Suite Evidence for Sprint Review
-
-| Repository | Branch | Commit ID | Commit Message | Commit Message Body | Committed on (Date) |
-|------------|--------|-----------|----------------|---------------------|---------------------|
-|            |        |           |                |                     |                     |
-
-#### 5.3.4.4. Execution Evidence for Sprint Review
-
-
-
-#### 5.3.4.5. Microservices Documentation Evidence for Sprint Review
-
-| Microservicio | Verbo | Endpoint | Parámetros | Response |
-|---------------|-------|----------|------------|----------|
-|               |       |          |            |          |
-
-#### 5.3.4.6. Software Deployment Evidence for Sprint Review
-
-
-
-#### 5.3.4.7. Team Collaboration Insights during Sprint
-
-| Integrantes | Tarea asignada |
-|-------------|----------------|
-|             |                |
-
-#### 5.3.4.8. Kanban Board
-
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 ## 5.4. Microservices Deployment
 
+Esta sección describe la materialización del despliegue de Talki en infraestructura cloud, partiendo de la configuración general establecida en la sección 5.2.4 y del *Container Diagram* C4 (Nivel 2) del Capítulo IV. Se documenta tanto la vista estática de los componentes desplegados como la dinámica de su interacción en tiempo de ejecución.
+
+### 5.4.0. Opciones de Deployment Evaluadas
+
+Antes de seleccionar la infraestructura concreta del producto Talki, el equipo evaluó los **cuatro modelos canónicos de despliegue en la nube** definidos por la taxonomía del *NIST Special Publication 800-145* y consolidados por la literatura académica de arquitectura de sistemas distribuidos. Cada modelo se diferencia por el nivel de responsabilidad operativa que asume el proveedor frente al equipo de desarrollo. La siguiente tabla compara los cuatro modelos y registra la decisión del equipo, justificada con trazabilidad a los drivers arquitectónicos del Capítulo IV.
+
+| # | Modelo | Definición | Responsabilidad del equipo | Ejemplos del mercado | Adopción en Talki |
+|---|---|---|---|---|---|
+| 1 | **IaaS** — *Infrastructure as a Service* | El proveedor entrega máquinas virtuales, redes y almacenamiento crudos; el equipo administra el sistema operativo, el runtime y la aplicación. | Sistema operativo, parches de seguridad, runtime de Java/Node, balanceadores, networking, escalado manual. | AWS EC2, Google Compute Engine, Azure VM. | **Descartado.** Sobrecarga operativa incompatible con la restricción C-13 del Capítulo IV (capacidad limitada del equipo académico) y con el ciclo de TP1. |
+| 2 | **PaaS** — *Platform as a Service* | El proveedor administra la infraestructura, el runtime y el *autoscaling*; el equipo solo aporta el código y la configuración. | Código fuente, variables de entorno, dependencias declaradas. | Railway, Vercel, Heroku, Google App Engine, Fly.io. | **Adoptado para los 8 microservicios backend + frontend + landing.** Railway aloja Java + Spring Boot, RabbitMQ y bases PostgreSQL; Vercel aloja Angular + landing estática. Cumple QAS-09 (despliegue continuo) y permite *rolling updates* sin tiempo de inactividad observable. |
+| 3 | **SaaS / BaaS** — *Software / Backend as a Service* | El proveedor entrega un servicio terminado vía API; el equipo consume funcionalidad sin administrar código del backend del servicio. | Únicamente las credenciales de acceso y la integración cliente. | Supabase Storage, Upstash Redis, Google Gemini Live API, Resend, SendGrid. | **Adoptado para capacidades transversales.** Supabase Storage gestiona materiales del usuario (CV, plantillas) con presigned URLs sin operar buckets propios; Upstash Redis provee el caché de scoring y *rate limiting*; Gemini Live API entrega el `transcript_gemini` en tiempo real evitando un *transcription-service* propio (DD-15, ADB-22, Ley 29733). |
+| 4 | **FaaS / Serverless / Edge** — *Function as a Service* | El proveedor ejecuta funciones cortas bajo demanda con escalado a cero; el equipo escribe únicamente la función. | Lógica de la función y *trigger* (HTTP, eventos). | Vercel Edge Functions, AWS Lambda, Cloudflare Workers, Google Cloud Functions. | **Adoptado parcialmente para el edge del frontend.** Vercel Edge Network distribuye los assets estáticos de `talki-landing` y `talki-frontend` con CDN global y caché por región; los microservicios Java se mantienen en PaaS por incompatibilidad de tiempos de *cold start* del JVM con FaaS para los flujos de QAS-02 (≤ 500 ms P95). |
+
+**Justificación de la combinación.** Talki adopta una arquitectura híbrida **PaaS + SaaS/BaaS + Edge/FaaS** en lugar de un único modelo, por las siguientes razones trazables a los drivers:
+
+1. **PaaS como base operativa** (Railway + Vercel): es el único modelo que permite al equipo académico desplegar ocho microservicios Java + Spring Boot junto con su *broker* RabbitMQ y bases PostgreSQL sin operar máquinas virtuales propias. Cumple la restricción C-13 (capacidad limitada del equipo, 5.2.1) y el principio P5 (despliegue continuo).
+2. **SaaS/BaaS para capacidades transversales** (Supabase, Upstash, Gemini Live): externalizar el almacenamiento de objetos, el caché y la IA conversacional reduce el costo operativo en ~USD 10 mensuales frente al diseño original con STT post-sesión (sección 5.4.2 *Modelo de costos*) y elimina por diseño la persistencia de audio biométrico (DD-15, cumplimiento nativo de la Ley 29733).
+3. **Edge/FaaS para el frontend público** (Vercel Edge Network): la distribución por CDN global cumple QAS-08 (Time-to-First-Byte ≤ 200 ms desde Lima) sin requerir réplicas geográficas explícitas. Las *Preview Deployments* por *pull request* materializan el principio P4 (validación temprana en el ciclo de CI/CD).
+4. **IaaS descartado explícitamente**: la sobrecarga operativa de administrar sistemas operativos, parches y *autoscaling* es incompatible con el cronograma académico y con la prioridad del equipo de invertir tiempo en la lógica de negocio del análisis de voz, no en la infraestructura subyacente.
+
+Esta combinación queda reflejada en el diagrama de arquitectura cloud de la siguiente subsección (5.4.1), donde cada componente se etiqueta con el modelo de despliegue que lo aloja.
+
 ### 5.4.1. Cloud Architecture Diagram
 
+La arquitectura cloud de Talki sigue una topología de **microservicios desplegados de forma independiente** sobre plataformas *Platform-as-a-Service* (PaaS), conservando los límites de los cinco *Bounded Contexts* definidos en el Capítulo IV. La distribución de los componentes en proveedores cloud se resume en el siguiente diagrama lógico.
 
+**Vista lógica del despliegue**
+
+| Capa | Componente desplegado | Plataforma | Tecnología | Acceso |
+|---|---|---|---|---|
+| Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.app`) |
+| Edge / CDN | `talki-frontend` | Vercel | Angular + TypeScript | Público (`https://app.talki.app`) |
+| API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.app`) |
+| Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `session-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `live-coach-service` | Railway | Java + Spring Boot | Privado (red interna; WebSocket expuesto vía API Gateway) |
+| Servicios | `filler-detection-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `scoring-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `progress-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `gamification-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Servicios | `notification-service` | Railway | Java + Spring Boot | Privado (red interna) |
+| Datos | PostgreSQL × N (una por servicio, *database-per-service*) | Supabase / Railway | PostgreSQL 15 gestionado | Privado (vínculo por servicio) |
+| Caché | Caché de scoring + rate limiting | Upstash Redis | Redis 7 gestionado | Privado (acceso por token) |
+| Almacenamiento | Materiales del usuario y exports (audio NO se persiste) | Supabase Storage | Buckets privados + presigned URLs | Privado (acceso por *signed URL*) |
+| IA externa | Servicio de IA conversacional con transcripción nativa | Google Gemini Live API | WebSocket / API HTTPS | Acceso saliente desde `live-coach-service` |
+| Notificaciones | Proveedor de email transaccional | Servicio externo (Resend / SendGrid) | API HTTPS | Acceso saliente desde `notification-service` |
+
+**Conexiones principales del diagrama**
+
+El siguiente listado representa los flujos de comunicación entre los componentes desplegados, complementando la tabla anterior:
+
+1. El **usuario final** accede a `talki-landing` y a `talki-frontend` desde su navegador, ambos servidos por la red CDN global de Vercel.
+2. El **frontend** consume exclusivamente el **API Gateway** público de Railway mediante HTTPS, autenticando cada solicitud con un *bearer token* JWT emitido por el `identity-service`.
+3. El **API Gateway** enruta las solicitudes a los microservicios correspondientes a través de la red privada interna de Railway, sin exposición pública.
+4. Cada **microservicio** se conecta exclusivamente a **su propia base de datos PostgreSQL** (patrón *database-per-service*), prohibiendo accesos cruzados.
+5. El `media-service` emite *presigned URLs* de **Supabase Storage** para que el cliente suba directamente los materiales del usuario (CV, plantillas) y descargue los exports, sin pasar por el API Gateway. El audio de la sesión **no se persiste** en almacenamiento (cumplimiento nativo de la Ley 29733; ver DD-15 / ADB-22).
+6. El `live-coach-service` mantiene una conexión WebSocket bidireccional con **Google Gemini Live** durante toda la sesión y, al cerrarla, publica el evento `session.live.finalized` con el `transcript_gemini` y las métricas acústicas calculadas en memoria; el pipeline `filler-detection-service → scoring-service → progress-service + gamification-service + notification-service` continúa de forma asíncrona sobre RabbitMQ.
+7. El `notification-service` envía correos transaccionales mediante el **proveedor de email externo** ante eventos de negocio (registro, recuperación de contraseña, hito de progreso).
+
+> _Figura: Diagrama de arquitectura cloud de Talki._ El diagrama formal en notación cloud (íconos oficiales de Vercel, Railway, Supabase, Upstash y Google Cloud) se elaborará en una herramienta de diagramación cloud y se incorporará en el directorio `assets/images/cloud-architecture.png` durante la implementación del primer sprint.
 
 ### 5.4.2. Cloud Architecture Deployment
 
+Esta subsección describe los aspectos operacionales del despliegue de la arquitectura presentada: dominios, redes, exposición de servicios, observabilidad y costos asociados al modelo PaaS adoptado.
 
+**Estrategia de dominios y DNS**
 
-<hr class="page-break">
+| Dominio | Apunta a | Propósito |
+|---|---|---|
+| `talki.app` | Vercel (`talki-landing`) | Landing pública del producto. |
+| `app.talki.app` | Vercel (`talki-frontend`) | Aplicación web principal autenticada. |
+| `api.talki.app` | Railway (API Gateway) | Endpoint público de la API REST. |
+| `*.preview.talki.app` | Vercel Previews | Subdominios automáticos por *pull request* para validación. |
+
+La gestión del DNS se realiza mediante un proveedor externo (Cloudflare o similar) configurado con registros `CNAME` hacia los *endpoints* públicos de Vercel y Railway, y certificados TLS gestionados automáticamente por cada plataforma.
+
+**Exposición de servicios y red privada**
+
+- **Servicios públicos**: únicamente la landing, el frontend y el API Gateway están expuestos a Internet. El resto de microservicios y las bases de datos permanecen en la red privada de Railway.
+- **Comunicación interna**: los microservicios se descubren entre sí mediante variables de entorno con las URLs internas (`http://session-service.railway.internal:8080`), evitando dependencia de un *service discovery* dedicado en esta etapa.
+- **Política de CORS**: el API Gateway acepta solicitudes desde los dominios `app.talki.app`, `talki.app` y los subdominios `*.preview.talki.app`, rechazando cualquier otro origen.
+- **TLS extremo a extremo**: todo el tráfico externo se cifra con TLS 1.3 mediante los certificados gestionados por Vercel y Railway.
+
+**Observabilidad y monitoreo**
+
+| Aspecto | Configuración |
+|---|---|
+| Logs centralizados | Logs estructurados en formato JSON emitidos por cada servicio y agregados por la consola nativa de Railway. |
+| Métricas | Spring Boot Actuator expone `/actuator/metrics` y `/actuator/prometheus`; Railway captura uso de CPU, memoria y latencia. |
+| Trazas distribuidas | Zipkin + Spring Sleuth con propagación del header `X-B3-TraceId` (HTTP) y campo `trace_id` (RabbitMQ) (DD-13 del Capítulo IV) para correlacionar peticiones entre microservicios. |
+| Health checks | Endpoint `GET /actuator/health` consultado periódicamente por Railway; reinicio automático ante respuestas no saludables. |
+| Alertas | Reglas configuradas en Railway por umbrales de CPU > 80 %, memoria > 85 % y *error rate* > 5 % en ventanas de 5 minutos. |
+
+**Procedimiento operativo de despliegue**
+
+El despliegue de un nuevo *release* en producción sigue los siguientes pasos, automatizados por GitHub Actions y la integración nativa de cada plataforma:
+
+1. Se publica el *tag* `vX.X.X` desde la rama `main` (ver sección 5.2.4).
+2. GitHub Actions construye las imágenes Docker de cada microservicio modificado y las publica en el registro interno de Railway.
+3. Railway despliega secuencialmente los servicios actualizados ejecutando *rolling updates* sin tiempo de inactividad observable, gracias a los *health checks* configurados.
+4. Vercel detecta el *push* a `main` y publica las nuevas versiones del frontend y la landing en su CDN global.
+5. Tras el despliegue, las pruebas *smoke* automatizadas verifican el estado del API Gateway y de los endpoints críticos (`POST /v1/auth/login`, `POST /v1/sessions`).
+6. Si las pruebas *smoke* fallan, el equipo realiza un *rollback* re-desplegando el *tag* anterior estable desde el panel de Railway y de Vercel.
+
+**Modelo de costos**
+
+El equipo prioriza los planes gratuitos y académicos de cada plataforma para sostener la operación durante la fase de validación del MVP:
+
+- **Vercel**: plan *Hobby* (gratuito) suficiente para landing y frontend en validación inicial; migración planificada al plan *Pro* al superar los 100 GB de *bandwidth* mensual.
+- **Railway**: plan *Trial* o *Hobby* con créditos mensuales; los ocho microservicios, el *broker* RabbitMQ y sus bases de datos se ajustan a los límites del plan durante la validación, escalando al plan *Pro* si la carga del MVP lo demanda.
+- **Supabase Storage**: tier gratuito (1 GB) cubre los materiales del usuario y los exports durante la validación. El audio de sesión **no se persiste** (cumplimiento nativo de la Ley 29733; DD-15 / ADB-22 del Capítulo IV), eliminando la línea de costo más significativa del diseño original.
+- **Upstash Redis**: tier gratuito (10K comandos/día) cubre la caché de scoring y el *rate limiting* del `identity-service`.
+- **Google Gemini Live**: facturación por uso (~USD 0.50 por 1M tokens de audio entrada / USD 2 por 1M de salida); rate limiting en el `live-coach-service` y por usuario para acotar el costo.
+
+Esta combinación permite operar el producto durante la fase de validación con un costo mensual estimado de ~USD 72 (frente a los ~USD 82 del diseño original con STT post-sesión), escalando linealmente con la adopción de usuarios reales.
+
+### 5.4.3. Investigación de Herramientas de Logs y Monitoreo
+
+Como parte del diseño operativo del producto, el equipo realizó una investigación comparativa de herramientas para resolver los dos pilares de la observabilidad declarados en el principio P6 del Capítulo IV (sección 4.1.1) y verificables contra el escenario QAS-11 (*"diagnosticar la causa raíz de un incidente productivo en ≤ 5 minutos"*): **trazabilidad distribuida** (correlación de una petición a través de múltiples microservicios) y **métricas operativas** (CPU, memoria, latencia, *error rate*). A continuación se documentan las alternativas evaluadas y la justificación de la elección, conforme al requerimiento del docente de investigar al menos dos herramientas por categoría.
+
+**Categoría 1 — Trazabilidad distribuida (correlación end-to-end)**
+
+| Herramienta | Madurez y modelo | Integración con Spring Boot 3.2 | Pros | Contras | Decisión |
+|---|---|---|---|---|---|
+| **Zipkin + Spring Sleuth (Micrometer Tracing)** | Open source, gestionado por OpenZipkin desde 2012. Modelo *pull* sobre HTTP / *push* sobre Kafka. | Auto-instrumentación nativa via dependencia `spring-boot-starter-actuator` + `micrometer-tracing-bridge-brave`; propagación del header `X-B3-TraceId` lista de fábrica. | Configuración mínima (≤ 10 líneas en `application.yml`). UI ligera. Plan gratuito ilimitado en autohosted. Integración nativa con RabbitMQ vía `talki-commons`. | UI menos rica que Jaeger para *flame graphs*. | **Adoptada** (DD-13 del Capítulo IV, ADB-21). Propaga `X-B3-TraceId` en HTTP y `trace_id` en eventos AMQP. |
+| **Jaeger** | Open source, gestionado por la CNCF desde 2017 (graduado). Modelo *push* sobre gRPC / Thrift. UI más rica con análisis de *dependency graphs*. | Auto-instrumentación vía OpenTelemetry; requiere bridge adicional para B3 propagation (Spring Sleuth-compatible). | UI superior con *service dependency graph* y *flame graphs*. Mejor para sistemas con > 50 servicios. Soporte oficial CNCF. | Configuración más compleja (Collector + Agent + Query). Spring Sleuth tiene mejor integración con Zipkin por defecto. | Descartada — *overkill* para 8 microservicios; añadiría 3 contenedores adicionales (Collector, Agent, Query) sin beneficio incremental en el rango de carga del MVP. |
+
+**Justificación final (trazabilidad).** La integración nativa de Zipkin con Spring Sleuth/Micrometer Tracing reduce el código de instrumentación a una sola dependencia Maven y dos propiedades de configuración por microservicio. Para un sistema de 8 microservicios con un pipeline asíncrono lineal (RabbitMQ saga), la UI de Zipkin cubre los casos de uso operativos sin requerir las capacidades avanzadas de Jaeger. La elección queda registrada como DD-13 en el Decision Log del Capítulo IV.
+
+**Categoría 2 — Métricas operativas y logs centralizados**
+
+| Herramienta | Categoría | Pros | Contras | Decisión |
+|---|---|---|---|---|
+| **Spring Boot Actuator** | Framework de métricas embebido. Expone `/actuator/health`, `/actuator/metrics` y `/actuator/prometheus` con formato Prometheus. | Cero instrumentación manual. Integra con Micrometer y exporta directamente a Railway Metrics, Prometheus, Grafana Cloud o Datadog si el equipo migra. | Requiere un *scraper* externo para retención a largo plazo (Railway lo provee de forma gratuita en el plan Hobby). | **Adoptada.** Solución nativa Spring Boot 3.2, gratuita y consistente con el toolchain Maven del equipo. |
+| **ELK Stack (Elasticsearch + Logstash + Kibana)** | Suite enterprise de logs centralizados con búsqueda full-text. | UI de Kibana muy rica para análisis exploratorio de logs. Estándar de la industria. | Requiere 3 contenedores adicionales (Elasticsearch, Logstash, Kibana) con > 4 GB de RAM combinados, incompatibles con el plan *Hobby* de Railway (512 MB por servicio). Costo operativo alto. | Descartada — incompatible con la restricción C-13 (capacidad limitada del equipo académico) y con el modelo de costos del 5.4.2 (~USD 72/mes). Se reconsidera para un futuro plan *Pro* si la carga lo justifica. |
+| **Grafana Loki** | Stack de logs ligero diseñado para plataformas cloud (LogQL similar a PromQL). | 10× menos consumo de RAM que Elasticsearch. Integración natural con Grafana. | Aún requiere desplegar un contenedor adicional (Loki + Promtail). Para 8 microservicios resulta innecesario porque Railway ya agrega los logs del *stdout* en formato estructurado nativo. | Descartada — alternativa válida para una fase posterior. Por ahora la consola nativa de Railway con logs JSON estructurados cubre el caso de uso operativo. |
+
+**Justificación final (métricas y logs).** Spring Boot Actuator más la consola nativa de logs de Railway resuelven los dos casos de uso operativos del MVP (verificación de *health checks* y consulta retrospectiva de logs) sin sumar costos ni contenedores. La combinación cumple el escenario QAS-11 al permitir filtrar logs por `traceId` (propagado por Sleuth) y correlacionarlos con las trazas de Zipkin en una ventana de tiempo común, alcanzando un *mean-time-to-diagnose* objetivo ≤ 5 minutos. Si la carga del producto justifica una observabilidad más sofisticada en una fase posterior, **Grafana Loki** queda preseleccionada como evolución natural por su menor costo operativo frente a ELK.
+
+**Resumen de la decisión de observabilidad para el MVP**
+
+| Pilar | Herramienta elegida | Alternativa evaluada y descartada | Referencia |
+|---|---|---|---|
+| Trazas distribuidas | Zipkin + Spring Sleuth (Micrometer Tracing) | Jaeger (CNCF) | DD-13, ADB-21 |
+| Métricas operativas | Spring Boot Actuator + Railway Metrics | Grafana Cloud / Prometheus autohosted | Sección 5.2.1 #9, 5.4.2 |
+| Logs centralizados | Consola nativa de Railway (JSON estructurado) | ELK Stack, Grafana Loki | Sección 5.4.2 |
+| Health checks | `GET /actuator/health` consumido por Railway | — | Sección 4.1.7 (táctica *Monitor*) |
+| Alertas | Reglas Railway sobre CPU, memoria y *error rate* | — | Sección 5.4.2 |
+
+Esta combinación constituye un *quality gate* operativo: ningún despliegue a producción se promueve si un microservicio falla su `/actuator/health` durante el *rolling update*, y cualquier incremento de *error rate* > 5 % en una ventana de 5 minutos genera una alerta accionable por el equipo, garantizando el cumplimiento del escenario QAS-11 desde el primer despliegue.
+
+<div style="page-break-after: always;"></div>
 
 # Conclusiones y recomendaciones
 
@@ -3874,34 +4419,47 @@ Al cierre del primer avance (TB1), el equipo Thropic logró consolidar la base e
 Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectónico de Talki en el Capítulo IV mediante la aplicación rigurosa del método Attribute-Driven Design (Wojcik et al., 2006). Los principales logros son:
 
 - **Catálogo de drivers formalizado.** Se especificaron 8 principios arquitectónicos (P1-P8), 8 estilos y patrones de aproximación, 8 patrones de diseño aplicados y 22 tácticas distribuidas en cinco atributos de calidad (Disponibilidad, Rendimiento, Seguridad, Modificabilidad, Testeabilidad), todos trazables a los requerimientos del Capítulo III.
-- **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), un Component Diagram C4 (Nivel 3) del `ai-feedback-service`, un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
+- **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), Component Diagrams C4 (Nivel 3) del `live-coach-service`, del `session-service` (4.3.1.6) y del `identity-service` (4.3.2), un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
 - **Drivers arquitectónicos formulados con métricas verificables.** La sección 4.2 establece 12 Quality Attribute Scenarios con seis partes (fuente, estímulo, artefacto, entorno, respuesta, medida), 14 Constraints técnicas y organizacionales, y 11 Architectural Concerns con riesgos gestionados, garantizando que cada decisión de diseño tenga un criterio de aceptación verificable.
-- **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Feedback Asíncrono) y la Iteration 2 (Identidad, Seguridad y Observabilidad Transversal) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
+- **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico) y la Iteration 2 (Identidad, Seguridad, Engagement y Observabilidad) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
 - **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
+
+Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
+
+- **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintiocho herramientas seleccionadas (GitHub Projects v2, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, Zipkin + Spring Sleuth, SonarCloud, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
+- **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan ocho microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
+- **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
+- **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los ocho microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.app`, la observabilidad con Zipkin + Spring Sleuth y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
+
+Adicionalmente, durante el ciclo de alineamiento previo a la entrega final, el equipo ejecutó una refactorización integral del backend para que la implementación coincida exactamente con el diseño documentado en los Capítulos IV y V. Los logros concretos son:
+
+- **Pipeline alineado con Gemini Live nativo.** Se eliminó el servicio intermedio `transcription-service` (Whisper STT) y se reconectó `filler-detection-service` directamente al evento `session.live.finalized`, que ahora viaja con `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`. El tiempo del pipeline post-sesión bajó de ~45 s (con STT) a ≤ 1 s, el costo operativo de ~USD 82/mes a ~USD 72/mes, y se eliminó toda persistencia de audio (DD-15 / ADB-22 cumplidos *by-design*).
+- **Patrones de diseño aplicados en código.** Se materializaron los patrones declarados en el Capítulo IV: DDD (entidades `AppUser`, `Session`, `Feedback`, `ScoreResult`, `UserProgress`, `UserStreak`), CQRS (`SessionCommandService` + `SessionQueryService` en `session-service`, vistas materializadas en `progress-service`), ACL (`SessionContextFacade` traduciendo JWT claims al modelo local), Saga por coreografía sobre RabbitMQ, Outbox Pattern e idempotencia at-least-once con manejo robusto de `DataIntegrityViolationException` sobre la unique constraint de `session_id`.
+- **Suite de tests unitarios completa.** Cada microservicio cuenta con tests JUnit 5 + Mockito + AssertJ que cubren happy path, edge cases e invariantes de dominio. Los hitos son: `identity-service` (15 tests: AuthService + JwtTokenProvider con casos de tokens forjados/expirados), `session-service` (27 tests: Command/Query services, ACL Facade, transiciones de estado del agregado `Session`), `live-coach-service` (13 tests: Orchestrator + Factory + 4 strategies), `filler-detection-service` (11 tests), `scoring-service` (33 tests: `ScoreCalculator`, `VoiceScore` con invariantes 0-100, race condition de idempotencia, `GlobalExceptionHandler` con DTOs `ApiErrorResponse`), `progress-service` (9 tests), `gamification-service` (13 tests: streaks, achievements, XP), `notification-service` (7 tests). Total: **128 unit tests pasando en los 8 microservicios** (`mvn test` verde).
+- **API Reference documentada con OpenAPI 3 en los 8 microservicios.** La sección 5.3 materializa `springdoc-openapi 2.3.0` en `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service`, publicando la spec en `/v3/api-docs` y la UI interactiva en `/swagger-ui.html` por servicio. Cada microservicio expone su contrato REST de forma autocontenida, consumible por el frontend Angular y por los contratos Pact del Nivel 4 de la pirámide de pruebas sin necesidad de documentación externa que pueda desactualizarse.
+- **Modelo del producto trazable por microservicio.** La sección 4.1.5 incorpora una tabla resumen del modelo por servicio (bounded context, agregado raíz, entidades, tablas, eventos pub/sub) y trece diagramas Mermaid embebidos (Class + ER por servicio, renderizados nativamente en GitHub) que permiten a cualquier integrante del equipo o lector del informe entender el alcance de cada servicio de forma aislada, sin depender de un único diagrama consolidado que se desactualiza con cada refactor.
+- **Coherencia documento-código verificada.** Cada clase listada en la tabla 5.1.1 (Nivel 1 de pruebas) tiene test correspondiente y verificable; cada Decision Log entry (DD-01 a DD-18) tiene una sola decisión consistente entre las secciones del documento; el Architectural Design Backlog (ADB-01 a ADB-22) no tiene huecos ni referencias rotas; los conteos de microservicios, eventos, puertos y dimensiones del Voice Coach Score son idénticos en el informe y en el código.
 
 ## Recomendaciones
 
-El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe después del TB1, preservando la trazabilidad y la mejora continua del producto:
+El equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al producto Talki tras el cierre del Trabajo Parcial 1, ahora que la arquitectura está diseñada e implementada y los ocho microservicios principales están operativos con cobertura de pruebas unitarias verificable.
 
-- **Preparar el Capítulo IV en función de los drivers del TB1.** La arquitectura del producto (Principles Statements, Architecture Overview en C4, diagramas de contenedores, patrones y tácticas) debe derivarse de los requerimientos funcionales del Product Backlog y de los atributos de calidad implícitos en las hipótesis, de modo que la arquitectura sea la respuesta técnica a los drivers ya identificados, y no un ejercicio académico desconectado.
-- **Adelantar la configuración del Capítulo V antes del sprint inicial.** Configurar los repositorios con GitFlow, convenciones de código, entorno de despliegue en la nube y canal de CI evitará acumular deuda de infraestructura al momento de iniciar la implementación del MVP, y permitirá que el equipo llegue al TB2 con foco en entregables de negocio.
-- **Ampliar la base de entrevistas del Segmento 2.** Aunque Gianger aporta un perfil bilingüe valioso, se recomienda incorporar al menos dos entrevistados adicionales del Segmento 2 en universidades peruanas presenciales (UPC, PUCP, UL, UPN) para robustecer los hallazgos de needfinding en contextos laborales 100 % locales.
-- **Sostener una cadencia quincenal de revisión del informe.** Mantener una revisión iterativa del documento por parte del equipo e incorporar las observaciones del docente durante las asesorías alimentará el criterio 9 (Evolution) que se evalúa desde el TB2 en adelante.
-- **Iniciar el prototipado visual del MVP.** Construir wireframes de las pantallas clave identificadas en las User Stories *Must* (registro, sesión de práctica, grabación, feedback general) habilitará la validación temprana con usuarios antes de entrar a la fase de implementación, y servirá como insumo para los ViewPoints Diagrams del Capítulo IV.
-
-Al cierre del segundo avance (TB2), el equipo identifica las siguientes líneas de trabajo prioritarias para dar continuidad al informe en el siguiente entregable (TP1), tomando como base las decisiones de diseño consolidadas en el Capítulo IV:
-
-- **Iniciar la implementación del camino crítico de la Iteration 1.** Materializar primero los contratos REST y AMQP del `session-service`, `transcription-service` y `ai-feedback-service` definidos en 4.3.1.5, junto con las decisiones DD-01 a DD-10, garantiza que el MVP entregue valor a los User Personas desde el primer sprint y permite validar empíricamente los SLO de QAS-01 (latencia ≤ 1.5 s) y QAS-02 (finalize ≤ 500 ms).
-- **Configurar el entorno de desarrollo y CI/CD antes del Sprint 1.** Establecer GitFlow, convenciones de código, contenedores Docker, pipelines de CI con tests unitarios y un primer despliegue de prueba antes de iniciar la implementación funcional evita la deuda de infraestructura y prepara el camino para la rúbrica TP1 (Software Configuration Management, Web Services RESTful API, Backend Application Core Testing Suite).
-- **Externalizar los prompts del LLM y los umbrales de análisis desde el primer sprint.** La decisión DD-09 (Spring Cloud Config) solo es valiosa si se aplica en la implementación; codificarla desde el inicio permite ajustar las reglas de análisis sprint a sprint sin redeploy, alineado con AC-03.
-- **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories ya tienen criterios Given-When-Then formulados; convertirlos en pruebas automatizadas con Cucumber o equivalente desde el Sprint 1 cubre el ítem 4 de la rúbrica TB3 (testing microservices) y refuerza la trazabilidad requerimientos → código → pruebas.
-- **Mantener actualizado el Registro de Versiones y el Student Outcome con cada incorporación.** Documentar las modificaciones en el momento de realizarlas, en lugar de consolidarlas al final, refuerza el ítem 9 (Evolution) de la rúbrica y permite al equipo recibir retroalimentación temprana del docente durante las asesorías quincenales.
+- **Cerrar los dos microservicios pendientes (`scenario-catalog-service` y `media-service`) en el siguiente sprint.** Aunque los puertos 8084 y 8085 están reservados y los contratos REST/AMQP definidos en ADB-10 y ADB-11, su implementación se difirió porque no son bloqueantes del flujo principal de práctica. Completarlos habilitará el catálogo de escenarios peruanos (F10) y la subida de materiales del usuario (F6), llevando el sistema a los 10 microservicios de negocio del diseño completo.
+- **Integrar el cliente real de Gemini Live en `live-coach-service`.** El servicio actual orquesta correctamente las strategies y publica el evento con `transcript_gemini` y métricas acústicas, pero el cliente WebSocket bidireccional contra `gemini-2.0-flash-live-001` aún está representado por un stub académico que recibe el transcript como parámetro. Conectar el cliente real con los buffers de audio del frontend cierra el último gap entre el diseño y la operación de producción.
+- **Migrar las bases de datos de H2 (local) a PostgreSQL gestionado en Railway.** El perfil `dev` levanta H2 in-memory por velocidad, pero el perfil `prod` necesita `ddl-auto: validate` con scripts de migración (Flyway o Liquibase) para que cada schema (`identity`, `sessions`, `scoring`, `progress`, `gamification`, `notification`) se versione formalmente.
+- **Implementar tests de integración con Testcontainers (Nivel 2).** El Nivel 1 (unit tests) ya está al 100 %; el Nivel 2 está documentado en la tabla 5.1.1 pero falta materializarse en código. Levantar contenedores efímeros de PostgreSQL 15, RabbitMQ 3 y Redis para verificar la cadena `session.live.finalized` → `fillers.analyzed` → `scoring.completed` → vistas CQRS es el siguiente paso lógico para subir el nivel de confianza del pipeline asíncrono antes del primer despliegue en cloud.
+- **Construir el frontend Angular contra los contratos REST y AMQP ya implementados.** Los endpoints (`POST /v1/sessions`, `POST /v1/coach/{id}/finalize`, `GET /v1/progress/dashboard`, etc.) y el WebSocket de notificaciones (`WSS /v1/notifications/stream`) están listos del lado backend; el frontend debe consumirlos respetando los DTOs publicados en `talki-commons`.
+- **Generar el diagrama formal de arquitectura cloud.** Construir la versión visual referida en 5.4.1 con íconos oficiales de Vercel, Railway, Supabase, Upstash y Google Cloud (en Lucidchart, draw.io o Excalidraw) y publicarla en `assets/images/cloud-architecture.png` para completar la evidencia visual del despliegue.
+- **Completar las evidencias visuales del código pendientes en 5.1.2.** Los screenshots del IDE para cada patrón implementado (repositorios JPA, fachada ACL, servicios CQRS, entidades de dominio, refactors RF-01 a RF-05) deben generarse de forma sistemática (capturas etiquetadas con el nombre exacto de la clase Java) para ser incrustadas en la sección 5.1.2 e ilustrar al lector la materialización concreta de los patrones declarados en el Capítulo IV.
+- **Configurar Spotless / Checkstyle y los linters frontend en el pipeline de CI.** Las convenciones del 5.2.3 hoy dependen de la disciplina manual; automatizarlas evita drift entre integrantes y mantiene el estilo del repositorio homogéneo sin requerir code reviews dedicados a formato.
+- **Reservar los dominios `talki.app`, `app.talki.app` y `api.talki.app`.** La adquisición temprana evita bloqueos por propagación DNS y emisión de certificados TLS cuando el frontend esté listo para despliegue público.
+- **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories tienen criterios Given-When-Then formulados; convertirlos en pruebas Cucumber 7 cierra el Nivel 3 de la pirámide (5.1.1) y mantiene trazabilidad explícita requerimientos → código → pruebas.
 
 # Video About-The-Team
 
 
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Referencias Bibliográficas
 
@@ -3927,7 +4485,7 @@ Teleprompter.com. (2024). *Public speaking statistics 2025: Global fear & trends
 
 Wojcik, R., Bachmann, F., Bass, L., Clements, P., Merson, P., Nord, R., & Wood, B. (2006). *Attribute-Driven Design (ADD), Version 2.0* (Technical Report CMU/SEI-2006-TR-023). Software Engineering Institute, Carnegie Mellon University. https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=8147
 
-<hr class="page-break">
+<div style="page-break-after: always;"></div>
 
 # Anexos
 
