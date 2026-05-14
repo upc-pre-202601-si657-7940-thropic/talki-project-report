@@ -147,6 +147,7 @@
       - [4.2.4. Constraints](#424-constraints)
       - [4.2.5. Architectural Concerns](#425-architectural-concerns)
    - [4.3. ADD Iterations](#43-add-iterations)
+      - [4.3.0. Iteration 0: Vista de Contexto General del Sistema](#430-iteration-0-vista-de-contexto-general-del-sistema)
       - [4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico](#431-iteration-1-núcleo-de-sesión-de-práctica-y-pipeline-de-análisis-asincrónico)
          - [4.3.1.1. Architectural Design Backlog 1](#4311-architectural-design-backlog-1)
          - [4.3.1.2. Establish Iteration Goal by Selecting Drivers](#4312-establish-iteration-goal-by-selecting-drivers)
@@ -2857,7 +2858,7 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
       <td>Riesgo gestionado</td>
       <td>Privacidad y datos sensibles (Ley 29733)</td>
       <td>La grabación de voz es un dato biométrico. Una filtración tendría implicaciones legales y reputacionales graves para Thropic.</td>
-      <td>Consentimiento explícito en el flujo de registro, cifrado en tránsito (C-07) y en reposo, retención mínima del audio (eliminación tras transcripción exitosa) y publicación de política de privacidad.</td>
+      <td>Consentimiento explícito en el flujo de registro, cifrado en tránsito (C-07), no persistencia del audio de sesión en storage y publicación de política de privacidad. Gemini Live entrega la transcripción en tiempo real, por lo que los chunks de audio se descartan al cerrar la sesión.</td>
     </tr>
     <tr>
       <td>AC-09</td>
@@ -2887,11 +2888,56 @@ Las preocupaciones arquitectónicas (*architectural concerns*) recogen aspectos 
 
 ## 4.3. ADD Iterations
 
-Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como ciclos cortos en los que se selecciona un subconjunto de drivers de la sección 4.2, se eligen los elementos del sistema a refinar, se aplican conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y se registran las decisiones tomadas con su justificación trazable. Cada iteración cierra con un análisis del estado actual del diseño y la revisión del cumplimiento del *iteration goal*, materializado mediante un Kanban Board que comunica visualmente el avance del backlog de diseño.
+Las iteraciones del método **Attribute-Driven Design (ADD 3.0)** estructuran las decisiones de diseño de Talki como un proceso incremental. ADD no rediseña todo el sistema en cada ciclo: primero establece una vista general del sistema y luego hace *zoom* sobre los drivers arquitectónicos más importantes, agregando decisiones sobre los elementos que la iteración anterior dejó pendientes.
 
-Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`filler-detection-service` → `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) incorpora el ciclo de vida de la cuenta de usuario (`identity-service`), los servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y la observabilidad transversal (Zipkin + Spring Sleuth con propagación `X-B3-TraceId` y Spring Boot Actuator), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas dos iteraciones completan el diseño arquitectónico del sistema Talki con 10 microservicios de negocio y 3 de infraestructura.
+En Talki esta lógica se aplica de la siguiente forma:
+
+```text
+Iteration 0 -> Vista completa del sistema y sus drivers generales
+Iteration 1 -> Zoom en los drivers críticos del flujo principal de práctica
+Iteration 2 -> Zoom en identidad, seguridad, engagement y observabilidad
+```
+
+Cada iteración selecciona un subconjunto de drivers de la sección 4.2, elige los elementos del sistema que deben refinarse, aplica conceptos de diseño (estilos, patrones y tácticas declarados en 4.1.2, 4.1.6 y 4.1.7) y registra las decisiones tomadas con justificación trazable. Al cierre de cada ciclo se revisa el cumplimiento del *iteration goal* y se comunica el estado del backlog de diseño mediante un Kanban Board.
+
+### 4.3.0. Iteration 0: Vista de Contexto General del Sistema
+
+La **Iteration 0** no busca resolver todos los detalles de diseño. Su propósito es establecer el contexto general de Talki para que las iteraciones posteriores tengan un punto de partida común: actores externos, límites del sistema, principales capacidades, riesgos técnicos y atributos de calidad que guían el diseño.
+
+Antes de iniciar la descomposición ADD, el equipo aplica la lógica de QAW/QWA trabajada en clase: clasificar los drivers arquitectónicos, priorizarlos y seleccionar cuáles entran en cada iteración. En Talki los drivers se organizan así:
+
+| Tipo de driver | Drivers de Talki | Criterio de selección |
+|---|---|---|
+| Drivers funcionales | US09 Crear sesión, US12 práctica en vivo con IA, US14 finalizar sesión, US15 recibir feedback, US17 Voice Coach Score, US05-US08 gestión de cuenta | Son requisitos funcionales que fuerzan la descomposición del sistema en servicios concretos. Se eligieron por relevancia para el MVP y complejidad técnica. |
+| Drivers de atributos de calidad | QAS-01 latencia en vivo, QAS-02 respuesta al finalizar sesión, QAS-03 disponibilidad/degradación, QAS-05 seguridad, QAS-07 modificabilidad, QAS-09 escalabilidad, QAS-11 observabilidad | Representan los escenarios más críticos para que Talki sea usable y operable. Se priorizan por impacto en el usuario y riesgo técnico. |
+| Drivers de restricciones | C-01 Java 17 + Spring Boot 3, C-02 Angular, C-04 Docker, C-08 Supabase Storage, C-09 Ley 29733, C-13 API `/v1`, C-14 JWT + bcrypt | No se priorizan como funcionalidades, pero condicionan todas las decisiones arquitectónicas. |
+| Architectural concerns | AC-02 desacoplamiento asincrónico, AC-06 dependencia de Gemini, AC-08 privacidad del audio, AC-09 calidad de transcripción, AC-11 trazabilidad de decisiones | Riesgos o preocupaciones que obligan a justificar decisiones como RabbitMQ, Circuit Breaker, no persistencia de audio y tracing distribuido. |
+
+La priorización inicial queda definida por la combinación **importancia para el negocio** y **dificultad técnica de implementación**:
+
+| Prioridad | Driver | Tipo | Justificación |
+|---|---|---|---|
+| 1 | QAS-01 / US12: práctica en vivo con Gemini Live | Calidad + funcional | Es el diferenciador principal del producto. Si la sesión en vivo tiene mala latencia, Talki pierde valor. |
+| 2 | QAS-02 / US15: análisis y feedback asincrónico | Calidad + funcional | El usuario debe cerrar la sesión sin esperar procesos pesados. Obliga a usar eventos, RabbitMQ y workers. |
+| 3 | QAS-03 / AC-06: disponibilidad ante fallos de Gemini | Calidad + concern | La dependencia de un proveedor externo es un riesgo alto; requiere Circuit Breaker y fallback. |
+| 4 | QAS-05 / C-14: seguridad de cuenta | Calidad + restricción | El sistema maneja datos personales, credenciales y contexto académico; requiere JWT, bcrypt y refresh rotation. |
+| 5 | QAS-11 / AC-11: observabilidad y trazabilidad | Calidad + concern | En una arquitectura distribuida se necesita diagnosticar incidentes con trace ID end-to-end. |
+
+En esta vista inicial se identifica que Talki necesita soportar tres grandes flujos:
+
+| Flujo general | Elementos candidatos | Drivers iniciales |
+|---|---|---|
+| Práctica oral con IA en tiempo real | `frontend`, API Gateway, `live-coach-service`, Gemini Live API | US09, US12, QAS-01, QAS-03 |
+| Análisis post-sesión y feedback | RabbitMQ, `filler-detection-service`, `scoring-service`, `progress-service`, `notification-service` | US14, US15, US17, QAS-02, QAS-09 |
+| Cuenta, seguridad y personalización | `identity-service`, `gamification-service`, `scenario-catalog-service`, observabilidad transversal | US05-US08, US18-US23, QAS-05, QAS-07, QAS-11 |
+
+Con esta vista general, el equipo prioriza los drivers de mayor riesgo técnico para la primera iteración: latencia de la sesión en vivo, procesamiento asincrónico del análisis, disponibilidad ante fallos del proveedor de IA y personalización inicial del feedback. Los elementos no críticos para habilitar el flujo principal quedan explícitamente diferidos para la segunda iteración.
+
+Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones de refinamiento: la **Iteration 1** (sección 4.3.1) habilita el núcleo de la sesión de práctica en tiempo real con Gemini Live y el pipeline asincrónico de análisis (`filler-detection-service` -> `scoring-service`), cubriendo los drivers más exigentes (US09, US12, US14, US15, US17, QAS-01, QAS-02, QAS-03, QAS-07, QAS-09); la **Iteration 2** (sección 4.3.2) toma el diseño resultante y agrega lo que quedó pendiente: ciclo de vida de la cuenta de usuario (`identity-service`), servicios de engagement (`progress-service` con CQRS, `gamification-service`, `notification-service`) y observabilidad transversal (Zipkin + Spring Sleuth con propagación `X-B3-TraceId` y Spring Boot Actuator), cerrando los drivers QAS-05, QAS-11, C-09, C-14 y AC-08. Estas iteraciones completan el diseño arquitectónico del sistema Talki con 10 microservicios de negocio y 3 de infraestructura.
 
 ### 4.3.1. Iteration 1: Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico
+
+La **Iteration 1** toma la vista de contexto de la Iteration 0 y hace *zoom* sobre el flujo más crítico del producto: que un estudiante pueda iniciar una práctica oral, interactuar con Gemini Live, finalizar la sesión y recibir análisis sin bloquear la experiencia de usuario. Por ello, esta iteración no incorpora todavía todo el ciclo de cuenta, progreso, gamificación ni observabilidad completa; esos elementos quedan registrados como pendientes para la siguiente iteración.
 
 #### 4.3.1.1. Architectural Design Backlog 1
 
@@ -2918,7 +2964,7 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 |---|---|---|
 | User Stories | US09 | Crear sesión de práctica — funcionalidad core. |
 | | US12 | Práctica en vivo con IA — base del UX diferenciador. |
-| | US14 | Finalizar sesión y guardar audio — cierre del flujo. |
+| | US14 | Finalizar sesión y guardar transcripción — cierre del flujo. |
 | | US15 | Recibir análisis de la sesión — outcome esperado. |
 | | US17 | Voice Coach Score — métrica central del producto. |
 | | US10 | Seleccionar escenario peruano — diferenciador de mercado. |
@@ -2950,7 +2996,7 @@ Para el MVP académico (ciclo 2026-10) se documentan dos iteraciones: la **Itera
 | `media-service` | Microservicio | URLs prefirmadas para upload directo a Supabase Storage. |
 | API Gateway | Edge layer | Único punto de entrada: routing, validación JWT, rate limiting, WebSocket pass-through. |
 | RabbitMQ | Message broker | Bus de eventos con exchange `talki.events`, queues por consumidor y DLX. |
-| Supabase Storage | Sistema managed | Buckets para audio de sesión y materiales del usuario. |
+| Supabase Storage | Sistema managed | Buckets para materiales del usuario y exports; el audio de sesión no se almacena. |
 | Supabase PostgreSQL | Data store | Schemas separados por servicio con usuarios PostgreSQL independientes. |
 | Upstash Redis | Cache managed | Rate limiting en gateway, caché de scores, sesiones WebSocket activas. |
 
@@ -3206,7 +3252,7 @@ sequenceDiagram
 
 ### 4.3.2. Iteration 2: Identidad, Seguridad, Engagement y Observabilidad
 
-Aplicando el paso 8 del método ADD (*repetir pasos 2 a 7 en la siguiente iteración*), la Iteration 2 refina los bounded contexts de usuario, engagement y observabilidad que la Iteration 1 dejó pendientes. Esta iteración toma el sistema con el pipeline de análisis completo y agrega autenticación segura, progreso persistente, gamificación y trazabilidad distribuida.
+Aplicando el paso 8 del método ADD (*repetir pasos 2 a 7 en la siguiente iteración*), la **Iteration 2** no vuelve a diseñar el flujo principal ya resuelto en la Iteration 1. En su lugar, toma ese diseño como base y hace *zoom* sobre los drivers que quedaron sin cubrir: ciclo de vida de usuario, seguridad de credenciales, personalización por perfil académico, progreso, gamificación, notificaciones y observabilidad transversal. Esta iteración completa el sistema alrededor del pipeline de práctica ya definido.
 
 #### 4.3.2.1. Architectural Design Backlog 2
 
@@ -4422,7 +4468,7 @@ Al cierre del segundo avance (TB2), el equipo consolidó el diseño arquitectón
 - **Catálogo de drivers formalizado.** Se especificaron 8 principios arquitectónicos (P1-P8), 8 estilos y patrones de aproximación, 8 patrones de diseño aplicados y 22 tácticas distribuidas en cinco atributos de calidad (Disponibilidad, Rendimiento, Seguridad, Modificabilidad, Testeabilidad), todos trazables a los requerimientos del Capítulo III.
 - **Arquitectura visualizada en cuatro vistas complementarias.** Se documentó el sistema mediante un Context Diagram C4 (Nivel 1), un Container Diagram C4 (Nivel 2), Component Diagrams C4 (Nivel 3) del `live-coach-service`, del `session-service` (4.3.1.6) y del `identity-service` (4.3.2), un Context Map DDD con cinco bounded contexts y sus relaciones de integración (U/D, OHS, ACL, PL), un Class Diagram consolidado y un Entity-Relation Diagram database-per-service.
 - **Drivers arquitectónicos formulados con métricas verificables.** La sección 4.2 establece 12 Quality Attribute Scenarios con seis partes (fuente, estímulo, artefacto, entorno, respuesta, medida), 14 Constraints técnicas y organizacionales, y 11 Architectural Concerns con riesgos gestionados, garantizando que cada decisión de diseño tenga un criterio de aceptación verificable.
-- **Dos iteraciones ADD documentadas íntegramente.** La Iteration 1 (Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico) y la Iteration 2 (Identidad, Seguridad, Engagement y Observabilidad) cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
+- **Proceso ADD incremental documentado íntegramente.** La Iteration 0 establece la vista de contexto general del sistema; la Iteration 1 hace zoom en el núcleo de sesión de práctica y pipeline de análisis asincrónico; y la Iteration 2 agrega identidad, seguridad, engagement y observabilidad sobre el diseño anterior. Las iteraciones de refinamiento cubren los siete pasos del método con un Architectural Design Backlog acumulado de 22 ítems (ADB-01 a ADB-22), un Decision Log de 18 decisiones (DD-01 a DD-18) y dos Kanban Boards de cierre.
 - **Trazabilidad end-to-end driver → decisión → componente.** Cada ítem del backlog y cada decisión de diseño enlaza con identificadores específicos de los drivers de 4.2, y cada componente instanciado en 4.3.1.5 y 4.3.2.5 referencia los principios y tácticas de 4.1, permitiendo que la próxima fase de implementación (Capítulo V) parta de un diseño justificado y reproducible.
 
 Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa del Capítulo V para la implementación de Talki, dejando lista toda la configuración previa al primer sprint. Los principales logros son:
