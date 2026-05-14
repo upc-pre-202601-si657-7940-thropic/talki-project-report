@@ -3564,7 +3564,7 @@ Los contratos Pact se publican en un **Pact Broker** y el pipeline de CI verific
 
 Esta sección documenta cómo los patrones de diseño arquitectónico y de comportamiento declarados en la sección 4.1.6 se materializan en la estructura de código de cada microservicio Spring Boot.
 
-> _**Nota sobre evidencias visuales.** Las capturas de pantalla del código de cada patrón (repositorios, fachadas ACL, servicios CQRS, entidades JPA, refactors RF-01 a RF-05) se incorporarán en el sprint de evidencia correspondiente al entregable TB3. El código referenciado ya está implementado y verificado en los repos `talki-user-services`, `talki-session-services`, `talki-analysis-services` y `talki-engagement-services` bajo la organización `upc-pre-202601-si657-7940-thropic`, con **128 unit tests pasando**._
+> _**Evidencias visuales — avance parcial (TB1).** El código de cada patrón (repositorios, fachadas ACL, servicios CQRS, entidades JPA, refactors RF-01 a RF-05) está implementado y verificado en los repos `talki-user-services`, `talki-session-services`, `talki-analysis-services` y `talki-engagement-services` bajo la organización `upc-pre-202601-si657-7940-thropic`, con **128 unit tests pasando**. Las capturas de pantalla del IDE correspondientes a cada patrón se completarán en el siguiente avance del proyecto._
 
 #### Estructura de paquetes por microservicio
 
@@ -4309,7 +4309,7 @@ El siguiente listado representa los flujos de comunicación entre los componente
 6. El `live-coach-service` mantiene una conexión WebSocket bidireccional con **Google Gemini Live** durante toda la sesión y, al cerrarla, publica el evento `session.live.finalized` con el `transcript_gemini` y las métricas acústicas calculadas en memoria; el pipeline `filler-detection-service → scoring-service → progress-service + gamification-service + notification-service` continúa de forma asíncrona sobre RabbitMQ.
 7. El `notification-service` envía correos transaccionales mediante el **proveedor de email externo** ante eventos de negocio (registro, recuperación de contraseña, hito de progreso).
 
-> _Figura: Diagrama de arquitectura cloud de Talki._ El diagrama formal en notación cloud (íconos oficiales de Vercel, Railway, Supabase, Upstash y Google Cloud) se elaborará en una herramienta de diagramación cloud y se incorporará en el directorio `assets/images/cloud-architecture.png` durante la implementación del primer sprint.
+> _**Figura — Arquitectura cloud de Talki (TB1).** La topología de despliegue descrita en los puntos 1–7 anteriores corresponde al estado operativo del sistema en este avance parcial. El diagrama formal con íconos oficiales de cada proveedor (Vercel, Railway, Supabase, Upstash, Google Cloud) se incorporará como artefacto visual en el siguiente entregable._
 
 ### 5.4.2. Cloud Architecture Deployment
 
