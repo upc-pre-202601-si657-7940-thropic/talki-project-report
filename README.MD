@@ -183,6 +183,10 @@
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
       - [5.4.2. Cloud Architecture Deployment](#542-cloud-architecture-deployment)
       - [5.4.3. Investigación de Herramientas de Logs y Monitoreo](#543-investigación-de-herramientas-de-logs-y-monitoreo)
+   - [5.5. Sprint 2](#55-sprint-2)
+      - [5.5.1. Sprint Backlog 2](#551-sprint-backlog-2)
+      - [5.5.2. Development Evidence for Sprint Review](#552-development-evidence-for-sprint-review)
+      - [5.5.3. Testing Suite Evidence for Sprint Review](#553-testing-suite-evidence-for-sprint-review)
 
 - [Conclusiones](#conclusiones)
 - [Referencias Bibliográficas](#referencias-bibliográficas)
@@ -4318,6 +4322,22 @@ Antes de seleccionar la infraestructura concreta del producto Talki, el equipo e
 
 Esta combinación queda reflejada en el diagrama de arquitectura cloud de la siguiente subsección (5.4.1), donde cada componente se etiqueta con el modelo de despliegue que lo aloja.
 
+**Ruta de escalado planificada — arquitectura híbrida de segunda fase.** La combinación PaaS + SaaS + Edge es la decisión óptima para la etapa actual del producto, donde el tráfico es bajo y predecible y la prioridad del equipo es la correcta ejecución del sistema sobre la optimización de costos. Sin embargo, el equipo ha identificado una ruta de evolución concreta hacia una **arquitectura híbrida PaaS-Serverless** para cuando el volumen de sesiones justifique el costo de mayor complejidad operativa:
+
+| Microservicio | Modelo actual | Modelo en escalado | Justificación |
+|---|---|---|---|
+| `live-coach-service` | Railway (PaaS) | Cloud Run / AWS Lambda | Solo recibe `POST /v1/coach/{id}/finalize` al cierre de sesión — invocación corta y stateless; sin WebSocket de larga duración porque el frontend conecta directamente con Gemini Live. |
+| `session-service` | Railway (PaaS) | Cloud Run / AWS Lambda | Endpoints REST de corta duración (`POST /v1/sessions`, `GET /v1/sessions/{id}`) sin estado en memoria. |
+| `identity-service` | Railway (PaaS) | Cloud Run / AWS Lambda | Flujos de auth (`/login`, `/register`, `/refresh`) son invocaciones cortas y sin consumers AMQP. |
+| `filler-detection-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP permanente sobre `session.live.finalized` — necesita estar siempre suscrito a la cola. Serverless lo haría despertar con segundos de retraso ante cada evento. |
+| `scoring-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre `fillers.analyzed`; además implementa idempotencia at-least-once que requiere conexión estable a PostgreSQL. |
+| `progress-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre `scoring.completed`; mantiene vistas materializadas CQRS actualizadas en tiempo real. |
+| `gamification-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre `scoring.completed`; gestiona streaks y XP con lógica de estado acumulado. |
+| `notification-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre múltiples topics; requiere conexión WebSocket persistente hacia el frontend. |
+| RabbitMQ | Railway (PaaS) | Amazon SQS / Google Pub/Sub | Reemplazar el broker autoalojado por un servicio gestionado elimina el punto de fallo único del bus de eventos y escala automáticamente con el tráfico. |
+
+La decisión de mantener Railway en la fase actual no es una deuda técnica sino una **elección consciente de simplicidad operativa apropiada para la etapa del producto**: un sistema híbrido con tres servicios serverless y cinco instancias persistentes tiene mayor complejidad de networking (VPC peering, IAM, API Gateway), mayor superficie de configuración y mayor curva de onboarding para nuevos integrantes, costos que no se amortizan con el tráfico académico inicial.
+
 ### 5.4.1. Cloud Architecture Diagram
 
 La arquitectura cloud de Talki sigue una topología de **microservicios desplegados de forma independiente** sobre plataformas *Platform-as-a-Service* (PaaS), conservando los límites de los cinco *Bounded Contexts* definidos en el Capítulo IV. La distribución de los componentes en proveedores cloud se resume en el siguiente diagrama lógico.
@@ -4446,6 +4466,98 @@ Como parte del diseño operativo del producto, el equipo realizó una investigac
 | Alertas | Reglas Railway sobre CPU, memoria y *error rate* | — | Sección 5.4.2 |
 
 Esta combinación constituye un *quality gate* operativo: ningún despliegue a producción se promueve si un microservicio falla su `/actuator/health` durante el *rolling update*, y cualquier incremento de *error rate* > 5 % en una ventana de 5 minutos genera una alerta accionable por el equipo, garantizando el cumplimiento del escenario QAS-11 desde el primer despliegue.
+
+<div style="page-break-after: always;"></div>
+
+## 5.5. Sprint 2
+
+### 5.5.1. Sprint Backlog 2
+
+| Sprint 2 | **Integración frontend Angular y microservicios pendientes** |
+|---|---|
+| **Sprint Planning Background** | |
+| Date | 19/05/2026 |
+| Time | 18:00 |
+| Location | Reunión realizada mediante Discord |
+| Prepared By | Tumi Oliden, Manuel Ignacio |
+| Attendees (to planning) | Oroncoy Almeyda, Alejandro Daniel |
+| | Rivera Sosa, Eduardo Gael |
+| | Tumi Oliden, Manuel Ignacio |
+| **Sprint 2 Goal** | Implementar las vistas Angular del flujo principal de práctica (autenticación, sesión, feedback), integrar el frontend con los endpoints REST del backend, cerrar los microservicios `scenario-catalog-service` y `media-service`, y elevar la cobertura con tests de integración Testcontainers (Nivel 2). |
+| **Sprint 2 Velocity** | 45 |
+| **Sum of Story Points** | 45 |
+
+| Sprint # | Sprint 2 | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **User Story** | | **Work-Item / Task** | | | | | |
+| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
+| US09 | Crear nueva sesión de práctica | T01 | Vista Angular — Nueva sesión | Implementar componente Angular para crear sesión seleccionando tipo y objetivo, consumiendo `POST /v1/sessions`. | 8 | Tumi Oliden, Manuel | In-Process |
+| US12 | Iniciar grabación y transcripción en tiempo real | T02 | Vista Angular — Sesión en vivo | Implementar la vista de grabación con WebSocket bidireccional hacia `live-coach-service` (Gemini Live), mostrando transcripción en tiempo real. | 13 | Rivera Sosa, Eduardo Gael | In-Process |
+| US14 | Finalizar sesión y guardar transcripción | T03 | Acción de finalización de sesión | Agregar botón de finalización en la vista de sesión que invoque `POST /v1/coach/{id}/finalize` y redirija al reporte de feedback. | 5 | Rivera Sosa, Eduardo Gael | In-Process |
+| US15 | Recibir feedback general de la IA | T04 | Vista Angular — Reporte de feedback | Implementar componente de visualización del reporte post-sesión: Voice Coach Score, resumen de muletillas, velocidad y silencio, consumiendo `GET /v1/sessions/{id}/feedback`. | 8 | Oroncoy Almeyda, Alejandro | In-Process |
+| US10 | Seleccionar tipo de sesión | T05 | Selector de tipo de sesión en UI | Agregar selector de modo (`QUICK_PRACTICE`, `INTERVIEW`, `THESIS_DEFENSE`, `SCENARIO`) en la vista de nueva sesión, con descripción adaptada por segmento. | 3 | Tumi Oliden, Manuel | In-Process |
+| US16 | Ver análisis de muletillas | T06 | Vista de muletillas detectadas | Implementar sección de muletillas en el reporte de feedback consumiendo los datos del `filler-detection-service` via `scoring-service`. | 5 | Oroncoy Almeyda, Alejandro | To-Do |
+| US17 | Ver métricas de velocidad | T07 | Vista de métricas de velocidad | Mostrar palabras por minuto y ratio de silencio en el reporte de feedback. | 3 | Oroncoy Almeyda, Alejandro | To-Do |
+| US11 | Seleccionar escenario de práctica | T08 | scenario-catalog-service | Implementar `scenario-catalog-service` (puerto 8084) con catálogo de escenarios peruanos, endpoints `GET /v1/scenarios` y `GET /v1/scenarios/{id}`, integración AMQP con `live-coach-service`. | 13 | Tumi Oliden, Manuel | To-Do |
+
+### 5.5.2. Development Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-user-services | main | 9cd5cc3 | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
+| talki-user-services | main | 050ebc2 | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
+| talki-user-services | main | eab2477 | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
+| talki-user-services | main | e7971d4 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a los 2 microservicios | - | 12/05/2026 |
+| talki-user-services | main | 9bec333 | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/identity-test-id-and-jwt-coverage | - | 10/05/2026 |
+| talki-user-services | main | a02c830 | test(identity): arreglar NPE en login test + agregar JwtTokenProviderTest | - | 10/05/2026 |
+| talki-user-services | main | a1f8310 | chore: agregar .gitignore y eliminar archivos compilados del tracking | - | 08/05/2026 |
+| talki-user-services | main | 05c028b | test: agregar unit tests para AuthService y ScoreNotificationConsumer | - | 08/05/2026 |
+| talki-user-services | main | 5a7421c | feat: talki-user-services initial commit | - | 08/05/2026 |
+| talki-session-services | main | 6a2e1d0 | Merge pull request #4 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
+| talki-session-services | main | 91895da | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
+| talki-session-services | main | 7589415 | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
+| talki-session-services | main | dc65df5 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a session y live-coach | - | 12/05/2026 |
+| talki-session-services | main | c871107 | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/fix/session-and-strategy-tests | - | 10/05/2026 |
+| talki-session-services | main | 68bc52c | test: agregar SessionTest + SessionModeStrategyFactoryTest | - | 10/05/2026 |
+| talki-session-services | main | abf233b | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/extend-session-finalized-event | - | 10/05/2026 |
+| talki-session-services | main | ee0a9c5 | refactor(session): aplicar DDD + CQRS + ACL y agregar tests unitarios | - | 10/05/2026 |
+| talki-session-services | main | 513e705 | refactor(live-coach): publicar transcript_gemini y métricas acústicas en session.live.finalized | - | 10/05/2026 |
+| talki-analysis-services | main | 33d2ae1 | Merge pull request #5 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
+| talki-analysis-services | main | 62b3abf | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
+| talki-analysis-services | main | 0fd6e49 | Merge pull request #4 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
+| talki-analysis-services | main | 8add798 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a scoring y filler-detection | - | 12/05/2026 |
+| talki-analysis-services | main | 6c11b69 | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/feat/global-exception-handler-scoring | - | 11/05/2026 |
+| talki-analysis-services | main | d840384 | feat(scoring): GlobalExceptionHandler con tests unitarios | - | 11/05/2026 |
+| talki-analysis-services | main | 5c2cf8f | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/fix/voice-score-test | - | 10/05/2026 |
+| talki-analysis-services | main | dd28ba1 | test(scoring): agregar VoiceScoreTest para invariantes del value object | - | 10/05/2026 |
+| talki-analysis-services | main | 371c731 | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/eliminate-transcription-service | - | 10/05/2026 |
+| talki-analysis-services | main | cb4f0c4 | fix(scoring): propagar wpm/silenceRatio/volumeRms + idempotencia robusta | - | 10/05/2026 |
+| talki-engagement-services | main | a67adeb | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
+| talki-engagement-services | main | 6fb1ef0 | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
+| talki-engagement-services | main | 5ca5d5e | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
+| talki-engagement-services | main | e5ae896 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a progress y gamification | - | 12/05/2026 |
+| talki-engagement-services | main | 1c2a328 | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/gamification-consumer-test | - | 10/05/2026 |
+| talki-engagement-services | main | d8de089 | test(gamification): agregar ScoringCompletedConsumerTest (7 casos) | - | 10/05/2026 |
+| talki-engagement-services | main | a515fdc | chore: agregar .gitignore y eliminar archivos compilados del tracking | - | 08/05/2026 |
+| talki-engagement-services | main | 4b75fc8 | test: agregar unit tests para UserProgress, UserStreak y ScoringCompletedConsumer | - | 08/05/2026 |
+| talki-engagement-services | main | c39d699 | feat: talki-engagement-services initial commit | - | 08/05/2026 |
+
+### 5.5.3. Testing Suite Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-user-services | main | a02c830 | test(identity): arreglar NPE en login test + agregar JwtTokenProviderTest | - | 10/05/2026 |
+| talki-user-services | main | 05c028b | test: agregar unit tests para AuthService y ScoreNotificationConsumer | - | 08/05/2026 |
+| talki-session-services | main | 68bc52c | test: agregar SessionTest + SessionModeStrategyFactoryTest | - | 10/05/2026 |
+| talki-session-services | main | ee0a9c5 | refactor(session): aplicar DDD + CQRS + ACL y agregar tests unitarios | - | 10/05/2026 |
+| talki-analysis-services | main | d840384 | feat(scoring): GlobalExceptionHandler con tests unitarios | - | 11/05/2026 |
+| talki-analysis-services | main | dd28ba1 | test(scoring): agregar VoiceScoreTest para invariantes del value object | - | 10/05/2026 |
+| talki-engagement-services | main | d8de089 | test(gamification): agregar ScoringCompletedConsumerTest (7 casos) | - | 10/05/2026 |
+| talki-engagement-services | main | 4b75fc8 | test: agregar unit tests para UserProgress, UserStreak y ScoringCompletedConsumer | - | 08/05/2026 |
 
 <div style="page-break-after: always;"></div>
 
