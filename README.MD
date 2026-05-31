@@ -187,8 +187,7 @@
       - [5.5.1. Sprint Backlog 2](#551-sprint-backlog-2)
       - [5.5.2. Development Evidence for Sprint Review](#552-development-evidence-for-sprint-review)
       - [5.5.3. Testing Suite Evidence for Sprint Review](#553-testing-suite-evidence-for-sprint-review)
-      - [5.5.4. Software Deployment Evidence for Sprint Review](#554-software-deployment-evidence-for-sprint-review)
-      - [5.5.5. Team Collaboration Insights during Sprint](#555-team-collaboration-insights-during-sprint)
+
 
 - [Conclusiones](#conclusiones)
 - [Referencias Bibliográficas](#referencias-bibliográficas)
@@ -4532,34 +4531,6 @@ Los tests de integración (Nivel 2 — Testcontainers) corresponden a los work-i
 | talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
 | talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
 | talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
-
-### 5.5.4. Software Deployment Evidence for Sprint Review
-
-Durante el Sprint 2, el equipo completó el despliegue de los ocho microservicios backend en Railway (PaaS) y el broker de mensajería en CloudAMQP, materializando la configuración de infraestructura cloud diseñada en las secciones 5.2.4 y 5.4.
-
-| Servicio | Plataforma | URL pública | Estado |
-|---|---|---|---|
-| identity-service | Railway | `talki-user-services-production.up.railway.app` | Desplegado |
-| notification-service | Railway | — | En proceso |
-| session-service | Railway | — | En proceso |
-| live-coach-service | Railway | — | En proceso |
-| filler-detection-service | Railway | — | En proceso |
-| scoring-service | Railway | — | En proceso |
-| progress-service | Railway | — | En proceso |
-| gamification-service | Railway | — | En proceso |
-| RabbitMQ (broker) | CloudAMQP | `shark.rmq.cloudamqp.com` | Desplegado |
-
-Los Dockerfiles multi-stage (`maven:3.9.6-eclipse-temurin-17-alpine` → `eclipse-temurin:17-jre-alpine`) y los perfiles `prod` con PostgreSQL gestionado por Railway fueron pusheados a los cuatro mono-repos backend como evidencia del proceso de configuración de despliegue continuo (commits del 31/05/2026 listados en 5.5.2).
-
-### 5.5.5. Team Collaboration Insights during Sprint
-
-El equipo Thropic colaboró durante el Sprint 2 mediante el flujo GitFlow establecido en la sección 5.2.2. Las contribuciones del período se distribuyen de la siguiente manera:
-
-| Integrante | Actividad principal | Repositorio(s) |
-|---|---|---|
-| Tumi Oliden, Manuel Ignacio | Configuración de despliegue Railway: Dockerfiles multi-stage, perfiles prod, variables de entorno CloudAMQP | talki-user-services, talki-session-services, talki-analysis-services, talki-engagement-services |
-| Oroncoy Almeyda, Alejandro Daniel | Implementación vistas Angular — reporte de feedback (T04), métricas de velocidad (T07) | talki-frontend *(en progreso)* |
-| Rivera Sosa, Eduardo Gael | Implementación vistas Angular — sesión en vivo (T02), finalización de sesión (T03) | talki-frontend *(en progreso)* |
 
 <div style="page-break-after: always;"></div>
 
