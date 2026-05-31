@@ -183,6 +183,11 @@
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
       - [5.4.2. Cloud Architecture Deployment](#542-cloud-architecture-deployment)
       - [5.4.3. Investigación de Herramientas de Logs y Monitoreo](#543-investigación-de-herramientas-de-logs-y-monitoreo)
+   - [5.5. Sprint 2](#55-sprint-2)
+      - [5.5.1. Sprint Backlog 2](#551-sprint-backlog-2)
+      - [5.5.2. Development Evidence for Sprint Review](#552-development-evidence-for-sprint-review)
+      - [5.5.3. Testing Suite Evidence for Sprint Review](#553-testing-suite-evidence-for-sprint-review)
+
 
 - [Conclusiones](#conclusiones)
 - [Referencias Bibliográficas](#referencias-bibliográficas)
@@ -4318,6 +4323,22 @@ Antes de seleccionar la infraestructura concreta del producto Talki, el equipo e
 
 Esta combinación queda reflejada en el diagrama de arquitectura cloud de la siguiente subsección (5.4.1), donde cada componente se etiqueta con el modelo de despliegue que lo aloja.
 
+**Ruta de escalado planificada — arquitectura híbrida de segunda fase.** La combinación PaaS + SaaS + Edge es la decisión óptima para la etapa actual del producto, donde el tráfico es bajo y predecible y la prioridad del equipo es la correcta ejecución del sistema sobre la optimización de costos. Sin embargo, el equipo ha identificado una ruta de evolución concreta hacia una **arquitectura híbrida PaaS-Serverless** para cuando el volumen de sesiones justifique el costo de mayor complejidad operativa:
+
+| Microservicio | Modelo actual | Modelo en escalado | Justificación |
+|---|---|---|---|
+| `live-coach-service` | Railway (PaaS) | Cloud Run / AWS Lambda | Solo recibe `POST /v1/coach/{id}/finalize` al cierre de sesión — invocación corta y stateless; sin WebSocket de larga duración porque el frontend conecta directamente con Gemini Live. |
+| `session-service` | Railway (PaaS) | Cloud Run / AWS Lambda | Endpoints REST de corta duración (`POST /v1/sessions`, `GET /v1/sessions/{id}`) sin estado en memoria. |
+| `identity-service` | Railway (PaaS) | Cloud Run / AWS Lambda | Flujos de auth (`/login`, `/register`, `/refresh`) son invocaciones cortas y sin consumers AMQP. |
+| `filler-detection-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP permanente sobre `session.live.finalized` — necesita estar siempre suscrito a la cola. Serverless lo haría despertar con segundos de retraso ante cada evento. |
+| `scoring-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre `fillers.analyzed`; además implementa idempotencia at-least-once que requiere conexión estable a PostgreSQL. |
+| `progress-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre `scoring.completed`; mantiene vistas materializadas CQRS actualizadas en tiempo real. |
+| `gamification-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre `scoring.completed`; gestiona streaks y XP con lógica de estado acumulado. |
+| `notification-service` | Railway (PaaS) | **Mantener PaaS** | Consumer AMQP sobre múltiples topics; requiere conexión WebSocket persistente hacia el frontend. |
+| RabbitMQ | Railway (PaaS) | Amazon SQS / Google Pub/Sub | Reemplazar el broker autoalojado por un servicio gestionado elimina el punto de fallo único del bus de eventos y escala automáticamente con el tráfico. |
+
+La decisión de mantener Railway en la fase actual no es una deuda técnica sino una **elección consciente de simplicidad operativa apropiada para la etapa del producto**: un sistema híbrido con tres servicios serverless y cinco instancias persistentes tiene mayor complejidad de networking (VPC peering, IAM, API Gateway), mayor superficie de configuración y mayor curva de onboarding para nuevos integrantes, costos que no se amortizan con el tráfico académico inicial.
+
 ### 5.4.1. Cloud Architecture Diagram
 
 La arquitectura cloud de Talki sigue una topología de **microservicios desplegados de forma independiente** sobre plataformas *Platform-as-a-Service* (PaaS), conservando los límites de los cinco *Bounded Contexts* definidos en el Capítulo IV. La distribución de los componentes en proveedores cloud se resume en el siguiente diagrama lógico.
@@ -4446,6 +4467,70 @@ Como parte del diseño operativo del producto, el equipo realizó una investigac
 | Alertas | Reglas Railway sobre CPU, memoria y *error rate* | — | Sección 5.4.2 |
 
 Esta combinación constituye un *quality gate* operativo: ningún despliegue a producción se promueve si un microservicio falla su `/actuator/health` durante el *rolling update*, y cualquier incremento de *error rate* > 5 % en una ventana de 5 minutos genera una alerta accionable por el equipo, garantizando el cumplimiento del escenario QAS-11 desde el primer despliegue.
+
+<div style="page-break-after: always;"></div>
+
+## 5.5. Sprint 2
+
+### 5.5.1. Sprint Backlog 2
+
+| Sprint 2 | **Integración frontend Angular y microservicios pendientes** |
+|---|---|
+| **Sprint Planning Background** | |
+| Date | 19/05/2026 |
+| Time | 18:00 |
+| Location | Reunión realizada mediante Discord |
+| Prepared By | Tumi Oliden, Manuel Ignacio |
+| Attendees (to planning) | Oroncoy Almeyda, Alejandro Daniel |
+| | Rivera Sosa, Eduardo Gael |
+| | Tumi Oliden, Manuel Ignacio |
+| **Sprint 2 Goal** | Implementar las vistas Angular del flujo principal de práctica (autenticación, sesión, feedback), integrar el frontend con los endpoints REST del backend, cerrar los microservicios `scenario-catalog-service` y `media-service`, y elevar la cobertura con tests de integración Testcontainers (Nivel 2). |
+| **Sprint 2 Velocity** | 45 |
+| **Sum of Story Points** | 45 |
+
+| Sprint # | Sprint 2 | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **User Story** | | **Work-Item / Task** | | | | | |
+| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
+| US09 | Crear nueva sesión de práctica | T01 | Vista Angular — Nueva sesión | Implementar componente Angular para crear sesión seleccionando tipo y objetivo, consumiendo `POST /v1/sessions`. | 8 | Tumi Oliden, Manuel | In-Process |
+| US12 | Iniciar grabación y transcripción en tiempo real | T02 | Vista Angular — Sesión en vivo | Implementar la vista de grabación con WebSocket bidireccional hacia `live-coach-service` (Gemini Live), mostrando transcripción en tiempo real. | 13 | Rivera Sosa, Eduardo Gael | In-Process |
+| US14 | Finalizar sesión y guardar transcripción | T03 | Acción de finalización de sesión | Agregar botón de finalización en la vista de sesión que invoque `POST /v1/coach/{id}/finalize` y redirija al reporte de feedback. | 5 | Rivera Sosa, Eduardo Gael | In-Process |
+| US15 | Recibir feedback general de la IA | T04 | Vista Angular — Reporte de feedback | Implementar componente de visualización del reporte post-sesión: Voice Coach Score, resumen de muletillas, velocidad y silencio, consumiendo `GET /v1/sessions/{id}/feedback`. | 8 | Oroncoy Almeyda, Alejandro | In-Process |
+| US10 | Seleccionar tipo de sesión | T05 | Selector de tipo de sesión en UI | Agregar selector de modo (`QUICK_PRACTICE`, `INTERVIEW`, `THESIS_DEFENSE`, `SCENARIO`) en la vista de nueva sesión, con descripción adaptada por segmento. | 3 | Tumi Oliden, Manuel | In-Process |
+| US16 | Ver análisis de muletillas | T06 | Vista de muletillas detectadas | Implementar sección de muletillas en el reporte de feedback consumiendo los datos del `filler-detection-service` via `scoring-service`. | 5 | Oroncoy Almeyda, Alejandro | To-Do |
+| US17 | Ver métricas de velocidad | T07 | Vista de métricas de velocidad | Mostrar palabras por minuto y ratio de silencio en el reporte de feedback. | 3 | Oroncoy Almeyda, Alejandro | To-Do |
+| US11 | Seleccionar escenario de práctica | T08 | scenario-catalog-service | Implementar `scenario-catalog-service` (puerto 8084) con catálogo de escenarios peruanos, endpoints `GET /v1/scenarios` y `GET /v1/scenarios/{id}`, integración AMQP con `live-coach-service`. | 13 | Tumi Oliden, Manuel | To-Do |
+
+### 5.5.2. Development Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+Los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) agrupan los ocho microservicios del producto. `talki-user-services` contiene tanto `identity-service` como `notification-service`; el `notification-service` no genera commits propios en esta iteración porque su implementación base ya estaba completa al cierre del TP1 y su trabajo del Sprint 2 depende de la integración con el frontend Angular (T04). Los commits listados corresponden al período del Sprint 2 (a partir del 19/05/2026); se irán incorporando conforme avance la iteración.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-user-services | main | 9599e61 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-user-services | main | 0a97247 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+| talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-session-services | main | d38f1f2 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+| talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-analysis-services | main | eda9131 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+| talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-engagement-services | main | e66cbdd | fix(rabbitmq): agregar virtual-host a gamification y progress service | - | 31/05/2026 |
+| talki-engagement-services | main | 238b675 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+
+### 5.5.3. Testing Suite Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+Los tests de integración (Nivel 2 — Testcontainers) corresponden a los work-items T09 y T10 del Sprint 2 y se incorporarán conforme avance la iteración. Los commits listados corresponden a la configuración del entorno de pruebas para el perfil `prod`.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-user-services | main | 9599e61 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
 
 <div style="page-break-after: always;"></div>
 
