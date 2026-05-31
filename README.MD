@@ -187,6 +187,8 @@
       - [5.5.1. Sprint Backlog 2](#551-sprint-backlog-2)
       - [5.5.2. Development Evidence for Sprint Review](#552-development-evidence-for-sprint-review)
       - [5.5.3. Testing Suite Evidence for Sprint Review](#553-testing-suite-evidence-for-sprint-review)
+      - [5.5.4. Software Deployment Evidence for Sprint Review](#554-software-deployment-evidence-for-sprint-review)
+      - [5.5.5. Team Collaboration Insights during Sprint](#555-team-collaboration-insights-during-sprint)
 
 - [Conclusiones](#conclusiones)
 - [Referencias Bibliográficas](#referencias-bibliográficas)
@@ -4504,60 +4506,60 @@ Esta combinación constituye un *quality gate* operativo: ningún despliegue a p
 
 URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
 
+Los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) agrupan los ocho microservicios del producto. `talki-user-services` contiene tanto `identity-service` como `notification-service`; el `notification-service` no genera commits propios en esta iteración porque su implementación base ya estaba completa al cierre del TP1 y su trabajo del Sprint 2 depende de la integración con el frontend Angular (T04). Los commits listados corresponden al período del Sprint 2 (a partir del 19/05/2026); se irán incorporando conforme avance la iteración.
+
 | Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
 |---|---|---|---|---|---|
-| talki-user-services | main | 9cd5cc3 | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
-| talki-user-services | main | 050ebc2 | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
-| talki-user-services | main | eab2477 | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
-| talki-user-services | main | e7971d4 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a los 2 microservicios | - | 12/05/2026 |
-| talki-user-services | main | 9bec333 | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/identity-test-id-and-jwt-coverage | - | 10/05/2026 |
-| talki-user-services | main | a02c830 | test(identity): arreglar NPE en login test + agregar JwtTokenProviderTest | - | 10/05/2026 |
-| talki-user-services | main | a1f8310 | chore: agregar .gitignore y eliminar archivos compilados del tracking | - | 08/05/2026 |
-| talki-user-services | main | 05c028b | test: agregar unit tests para AuthService y ScoreNotificationConsumer | - | 08/05/2026 |
-| talki-user-services | main | 5a7421c | feat: talki-user-services initial commit | - | 08/05/2026 |
-| talki-session-services | main | 6a2e1d0 | Merge pull request #4 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
-| talki-session-services | main | 91895da | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
-| talki-session-services | main | 7589415 | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
-| talki-session-services | main | dc65df5 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a session y live-coach | - | 12/05/2026 |
-| talki-session-services | main | c871107 | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/fix/session-and-strategy-tests | - | 10/05/2026 |
-| talki-session-services | main | 68bc52c | test: agregar SessionTest + SessionModeStrategyFactoryTest | - | 10/05/2026 |
-| talki-session-services | main | abf233b | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/extend-session-finalized-event | - | 10/05/2026 |
-| talki-session-services | main | ee0a9c5 | refactor(session): aplicar DDD + CQRS + ACL y agregar tests unitarios | - | 10/05/2026 |
-| talki-session-services | main | 513e705 | refactor(live-coach): publicar transcript_gemini y métricas acústicas en session.live.finalized | - | 10/05/2026 |
-| talki-analysis-services | main | 33d2ae1 | Merge pull request #5 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
-| talki-analysis-services | main | 62b3abf | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
-| talki-analysis-services | main | 0fd6e49 | Merge pull request #4 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
-| talki-analysis-services | main | 8add798 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a scoring y filler-detection | - | 12/05/2026 |
-| talki-analysis-services | main | 6c11b69 | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/feat/global-exception-handler-scoring | - | 11/05/2026 |
-| talki-analysis-services | main | d840384 | feat(scoring): GlobalExceptionHandler con tests unitarios | - | 11/05/2026 |
-| talki-analysis-services | main | 5c2cf8f | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/fix/voice-score-test | - | 10/05/2026 |
-| talki-analysis-services | main | dd28ba1 | test(scoring): agregar VoiceScoreTest para invariantes del value object | - | 10/05/2026 |
-| talki-analysis-services | main | 371c731 | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/eliminate-transcription-service | - | 10/05/2026 |
-| talki-analysis-services | main | cb4f0c4 | fix(scoring): propagar wpm/silenceRatio/volumeRms + idempotencia robusta | - | 10/05/2026 |
-| talki-engagement-services | main | a67adeb | Merge pull request #3 from upc-pre-202601-si657-7940-thropic/fix/domain-talki-lat | - | 12/05/2026 |
-| talki-engagement-services | main | 6fb1ef0 | fix(openapi): actualiza dominio de Server URL a talki.lat (dominio real adquirido) | - | 12/05/2026 |
-| talki-engagement-services | main | 5ca5d5e | Merge pull request #2 from upc-pre-202601-si657-7940-thropic/feat/swagger-openapi | - | 12/05/2026 |
-| talki-engagement-services | main | e5ae896 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a progress y gamification | - | 12/05/2026 |
-| talki-engagement-services | main | 1c2a328 | Merge pull request #1 from upc-pre-202601-si657-7940-thropic/fix/gamification-consumer-test | - | 10/05/2026 |
-| talki-engagement-services | main | d8de089 | test(gamification): agregar ScoringCompletedConsumerTest (7 casos) | - | 10/05/2026 |
-| talki-engagement-services | main | a515fdc | chore: agregar .gitignore y eliminar archivos compilados del tracking | - | 08/05/2026 |
-| talki-engagement-services | main | 4b75fc8 | test: agregar unit tests para UserProgress, UserStreak y ScoringCompletedConsumer | - | 08/05/2026 |
-| talki-engagement-services | main | c39d699 | feat: talki-engagement-services initial commit | - | 08/05/2026 |
+| talki-user-services | main | 9599e61 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-user-services | main | 0a97247 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+| talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-session-services | main | d38f1f2 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+| talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-analysis-services | main | eda9131 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
+| talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-engagement-services | main | e66cbdd | fix(rabbitmq): agregar virtual-host a gamification y progress service | - | 31/05/2026 |
+| talki-engagement-services | main | 238b675 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | - | 31/05/2026 |
 
 ### 5.5.3. Testing Suite Evidence for Sprint Review
 
 URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
 
+Los tests de integración (Nivel 2 — Testcontainers) corresponden a los work-items T09 y T10 del Sprint 2 y se incorporarán conforme avance la iteración. Los commits listados corresponden a la configuración del entorno de pruebas para el perfil `prod`.
+
 | Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
 |---|---|---|---|---|---|
-| talki-user-services | main | a02c830 | test(identity): arreglar NPE en login test + agregar JwtTokenProviderTest | - | 10/05/2026 |
-| talki-user-services | main | 05c028b | test: agregar unit tests para AuthService y ScoreNotificationConsumer | - | 08/05/2026 |
-| talki-session-services | main | 68bc52c | test: agregar SessionTest + SessionModeStrategyFactoryTest | - | 10/05/2026 |
-| talki-session-services | main | ee0a9c5 | refactor(session): aplicar DDD + CQRS + ACL y agregar tests unitarios | - | 10/05/2026 |
-| talki-analysis-services | main | d840384 | feat(scoring): GlobalExceptionHandler con tests unitarios | - | 11/05/2026 |
-| talki-analysis-services | main | dd28ba1 | test(scoring): agregar VoiceScoreTest para invariantes del value object | - | 10/05/2026 |
-| talki-engagement-services | main | d8de089 | test(gamification): agregar ScoringCompletedConsumerTest (7 casos) | - | 10/05/2026 |
-| talki-engagement-services | main | 4b75fc8 | test: agregar unit tests para UserProgress, UserStreak y ScoringCompletedConsumer | - | 08/05/2026 |
+| talki-user-services | main | 9599e61 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+| talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | - | 31/05/2026 |
+
+### 5.5.4. Software Deployment Evidence for Sprint Review
+
+Durante el Sprint 2, el equipo completó el despliegue de los ocho microservicios backend en Railway (PaaS) y el broker de mensajería en CloudAMQP, materializando la configuración de infraestructura cloud diseñada en las secciones 5.2.4 y 5.4.
+
+| Servicio | Plataforma | URL pública | Estado |
+|---|---|---|---|
+| identity-service | Railway | `talki-user-services-production.up.railway.app` | Desplegado |
+| notification-service | Railway | — | En proceso |
+| session-service | Railway | — | En proceso |
+| live-coach-service | Railway | — | En proceso |
+| filler-detection-service | Railway | — | En proceso |
+| scoring-service | Railway | — | En proceso |
+| progress-service | Railway | — | En proceso |
+| gamification-service | Railway | — | En proceso |
+| RabbitMQ (broker) | CloudAMQP | `shark.rmq.cloudamqp.com` | Desplegado |
+
+Los Dockerfiles multi-stage (`maven:3.9.6-eclipse-temurin-17-alpine` → `eclipse-temurin:17-jre-alpine`) y los perfiles `prod` con PostgreSQL gestionado por Railway fueron pusheados a los cuatro mono-repos backend como evidencia del proceso de configuración de despliegue continuo (commits del 31/05/2026 listados en 5.5.2).
+
+### 5.5.5. Team Collaboration Insights during Sprint
+
+El equipo Thropic colaboró durante el Sprint 2 mediante el flujo GitFlow establecido en la sección 5.2.2. Las contribuciones del período se distribuyen de la siguiente manera:
+
+| Integrante | Actividad principal | Repositorio(s) |
+|---|---|---|
+| Tumi Oliden, Manuel Ignacio | Configuración de despliegue Railway: Dockerfiles multi-stage, perfiles prod, variables de entorno CloudAMQP | talki-user-services, talki-session-services, talki-analysis-services, talki-engagement-services |
+| Oroncoy Almeyda, Alejandro Daniel | Implementación vistas Angular — reporte de feedback (T04), métricas de velocidad (T07) | talki-frontend *(en progreso)* |
+| Rivera Sosa, Eduardo Gael | Implementación vistas Angular — sesión en vivo (T02), finalización de sesión (T03) | talki-frontend *(en progreso)* |
 
 <div style="page-break-after: always;"></div>
 
