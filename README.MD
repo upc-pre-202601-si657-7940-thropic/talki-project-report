@@ -103,6 +103,7 @@
 | 2.37 | 07/06/2026 | Alejandro | Desarrollo completo de la sección **5.3.1 Sprint 1 (TP1)**, que pasa de un resumen de un párrafo a las ocho subsecciones de evidencia de *Sprint Review* del statement (5.3.1.1 a 5.3.1.8), en paralelo a la estructura del Sprint 2: Sprint Backlog 1 con tabla de work-items T01–T07, Development Evidence con los 19 commits reales del período 08/05–12/05/2026 por mono-repo, Testing Suite Evidence con el desglose de los 128 unit tests por servicio y capturas JUnit 5 + Mockito + feature BDD, Execution Evidence (ejecución local + Swagger UI + fragmentos de `session-service`), Microservices Documentation Evidence (tabla OpenAPI por servicio), Software Deployment Evidence (despliegue local + configuración cloud diferida al Sprint 2), Team Collaboration Insights (roles y contribuciones del Sprint 1) y Kanban Board. Se añadieron las ocho entradas al TOC |
 | 2.38 | 07/06/2026 | Alejandro | Se elimina el bloque **Sprint Planning Background** (Date, Time, Location, Prepared By, Attendees) de las tablas de Sprint Backlog 1 (5.3.1.1) y Sprint Backlog 2 (5.3.2.1), conservando únicamente el objetivo del Sprint (*Sprint Goal*), la velocidad y la suma de Story Points junto al tablero de work-items; las referencias a "Sprint Planning" en notas y conclusiones se reformulan como "re-priorización" |
 | 2.39 | 07/06/2026 | Alejandro | Se convierten los tableros de work-items de Sprint Backlog 1 (5.3.1.1) y Sprint Backlog 2 (5.3.2.1) de tablas Markdown a **tablas HTML con `colspan`**, de modo que las cabeceras combinadas ("Sprint #" / "Sprint 2" y "User Story" / "Work-Item / Task") se rendericen correctamente en GitHub en lugar de mostrarse desalineadas con celdas vacías; el contenido de cada celda preserva el formato de código (`<code>`) y énfasis (`<em>`) | 
+| 2.40 | 07/06/2026 | Alejandro | Se completa la **Execution Evidence del Sprint 2 (5.3.2.4)** con la interacción real de los Web Services vía **Postman** (Cloud Agent) contra las URLs productivas de Railway: cinco capturas con su respuesta real (registro `POST /v1/auth/register` → 201, login `POST /v1/auth/login` → 200 con JWT, listado de sesiones `GET /v1/sessions` → 200 con el `user` proyectado, health `GET /actuator/health` → 200 UP y contrato `GET /v3/api-docs` → 200), y se versiona la colección en `postman/Talki-Backend-Sprint2.postman_collection.json`. El "pendiente Sprint 3" se reduce solo al video de demostración. Esta evidencia validó en producción la **Saga por coreografía** del evento `user.registered` (identity-service publica → session-service proyecta el `AppUser` local), eslabón que habilita la creación y consulta de sesiones bajo *database-per-service* |
 
 # Contenido
 
@@ -4431,7 +4432,7 @@ A continuación se muestran fragmentos del código en ejecución del `session-se
 ![session-service — SessionCommandServiceImpl (CQRS Command)](assets/images/Backend/SessionCommandServiceImpl.png)
 ![session-service — SessionController REST](assets/images/Backend/SessionController.png)
 
-> _Nota._ El despliegue **cloud** de estos servicios (ejecución pública en Railway con su Swagger UI accesible por internet) fue el objetivo del Sprint 2; su evidencia de ejecución en producción se documenta en la sección 5.3.2.4. Para el Sprint 3 queda pendiente la grabación del video de demostración end-to-end y una colección de pruebas de API (Bruno / Postman) versionada.
+> _Nota._ El despliegue **cloud** de estos servicios (ejecución pública en Railway con su Swagger UI accesible por internet) fue el objetivo del Sprint 2; su evidencia de ejecución en producción —incluida la interacción con los Web Services vía **Postman**— se documenta en la sección 5.3.2.4. Para el Sprint 3 queda pendiente la grabación del video de demostración end-to-end una vez integrado el frontend Angular.
 
 #### 5.3.1.5. Microservices Documentation Evidence for Sprint Review
 
@@ -4664,7 +4665,31 @@ A continuación se presentan capturas de la ejecución real del `identity-servic
 
 ![Swagger UI session-service en producción](assets/images/deployment/swagger-session-prod.png)
 
-> _Pendiente para el Sprint 3:_ grabación del video de demostración end-to-end (registro → sesión de práctica → feedback) una vez integrado el frontend Angular contra estas APIs productivas, y una colección de pruebas de API ejecutable (Bruno / Postman) versionada en el repositorio.
+**Interacción con los Web Services vía Postman (producción).** Las operaciones principales del backend se ejercitaron contra las URLs productivas de Railway desde **Postman** (Cloud Agent), validando el flujo de extremo a extremo del bounded context de identidad y de sesión. La colección está versionada en el repositorio del informe (`postman/Talki-Backend-Sprint2.postman_collection.json`) y el request de *Login* almacena automáticamente el JWT para los requests subsecuentes. Capturas de cada operación con su respuesta real:
+
+**1. Registro de cuenta** — `POST /v1/auth/register` → **201 Created** (publica el evento `user.registered`):
+
+![Postman — register 201](assets/images/postman/01-register-201.png)
+
+**2. Autenticación** — `POST /v1/auth/login` → **200 OK** con el **JWT** (`type: Bearer`):
+
+![Postman — login 200 + JWT](assets/images/postman/02-login-200-jwt.png)
+
+**3. Listado de sesiones (lado Query de CQRS)** — `GET /v1/sessions?userId=...` → **200 OK** con la sesión y el `user` proyectado localmente en el `session-service`:
+
+![Postman — list sessions 200](assets/images/postman/03-list-sessions-200.png)
+
+**4. Health check (observabilidad / Actuator)** — `GET /actuator/health` → **200 OK** `{"status":"UP"}`:
+
+![Postman — health UP](assets/images/postman/04-health-up.png)
+
+**5. Contrato OpenAPI 3** — `GET /v3/api-docs` → **200 OK** con la especificación de la *Talki - Identity Service API*:
+
+![Postman — OpenAPI 200](assets/images/postman/05-openapi-200.png)
+
+> El listado de sesiones (operación 3) materializa la **Saga por coreografía** end-to-end: el registro en `identity-service` publica `user.registered` sobre el exchange `talki.events`, el `session-service` proyecta localmente al usuario (database-per-service) y, sobre esa proyección, crea y consulta las sesiones — todo verificado en vivo contra producción.
+
+> _Pendiente para el Sprint 3:_ grabación del **video de demostración** end-to-end (registro → sesión de práctica → feedback) una vez integrado el frontend Angular contra estas APIs productivas, que complementa la evidencia de Postman ya disponible.
 
 #### 5.3.2.5. Microservices Documentation Evidence for Sprint Review
 
