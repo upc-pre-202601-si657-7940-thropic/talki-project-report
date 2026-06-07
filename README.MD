@@ -4426,15 +4426,39 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 #### 5.3.2.7. Team Collaboration Insights during Sprint
 
-El trabajo del Sprint 2 se coordinó por Discord y se ejecutó sobre los cuatro mono-repos backend bajo la organización GitHub `upc-pre-202601-si657-7940-thropic`. La siguiente tabla resume la distribución de commits del proyecto por integrante (acumulado en los repositorios backend):
+Durante el Sprint 2, el equipo mantuvo una colaboración activa y constante a través de GitHub, trabajando sobre los cuatro mono-repos backend bajo la organización `upc-pre-202601-si657-7940-thropic`. Las métricas de colaboración (historial de commits, autores y fechas) evidencian la distribución del trabajo y el uso de GitFlow con Conventional Commits descrito en la sección 5.2.2. La siguiente tabla resume los roles de cada integrante en este Sprint:
 
-| Integrante | Rol principal en el Sprint 2 | Contribución |
-|---|---|---|
-| **Tumi Oliden, Manuel Ignacio** | DevOps / Cloud Deployment | Lideró el despliegue: Dockerfiles multi-stage, perfil `prod`, aprovisionamiento de Railway y PostgreSQL por servicio, estandarización de RabbitMQ (T01–T06). |
-| **Oroncoy Almeyda, Alejandro Daniel** | Backend / Documentación | Implementación y pruebas de los microservicios consolidadas en el TP1 (suite de 128 unit tests), documentación OpenAPI por servicio y mantenimiento del informe. |
-| **Rivera Sosa, Eduardo Gael** | Frontend (Sprint 3) | Preparación de las vistas Angular y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
+| Integrante | Usuario GitHub | Rol principal en el Sprint 2 | Contribución |
+|---|---|---|---|
+| **Tumi Oliden, Manuel Ignacio** | `Manuel2224` / `Manuel Tumi` | DevOps / Cloud Deployment | Lideró el despliegue: Dockerfiles multi-stage, perfil `prod`, aprovisionamiento de Railway y PostgreSQL por servicio, estandarización de RabbitMQ (T01–T06). |
+| **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / Documentación | Implementación y pruebas de los microservicios consolidadas en el TP1 (suite de 128 unit tests), documentación OpenAPI por servicio, health checks Actuator y mantenimiento del informe. |
+| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend (Sprint 3) | Preparación de las vistas Angular y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
 
-> _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06. El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
+A continuación se presentan las capturas del historial de commits de GitHub (*Insights de colaboración*) de cada repositorio intervenido durante el Sprint 2, donde se observa el autor, el mensaje (Conventional Commits) y la fecha de cada contribución:
+
+**`talki-user-services`** (identity-service + notification-service):
+
+![GitHub Collaboration Insights — talki-user-services](assets/images/collaboration/commits-user-services.png)
+
+**`talki-session-services`** (session-service + live-coach-service):
+
+![GitHub Collaboration Insights — talki-session-services](assets/images/collaboration/commits-session-services.png)
+
+**`talki-analysis-services`** (filler-detection-service + scoring-service):
+
+![GitHub Collaboration Insights — talki-analysis-services](assets/images/collaboration/commits-analysis-services.png)
+
+**`talki-engagement-services`** (progress-service + gamification-service):
+
+![GitHub Collaboration Insights — talki-engagement-services](assets/images/collaboration/commits-engagement-services.png)
+
+**`talki-project-report`** (informe del proyecto, rama `develop`):
+
+El repositorio del informe también refleja la colaboración del equipo en la redacción y el alineamiento continuo del documento, con commits trazables a cada Pull Request revisado.
+
+![GitHub Collaboration Insights — talki-project-report](assets/images/collaboration/commits-project-report.png)
+
+> _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06 visible en las capturas anteriores. El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
 
 #### 5.3.2.8. Kanban Board → (Avance 3)
 
