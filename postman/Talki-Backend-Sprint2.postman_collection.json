@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Talki — Backend Sprint 2 (Railway prod)",
-    "description": "Colección de pruebas de API contra los microservicios de Talki desplegados en Railway (Sprint 2). El request 'Login' guarda automáticamente el JWT en la variable de colección {{token}}.",
+    "description": "Colección de pruebas de API contra los microservicios de Talki desplegados en Railway (Sprint 2). El flujo está encadenado: 'Register' guarda el userId y el email, 'Login' guarda el JWT, y 'Create session' / 'List sessions' reutilizan el userId. Pensada para ejecutarse en orden (Runner o request por request) durante la demostración.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -11,6 +11,7 @@
     { "key": "progress", "value": "https://progress-service-production-cd14.up.railway.app" },
     { "key": "gamification", "value": "https://gamification-service-production-3c2c.up.railway.app" },
     { "key": "demoEmail", "value": "" },
+    { "key": "userId", "value": "" },
     { "key": "token", "value": "" }
   ],
   "item": [
@@ -26,7 +27,8 @@
         {
           "listen": "test",
           "script": { "type": "text/javascript", "exec": [
-            "pm.test('201 Created', () => pm.response.to.have.status(201));"
+            "pm.test('201 Created', () => pm.response.to.have.status(201));",
+            "pm.collectionVariables.set('userId', pm.response.json().userId);"
           ] }
         }
       ],
@@ -58,15 +60,41 @@
       }
     },
     {
-      "name": "3. List sessions (session, CQRS read) — GET /v1/sessions?userId=1",
+      "name": "3. Create session (session) — POST /v1/sessions",
+      "event": [
+        {
+          "listen": "test",
+          "script": { "type": "text/javascript", "exec": [
+            "pm.test('201 Created', () => pm.response.to.have.status(201));",
+            "pm.test('sesion con user proyectado', () => pm.expect(pm.response.json().user.id.toString()).to.eql(pm.collectionVariables.get('userId').toString()));"
+          ] }
+        }
+      ],
       "request": {
-        "method": "GET",
-        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
-        "url": { "raw": "{{session}}/v1/sessions?userId=1", "host": ["{{session}}"], "path": ["v1","sessions"], "query": [ { "key": "userId", "value": "1" } ] }
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Práctica de exposición — Demo\",\n  \"sessionType\": \"QUICK_PRACTICE\",\n  \"userId\": {{userId}}\n}" },
+        "url": { "raw": "{{session}}/v1/sessions", "host": ["{{session}}"], "path": ["v1","sessions"] }
       }
     },
     {
-      "name": "4. Health check (identity) — GET /actuator/health",
+      "name": "4. List sessions (session, CQRS read) — GET /v1/sessions?userId={{userId}}",
+      "event": [
+        {
+          "listen": "test",
+          "script": { "type": "text/javascript", "exec": [
+            "pm.test('200 OK', () => pm.response.to.have.status(200));"
+          ] }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{session}}/v1/sessions?userId={{userId}}", "host": ["{{session}}"], "path": ["v1","sessions"], "query": [ { "key": "userId", "value": "{{userId}}" } ] }
+      }
+    },
+    {
+      "name": "5. Health check (identity) — GET /actuator/health",
       "request": {
         "method": "GET",
         "header": [],
@@ -74,7 +102,7 @@
       }
     },
     {
-      "name": "5. OpenAPI spec (identity) — GET /v3/api-docs",
+      "name": "6. OpenAPI spec (identity) — GET /v3/api-docs",
       "request": {
         "method": "GET",
         "header": [],
