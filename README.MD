@@ -4753,23 +4753,23 @@ Durante el Sprint 2, el equipo mantuvo una colaboración activa y constante a tr
 | **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / Documentación | Implementación y pruebas de los microservicios consolidadas en el TP1 (suite de 128 unit tests), documentación OpenAPI por servicio, health checks Actuator y mantenimiento del informe. |
 | **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend (Sprint 3) | Preparación de las vistas Angular y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
 
-A continuación se presentan las capturas del historial de commits de GitHub (*Insights de colaboración*) de cada repositorio intervenido durante el Sprint 2, donde se observa el autor, el mensaje (Conventional Commits) y la fecha de cada contribución:
+A continuación se presentan los grafos de **Contributors** de GitHub (*Insights → Contributors*) de cada repositorio intervenido durante el Sprint 2, donde se observa la cantidad de commits y de líneas añadidas/eliminadas por cada integrante a lo largo del proyecto:
 
 **`talki-user-services`** (identity-service + notification-service):
 
-![GitHub Collaboration Insights — talki-user-services](assets/images/collaboration/commits-user-services.png)
+![GitHub Collaboration Insights — talki-user-services](assets/images/collaboration/contributors-user-services.png)
 
 **`talki-session-services`** (session-service + live-coach-service):
 
-![GitHub Collaboration Insights — talki-session-services](assets/images/collaboration/commits-session-services.png)
+![GitHub Collaboration Insights — talki-session-services](assets/images/collaboration/contributors-session-services.png)
 
 **`talki-analysis-services`** (filler-detection-service + scoring-service):
 
-![GitHub Collaboration Insights — talki-analysis-services](assets/images/collaboration/commits-analysis-services.png)
+![GitHub Collaboration Insights — talki-analysis-services](assets/images/collaboration/contributors-analysis-services.png)
 
 **`talki-engagement-services`** (progress-service + gamification-service):
 
-![GitHub Collaboration Insights — talki-engagement-services](assets/images/collaboration/commits-engagement-services.png)
+![GitHub Collaboration Insights — talki-engagement-services](assets/images/collaboration/contributors-engagement-services.png)
 
 **`talki-project-report`** (informe del proyecto, rama `develop`):
 
@@ -4777,7 +4777,7 @@ El repositorio del informe también refleja la colaboración del equipo en la re
 
 ![GitHub Contributors Insights — talki-project-report](assets/images/collaboration/contributors-graph.png)
 
-> _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06 visible en las capturas anteriores. El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
+> _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06 documentada en la tabla de Development Evidence (5.3.2.2). El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
 
 #### 5.3.2.8. Kanban Board → (Avance 3)
 
