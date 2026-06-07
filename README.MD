@@ -102,8 +102,7 @@
 | 2.36 | 07/06/2026 | Alejandro | Reestructuración del Capítulo V para alinear su numeración con la jerarquía del *Final Project Statement* del curso: los Sprints se agrupan bajo una nueva sección **5.3 Microservices Implementation** (5.3.1 Sprint 1 — resumen del TP1; 5.3.2 Sprint 2 con sus ocho subsecciones 5.3.2.1 a 5.3.2.8), y **Microservices Deployment** pasa a ser **5.4**, ubicándose después de Implementation como en el statement. La antigua sección "5.3 Microservices Documentation (API Reference)" se integró en la evidencia de documentación del Sprint (5.3.2.5 Microservices Documentation Evidence), eliminando la sección huérfana que no figuraba en el statement. Se actualizaron el TOC, todos los anchors y las referencias cruzadas (5.5.x → 5.3.2.x). Nota: el cronograma Excel del curso numera el Sprint 2 como "5.2.2" por un error de copy-paste que colisiona con "5.2.2 Source Code Management"; la jerarquía correcta del statement (.docx) ubica el Sprint 2 como 5.3.2, que es la adoptada |
 | 2.37 | 07/06/2026 | Alejandro | Desarrollo completo de la sección **5.3.1 Sprint 1 (TP1)**, que pasa de un resumen de un párrafo a las ocho subsecciones de evidencia de *Sprint Review* del statement (5.3.1.1 a 5.3.1.8), en paralelo a la estructura del Sprint 2: Sprint Backlog 1 con tabla de work-items T01–T07, Development Evidence con los 19 commits reales del período 08/05–12/05/2026 por mono-repo, Testing Suite Evidence con el desglose de los 128 unit tests por servicio y capturas JUnit 5 + Mockito + feature BDD, Execution Evidence (ejecución local + Swagger UI + fragmentos de `session-service`), Microservices Documentation Evidence (tabla OpenAPI por servicio), Software Deployment Evidence (despliegue local + configuración cloud diferida al Sprint 2), Team Collaboration Insights (roles y contribuciones del Sprint 1) y Kanban Board. Se añadieron las ocho entradas al TOC |
 | 2.38 | 07/06/2026 | Alejandro | Se elimina el bloque **Sprint Planning Background** (Date, Time, Location, Prepared By, Attendees) de las tablas de Sprint Backlog 1 (5.3.1.1) y Sprint Backlog 2 (5.3.2.1), conservando únicamente el objetivo del Sprint (*Sprint Goal*), la velocidad y la suma de Story Points junto al tablero de work-items; las referencias a "Sprint Planning" en notas y conclusiones se reformulan como "re-priorización" |
-
-<div style="page-break-after: always;"></div>
+| 2.39 | 07/06/2026 | Alejandro | Se convierten los tableros de work-items de Sprint Backlog 1 (5.3.1.1) y Sprint Backlog 2 (5.3.2.1) de tablas Markdown a **tablas HTML con `colspan`**, de modo que las cabeceras combinadas ("Sprint #" / "Sprint 2" y "User Story" / "Work-Item / Task") se rendericen correctamente en GitHub en lugar de mostrarse desalineadas con celdas vacías; el contenido de cada celda preserva el formato de código (`<code>`) y énfasis (`<em>`) | 
 
 # Contenido
 
@@ -4261,17 +4260,100 @@ El **Sprint 1**, entregado en el Trabajo Parcial 1 (TP1), estableció la base de
 | **Sprint 1 Velocity** | 38 |
 | **Sum of Story Points** | 38 |
 
-| Sprint # | Sprint 1 | | | | | | |
-|---|---|---|---|---|---|---|---|
-| **User Story** | | **Work-Item / Task** | | | | | |
-| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
-| US05–US28 | Núcleo backend del producto (transversal) | T01 | Scaffolding de los 8 microservicios | Inicializar los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) con la estructura por capas (domain / application / infrastructure / interfaces) de cada microservicio Spring Boot. | 8 | Tumi Oliden, Manuel | Done |
-| US06, US07 | Registro y autenticación de cuenta | T02 | Dominio e identidad (`identity-service`) | Implementar `AuthService` y `JwtTokenProvider` (registro con bcrypt, login, refresh token) y el consumidor `ScoreNotificationConsumer` en `notification-service`. | 8 | Tumi Oliden, Manuel · Oroncoy, Alejandro | Done |
-| US12, US14 | Sesión de práctica en vivo | T03 | DDD + CQRS + ACL en `session-service` | Refactorizar `session-service` a modelo de dominio rico con agregado `Session`, separación Command/Query y ACL; en `live-coach-service` publicar `session.live.finalized` con `transcript_gemini` y métricas acústicas. | 13 | Oroncoy, Alejandro | Done |
-| US15, US16 | Análisis de muletillas y scoring | T04 | Pipeline de análisis sobre Gemini Live | Eliminar `transcription-service`/Whisper y conectar `filler-detection-service` directo a `session.live.finalized`; en `scoring-service` propagar `wpm`/`silenceRatio`/`volumeRms`, persistir `ScoreResult` y garantizar idempotencia del consumidor. | 13 | Oroncoy, Alejandro | Done |
-| US19, US22 | Progreso y gamificación | T05 | Proyecciones CQRS de engagement | Implementar `UserProgress` y `UserStreak` con sus consumidores `ScoringCompletedConsumer` (proyección de vista materializada al consumir `scoring.completed`). | 5 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Núcleo backend del producto | T06 | Suite de 128 unit tests (Nivel 1) | Cubrir la lógica de dominio de los 8 servicios con JUnit 5 + Mockito (incluye `JwtTokenProviderTest`, `SessionTest`, `VoiceScoreTest`, `ScoringCompletedConsumerTest`) y el `GlobalExceptionHandler` (RF-05) del `scoring-service`. | 8 | Oroncoy, Alejandro | Done |
-| US05–US28 | Núcleo backend del producto | T07 | Documentación OpenAPI 3 por servicio | Incorporar `springdoc-openapi 2.3.0` a los 8 microservicios exponiendo `/v3/api-docs` y `/swagger-ui.html`, con la metadata y el Server URL del dominio `talki.lat`. | 5 | Oroncoy, Alejandro | Done |
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Sprint #</th>
+      <th colspan="6">Sprint 1</th>
+    </tr>
+    <tr>
+      <th colspan="2">User Story</th>
+      <th colspan="6">Work-Item / Task</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Estimations (Hours)</th>
+      <th>Assigned To</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>US05–US28</td>
+      <td>Núcleo backend del producto (transversal)</td>
+      <td>T01</td>
+      <td>Scaffolding de los 8 microservicios</td>
+      <td>Inicializar los cuatro mono-repos backend (<code>talki-user-services</code>, <code>talki-session-services</code>, <code>talki-analysis-services</code>, <code>talki-engagement-services</code>) con la estructura por capas (domain / application / infrastructure / interfaces) de cada microservicio Spring Boot.</td>
+      <td>8</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US06, US07</td>
+      <td>Registro y autenticación de cuenta</td>
+      <td>T02</td>
+      <td>Dominio e identidad (<code>identity-service</code>)</td>
+      <td>Implementar <code>AuthService</code> y <code>JwtTokenProvider</code> (registro con bcrypt, login, refresh token) y el consumidor <code>ScoreNotificationConsumer</code> en <code>notification-service</code>.</td>
+      <td>8</td>
+      <td>Tumi Oliden, Manuel · Oroncoy, Alejandro</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US12, US14</td>
+      <td>Sesión de práctica en vivo</td>
+      <td>T03</td>
+      <td>DDD + CQRS + ACL en <code>session-service</code></td>
+      <td>Refactorizar <code>session-service</code> a modelo de dominio rico con agregado <code>Session</code>, separación Command/Query y ACL; en <code>live-coach-service</code> publicar <code>session.live.finalized</code> con <code>transcript_gemini</code> y métricas acústicas.</td>
+      <td>13</td>
+      <td>Oroncoy, Alejandro</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US15, US16</td>
+      <td>Análisis de muletillas y scoring</td>
+      <td>T04</td>
+      <td>Pipeline de análisis sobre Gemini Live</td>
+      <td>Eliminar <code>transcription-service</code>/Whisper y conectar <code>filler-detection-service</code> directo a <code>session.live.finalized</code>; en <code>scoring-service</code> propagar <code>wpm</code>/<code>silenceRatio</code>/<code>volumeRms</code>, persistir <code>ScoreResult</code> y garantizar idempotencia del consumidor.</td>
+      <td>13</td>
+      <td>Oroncoy, Alejandro</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US19, US22</td>
+      <td>Progreso y gamificación</td>
+      <td>T05</td>
+      <td>Proyecciones CQRS de engagement</td>
+      <td>Implementar <code>UserProgress</code> y <code>UserStreak</code> con sus consumidores <code>ScoringCompletedConsumer</code> (proyección de vista materializada al consumir <code>scoring.completed</code>).</td>
+      <td>5</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Núcleo backend del producto</td>
+      <td>T06</td>
+      <td>Suite de 128 unit tests (Nivel 1)</td>
+      <td>Cubrir la lógica de dominio de los 8 servicios con JUnit 5 + Mockito (incluye <code>JwtTokenProviderTest</code>, <code>SessionTest</code>, <code>VoiceScoreTest</code>, <code>ScoringCompletedConsumerTest</code>) y el <code>GlobalExceptionHandler</code> (RF-05) del <code>scoring-service</code>.</td>
+      <td>8</td>
+      <td>Oroncoy, Alejandro</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Núcleo backend del producto</td>
+      <td>T07</td>
+      <td>Documentación OpenAPI 3 por servicio</td>
+      <td>Incorporar <code>springdoc-openapi 2.3.0</code> a los 8 microservicios exponiendo <code>/v3/api-docs</code> y <code>/swagger-ui.html</code>, con la metadata y el Server URL del dominio <code>talki.lat</code>.</td>
+      <td>5</td>
+      <td>Oroncoy, Alejandro</td>
+      <td>Done</td>
+    </tr>
+  </tbody>
+</table>
 
 > **Nota.** El Sprint 1 priorizó la **corrección arquitectónica** del backend (modelo de dominio rico, eliminación de dependencias cíclicas, Saga de coreografía y manejo global de excepciones) sobre el despliegue cloud, que se planificó como objetivo central del Sprint 2. Las cinco refactorizaciones ejecutadas se documentan en detalle en la sección 5.1.4 (RF-01 a RF-05).
 
@@ -4415,18 +4497,110 @@ Con el núcleo backend implementado y probado, el Sprint 1 dejó el producto lis
 
 > **Nota de re-priorización.** El equipo decidió priorizar el **despliegue cloud del backend** sobre la integración del frontend, porque un backend desplegado y accesible públicamente es prerrequisito tanto para que el frontend Angular consuma APIs reales como para que el docente verifique el producto en ejecución. Las User Stories de las vistas Angular dependen de esta plataforma, por lo que adelantar el deployment desbloquea el camino crítico del Sprint 3.
 
-| Sprint # | Sprint 2 | | | | | | |
-|---|---|---|---|---|---|---|---|
-| **User Story** | | **Work-Item / Task** | | | | | |
-| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
-| US05–US28 | Plataforma backend desplegable (transversal a todas las US) | T01 | Contenerización multi-stage de los 8 microservicios | Crear un `Dockerfile` multi-stage por servicio (build con Maven + runtime `eclipse-temurin:17-jre-alpine`) en los cuatro mono-repos backend. | 8 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T02 | Perfil `prod` con PostgreSQL por servicio | Externalizar la configuración en `application-prod.yml` apuntando a PostgreSQL gestionado (`PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`) con `ddl-auto: update`, desactivando H2. | 8 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T03 | Binding de puerto dinámico para Railway | Parametrizar `server.port` con la variable `PORT` que Railway inyecta en tiempo de ejecución, en los 8 servicios. | 3 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T04 | Aprovisionamiento de bases PostgreSQL en Railway | Crear una instancia PostgreSQL gestionada por servicio con estado (identity, session, scoring, progress, gamification) respetando *database-per-service*. | 5 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T05 | Estandarización de credenciales RabbitMQ | Unificar las variables `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD` y `virtual-host` entre los servicios productores/consumidores del exchange `talki.events`. | 5 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T06 | Health checks + verificación Online | Incorporar `spring-boot-starter-actuator` en los 8 servicios para exponer `/actuator/health` (consumido por Railway), desplegar y verificar estado **Online** y respuesta HTTP 200 en `/v3/api-docs`, `/swagger-ui.html` y `/actuator/health` por servicio. | 5 | Tumi Oliden, Manuel · Oroncoy, Alejandro | Done |
-| US12 | Iniciar grabación y transcripción en tiempo real | T07 | Vista Angular — Sesión en vivo | Implementar la vista de grabación con WebSocket bidireccional hacia `live-coach-service`. *(Reprogramada a Sprint 3 — depende de la plataforma desplegada.)* | 13 | Rivera Sosa, Eduardo Gael | To-Do |
-| US11 | Seleccionar escenario de práctica | T08 | scenario-catalog-service | Implementar `scenario-catalog-service` (puerto 8084) con catálogo de escenarios peruanos. *(Reprogramada a Sprint 3.)* | 13 | Tumi Oliden, Manuel | To-Do |
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Sprint #</th>
+      <th colspan="6">Sprint 2</th>
+    </tr>
+    <tr>
+      <th colspan="2">User Story</th>
+      <th colspan="6">Work-Item / Task</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Estimations (Hours)</th>
+      <th>Assigned To</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>US05–US28</td>
+      <td>Plataforma backend desplegable (transversal a todas las US)</td>
+      <td>T01</td>
+      <td>Contenerización multi-stage de los 8 microservicios</td>
+      <td>Crear un <code>Dockerfile</code> multi-stage por servicio (build con Maven + runtime <code>eclipse-temurin:17-jre-alpine</code>) en los cuatro mono-repos backend.</td>
+      <td>8</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Plataforma backend desplegable</td>
+      <td>T02</td>
+      <td>Perfil <code>prod</code> con PostgreSQL por servicio</td>
+      <td>Externalizar la configuración en <code>application-prod.yml</code> apuntando a PostgreSQL gestionado (<code>PGHOST</code>, <code>PGPORT</code>, <code>PGDATABASE</code>, <code>PGUSER</code>, <code>PGPASSWORD</code>) con <code>ddl-auto: update</code>, desactivando H2.</td>
+      <td>8</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Plataforma backend desplegable</td>
+      <td>T03</td>
+      <td>Binding de puerto dinámico para Railway</td>
+      <td>Parametrizar <code>server.port</code> con la variable <code>PORT</code> que Railway inyecta en tiempo de ejecución, en los 8 servicios.</td>
+      <td>3</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Plataforma backend desplegable</td>
+      <td>T04</td>
+      <td>Aprovisionamiento de bases PostgreSQL en Railway</td>
+      <td>Crear una instancia PostgreSQL gestionada por servicio con estado (identity, session, scoring, progress, gamification) respetando <em>database-per-service</em>.</td>
+      <td>5</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Plataforma backend desplegable</td>
+      <td>T05</td>
+      <td>Estandarización de credenciales RabbitMQ</td>
+      <td>Unificar las variables <code>RABBITMQ_USERNAME</code>, <code>RABBITMQ_PASSWORD</code> y <code>virtual-host</code> entre los servicios productores/consumidores del exchange <code>talki.events</code>.</td>
+      <td>5</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Plataforma backend desplegable</td>
+      <td>T06</td>
+      <td>Health checks + verificación Online</td>
+      <td>Incorporar <code>spring-boot-starter-actuator</code> en los 8 servicios para exponer <code>/actuator/health</code> (consumido por Railway), desplegar y verificar estado <strong>Online</strong> y respuesta HTTP 200 en <code>/v3/api-docs</code>, <code>/swagger-ui.html</code> y <code>/actuator/health</code> por servicio.</td>
+      <td>5</td>
+      <td>Tumi Oliden, Manuel · Oroncoy, Alejandro</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US12</td>
+      <td>Iniciar grabación y transcripción en tiempo real</td>
+      <td>T07</td>
+      <td>Vista Angular — Sesión en vivo</td>
+      <td>Implementar la vista de grabación con WebSocket bidireccional hacia <code>live-coach-service</code>. <em>(Reprogramada a Sprint 3 — depende de la plataforma desplegada.)</em></td>
+      <td>13</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>To-Do</td>
+    </tr>
+    <tr>
+      <td>US11</td>
+      <td>Seleccionar escenario de práctica</td>
+      <td>T08</td>
+      <td>scenario-catalog-service</td>
+      <td>Implementar <code>scenario-catalog-service</code> (puerto 8084) con catálogo de escenarios peruanos. <em>(Reprogramada a Sprint 3.)</em></td>
+      <td>13</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>To-Do</td>
+    </tr>
+  </tbody>
+</table>
 
 #### 5.3.2.2. Development Evidence for Sprint Review
 
