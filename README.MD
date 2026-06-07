@@ -4785,12 +4785,16 @@ El estado del backlog al cierre del Sprint 2 se gestiona en el tablero público 
 
 🔗 **Tablero público:** <https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1>
 
+Cada tarjeta del tablero es un **issue real de GitHub** vinculado a su repositorio correspondiente (no un *draft*): las User Stories de autenticación viven en `talki-user-services`, las de sesión en `talki-session-services`, las de análisis en `talki-analysis-services`, las de progreso y gamificación en `talki-engagement-services`, y las de la landing en `landing-page`. Las cuatro historias en **Done** corresponden a *issues cerrados como completados*, con referencia a su implementación en `identity-service`.
+
+![Kanban Board — GitHub Projects v2 al cierre del Sprint 2](assets/images/collaboration/project-board-view2.png)
+
 | Estado | Cantidad | Lectura al cierre del Sprint 2 |
 |---|---|---|
-| **Done** | 4 | Ciclo de autenticación (`identity-service`) completo y desplegado. |
+| **Done** | 4 | Ciclo de autenticación (`identity-service`) completo y desplegado (issues cerrados: registro, login, recuperación de contraseña, cierre de sesión). |
 | **Review** | 4 | Componentes backend de sesión y personalización desplegados, listos para validación end-to-end. |
 | **In Progress** | 10 | Backend operativo en producción; pendiente la integración con el frontend Angular. |
-| **Todo** | 10 | Landing, exportación (`media-service`) y catálogo de escenarios (`scenario-catalog-service`), reprogramados al Sprint 3. |
+| **Todo** | 10 | Landing (`landing-page`), exportación y catálogo de escenarios, reprogramados al Sprint 3. |
 
 Con el backend desplegado y accesible públicamente, el camino crítico del Sprint 3 queda despejado para mover las historias de *In Progress* a *Done* a medida que el frontend Angular consuma las APIs productivas verificadas en la sección 5.3.2.4.
 
