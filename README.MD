@@ -99,6 +99,7 @@
 | 2.33 | 31/05/2026 | Manuel | Inicio del Sprint 2 (sección 5.5): redacción del Sprint Backlog 2 (5.5.1), Development Evidence (5.5.2) y Testing Suite Evidence (5.5.3) con la planificación de la iteración y los primeros commits de despliegue |
 | 2.34 | 07/06/2026 | Alejandro, Manuel | Cierre del Avance 3 (Sprint 2 — Despliegue cloud): re-priorización del Sprint Backlog 2 para reflejar el trabajo realmente ejecutado (despliegue de los 8 microservicios en Railway con *database-per-service* sobre PostgreSQL gestionado, contenerización multi-stage y perfil `prod`), sustituyendo el foco original en frontend que se reprograma al Sprint 3; redacción de las cinco subsecciones de evidencia faltantes: 5.5.4 Execution Evidence (8 URLs de Swagger UI en producción verificadas HTTP 200 + capturas), 5.5.5 Microservices Documentation Evidence (endpoints OpenAPI en producción + verificación del RF-05 en vivo), 5.5.6 Software Deployment Evidence (panel Railway con 8 servicios Online + 5 PostgreSQL, pasos de despliegue y `Dockerfile` multi-stage), 5.5.7 Team Collaboration Insights y 5.5.8 Kanban Board → Avance 3. Adicionalmente se incorporó `spring-boot-starter-actuator` en los 8 microservicios (PRs talki-user-services#4, talki-session-services#5, talki-analysis-services#6, talki-engagement-services#4) para que el endpoint `/actuator/health` declarado en 4.1.7, 5.2.1 y 5.4.2 quede operativo; verificado `{"status":"UP"}` HTTP 200 en las 8 URLs productivas tras el redespliegue automático de Railway |
 | 2.35 | 07/06/2026 | Alejandro | Revisión integral de coherencia tras el Avance 3: corrección de puertos en la tabla de mono-repos 5.2.2 (`filler-detection-service` 8086→8087, `progress-service` 8088→8089, `gamification-service` 8089→8090, eliminando una colisión de puerto con `scoring-service`); actualización del tiempo verbal de la nota del diagrama cloud en 5.4.1 (el despliegue ya es realidad, no acción futura); ADB-10 y ADB-11 pasan de "Hecho" a "Diseñado (implementación diferida a Sprint 3)" para alinear con su estado real de implementación; adición de un párrafo de Conclusiones del Avance 3 (backend desplegado y Online en Railway, database-per-service en producción, observabilidad verificada, re-priorización ágil); y actualización de las Recomendaciones que ya se cumplieron en el Sprint 2 (migración a PostgreSQL gestionado → ahora formalización de migraciones Flyway/Liquibase; "antes del primer despliegue en cloud" → "ahora que el backend ya está desplegado") |
+| 2.36 | 07/06/2026 | Alejandro | Reestructuración del Capítulo V para alinear su numeración con la jerarquía del *Final Project Statement* del curso: los Sprints se agrupan bajo una nueva sección **5.3 Microservices Implementation** (5.3.1 Sprint 1 — resumen del TP1; 5.3.2 Sprint 2 con sus ocho subsecciones 5.3.2.1 a 5.3.2.8), y **Microservices Deployment** pasa a ser **5.4**, ubicándose después de Implementation como en el statement. La antigua sección "5.3 Microservices Documentation (API Reference)" se integró en la evidencia de documentación del Sprint (5.3.2.5 Microservices Documentation Evidence), eliminando la sección huérfana que no figuraba en el statement. Se actualizaron el TOC, todos los anchors y las referencias cruzadas (5.5.x → 5.3.2.x). Nota: el cronograma Excel del curso numera el Sprint 2 como "5.2.2" por un error de copy-paste que colisiona con "5.2.2 Source Code Management"; la jerarquía correcta del statement (.docx) ubica el Sprint 2 como 5.3.2, que es la adoptada |
 
 <div style="page-break-after: always;"></div>
 
@@ -180,21 +181,22 @@
       - [5.2.3. Source Code Style Guide & Conventions](#523-source-code-style-guide--conventions)
       - [5.2.4. Software Deployment Configuration](#524-software-deployment-configuration)
       - [5.2.5. Quality Gate y Revisión de Calidad de Código](#525-quality-gate-y-revisión-de-calidad-de-código)
-   - [5.3. Microservices Documentation (API Reference)](#53-microservices-documentation-api-reference)
+   - [5.3. Microservices Implementation](#53-microservices-implementation)
+      - [5.3.1. Sprint 1 (TP1)](#531-sprint-1-tp1)
+      - [5.3.2. Sprint 2](#532-sprint-2)
+         - [5.3.2.1. Sprint Backlog 2](#5321-sprint-backlog-2)
+         - [5.3.2.2. Development Evidence for Sprint Review](#5322-development-evidence-for-sprint-review)
+         - [5.3.2.3. Testing Suite Evidence for Sprint Review](#5323-testing-suite-evidence-for-sprint-review)
+         - [5.3.2.4. Execution Evidence for Sprint Review](#5324-execution-evidence-for-sprint-review)
+         - [5.3.2.5. Microservices Documentation Evidence for Sprint Review](#5325-microservices-documentation-evidence-for-sprint-review)
+         - [5.3.2.6. Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
+         - [5.3.2.7. Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
+         - [5.3.2.8. Kanban Board → (Avance 3)](#5328-kanban-board--avance-3)
    - [5.4. Microservices Deployment](#54-microservices-deployment)
       - [5.4.0. Opciones de Deployment Evaluadas](#540-opciones-de-deployment-evaluadas)
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
       - [5.4.2. Cloud Architecture Deployment](#542-cloud-architecture-deployment)
       - [5.4.3. Investigación de Herramientas de Logs y Monitoreo](#543-investigación-de-herramientas-de-logs-y-monitoreo)
-   - [5.5. Sprint 2](#55-sprint-2)
-      - [5.5.1. Sprint Backlog 2](#551-sprint-backlog-2)
-      - [5.5.2. Development Evidence for Sprint Review](#552-development-evidence-for-sprint-review)
-      - [5.5.3. Testing Suite Evidence for Sprint Review](#553-testing-suite-evidence-for-sprint-review)
-      - [5.5.4. Execution Evidence for Sprint Review](#554-execution-evidence-for-sprint-review)
-      - [5.5.5. Microservices Documentation Evidence for Sprint Review](#555-microservices-documentation-evidence-for-sprint-review)
-      - [5.5.6. Software Deployment Evidence for Sprint Review](#556-software-deployment-evidence-for-sprint-review)
-      - [5.5.7. Team Collaboration Insights during Sprint](#557-team-collaboration-insights-during-sprint)
-      - [5.5.8. Kanban Board → (Avance 3)](#558-kanban-board--avance-3)
 
 
 - [Conclusiones](#conclusiones)
@@ -218,7 +220,7 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
   <tbody>
     <tr>
       <td rowspan="3"><strong>Criterio 1: ABET-EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
-      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.<br><br><b>AV2:</b> Redacté la sección 4.3 ADD Iterations del Capítulo IV con dos iteraciones completas del método Attribute-Driven Design (Iteration 1 — Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico; Iteration 2 — Identidad, Seguridad, Engagement y Observabilidad), comunicando el proceso iterativo de diseño mediante un Architectural Design Backlog trazable a los drivers de la sección 4.2, una tabla de Architectural Driver Priorities (Importance × Difficulty), diagramas C4 de Nivel 3 del session-service y del identity-service, diagramas UML de secuencia para el flujo end-to-end y el escenario de degradación elegante, una Software Element View consolidada del sistema, un Decision Log con identificadores DD-01 a DD-18, y Kanban Boards de cierre por iteración, adaptando el formato visual y narrativo a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> Comuniqué el proceso de alineamiento entre la documentación arquitectónica y la implementación real del backend en la sección 5.1.4 (Framework Pattern Driven Refactoring Report) con cinco refactorizaciones documentadas (RF-01 a RF-05) que explican modelo de dominio rico, eliminación de dependencias cíclicas con ArchUnit, reemplazo de llamadas síncronas por Saga de coreografía sobre RabbitMQ, externalización de configuración con Spring Cloud Config y manejo global de excepciones con `@RestControllerAdvice`. Coordiné con el equipo la incorporación de las contribuciones de Gael (capítulo V) al documento principal mediante revisiones de Pull Request, reconcilié decisiones de diseño contradictorias entre secciones (DD-09 Rate Limiting, DD-13 Zipkin, DD-15 no persistencia de audio) y consolidé el Registro de Versiones (versiones 2.20 a 2.31) para comunicar al docente la trazabilidad temporal de las correcciones de coherencia. Para mejorar el alineamiento del informe con las buenas prácticas esperadas en este tipo de proyectos de arquitectura de microservicios, redacté las cuatro adiciones del PR #29 al informe que cierran piezas operativas del producto: el tablero público de User Stories con estados (To Do → In Progress → Review → Done) en GitHub Projects v2 vinculado en 3.4 para hacer trazable el avance del backlog, la subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y la justificación de la combinación adoptada por Talki, la subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con la comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki que sustenta las decisiones DD-13 y DD-15, y la subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus seis reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %). Posteriormente, en el PR #30 reforcé la trazabilidad por servicio reescribiendo la sección 4.1.5 con una tabla resumen del modelo por microservicio (bounded context, agregado raíz, entidades, tablas, eventos pub/sub) y trece diagramas Mermaid embebidos que muestran Class Diagram y ER por servicio (renderizables nativamente en GitHub para mantenerse alineados al código), y añadí la nueva sección 5.3 "Microservices Documentation (API Reference)" con la tabla de endpoints OpenAPI y endpoints REST principales por microservicio, comunicando al equipo y al docente cómo cada componente del sistema queda documentado de forma autocontenida.</td>
+      <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.<br><br><b>AV2:</b> Redacté la sección 4.3 ADD Iterations del Capítulo IV con dos iteraciones completas del método Attribute-Driven Design (Iteration 1 — Núcleo de Sesión de Práctica y Pipeline de Análisis Asincrónico; Iteration 2 — Identidad, Seguridad, Engagement y Observabilidad), comunicando el proceso iterativo de diseño mediante un Architectural Design Backlog trazable a los drivers de la sección 4.2, una tabla de Architectural Driver Priorities (Importance × Difficulty), diagramas C4 de Nivel 3 del session-service y del identity-service, diagramas UML de secuencia para el flujo end-to-end y el escenario de degradación elegante, una Software Element View consolidada del sistema, un Decision Log con identificadores DD-01 a DD-18, y Kanban Boards de cierre por iteración, adaptando el formato visual y narrativo a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> Comuniqué el proceso de alineamiento entre la documentación arquitectónica y la implementación real del backend en la sección 5.1.4 (Framework Pattern Driven Refactoring Report) con cinco refactorizaciones documentadas (RF-01 a RF-05) que explican modelo de dominio rico, eliminación de dependencias cíclicas con ArchUnit, reemplazo de llamadas síncronas por Saga de coreografía sobre RabbitMQ, externalización de configuración con Spring Cloud Config y manejo global de excepciones con `@RestControllerAdvice`. Coordiné con el equipo la incorporación de las contribuciones de Gael (capítulo V) al documento principal mediante revisiones de Pull Request, reconcilié decisiones de diseño contradictorias entre secciones (DD-09 Rate Limiting, DD-13 Zipkin, DD-15 no persistencia de audio) y consolidé el Registro de Versiones (versiones 2.20 a 2.31) para comunicar al docente la trazabilidad temporal de las correcciones de coherencia. Para mejorar el alineamiento del informe con las buenas prácticas esperadas en este tipo de proyectos de arquitectura de microservicios, redacté las cuatro adiciones del PR #29 al informe que cierran piezas operativas del producto: el tablero público de User Stories con estados (To Do → In Progress → Review → Done) en GitHub Projects v2 vinculado en 3.4 para hacer trazable el avance del backlog, la subsección 5.4.0 "Opciones de Deployment Evaluadas" con la taxonomía IaaS/PaaS/SaaS/FaaS y la justificación de la combinación adoptada por Talki, la subsección 5.4.3 "Investigación de Herramientas de Logs y Monitoreo" con la comparativa Zipkin vs Jaeger y Actuator vs ELK/Loki que sustenta las decisiones DD-13 y DD-15, y la subsección 5.2.5 "Quality Gate y Revisión de Calidad de Código" con SonarCloud y sus seis reglas principales (Reliability A, Security A, Hotspots 100 %, Maintainability A, Coverage ≥ 75 %, Duplication ≤ 3 %). Posteriormente, en el PR #30 reforcé la trazabilidad por servicio reescribiendo la sección 4.1.5 con una tabla resumen del modelo por microservicio (bounded context, agregado raíz, entidades, tablas, eventos pub/sub) y trece diagramas Mermaid embebidos que muestran Class Diagram y ER por servicio (renderizables nativamente en GitHub para mantenerse alineados al código), y documenté los endpoints OpenAPI y REST principales por microservicio —contenido que, tras la reestructuración del Capítulo V para alinearlo con la jerarquía del statement, quedó integrado en la evidencia de documentación del Sprint (sección 5.3.2.5)—, comunicando al equipo y al docente cómo cada componente del sistema queda documentado de forma autocontenida.</td>
       <td rowspan="3"><b>AV1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.<br><br><b>AV2:</b> El equipo comunicó de manera efectiva el diseño arquitectónico de Talki en el Capítulo IV combinando narrativa técnica, diagramas C4 (contexto, contenedores y componentes), diagramas entidad-relación, tablas de drivers con identificadores trazables y matrices de tácticas por atributo de calidad, adaptando el formato a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> El equipo comunicó la transición del diseño arquitectónico (Capítulo IV) a la implementación operativa (Capítulo V) mediante tablas de pruebas unitarias por servicio (5.1.1), tablas de patrones aplicados con referencia al código real (5.1.2), tabla de mono-repos con asignación de puertos por microservicio (5.2.2), descripción del despliegue cloud por proveedor (5.4) y un Registro de Versiones que documenta cronológicamente las decisiones de alineamiento, garantizando que cualquier afirmación del informe se pueda verificar contra el código publicado en la organización GitHub del proyecto.</td>
     </tr>
     <tr>
@@ -4233,20 +4235,123 @@ Al cierre del TP1 (12 de mayo de 2026), SonarCloud queda **investigada y aprobad
 
 <div style="page-break-after: always;"></div>
 
-## 5.3. Microservices Documentation (API Reference)
+## 5.3. Microservices Implementation
 
-Una arquitectura de microservicios sostenible requiere que **cada servicio publique su contrato REST de forma autocontenida**, sin depender de documentación externa que pueda desactualizarse. Esta sección documenta los endpoints REST publicados por cada microservicio del producto Talki mediante **OpenAPI 3 vía springdoc-openapi 2.3.0**. La elección de springdoc sobre alternativas como el legacy `springfox` responde a la compatibilidad nativa con Spring Boot 3.2 declarada en el toolchain de la sección 5.2.1 y a la generación automática de la especificación a partir de los `@RestController` ya existentes, sin requerir anotaciones adicionales en el código de dominio.
+En esta sección se documenta el proceso de implementación, pruebas, documentación y despliegue de los microservicios del producto Talki, organizado por Sprints siguiendo el enfoque ágil iterativo e incremental descrito en la sección 5.2. Cada Sprint cierra con un conjunto de evidencias de *Sprint Review* (Sprint Backlog, Development Evidence, Testing Suite Evidence, Execution Evidence, Microservices Documentation Evidence, Software Deployment Evidence, Team Collaboration Insights) y un Kanban Board que comunica el estado del backlog.
 
-Cada uno de los 8 microservicios expone dos endpoints estándar:
+### 5.3.1. Sprint 1 (TP1)
 
-- `GET /v3/api-docs` — devuelve la especificación **OpenAPI 3** en formato JSON, consumible por clientes generados automáticamente, contratos Pact (sección 5.1.1 Nivel 4) y herramientas de API testing (Hoppscotch, Postman).
-- `GET /swagger-ui.html` — devuelve la **UI interactiva de Swagger** que permite explorar los endpoints, los esquemas de DTO y ejecutar llamadas de prueba directamente desde el navegador.
+El **Sprint 1**, entregado en el Trabajo Parcial 1 (TP1), estableció la base de implementación del backend de Talki. Sus principales resultados —documentados en detalle en las secciones 5.1 (suites de prueba), 5.1.4 (refactorizaciones RF-01 a RF-05) y 5.2 (configuración y gestión)— fueron:
 
-La configuración del springdoc en cada microservicio se realiza en tres archivos siguiendo el patrón homogéneo del toolchain:
+- **Ocho microservicios Spring Boot implementados** sobre cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`), aplicando DDD, CQRS, ACL y Saga por coreografía sobre RabbitMQ.
+- **Suite de 128 unit tests (Nivel 1)** con JUnit 5 + Mockito + AssertJ, verde en `mvn test` (identity 15, notification 7, session 27, live-coach 13, filler-detection 11, scoring 33, progress 9, gamification 13).
+- **Documentación OpenAPI 3 (springdoc 2.3.0)** incorporada en los 8 microservicios, exponiendo `/v3/api-docs` y `/swagger-ui.html` por servicio.
+- **Alineamiento del pipeline con Gemini Live nativo** (eliminación de `transcription-service`/Whisper) y cumplimiento *by-design* de la Ley 29733 (sin persistencia de audio).
 
-1. `pom.xml` declara la dependencia `org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0`.
-2. `application.yml` configura los paths (`springdoc.api-docs.path`, `springdoc.swagger-ui.path`) y el orden de presentación (`operations-sorter: method`, `tags-sorter: alpha`).
-3. Una clase `OpenApiConfig` con `@Configuration` y un bean `OpenAPI` que aporta los metadatos del servicio (`title`, `description`, `version`, `contact`, `license`) y la lista de `servers` (entorno local + producción).
+El Sprint 1 cerró con el Kanban Board de la entrega TP1 (tablero público de GitHub Projects v2, sección 3.4). El presente Avance 3 documenta el **Sprint 2** a continuación.
+
+### 5.3.2. Sprint 2
+
+#### 5.3.2.1. Sprint Backlog 2
+
+| Sprint 2 | **Despliegue cloud de los microservicios en Railway (Cloud-Native Deployment)** |
+|---|---|
+| **Sprint Planning Background** | |
+| Date | 19/05/2026 |
+| Time | 18:00 |
+| Location | Reunión realizada mediante Discord |
+| Prepared By | Tumi Oliden, Manuel Ignacio |
+| Attendees (to planning) | Oroncoy Almeyda, Alejandro Daniel |
+| | Rivera Sosa, Eduardo Gael |
+| | Tumi Oliden, Manuel Ignacio |
+| **Sprint 2 Goal** | Llevar los ocho microservicios del producto Talki a un entorno cloud productivo sobre **Railway**, materializando la arquitectura *cloud-native* diseñada en el Capítulo IV: contenerizar cada servicio con un `Dockerfile` multi-stage, externalizar la configuración en un perfil `prod` con **PostgreSQL gestionado por servicio** (*database-per-service*), parametrizar el binding del puerto y las credenciales de RabbitMQ por variables de entorno de Railway, y verificar que cada servicio quede **Online** y accesible públicamente con su documentación OpenAPI expuesta. La integración del frontend Angular y el cierre de los microservicios `scenario-catalog-service` y `media-service` se reprograman al Sprint 3, una vez disponible la plataforma de backend desplegada. |
+| **Sprint 2 Velocity** | 42 |
+| **Sum of Story Points** | 42 |
+
+> **Nota de re-priorización (Sprint Planning).** Durante la planificación, el equipo decidió priorizar el **despliegue cloud del backend** sobre la integración del frontend, porque un backend desplegado y accesible públicamente es prerrequisito tanto para que el frontend Angular consuma APIs reales como para que el docente verifique el producto en ejecución. Las User Stories de las vistas Angular dependen de esta plataforma, por lo que adelantar el deployment desbloquea el camino crítico del Sprint 3.
+
+| Sprint # | Sprint 2 | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **User Story** | | **Work-Item / Task** | | | | | |
+| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
+| US05–US28 | Plataforma backend desplegable (transversal a todas las US) | T01 | Contenerización multi-stage de los 8 microservicios | Crear un `Dockerfile` multi-stage por servicio (build con Maven + runtime `eclipse-temurin:17-jre-alpine`) en los cuatro mono-repos backend. | 8 | Tumi Oliden, Manuel | Done |
+| US05–US28 | Plataforma backend desplegable | T02 | Perfil `prod` con PostgreSQL por servicio | Externalizar la configuración en `application-prod.yml` apuntando a PostgreSQL gestionado (`PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`) con `ddl-auto: update`, desactivando H2. | 8 | Tumi Oliden, Manuel | Done |
+| US05–US28 | Plataforma backend desplegable | T03 | Binding de puerto dinámico para Railway | Parametrizar `server.port` con la variable `PORT` que Railway inyecta en tiempo de ejecución, en los 8 servicios. | 3 | Tumi Oliden, Manuel | Done |
+| US05–US28 | Plataforma backend desplegable | T04 | Aprovisionamiento de bases PostgreSQL en Railway | Crear una instancia PostgreSQL gestionada por servicio con estado (identity, session, scoring, progress, gamification) respetando *database-per-service*. | 5 | Tumi Oliden, Manuel | Done |
+| US05–US28 | Plataforma backend desplegable | T05 | Estandarización de credenciales RabbitMQ | Unificar las variables `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD` y `virtual-host` entre los servicios productores/consumidores del exchange `talki.events`. | 5 | Tumi Oliden, Manuel | Done |
+| US05–US28 | Plataforma backend desplegable | T06 | Health checks + verificación Online | Incorporar `spring-boot-starter-actuator` en los 8 servicios para exponer `/actuator/health` (consumido por Railway), desplegar y verificar estado **Online** y respuesta HTTP 200 en `/v3/api-docs`, `/swagger-ui.html` y `/actuator/health` por servicio. | 5 | Tumi Oliden, Manuel · Oroncoy, Alejandro | Done |
+| US12 | Iniciar grabación y transcripción en tiempo real | T07 | Vista Angular — Sesión en vivo | Implementar la vista de grabación con WebSocket bidireccional hacia `live-coach-service`. *(Reprogramada a Sprint 3 — depende de la plataforma desplegada.)* | 13 | Rivera Sosa, Eduardo Gael | To-Do |
+| US11 | Seleccionar escenario de práctica | T08 | scenario-catalog-service | Implementar `scenario-catalog-service` (puerto 8084) con catálogo de escenarios peruanos. *(Reprogramada a Sprint 3.)* | 13 | Tumi Oliden, Manuel | To-Do |
+
+#### 5.3.2.2. Development Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+Los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) agrupan los ocho microservicios del producto. El trabajo del Sprint 2 se concentró en la **contenerización y el despliegue cloud** de cada servicio: los commits listados materializan los work-items T01–T05 (Dockerfiles multi-stage, perfil `prod` con PostgreSQL, binding de `PORT` para Railway y estandarización de credenciales RabbitMQ). Todos los commits corresponden al período del Sprint 2 (31/05/2026 – 01/06/2026).
+
+| Repository | Branch | Commit Id | Commit Message | Work-Item | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-user-services | main | 0a97247 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
+| talki-user-services | main | 9599e61 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
+| talki-user-services | main | 42170f4 | fix(deploy): agregar virtual-host RabbitMQ en notification-service | T05 | 01/06/2026 |
+| talki-session-services | main | d38f1f2 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
+| talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
+| talki-session-services | main | 4401a2f | fix(deploy): estandarizar variable RABBITMQ_USERNAME en live-coach-service | T05 | 01/06/2026 |
+| talki-analysis-services | main | eda9131 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
+| talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
+| talki-analysis-services | main | 2b5aac5 | fix(deploy): estandarizar variable RABBITMQ_USERNAME en filler-detection-service | T05 | 01/06/2026 |
+| talki-analysis-services | main | 5c87d28 | fix(deploy): estandarizar variable RABBITMQ_USERNAME en scoring-service | T05 | 01/06/2026 |
+| talki-engagement-services | main | 238b675 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
+| talki-engagement-services | main | e66cbdd | fix(rabbitmq): agregar virtual-host a gamification y progress service | T05 | 31/05/2026 |
+| talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
+
+#### 5.3.2.3. Testing Suite Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+La suite de **pruebas unitarias (Nivel 1)** consolidada en el TP1 se mantiene verde a lo largo de todo el Sprint 2: cada commit de deployment se construyó con la fase `mvn package` del `Dockerfile` multi-stage, que ejecuta los **128 unit tests** de los 8 microservicios antes de generar la imagen. Es decir, ninguna imagen llegó a Railway sin pasar la batería de pruebas. El detalle por servicio (15 + 7 + 27 + 13 + 11 + 33 + 9 + 13) se documenta en la sección 5.1.1.
+
+| Nivel de prueba | Estado al cierre del Sprint 2 | Evidencia |
+|---|---|---|
+| Nivel 1 — Unit Tests (JUnit 5 + Mockito) | ✅ 128 / 128 verdes | Ejecutados en la fase `build` de cada `Dockerfile`; tabla 5.1.1 |
+| Nivel 2 — Integration Tests (Testcontainers) | 🟡 Reprogramado a Sprint 3 | Documentado en 5.1.1; depende del perfil `prod` ya configurado en este Sprint |
+| Nivel 3 — BDD (Cucumber) | 🟡 Reprogramado a Sprint 3 | Feature files diseñados en 5.1.1 |
+| Nivel 4 — Contract Testing (Pact) | 🟡 Reprogramado a Sprint 3 | Contratos consumibles desde la spec OpenAPI ya publicada en producción (5.3.2.5) |
+
+> El perfil `prod` con PostgreSQL configurado en este Sprint (T02) es precisamente el prerrequisito de infraestructura que habilita los tests de integración Nivel 2 con Testcontainers en el Sprint 3.
+
+#### 5.3.2.4. Execution Evidence for Sprint Review
+
+Al cierre del Sprint 2, los **ocho microservicios del producto Talki se encuentran en ejecución en producción sobre Railway**, cada uno con su documentación OpenAPI interactiva (Swagger UI) accesible públicamente. La siguiente tabla recoge las URLs de ejecución verificadas (respuesta **HTTP 200** en `/v3/api-docs` el 07/06/2026):
+
+| # | Microservicio | URL de ejecución (Swagger UI en producción) | Estado |
+|---|---|---|---|
+| 1 | `identity-service` | <https://talki-user-services-production.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 2 | `notification-service` | <https://notification-service-production-a277.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 3 | `session-service` | <https://session-service-production-c267.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 4 | `live-coach-service` | <https://live-coach-service-production.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 5 | `filler-detection-service` | <https://filler-detection-service-production.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 6 | `scoring-service` | <https://scoring-service-production-9702.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 7 | `progress-service` | <https://progress-service-production-cd14.up.railway.app/swagger-ui.html> | 🟢 Online |
+| 8 | `gamification-service` | <https://gamification-service-production-3c2c.up.railway.app/swagger-ui.html> | 🟢 Online |
+
+A continuación se presentan capturas de la ejecución real del `identity-service` y el `session-service` desde su Swagger UI desplegada en Railway, donde se pueden explorar e invocar los endpoints REST contra la instancia productiva:
+
+**`identity-service` — Swagger UI en producción (Railway):**
+
+![Swagger UI identity-service en producción](assets/images/deployment/swagger-identity-prod.png)
+
+**`session-service` — Swagger UI en producción (Railway):**
+
+![Swagger UI session-service en producción](assets/images/deployment/swagger-session-prod.png)
+
+> _Pendiente para el Sprint 3:_ grabación del video de demostración end-to-end (registro → sesión de práctica → feedback) una vez integrado el frontend Angular contra estas APIs productivas, y una colección de pruebas de API ejecutable (Bruno / Postman) versionada en el repositorio.
+
+#### 5.3.2.5. Microservices Documentation Evidence for Sprint Review
+
+Cada microservicio publica su contrato REST mediante **OpenAPI 3 (springdoc 2.3.0)**, ahora accesible no solo en local sino también en la instancia productiva de Railway. La siguiente tabla documenta los endpoints REST principales expuestos por cada servicio, verificables en vivo desde la spec `/v3/api-docs` de cada URL de producción listada en 5.3.2.4.
+
+Para referencia, los puertos locales y las rutas de documentación OpenAPI de cada microservicio son:
 
 **Tabla resumen — endpoints OpenAPI por microservicio**
 
@@ -4261,49 +4366,90 @@ La configuración del springdoc en cada microservicio se realiza en tres archivo
 | 7 | `gamification-service` | 8090 | `http://localhost:8090/v3/api-docs` | `http://localhost:8090/swagger-ui.html` | Progress & Metrics |
 | 8 | `notification-service` | 8091 | `http://localhost:8091/v3/api-docs` | `http://localhost:8091/swagger-ui.html` | Notification |
 
-**Tabla — endpoints REST principales por microservicio**
-
-A continuación se listan los endpoints REST más relevantes para el TP1, los cuales quedan automáticamente documentados por springdoc al levantar cada servicio. Los endpoints de Actuator (`/actuator/health`, `/actuator/metrics`) están disponibles en todos los servicios y se documentan en la sección 5.4.2 (Observabilidad y monitoreo).
-
-| Microservicio | Endpoint | Verbo | Propósito |
+| Microservicio | Endpoint | Verbo | Acción |
 |---|---|---|---|
-| `identity-service` | `/v1/auth/register` | POST | Registro de cuenta con bcrypt cost ≥ 12 (DD-11). Publica `user.registered`. |
-| `identity-service` | `/v1/auth/login` | POST | Login con email + password. Devuelve JWT RSA-256 y refresh token. |
-| `identity-service` | `/v1/auth/refresh` | POST | Rotación del refresh token (refresh token rotation). |
-| `identity-service` | `/.well-known/jwks.json` | GET | Clave pública JWKS para validación distribuida del JWT. |
-| `session-service` | `/v1/sessions` | POST | Crear sesión de práctica (US09). Pasa el agregado a estado `DRAFT`. |
-| `session-service` | `/v1/sessions/{id}` | GET | Obtener detalle de sesión (Query Service del CQRS). |
-| `session-service` | `/v1/sessions/{id}/feedback` | GET | Listar feedbacks intra-BC (`@OneToMany` Session → Feedback). |
-| `live-coach-service` | `/v1/coach/{sessionId}/start` | POST | Abre WebSocket Gemini Live con system prompt seleccionado por Strategy. |
-| `live-coach-service` | `/v1/coach/{sessionId}/finalize` | POST | Cierra el WebSocket y publica `session.live.finalized` con métricas (RF-03). |
-| `scoring-service` | `/v1/scores/{sessionId}` | GET | Obtener Voice Coach Score calculado (5 dimensiones 0-100). |
-| `progress-service` | `/v1/progress/dashboard` | GET | Dashboard agregado del usuario autenticado (vista CQRS materializada). |
-| `progress-service` | `/v1/progress/sessions/compare` | GET | Comparar dos sesiones (US22). |
-| `gamification-service` | `/v1/gamification/streak` | GET | Racha actual y mejor racha del usuario. |
-| `gamification-service` | `/v1/gamification/achievements` | GET | Logros desbloqueados del usuario. |
-| `notification-service` | `/v1/notifications/stream` | WSS | WebSocket para push de notificaciones al cliente Angular. |
-| **Todos** | `/v3/api-docs` | GET | Spec OpenAPI 3 JSON (springdoc). |
-| **Todos** | `/swagger-ui.html` | GET | UI interactiva Swagger. |
-| **Todos** | `/actuator/health` | GET | Health check consumido por Railway (sección 4.1.7). |
+| `identity-service` | `/v1/auth/register` | POST | Registro de cuenta (bcrypt cost ≥ 12) — publica `user.registered` |
+| `identity-service` | `/v1/auth/login` | POST | Autenticación — devuelve JWT + refresh token |
+| `session-service` | `/v1/sessions` | GET / POST | Listar / crear sesiones de práctica (CQRS) |
+| `session-service` | `/v1/sessions/{id}` | GET | Detalle de una sesión |
+| `session-service` | `/v1/sessions/{id}/finalize` | POST | Finalizar sesión — publica `session.live.finalized` |
+| `session-service` | `/v1/sessions/{id}/feedbacks` | GET / POST | Listar / registrar feedback intra-BC |
+| `scoring-service` | `/v1/scores/{sessionId}` | GET | Voice Coach Score (5 dimensiones 0-100) |
+| `progress-service` | `/v1/progress/dashboard` | GET | Dashboard de progreso (vista CQRS) |
+| `gamification-service` | `/v1/gamification/streak` | GET | Racha y XP del usuario |
+| **Todos** | `/v3/api-docs` | GET | Especificación OpenAPI 3 (JSON) |
+| **Todos** | `/swagger-ui.html` | GET | UI interactiva de Swagger |
+| **Todos** | `/actuator/health` | GET | Health check (Spring Boot Actuator) consumido por Railway |
 
-**Verificación**
+Un hallazgo verificado durante la ejecución del Sprint confirma que el **manejo global de excepciones (RF-05)** funciona en producción: al invocar un endpoint no existente sobre el `scoring-service`, el servicio responde con el DTO estándar `ApiErrorResponse` (`{"timestamp":..., "code":"INTERNAL_ERROR", "message":"Unexpected error occurred"}`) en lugar de un stacktrace, demostrando que el `GlobalExceptionHandler` desplegado se comporta como se documentó en la sección 5.1.4.
 
-La generación correcta de la spec OpenAPI por servicio se valida en el pipeline de CI de cada mono-repo (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) mediante la ejecución de `mvn test`, que arranca el contexto Spring de cada microservicio y verifica que el bean `OpenAPI` se inicialice correctamente sin colisiones de configuración con Spring Security ni con el filtro JWT del `identity-service`. La suite agregada al cierre del TP1 contabiliza **128 unit tests verdes** distribuidos así:
+Asimismo, la **observabilidad declarada en el toolchain (Spring Boot Actuator, 5.2.1) y en la táctica Monitor (4.1.7)** quedó verificada en producción: los ocho microservicios responden `{"status":"UP"}` con HTTP 200 en `/actuator/health`, endpoint que Railway consulta para el reinicio automático ante fallos. Esta verificación se ejecutó el 07/06/2026 contra las ocho URLs productivas listadas en 5.3.2.4.
 
-| Servicio | Tests | Servicio | Tests |
+#### 5.3.2.6. Software Deployment Evidence for Sprint Review
+
+Esta es la evidencia central del Sprint 2: el **despliegue cloud completo del backend de Talki en Railway**, materializando la arquitectura *cloud-native* (PaaS) diseñada en la sección 5.4. El siguiente diagrama del panel de Railway muestra los **ocho microservicios en estado Online** junto con sus **cinco bases de datos PostgreSQL gestionadas** (una por servicio con estado, respetando el patrón *database-per-service*):
+
+![Panel de Railway — 8 microservicios Online + PostgreSQL por servicio](assets/images/deployment/railway-services-online.png)
+
+_Panel de despliegue de Talki en Railway (proyecto `production`). Los servicios `identity` (`talki-user-services`), `session`, `scoring`, `progress` y `gamification` tienen su propia instancia PostgreSQL con volumen persistente; `notification`, `live-coach` y `filler-detection` son stateless (consumidores/orquestadores de eventos), coherente con el modelo por servicio documentado en 4.1.5._
+
+**Pasos de despliegue ejecutados durante el Sprint:**
+
+| # | Paso | Detalle | Work-Item |
 |---|---|---|---|
-| `identity-service` | 15 | `scoring-service` | 33 |
-| `notification-service` | 7 | `progress-service` | 9 |
-| `session-service` | 27 | `gamification-service` | 13 |
-| `live-coach-service` | 13 | `filler-detection-service` | 11 |
+| 1 | Contenerización | `Dockerfile` multi-stage por servicio: etapa `build` con `maven:3.9.6-eclipse-temurin-17-alpine` (ejecuta `mvn package`, corriendo los unit tests) + etapa `runtime` con `eclipse-temurin:17-jre-alpine`. | T01 |
+| 2 | Perfil productivo | `application-prod.yml` con `datasource` apuntando a PostgreSQL (`jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}`), `ddl-auto: update`, dialecto PostgreSQL y consola H2 desactivada. | T02 |
+| 3 | Binding de puerto | `server.port` parametrizado con la variable `PORT` inyectada por Railway en tiempo de ejecución. | T03 |
+| 4 | Aprovisionamiento de datos | Una instancia **PostgreSQL gestionada por Railway** para cada microservicio con estado, con volumen persistente (`identity-db`, `session-service-db`, `scoring-service-db`, `progress-service-db`, `gamification-service-db`). | T04 |
+| 5 | Mensajería | Variables `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD` y `virtual-host` estandarizadas entre productores y consumidores del exchange `talki.events`. | T05 |
+| 6 | Health checks | `spring-boot-starter-actuator` incorporado en los 8 servicios para exponer `/actuator/health`; Railway lo consulta para el reinicio automático ante fallos. Verificado `{"status":"UP"}` HTTP 200 en producción. | T06 |
+| 7 | Verificación | Los 8 servicios alcanzan estado **Online**; respuesta HTTP 200 confirmada en `/v3/api-docs`, `/swagger-ui.html` y `/actuator/health` de cada URL pública (ver 5.3.2.4). | T06 |
 
-**Total: 128 / 128 verdes en `mvn test`.**
+**Fragmento del `Dockerfile` multi-stage** (idéntico en estructura para los 8 servicios, ajustando el puerto `EXPOSE`):
 
-**Trazabilidad**
+```dockerfile
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn package -DskipTests -B
 
-- Pulls Request mergeados a `main` en los 4 mono-repos que materializan esta sección: `talki-user-services#2`, `talki-session-services#3`, `talki-analysis-services#4`, `talki-engagement-services#2`.
-- Herramienta declarada en la tabla 5.2.1 (Swagger / OpenAPI 3, categoría #8 Documentación y configuración).
-- La especificación generada es consumida por el contract testing Pact (5.1.1 Nivel 4), que verifica en CI que el frontend Angular y los productores/consumidores de eventos AMQP se mantengan compatibles con el contrato publicado en `talki-commons`.
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8081
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+> El despliegue confirma de forma tangible la decisión **PaaS** documentada en la sección 5.4.0 (Opciones de Deployment Evaluadas): Railway aloja los contenedores Java + Spring Boot y las bases PostgreSQL sin que el equipo administre máquinas virtuales ni sistemas operativos, cumpliendo la restricción C-13 (capacidad limitada del equipo académico).
+
+#### 5.3.2.7. Team Collaboration Insights during Sprint
+
+El trabajo del Sprint 2 se coordinó por Discord y se ejecutó sobre los cuatro mono-repos backend bajo la organización GitHub `upc-pre-202601-si657-7940-thropic`. La siguiente tabla resume la distribución de commits del proyecto por integrante (acumulado en los repositorios backend):
+
+| Integrante | Rol principal en el Sprint 2 | Contribución |
+|---|---|---|
+| **Tumi Oliden, Manuel Ignacio** | DevOps / Cloud Deployment | Lideró el despliegue: Dockerfiles multi-stage, perfil `prod`, aprovisionamiento de Railway y PostgreSQL por servicio, estandarización de RabbitMQ (T01–T06). |
+| **Oroncoy Almeyda, Alejandro Daniel** | Backend / Documentación | Implementación y pruebas de los microservicios consolidadas en el TP1 (suite de 128 unit tests), documentación OpenAPI por servicio y mantenimiento del informe. |
+| **Rivera Sosa, Eduardo Gael** | Frontend (Sprint 3) | Preparación de las vistas Angular y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
+
+> _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06. El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
+
+#### 5.3.2.8. Kanban Board → (Avance 3)
+
+El estado del backlog al cierre del Sprint 2 se gestiona en el tablero público de **GitHub Projects v2** del equipo, donde las 28 User Stories del producto se distribuyen entre los estados *Todo → In Progress → Review → Done*:
+
+🔗 **Tablero público:** <https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1>
+
+| Estado | Cantidad | Lectura al cierre del Sprint 2 |
+|---|---|---|
+| **Done** | 4 | Ciclo de autenticación (`identity-service`) completo y desplegado. |
+| **Review** | 4 | Componentes backend de sesión y personalización desplegados, listos para validación end-to-end. |
+| **In Progress** | 10 | Backend operativo en producción; pendiente la integración con el frontend Angular. |
+| **Todo** | 10 | Landing, exportación (`media-service`) y catálogo de escenarios (`scenario-catalog-service`), reprogramados al Sprint 3. |
+
+Con el backend desplegado y accesible públicamente, el camino crítico del Sprint 3 queda despejado para mover las historias de *In Progress* a *Done* a medida que el frontend Angular consuma las APIs productivas verificadas en la sección 5.3.2.4.
 
 <div style="page-break-after: always;"></div>
 
@@ -4384,7 +4530,7 @@ El siguiente listado representa los flujos de comunicación entre los componente
 6. El `live-coach-service` mantiene una conexión WebSocket bidireccional con **Google Gemini Live** durante toda la sesión y, al cerrarla, publica el evento `session.live.finalized` con el `transcript_gemini` y las métricas acústicas calculadas en memoria; el pipeline `filler-detection-service → scoring-service → progress-service + gamification-service + notification-service` continúa de forma asíncrona sobre RabbitMQ.
 7. El `notification-service` envía correos transaccionales mediante el **proveedor de email externo** ante eventos de negocio (registro, recuperación de contraseña, hito de progreso).
 
-> _Figura: Diagrama de arquitectura cloud de Talki._ La materialización de esta vista lógica en infraestructura real se completó durante el Sprint 2 (Avance 3): los ocho microservicios backend están desplegados y **Online en Railway**, cada uno con su base PostgreSQL gestionada por servicio. La evidencia del despliegue (panel de Railway con los servicios en ejecución y las URLs públicas verificadas) se documenta en la sección 5.5.6. Queda pendiente para una iteración posterior elaborar el diagrama formal con íconos oficiales de cada proveedor en una herramienta de diagramación cloud.
+> _Figura: Diagrama de arquitectura cloud de Talki._ La materialización de esta vista lógica en infraestructura real se completó durante el Sprint 2 (Avance 3): los ocho microservicios backend están desplegados y **Online en Railway**, cada uno con su base PostgreSQL gestionada por servicio. La evidencia del despliegue (panel de Railway con los servicios en ejecución y las URLs públicas verificadas) se documenta en la sección 5.3.2.6. Queda pendiente para una iteración posterior elaborar el diagrama formal con íconos oficiales de cada proveedor en una herramienta de diagramación cloud.
 
 ### 5.4.2. Cloud Architecture Deployment
 
@@ -4478,194 +4624,6 @@ Esta combinación constituye un *quality gate* operativo: ningún despliegue a p
 
 <div style="page-break-after: always;"></div>
 
-## 5.5. Sprint 2
-
-### 5.5.1. Sprint Backlog 2
-
-| Sprint 2 | **Despliegue cloud de los microservicios en Railway (Cloud-Native Deployment)** |
-|---|---|
-| **Sprint Planning Background** | |
-| Date | 19/05/2026 |
-| Time | 18:00 |
-| Location | Reunión realizada mediante Discord |
-| Prepared By | Tumi Oliden, Manuel Ignacio |
-| Attendees (to planning) | Oroncoy Almeyda, Alejandro Daniel |
-| | Rivera Sosa, Eduardo Gael |
-| | Tumi Oliden, Manuel Ignacio |
-| **Sprint 2 Goal** | Llevar los ocho microservicios del producto Talki a un entorno cloud productivo sobre **Railway**, materializando la arquitectura *cloud-native* diseñada en el Capítulo IV: contenerizar cada servicio con un `Dockerfile` multi-stage, externalizar la configuración en un perfil `prod` con **PostgreSQL gestionado por servicio** (*database-per-service*), parametrizar el binding del puerto y las credenciales de RabbitMQ por variables de entorno de Railway, y verificar que cada servicio quede **Online** y accesible públicamente con su documentación OpenAPI expuesta. La integración del frontend Angular y el cierre de los microservicios `scenario-catalog-service` y `media-service` se reprograman al Sprint 3, una vez disponible la plataforma de backend desplegada. |
-| **Sprint 2 Velocity** | 42 |
-| **Sum of Story Points** | 42 |
-
-> **Nota de re-priorización (Sprint Planning).** Durante la planificación, el equipo decidió priorizar el **despliegue cloud del backend** sobre la integración del frontend, porque un backend desplegado y accesible públicamente es prerrequisito tanto para que el frontend Angular consuma APIs reales como para que el docente verifique el producto en ejecución. Las User Stories de las vistas Angular dependen de esta plataforma, por lo que adelantar el deployment desbloquea el camino crítico del Sprint 3.
-
-| Sprint # | Sprint 2 | | | | | | |
-|---|---|---|---|---|---|---|---|
-| **User Story** | | **Work-Item / Task** | | | | | |
-| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
-| US05–US28 | Plataforma backend desplegable (transversal a todas las US) | T01 | Contenerización multi-stage de los 8 microservicios | Crear un `Dockerfile` multi-stage por servicio (build con Maven + runtime `eclipse-temurin:17-jre-alpine`) en los cuatro mono-repos backend. | 8 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T02 | Perfil `prod` con PostgreSQL por servicio | Externalizar la configuración en `application-prod.yml` apuntando a PostgreSQL gestionado (`PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`) con `ddl-auto: update`, desactivando H2. | 8 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T03 | Binding de puerto dinámico para Railway | Parametrizar `server.port` con la variable `PORT` que Railway inyecta en tiempo de ejecución, en los 8 servicios. | 3 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T04 | Aprovisionamiento de bases PostgreSQL en Railway | Crear una instancia PostgreSQL gestionada por servicio con estado (identity, session, scoring, progress, gamification) respetando *database-per-service*. | 5 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T05 | Estandarización de credenciales RabbitMQ | Unificar las variables `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD` y `virtual-host` entre los servicios productores/consumidores del exchange `talki.events`. | 5 | Tumi Oliden, Manuel | Done |
-| US05–US28 | Plataforma backend desplegable | T06 | Health checks + verificación Online | Incorporar `spring-boot-starter-actuator` en los 8 servicios para exponer `/actuator/health` (consumido por Railway), desplegar y verificar estado **Online** y respuesta HTTP 200 en `/v3/api-docs`, `/swagger-ui.html` y `/actuator/health` por servicio. | 5 | Tumi Oliden, Manuel · Oroncoy, Alejandro | Done |
-| US12 | Iniciar grabación y transcripción en tiempo real | T07 | Vista Angular — Sesión en vivo | Implementar la vista de grabación con WebSocket bidireccional hacia `live-coach-service`. *(Reprogramada a Sprint 3 — depende de la plataforma desplegada.)* | 13 | Rivera Sosa, Eduardo Gael | To-Do |
-| US11 | Seleccionar escenario de práctica | T08 | scenario-catalog-service | Implementar `scenario-catalog-service` (puerto 8084) con catálogo de escenarios peruanos. *(Reprogramada a Sprint 3.)* | 13 | Tumi Oliden, Manuel | To-Do |
-
-### 5.5.2. Development Evidence for Sprint Review
-
-URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
-
-Los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) agrupan los ocho microservicios del producto. El trabajo del Sprint 2 se concentró en la **contenerización y el despliegue cloud** de cada servicio: los commits listados materializan los work-items T01–T05 (Dockerfiles multi-stage, perfil `prod` con PostgreSQL, binding de `PORT` para Railway y estandarización de credenciales RabbitMQ). Todos los commits corresponden al período del Sprint 2 (31/05/2026 – 01/06/2026).
-
-| Repository | Branch | Commit Id | Commit Message | Work-Item | Committed on (Date) |
-|---|---|---|---|---|---|
-| talki-user-services | main | 0a97247 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
-| talki-user-services | main | 9599e61 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
-| talki-user-services | main | 42170f4 | fix(deploy): agregar virtual-host RabbitMQ en notification-service | T05 | 01/06/2026 |
-| talki-session-services | main | d38f1f2 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
-| talki-session-services | main | 6274081 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
-| talki-session-services | main | 4401a2f | fix(deploy): estandarizar variable RABBITMQ_USERNAME en live-coach-service | T05 | 01/06/2026 |
-| talki-analysis-services | main | eda9131 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
-| talki-analysis-services | main | 77ad072 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
-| talki-analysis-services | main | 2b5aac5 | fix(deploy): estandarizar variable RABBITMQ_USERNAME en filler-detection-service | T05 | 01/06/2026 |
-| talki-analysis-services | main | 5c87d28 | fix(deploy): estandarizar variable RABBITMQ_USERNAME en scoring-service | T05 | 01/06/2026 |
-| talki-engagement-services | main | 238b675 | chore(deploy): Dockerfiles multi-stage y perfil prod con PostgreSQL | T01, T02 | 31/05/2026 |
-| talki-engagement-services | main | e66cbdd | fix(rabbitmq): agregar virtual-host a gamification y progress service | T05 | 31/05/2026 |
-| talki-engagement-services | main | 2c52568 | fix(deploy): usar PORT env var para Railway en todos los servicios | T03 | 31/05/2026 |
-
-### 5.5.3. Testing Suite Evidence for Sprint Review
-
-URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
-
-La suite de **pruebas unitarias (Nivel 1)** consolidada en el TP1 se mantiene verde a lo largo de todo el Sprint 2: cada commit de deployment se construyó con la fase `mvn package` del `Dockerfile` multi-stage, que ejecuta los **128 unit tests** de los 8 microservicios antes de generar la imagen. Es decir, ninguna imagen llegó a Railway sin pasar la batería de pruebas. El detalle por servicio (15 + 7 + 27 + 13 + 11 + 33 + 9 + 13) se documenta en la sección 5.1.1.
-
-| Nivel de prueba | Estado al cierre del Sprint 2 | Evidencia |
-|---|---|---|
-| Nivel 1 — Unit Tests (JUnit 5 + Mockito) | ✅ 128 / 128 verdes | Ejecutados en la fase `build` de cada `Dockerfile`; tabla 5.1.1 |
-| Nivel 2 — Integration Tests (Testcontainers) | 🟡 Reprogramado a Sprint 3 | Documentado en 5.1.1; depende del perfil `prod` ya configurado en este Sprint |
-| Nivel 3 — BDD (Cucumber) | 🟡 Reprogramado a Sprint 3 | Feature files diseñados en 5.1.1 |
-| Nivel 4 — Contract Testing (Pact) | 🟡 Reprogramado a Sprint 3 | Contratos consumibles desde la spec OpenAPI ya publicada en producción (5.5.5) |
-
-> El perfil `prod` con PostgreSQL configurado en este Sprint (T02) es precisamente el prerrequisito de infraestructura que habilita los tests de integración Nivel 2 con Testcontainers en el Sprint 3.
-
-### 5.5.4. Execution Evidence for Sprint Review
-
-Al cierre del Sprint 2, los **ocho microservicios del producto Talki se encuentran en ejecución en producción sobre Railway**, cada uno con su documentación OpenAPI interactiva (Swagger UI) accesible públicamente. La siguiente tabla recoge las URLs de ejecución verificadas (respuesta **HTTP 200** en `/v3/api-docs` el 07/06/2026):
-
-| # | Microservicio | URL de ejecución (Swagger UI en producción) | Estado |
-|---|---|---|---|
-| 1 | `identity-service` | <https://talki-user-services-production.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 2 | `notification-service` | <https://notification-service-production-a277.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 3 | `session-service` | <https://session-service-production-c267.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 4 | `live-coach-service` | <https://live-coach-service-production.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 5 | `filler-detection-service` | <https://filler-detection-service-production.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 6 | `scoring-service` | <https://scoring-service-production-9702.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 7 | `progress-service` | <https://progress-service-production-cd14.up.railway.app/swagger-ui.html> | 🟢 Online |
-| 8 | `gamification-service` | <https://gamification-service-production-3c2c.up.railway.app/swagger-ui.html> | 🟢 Online |
-
-A continuación se presentan capturas de la ejecución real del `identity-service` y el `session-service` desde su Swagger UI desplegada en Railway, donde se pueden explorar e invocar los endpoints REST contra la instancia productiva:
-
-**`identity-service` — Swagger UI en producción (Railway):**
-
-![Swagger UI identity-service en producción](assets/images/deployment/swagger-identity-prod.png)
-
-**`session-service` — Swagger UI en producción (Railway):**
-
-![Swagger UI session-service en producción](assets/images/deployment/swagger-session-prod.png)
-
-> _Pendiente para el Sprint 3:_ grabación del video de demostración end-to-end (registro → sesión de práctica → feedback) una vez integrado el frontend Angular contra estas APIs productivas, y una colección de pruebas de API ejecutable (Bruno / Postman) versionada en el repositorio.
-
-### 5.5.5. Microservices Documentation Evidence for Sprint Review
-
-Cada microservicio publica su contrato REST mediante **OpenAPI 3 (springdoc 2.3.0)**, ahora accesible no solo en local sino también en la instancia productiva de Railway. La siguiente tabla documenta los endpoints REST principales expuestos por cada servicio, verificables en vivo desde la spec `/v3/api-docs` de cada URL de producción listada en 5.5.4.
-
-| Microservicio | Endpoint | Verbo | Acción |
-|---|---|---|---|
-| `identity-service` | `/v1/auth/register` | POST | Registro de cuenta (bcrypt cost ≥ 12) — publica `user.registered` |
-| `identity-service` | `/v1/auth/login` | POST | Autenticación — devuelve JWT + refresh token |
-| `session-service` | `/v1/sessions` | GET / POST | Listar / crear sesiones de práctica (CQRS) |
-| `session-service` | `/v1/sessions/{id}` | GET | Detalle de una sesión |
-| `session-service` | `/v1/sessions/{id}/finalize` | POST | Finalizar sesión — publica `session.live.finalized` |
-| `session-service` | `/v1/sessions/{id}/feedbacks` | GET / POST | Listar / registrar feedback intra-BC |
-| `scoring-service` | `/v1/scores/{sessionId}` | GET | Voice Coach Score (5 dimensiones 0-100) |
-| `progress-service` | `/v1/progress/dashboard` | GET | Dashboard de progreso (vista CQRS) |
-| `gamification-service` | `/v1/gamification/streak` | GET | Racha y XP del usuario |
-| **Todos** | `/v3/api-docs` | GET | Especificación OpenAPI 3 (JSON) |
-| **Todos** | `/swagger-ui.html` | GET | UI interactiva de Swagger |
-| **Todos** | `/actuator/health` | GET | Health check (Spring Boot Actuator) consumido por Railway |
-
-Un hallazgo verificado durante la ejecución del Sprint confirma que el **manejo global de excepciones (RF-05)** funciona en producción: al invocar un endpoint no existente sobre el `scoring-service`, el servicio responde con el DTO estándar `ApiErrorResponse` (`{"timestamp":..., "code":"INTERNAL_ERROR", "message":"Unexpected error occurred"}`) en lugar de un stacktrace, demostrando que el `GlobalExceptionHandler` desplegado se comporta como se documentó en la sección 5.1.4.
-
-Asimismo, la **observabilidad declarada en el toolchain (Spring Boot Actuator, 5.2.1) y en la táctica Monitor (4.1.7)** quedó verificada en producción: los ocho microservicios responden `{"status":"UP"}` con HTTP 200 en `/actuator/health`, endpoint que Railway consulta para el reinicio automático ante fallos. Esta verificación se ejecutó el 07/06/2026 contra las ocho URLs productivas listadas en 5.5.4.
-
-### 5.5.6. Software Deployment Evidence for Sprint Review
-
-Esta es la evidencia central del Sprint 2: el **despliegue cloud completo del backend de Talki en Railway**, materializando la arquitectura *cloud-native* (PaaS) diseñada en la sección 5.4. El siguiente diagrama del panel de Railway muestra los **ocho microservicios en estado Online** junto con sus **cinco bases de datos PostgreSQL gestionadas** (una por servicio con estado, respetando el patrón *database-per-service*):
-
-![Panel de Railway — 8 microservicios Online + PostgreSQL por servicio](assets/images/deployment/railway-services-online.png)
-
-_Panel de despliegue de Talki en Railway (proyecto `production`). Los servicios `identity` (`talki-user-services`), `session`, `scoring`, `progress` y `gamification` tienen su propia instancia PostgreSQL con volumen persistente; `notification`, `live-coach` y `filler-detection` son stateless (consumidores/orquestadores de eventos), coherente con el modelo por servicio documentado en 4.1.5._
-
-**Pasos de despliegue ejecutados durante el Sprint:**
-
-| # | Paso | Detalle | Work-Item |
-|---|---|---|---|
-| 1 | Contenerización | `Dockerfile` multi-stage por servicio: etapa `build` con `maven:3.9.6-eclipse-temurin-17-alpine` (ejecuta `mvn package`, corriendo los unit tests) + etapa `runtime` con `eclipse-temurin:17-jre-alpine`. | T01 |
-| 2 | Perfil productivo | `application-prod.yml` con `datasource` apuntando a PostgreSQL (`jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}`), `ddl-auto: update`, dialecto PostgreSQL y consola H2 desactivada. | T02 |
-| 3 | Binding de puerto | `server.port` parametrizado con la variable `PORT` inyectada por Railway en tiempo de ejecución. | T03 |
-| 4 | Aprovisionamiento de datos | Una instancia **PostgreSQL gestionada por Railway** para cada microservicio con estado, con volumen persistente (`identity-db`, `session-service-db`, `scoring-service-db`, `progress-service-db`, `gamification-service-db`). | T04 |
-| 5 | Mensajería | Variables `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD` y `virtual-host` estandarizadas entre productores y consumidores del exchange `talki.events`. | T05 |
-| 6 | Health checks | `spring-boot-starter-actuator` incorporado en los 8 servicios para exponer `/actuator/health`; Railway lo consulta para el reinicio automático ante fallos. Verificado `{"status":"UP"}` HTTP 200 en producción. | T06 |
-| 7 | Verificación | Los 8 servicios alcanzan estado **Online**; respuesta HTTP 200 confirmada en `/v3/api-docs`, `/swagger-ui.html` y `/actuator/health` de cada URL pública (ver 5.5.4). | T06 |
-
-**Fragmento del `Dockerfile` multi-stage** (idéntico en estructura para los 8 servicios, ajustando el puerto `EXPOSE`):
-
-```dockerfile
-FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-COPY src ./src
-RUN mvn package -DskipTests -B
-
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "app.jar"]
-```
-
-> El despliegue confirma de forma tangible la decisión **PaaS** documentada en la sección 5.4.0 (Opciones de Deployment Evaluadas): Railway aloja los contenedores Java + Spring Boot y las bases PostgreSQL sin que el equipo administre máquinas virtuales ni sistemas operativos, cumpliendo la restricción C-13 (capacidad limitada del equipo académico).
-
-### 5.5.7. Team Collaboration Insights during Sprint
-
-El trabajo del Sprint 2 se coordinó por Discord y se ejecutó sobre los cuatro mono-repos backend bajo la organización GitHub `upc-pre-202601-si657-7940-thropic`. La siguiente tabla resume la distribución de commits del proyecto por integrante (acumulado en los repositorios backend):
-
-| Integrante | Rol principal en el Sprint 2 | Contribución |
-|---|---|---|
-| **Tumi Oliden, Manuel Ignacio** | DevOps / Cloud Deployment | Lideró el despliegue: Dockerfiles multi-stage, perfil `prod`, aprovisionamiento de Railway y PostgreSQL por servicio, estandarización de RabbitMQ (T01–T06). |
-| **Oroncoy Almeyda, Alejandro Daniel** | Backend / Documentación | Implementación y pruebas de los microservicios consolidadas en el TP1 (suite de 128 unit tests), documentación OpenAPI por servicio y mantenimiento del informe. |
-| **Rivera Sosa, Eduardo Gael** | Frontend (Sprint 3) | Preparación de las vistas Angular y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
-
-> _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06. El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
-
-### 5.5.8. Kanban Board → (Avance 3)
-
-El estado del backlog al cierre del Sprint 2 se gestiona en el tablero público de **GitHub Projects v2** del equipo, donde las 28 User Stories del producto se distribuyen entre los estados *Todo → In Progress → Review → Done*:
-
-🔗 **Tablero público:** <https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1>
-
-| Estado | Cantidad | Lectura al cierre del Sprint 2 |
-|---|---|---|
-| **Done** | 4 | Ciclo de autenticación (`identity-service`) completo y desplegado. |
-| **Review** | 4 | Componentes backend de sesión y personalización desplegados, listos para validación end-to-end. |
-| **In Progress** | 10 | Backend operativo en producción; pendiente la integración con el frontend Angular. |
-| **Todo** | 10 | Landing, exportación (`media-service`) y catálogo de escenarios (`scenario-catalog-service`), reprogramados al Sprint 3. |
-
-Con el backend desplegado y accesible públicamente, el camino crítico del Sprint 3 queda despejado para mover las historias de *In Progress* a *Done* a medida que el frontend Angular consuma las APIs productivas verificadas en la sección 5.5.4.
-
-<div style="page-break-after: always;"></div>
-
 # Conclusiones y recomendaciones
 
 ## Conclusiones
@@ -4700,16 +4658,16 @@ Adicionalmente, durante el ciclo de alineamiento previo a la entrega final, el e
 - **Pipeline alineado con Gemini Live nativo.** Se eliminó el servicio intermedio `transcription-service` (Whisper STT) y se reconectó `filler-detection-service` directamente al evento `session.live.finalized`, que ahora viaja con `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`. El tiempo del pipeline post-sesión bajó de ~45 s (con STT) a ≤ 1 s, el costo operativo de ~USD 82/mes a ~USD 72/mes, y se eliminó toda persistencia de audio (DD-15 / ADB-22 cumplidos *by-design*).
 - **Patrones de diseño aplicados en código.** Se materializaron los patrones declarados en el Capítulo IV: DDD (entidades `AppUser`, `Session`, `Feedback`, `ScoreResult`, `UserProgress`, `UserStreak`), CQRS (`SessionCommandService` + `SessionQueryService` en `session-service`, vistas materializadas en `progress-service`), ACL (`SessionContextFacade` traduciendo JWT claims al modelo local), Saga por coreografía sobre RabbitMQ, Outbox Pattern e idempotencia at-least-once con manejo robusto de `DataIntegrityViolationException` sobre la unique constraint de `session_id`.
 - **Suite de tests unitarios completa.** Cada microservicio cuenta con tests JUnit 5 + Mockito + AssertJ que cubren happy path, edge cases e invariantes de dominio. Los hitos son: `identity-service` (15 tests: AuthService + JwtTokenProvider con casos de tokens forjados/expirados), `session-service` (27 tests: Command/Query services, ACL Facade, transiciones de estado del agregado `Session`), `live-coach-service` (13 tests: Orchestrator + Factory + 4 strategies), `filler-detection-service` (11 tests), `scoring-service` (33 tests: `ScoreCalculator`, `VoiceScore` con invariantes 0-100, race condition de idempotencia, `GlobalExceptionHandler` con DTOs `ApiErrorResponse`), `progress-service` (9 tests), `gamification-service` (13 tests: streaks, achievements, XP), `notification-service` (7 tests). Total: **128 unit tests pasando en los 8 microservicios** (`mvn test` verde).
-- **API Reference documentada con OpenAPI 3 en los 8 microservicios.** La sección 5.3 materializa `springdoc-openapi 2.3.0` en `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service`, publicando la spec en `/v3/api-docs` y la UI interactiva en `/swagger-ui.html` por servicio. Cada microservicio expone su contrato REST de forma autocontenida, consumible por el frontend Angular y por los contratos Pact del Nivel 4 de la pirámide de pruebas sin necesidad de documentación externa que pueda desactualizarse.
+- **API Reference documentada con OpenAPI 3 en los 8 microservicios.** La evidencia de documentación del Sprint (sección 5.3.2.5) materializa `springdoc-openapi 2.3.0` en `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service`, publicando la spec en `/v3/api-docs` y la UI interactiva en `/swagger-ui.html` por servicio. Cada microservicio expone su contrato REST de forma autocontenida, consumible por el frontend Angular y por los contratos Pact del Nivel 4 de la pirámide de pruebas sin necesidad de documentación externa que pueda desactualizarse.
 - **Modelo del producto trazable por microservicio.** La sección 4.1.5 incorpora una tabla resumen del modelo por servicio (bounded context, agregado raíz, entidades, tablas, eventos pub/sub) y trece diagramas Mermaid embebidos (Class + ER por servicio, renderizados nativamente en GitHub) que permiten a cualquier integrante del equipo o lector del informe entender el alcance de cada servicio de forma aislada, sin depender de un único diagrama consolidado que se desactualiza con cada refactor.
 - **Coherencia documento-código verificada.** Cada clase listada en la tabla 5.1.1 (Nivel 1 de pruebas) tiene test correspondiente y verificable; cada Decision Log entry (DD-01 a DD-18) tiene una sola decisión consistente entre las secciones del documento; el Architectural Design Backlog (ADB-01 a ADB-22) no tiene huecos ni referencias rotas; los conteos de microservicios, eventos, puertos y dimensiones del Voice Coach Score son idénticos en el informe y en el código.
 
 Al cierre del Avance 3 (Sprint 2), el equipo materializó la arquitectura *cloud-native* del Capítulo IV en un despliegue productivo real, dejando el backend de Talki en ejecución y accesible públicamente. Los principales logros son:
 
-- **Backend desplegado y Online en Railway.** Los ocho microservicios de negocio quedaron contenerizados con un `Dockerfile` multi-stage por servicio (build con Maven que ejecuta los 128 unit tests + runtime `eclipse-temurin:17-jre-alpine`) y desplegados sobre Railway, cada uno con su URL pública verificada con respuesta HTTP 200 en `/v3/api-docs` y `/swagger-ui.html` (sección 5.5.4). El despliegue confirma de forma tangible la decisión **PaaS** documentada en 5.4.0.
+- **Backend desplegado y Online en Railway.** Los ocho microservicios de negocio quedaron contenerizados con un `Dockerfile` multi-stage por servicio (build con Maven que ejecuta los 128 unit tests + runtime `eclipse-temurin:17-jre-alpine`) y desplegados sobre Railway, cada uno con su URL pública verificada con respuesta HTTP 200 en `/v3/api-docs` y `/swagger-ui.html` (sección 5.3.2.4). El despliegue confirma de forma tangible la decisión **PaaS** documentada en 5.4.0.
 - **Database-per-service en producción.** Se aprovisionó una instancia **PostgreSQL gestionada por Railway** para cada uno de los cinco microservicios con estado (`identity`, `session`, `scoring`, `progress`, `gamification`), con volumen persistente, mientras que los tres servicios stateless (`notification`, `live-coach`, `filler-detection`) operan sin esquema propio, materializando el principio P4 (Database per Service) del Capítulo IV.
 - **Observabilidad operativa verificada.** Se incorporó `spring-boot-starter-actuator` en los ocho servicios: el endpoint `/actuator/health` responde `{"status":"UP"}` con HTTP 200 en producción y es consultado por Railway para el reinicio automático ante fallos, cumpliendo la táctica *Monitor* (4.1.7) y el escenario QAS-11. El manejo global de excepciones (RF-05) también quedó verificado en vivo: el `scoring-service` responde con el DTO `ApiErrorResponse` en lugar de un stacktrace.
-- **Re-priorización ágil documentada.** El equipo adelantó el despliegue cloud sobre la integración del frontend al detectar que un backend desplegado es prerrequisito del consumo de APIs por el cliente Angular; la sección 5.5.1 documenta esta decisión de Sprint Planning y reprograma el frontend y los microservicios `scenario-catalog-service` y `media-service` al Sprint 3.
+- **Re-priorización ágil documentada.** El equipo adelantó el despliegue cloud sobre la integración del frontend al detectar que un backend desplegado es prerrequisito del consumo de APIs por el cliente Angular; la sección 5.3.2.1 documenta esta decisión de Sprint Planning y reprograma el frontend y los microservicios `scenario-catalog-service` y `media-service` al Sprint 3.
 
 ## Recomendaciones
 
