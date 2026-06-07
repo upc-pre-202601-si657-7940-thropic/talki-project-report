@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "Talki — Backend Sprint 2 (Railway prod)",
+    "description": "Colección de pruebas de API contra los microservicios de Talki desplegados en Railway (Sprint 2). El request 'Login' guarda automáticamente el JWT en la variable de colección {{token}}.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "identity", "value": "https://talki-user-services-production.up.railway.app" },
+    { "key": "session", "value": "https://session-service-production-c267.up.railway.app" },
+    { "key": "scoring", "value": "https://scoring-service-production-9702.up.railway.app" },
+    { "key": "progress", "value": "https://progress-service-production-cd14.up.railway.app" },
+    { "key": "gamification", "value": "https://gamification-service-production-3c2c.up.railway.app" },
+    { "key": "demoEmail", "value": "" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Register (identity) — POST /v1/auth/register",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": { "type": "text/javascript", "exec": [
+            "pm.collectionVariables.set('demoEmail', 'demo.talki.' + Date.now() + '@example.com');"
+          ] }
+        },
+        {
+          "listen": "test",
+          "script": { "type": "text/javascript", "exec": [
+            "pm.test('201 Created', () => pm.response.to.have.status(201));"
+          ] }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{demoEmail}}\",\n  \"password\": \"Demo1234!\",\n  \"username\": \"demo_talki\",\n  \"academicSegment\": \"ciclos_1_5\"\n}" },
+        "url": { "raw": "{{identity}}/v1/auth/register", "host": ["{{identity}}"], "path": ["v1","auth","register"] }
+      }
+    },
+    {
+      "name": "2. Login (identity) — POST /v1/auth/login",
+      "event": [
+        {
+          "listen": "test",
+          "script": { "type": "text/javascript", "exec": [
+            "pm.test('200 OK', () => pm.response.to.have.status(200));",
+            "const t = pm.response.json().token;",
+            "pm.collectionVariables.set('token', t);",
+            "pm.test('JWT recibido', () => pm.expect(t).to.be.a('string').and.not.empty);"
+          ] }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{demoEmail}}\",\n  \"password\": \"Demo1234!\"\n}" },
+        "url": { "raw": "{{identity}}/v1/auth/login", "host": ["{{identity}}"], "path": ["v1","auth","login"] }
+      }
+    },
+    {
+      "name": "3. List sessions (session, CQRS read) — GET /v1/sessions?userId=1",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+        "url": { "raw": "{{session}}/v1/sessions?userId=1", "host": ["{{session}}"], "path": ["v1","sessions"], "query": [ { "key": "userId", "value": "1" } ] }
+      }
+    },
+    {
+      "name": "4. Health check (identity) — GET /actuator/health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{identity}}/actuator/health", "host": ["{{identity}}"], "path": ["actuator","health"] }
+      }
+    },
+    {
+      "name": "5. OpenAPI spec (identity) — GET /v3/api-docs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{identity}}/v3/api-docs", "host": ["{{identity}}"], "path": ["v3","api-docs"] }
+      }
+    }
+  ]
+}
