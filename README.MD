@@ -4773,9 +4773,9 @@ A continuación se presentan las capturas del historial de commits de GitHub (*I
 
 **`talki-project-report`** (informe del proyecto, rama `develop`):
 
-El repositorio del informe también refleja la colaboración del equipo en la redacción y el alineamiento continuo del documento, con commits trazables a cada Pull Request revisado.
+El repositorio del informe también refleja la colaboración del equipo en la redacción y el alineamiento continuo del documento. El grafo de **Contributors** (Insights → Contributors) muestra la distribución de commits y líneas añadidas/eliminadas por cada integrante a lo largo del proyecto:
 
-![GitHub Collaboration Insights — talki-project-report](assets/images/collaboration/commits-project-report.png)
+![GitHub Contributors Insights — talki-project-report](assets/images/collaboration/contributors-graph.png)
 
 > _Insight del Sprint._ Concentrar el deployment en un responsable (Manuel) permitió resolver de forma cohesiva la cadena de incidencias propias de un primer despliegue cloud (binding de puerto, virtual-host de RabbitMQ, variables de PostgreSQL), evidenciada en la secuencia de commits `chore(deploy)` → `fix(deploy)` del 31/05 al 01/06 visible en las capturas anteriores. El backend desplegado desbloquea el trabajo paralelo del frontend en el Sprint 3.
 
