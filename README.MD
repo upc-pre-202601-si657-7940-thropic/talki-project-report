@@ -100,6 +100,7 @@
 | 2.34 | 07/06/2026 | Alejandro, Manuel | Cierre del Avance 3 (Sprint 2 — Despliegue cloud): re-priorización del Sprint Backlog 2 para reflejar el trabajo realmente ejecutado (despliegue de los 8 microservicios en Railway con *database-per-service* sobre PostgreSQL gestionado, contenerización multi-stage y perfil `prod`), sustituyendo el foco original en frontend que se reprograma al Sprint 3; redacción de las cinco subsecciones de evidencia faltantes: 5.5.4 Execution Evidence (8 URLs de Swagger UI en producción verificadas HTTP 200 + capturas), 5.5.5 Microservices Documentation Evidence (endpoints OpenAPI en producción + verificación del RF-05 en vivo), 5.5.6 Software Deployment Evidence (panel Railway con 8 servicios Online + 5 PostgreSQL, pasos de despliegue y `Dockerfile` multi-stage), 5.5.7 Team Collaboration Insights y 5.5.8 Kanban Board → Avance 3. Adicionalmente se incorporó `spring-boot-starter-actuator` en los 8 microservicios (PRs talki-user-services#4, talki-session-services#5, talki-analysis-services#6, talki-engagement-services#4) para que el endpoint `/actuator/health` declarado en 4.1.7, 5.2.1 y 5.4.2 quede operativo; verificado `{"status":"UP"}` HTTP 200 en las 8 URLs productivas tras el redespliegue automático de Railway |
 | 2.35 | 07/06/2026 | Alejandro | Revisión integral de coherencia tras el Avance 3: corrección de puertos en la tabla de mono-repos 5.2.2 (`filler-detection-service` 8086→8087, `progress-service` 8088→8089, `gamification-service` 8089→8090, eliminando una colisión de puerto con `scoring-service`); actualización del tiempo verbal de la nota del diagrama cloud en 5.4.1 (el despliegue ya es realidad, no acción futura); ADB-10 y ADB-11 pasan de "Hecho" a "Diseñado (implementación diferida a Sprint 3)" para alinear con su estado real de implementación; adición de un párrafo de Conclusiones del Avance 3 (backend desplegado y Online en Railway, database-per-service en producción, observabilidad verificada, re-priorización ágil); y actualización de las Recomendaciones que ya se cumplieron en el Sprint 2 (migración a PostgreSQL gestionado → ahora formalización de migraciones Flyway/Liquibase; "antes del primer despliegue en cloud" → "ahora que el backend ya está desplegado") |
 | 2.36 | 07/06/2026 | Alejandro | Reestructuración del Capítulo V para alinear su numeración con la jerarquía del *Final Project Statement* del curso: los Sprints se agrupan bajo una nueva sección **5.3 Microservices Implementation** (5.3.1 Sprint 1 — resumen del TP1; 5.3.2 Sprint 2 con sus ocho subsecciones 5.3.2.1 a 5.3.2.8), y **Microservices Deployment** pasa a ser **5.4**, ubicándose después de Implementation como en el statement. La antigua sección "5.3 Microservices Documentation (API Reference)" se integró en la evidencia de documentación del Sprint (5.3.2.5 Microservices Documentation Evidence), eliminando la sección huérfana que no figuraba en el statement. Se actualizaron el TOC, todos los anchors y las referencias cruzadas (5.5.x → 5.3.2.x). Nota: el cronograma Excel del curso numera el Sprint 2 como "5.2.2" por un error de copy-paste que colisiona con "5.2.2 Source Code Management"; la jerarquía correcta del statement (.docx) ubica el Sprint 2 como 5.3.2, que es la adoptada |
+| 2.37 | 07/06/2026 | Alejandro | Desarrollo completo de la sección **5.3.1 Sprint 1 (TP1)**, que pasa de un resumen de un párrafo a las ocho subsecciones de evidencia de *Sprint Review* del statement (5.3.1.1 a 5.3.1.8), en paralelo a la estructura del Sprint 2: Sprint Backlog 1 con Sprint Planning y tabla de work-items T01–T07, Development Evidence con los 19 commits reales del período 08/05–12/05/2026 por mono-repo, Testing Suite Evidence con el desglose de los 128 unit tests por servicio y capturas JUnit 5 + Mockito + feature BDD, Execution Evidence (ejecución local + Swagger UI + fragmentos de `session-service`), Microservices Documentation Evidence (tabla OpenAPI por servicio), Software Deployment Evidence (despliegue local + configuración cloud diferida al Sprint 2), Team Collaboration Insights (roles y contribuciones del Sprint 1) y Kanban Board. Se añadieron las ocho entradas al TOC |
 
 <div style="page-break-after: always;"></div>
 
@@ -183,6 +184,14 @@
       - [5.2.5. Quality Gate y Revisión de Calidad de Código](#525-quality-gate-y-revisión-de-calidad-de-código)
    - [5.3. Microservices Implementation](#53-microservices-implementation)
       - [5.3.1. Sprint 1 (TP1)](#531-sprint-1-tp1)
+         - [5.3.1.1. Sprint Backlog 1](#5311-sprint-backlog-1)
+         - [5.3.1.2. Development Evidence for Sprint Review](#5312-development-evidence-for-sprint-review)
+         - [5.3.1.3. Testing Suite Evidence for Sprint Review](#5313-testing-suite-evidence-for-sprint-review)
+         - [5.3.1.4. Execution Evidence for Sprint Review](#5314-execution-evidence-for-sprint-review)
+         - [5.3.1.5. Microservices Documentation Evidence for Sprint Review](#5315-microservices-documentation-evidence-for-sprint-review)
+         - [5.3.1.6. Software Deployment Evidence for Sprint Review](#5316-software-deployment-evidence-for-sprint-review)
+         - [5.3.1.7. Team Collaboration Insights during Sprint](#5317-team-collaboration-insights-during-sprint)
+         - [5.3.1.8. Kanban Board](#5318-kanban-board)
       - [5.3.2. Sprint 2](#532-sprint-2)
          - [5.3.2.1. Sprint Backlog 2](#5321-sprint-backlog-2)
          - [5.3.2.2. Development Evidence for Sprint Review](#5322-development-evidence-for-sprint-review)
@@ -4241,14 +4250,165 @@ En esta sección se documenta el proceso de implementación, pruebas, documentac
 
 ### 5.3.1. Sprint 1 (TP1)
 
-El **Sprint 1**, entregado en el Trabajo Parcial 1 (TP1), estableció la base de implementación del backend de Talki. Sus principales resultados —documentados en detalle en las secciones 5.1 (suites de prueba), 5.1.4 (refactorizaciones RF-01 a RF-05) y 5.2 (configuración y gestión)— fueron:
+El **Sprint 1**, entregado en el Trabajo Parcial 1 (TP1), estableció la base de implementación del backend de Talki: la construcción de los ocho microservicios Spring Boot sobre cuatro mono-repos, la aplicación de los patrones tácticos de DDD (modelo de dominio rico, CQRS, ACL), el alineamiento del pipeline de análisis con Gemini Live nativo, la suite de 128 pruebas unitarias y la documentación OpenAPI por servicio. A continuación se documenta el Sprint siguiendo las ocho evidencias de *Sprint Review* del statement.
 
-- **Ocho microservicios Spring Boot implementados** sobre cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`), aplicando DDD, CQRS, ACL y Saga por coreografía sobre RabbitMQ.
-- **Suite de 128 unit tests (Nivel 1)** con JUnit 5 + Mockito + AssertJ, verde en `mvn test` (identity 15, notification 7, session 27, live-coach 13, filler-detection 11, scoring 33, progress 9, gamification 13).
-- **Documentación OpenAPI 3 (springdoc 2.3.0)** incorporada en los 8 microservicios, exponiendo `/v3/api-docs` y `/swagger-ui.html` por servicio.
-- **Alineamiento del pipeline con Gemini Live nativo** (eliminación de `transcription-service`/Whisper) y cumplimiento *by-design* de la Ley 29733 (sin persistencia de audio).
+#### 5.3.1.1. Sprint Backlog 1
 
-El Sprint 1 cerró con el Kanban Board de la entrega TP1 (tablero público de GitHub Projects v2, sección 3.4). El presente Avance 3 documenta el **Sprint 2** a continuación.
+| Sprint 1 | **Implementación del núcleo backend: 8 microservicios con DDD, CQRS, ACL y suite de pruebas** |
+|---|---|
+| **Sprint Planning Background** | |
+| Date | 05/05/2026 |
+| Time | 18:00 |
+| Location | Reunión realizada mediante Discord |
+| Prepared By | Oroncoy Almeyda, Alejandro Daniel |
+| Attendees (to planning) | Oroncoy Almeyda, Alejandro Daniel |
+| | Rivera Sosa, Eduardo Gael |
+| | Tumi Oliden, Manuel Ignacio |
+| **Sprint 1 Goal** | Materializar el diseño arquitectónico del Capítulo IV en código ejecutable: implementar los ocho microservicios de negocio (`identity`, `notification`, `session`, `live-coach`, `filler-detection`, `scoring`, `progress`, `gamification`) sobre cuatro mono-repos Spring Boot, aplicando DDD (modelo de dominio rico, agregados, value objects), CQRS, Anti-Corruption Layer y Saga por coreografía sobre RabbitMQ (exchange `talki.events`); alinear el pipeline de análisis con la transcripción nativa de **Gemini Live** (eliminando `transcription-service`/Whisper) en cumplimiento *by-design* de la Ley 29733 (sin persistencia de audio); cubrir la lógica de dominio con una suite de **pruebas unitarias (Nivel 1)** verde; y publicar el contrato REST de cada servicio con **OpenAPI 3**. |
+| **Sprint 1 Velocity** | 38 |
+| **Sum of Story Points** | 38 |
+
+| Sprint # | Sprint 1 | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **User Story** | | **Work-Item / Task** | | | | | |
+| **ID** | **Title** | **ID** | **Title** | **Description** | **Estimations (Hours)** | **Assigned To** | **Status** |
+| US05–US28 | Núcleo backend del producto (transversal) | T01 | Scaffolding de los 8 microservicios | Inicializar los cuatro mono-repos backend (`talki-user-services`, `talki-session-services`, `talki-analysis-services`, `talki-engagement-services`) con la estructura por capas (domain / application / infrastructure / interfaces) de cada microservicio Spring Boot. | 8 | Tumi Oliden, Manuel | Done |
+| US06, US07 | Registro y autenticación de cuenta | T02 | Dominio e identidad (`identity-service`) | Implementar `AuthService` y `JwtTokenProvider` (registro con bcrypt, login, refresh token) y el consumidor `ScoreNotificationConsumer` en `notification-service`. | 8 | Tumi Oliden, Manuel · Oroncoy, Alejandro | Done |
+| US12, US14 | Sesión de práctica en vivo | T03 | DDD + CQRS + ACL en `session-service` | Refactorizar `session-service` a modelo de dominio rico con agregado `Session`, separación Command/Query y ACL; en `live-coach-service` publicar `session.live.finalized` con `transcript_gemini` y métricas acústicas. | 13 | Oroncoy, Alejandro | Done |
+| US15, US16 | Análisis de muletillas y scoring | T04 | Pipeline de análisis sobre Gemini Live | Eliminar `transcription-service`/Whisper y conectar `filler-detection-service` directo a `session.live.finalized`; en `scoring-service` propagar `wpm`/`silenceRatio`/`volumeRms`, persistir `ScoreResult` y garantizar idempotencia del consumidor. | 13 | Oroncoy, Alejandro | Done |
+| US19, US22 | Progreso y gamificación | T05 | Proyecciones CQRS de engagement | Implementar `UserProgress` y `UserStreak` con sus consumidores `ScoringCompletedConsumer` (proyección de vista materializada al consumir `scoring.completed`). | 5 | Tumi Oliden, Manuel | Done |
+| US05–US28 | Núcleo backend del producto | T06 | Suite de 128 unit tests (Nivel 1) | Cubrir la lógica de dominio de los 8 servicios con JUnit 5 + Mockito (incluye `JwtTokenProviderTest`, `SessionTest`, `VoiceScoreTest`, `ScoringCompletedConsumerTest`) y el `GlobalExceptionHandler` (RF-05) del `scoring-service`. | 8 | Oroncoy, Alejandro | Done |
+| US05–US28 | Núcleo backend del producto | T07 | Documentación OpenAPI 3 por servicio | Incorporar `springdoc-openapi 2.3.0` a los 8 microservicios exponiendo `/v3/api-docs` y `/swagger-ui.html`, con la metadata y el Server URL del dominio `talki.lat`. | 5 | Oroncoy, Alejandro | Done |
+
+> **Nota.** El Sprint 1 priorizó la **corrección arquitectónica** del backend (modelo de dominio rico, eliminación de dependencias cíclicas, Saga de coreografía y manejo global de excepciones) sobre el despliegue cloud, que se planificó como objetivo central del Sprint 2. Las cinco refactorizaciones ejecutadas se documentan en detalle en la sección 5.1.4 (RF-01 a RF-05).
+
+#### 5.3.1.2. Development Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+El trabajo de implementación del Sprint 1 se concentró en construir los ocho microservicios y refactorizarlos hacia los patrones tácticos de DDD. Los commits listados materializan los work-items T01–T07 y corresponden al período del Sprint 1 (08/05/2026 – 12/05/2026):
+
+| Repository | Branch | Commit Id | Commit Message | Work-Item | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-user-services | main | 5a7421c | feat: talki-user-services initial commit | T01 | 08/05/2026 |
+| talki-user-services | main | 05c028b | test: agregar unit tests para AuthService y ScoreNotificationConsumer | T02, T06 | 08/05/2026 |
+| talki-user-services | main | a02c830 | test(identity): arreglar NPE en login test + agregar JwtTokenProviderTest | T06 | 10/05/2026 |
+| talki-user-services | main | e7971d4 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a los 2 microservicios | T07 | 12/05/2026 |
+| talki-session-services | main | 3dc3a39 | feat: talki-session-services initial commit | T01 | 08/05/2026 |
+| talki-session-services | main | 513e705 | refactor(live-coach): publicar transcript_gemini y métricas acústicas en session.live.finalized | T03 | 10/05/2026 |
+| talki-session-services | main | ee0a9c5 | refactor(session): aplicar DDD + CQRS + ACL y agregar tests unitarios | T03, T06 | 10/05/2026 |
+| talki-session-services | main | 68bc52c | test: agregar SessionTest + SessionModeStrategyFactoryTest | T06 | 10/05/2026 |
+| talki-session-services | main | dc65df5 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a session y live-coach | T07 | 12/05/2026 |
+| talki-analysis-services | main | d0669b4 | feat: talki-analysis-services initial commit | T01 | 08/05/2026 |
+| talki-analysis-services | main | 9f62af4 | refactor: eliminar transcription-service y conectar filler-detection directo a session.live.finalized | T04 | 10/05/2026 |
+| talki-analysis-services | main | cb4f0c4 | fix(scoring): propagar wpm/silenceRatio/volumeRms + idempotencia robusta | T04 | 10/05/2026 |
+| talki-analysis-services | main | dd28ba1 | test(scoring): agregar VoiceScoreTest para invariantes del value object | T06 | 10/05/2026 |
+| talki-analysis-services | main | d840384 | feat(scoring): GlobalExceptionHandler con tests unitarios | T06 | 11/05/2026 |
+| talki-analysis-services | main | 8add798 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a scoring y filler-detection | T07 | 12/05/2026 |
+| talki-engagement-services | main | c39d699 | feat: talki-engagement-services initial commit | T01 | 08/05/2026 |
+| talki-engagement-services | main | 4b75fc8 | test: agregar unit tests para UserProgress, UserStreak y ScoringCompletedConsumer | T05, T06 | 08/05/2026 |
+| talki-engagement-services | main | d8de089 | test(gamification): agregar ScoringCompletedConsumerTest (7 casos) | T06 | 10/05/2026 |
+| talki-engagement-services | main | e5ae896 | feat(openapi): incorpora documentación Swagger/OpenAPI 3 a progress y gamification | T07 | 12/05/2026 |
+
+#### 5.3.1.3. Testing Suite Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic>
+
+La principal evidencia de calidad del Sprint 1 es la **suite de pruebas unitarias (Nivel 1)**: **128 unit tests** verdes en `mvn test`, ejecutados con JUnit 5 + Mockito sobre la lógica de dominio de los ocho microservicios, sin levantar contexto de Spring ni dependencias externas (los clientes de Gemini Live se sustituyen por dobles de prueba). El desglose por servicio es:
+
+| Microservicio | Unit tests | Clases bajo prueba (muestra) |
+|---|---|---|
+| `identity-service` | 15 | `AuthService`, `JwtTokenProvider` |
+| `notification-service` | 7 | `ScoreNotificationConsumer`, `AchievementNotificationConsumer` |
+| `session-service` | 27 | `SessionCommandServiceImpl`, `SessionQueryServiceImpl`, `Session` |
+| `live-coach-service` | 13 | `LiveCoachOrchestrator`, `SessionModeStrategyFactory`, estrategias de modo |
+| `filler-detection-service` | 11 | `FillerAnalyzer`, `FillerAnalyzedEvent` |
+| `scoring-service` | 33 | `ScoreCalculator`, `VoiceScore`, `FillerAnalyzedConsumer`, `GlobalExceptionHandler` |
+| `progress-service` | 9 | `UserProgress`, `ScoringCompletedConsumer` |
+| `gamification-service` | 13 | `UserStreak`, `ScoringCompletedConsumer` |
+| **Total** | **128** | |
+
+Capturas de la ejecución de la suite con JUnit 5 + Mockito (todas verdes):
+
+![Ejecución JUnit 5 + Mockito — suite verde (1)](assets/images/Backend/JUnit5yMockito1.png)
+![Ejecución JUnit 5 + Mockito — suite verde (2)](assets/images/Backend/JUnit5yMockito2.png)
+![Ejecución JUnit 5 + Mockito — suite verde (3)](assets/images/Backend/JUnit5yMockito3.png)
+![Ejecución JUnit 5 + Mockito — suite verde (4)](assets/images/Backend/JUnit5yMockito4.png)
+
+Adicionalmente, los criterios de aceptación Given-When-Then de las User Stories del Capítulo III se diseñaron como *feature files* de **BDD (Nivel 3, Cucumber)**; el siguiente es el feature de finalización de sesión (US14):
+
+![Feature BDD — finalize-session (US14)](assets/images/Backend/finalize-session.png)
+
+| Nivel de prueba | Estado al cierre del Sprint 1 | Evidencia |
+|---|---|---|
+| Nivel 1 — Unit Tests (JUnit 5 + Mockito) | ✅ 128 / 128 verdes | Capturas de esta sección; desglose en 5.1.1 |
+| Nivel 2 — Integration Tests (Testcontainers) | 🟡 Diseñado, reprogramado | Matriz de servicios/infraestructura en 5.1.1 |
+| Nivel 3 — BDD (Cucumber) | 🟡 Feature files diseñados | `finalize-session.feature` (5.1.1) |
+| Nivel 4 — Contract Testing (Pact) | 🟡 Contratos definidos | Matriz consumidor/proveedor en 5.1.1 |
+
+#### 5.3.1.4. Execution Evidence for Sprint Review
+
+Al cierre del Sprint 1, los ocho microservicios se ejecutan **localmente** sobre sus puertos asignados, levantando el contexto Spring Boot con perfil por defecto (base H2 en memoria y RabbitMQ local). La evidencia de ejecución del Sprint 1 es doble: (1) la batería de **128 unit tests verde** mostrada en 5.3.1.3, que confirma el correcto comportamiento de la lógica de dominio, y (2) la **documentación OpenAPI interactiva (Swagger UI)** servida por cada microservicio en `http://localhost:<puerto>/swagger-ui.html`, desde donde se exploran e invocan los endpoints REST contra la instancia local.
+
+A continuación se muestran fragmentos del código en ejecución del `session-service` —el agregado `Session`, el `SessionCommandServiceImpl` (lado Command de CQRS) y el `SessionController` REST— que materializan los patrones tácticos verificados por la suite:
+
+![session-service — agregado Session](assets/images/Backend/Session.png)
+![session-service — SessionCommandServiceImpl (CQRS Command)](assets/images/Backend/SessionCommandServiceImpl.png)
+![session-service — SessionController REST](assets/images/Backend/SessionController.png)
+
+> _Nota._ El despliegue **cloud** de estos servicios (ejecución pública en Railway con su Swagger UI accesible por internet) fue el objetivo del Sprint 2; su evidencia de ejecución en producción se documenta en la sección 5.3.2.4. Para el Sprint 3 queda pendiente la grabación del video de demostración end-to-end y una colección de pruebas de API (Bruno / Postman) versionada.
+
+#### 5.3.1.5. Microservices Documentation Evidence for Sprint Review
+
+Cada microservicio publica su contrato REST mediante **OpenAPI 3 (springdoc 2.3.0)** desde el Sprint 1, accesible localmente en `/v3/api-docs` (spec JSON) y `/swagger-ui.html` (UI interactiva). La metadata de cada `OpenApiConfig` describe el Bounded Context, los patrones aplicados y el Server URL del dominio `talki.lat`. Los puertos locales y rutas de documentación por servicio son:
+
+| # | Microservicio | Puerto local | Spec OpenAPI 3 | UI Swagger | Bounded Context |
+|---|---|---|---|---|---|
+| 1 | `identity-service` | 8081 | `http://localhost:8081/v3/api-docs` | `http://localhost:8081/swagger-ui.html` | Identity & Access |
+| 2 | `session-service` | 8082 | `http://localhost:8082/v3/api-docs` | `http://localhost:8082/swagger-ui.html` | Practice Session |
+| 3 | `live-coach-service` | 8083 | `http://localhost:8083/v3/api-docs` | `http://localhost:8083/swagger-ui.html` | Practice Session (orquestador) |
+| 4 | `filler-detection-service` | 8087 | `http://localhost:8087/v3/api-docs` | `http://localhost:8087/swagger-ui.html` | Speech Analysis |
+| 5 | `scoring-service` | 8088 | `http://localhost:8088/v3/api-docs` | `http://localhost:8088/swagger-ui.html` | Speech Analysis |
+| 6 | `progress-service` | 8089 | `http://localhost:8089/v3/api-docs` | `http://localhost:8089/swagger-ui.html` | Progress & Metrics |
+| 7 | `gamification-service` | 8090 | `http://localhost:8090/v3/api-docs` | `http://localhost:8090/swagger-ui.html` | Progress & Metrics |
+| 8 | `notification-service` | 8091 | `http://localhost:8091/v3/api-docs` | `http://localhost:8091/swagger-ui.html` | Notification |
+
+El modelo de dominio (Class Diagram y ER) y los eventos publicados/consumidos por cada microservicio se documentan en detalle en la sección 4.1.5. Sobre esta base local, el Sprint 2 expuso la misma documentación en producción (sección 5.3.2.5).
+
+#### 5.3.1.6. Software Deployment Evidence for Sprint Review
+
+Durante el Sprint 1, el despliegue de los servicios fue **local**: cada microservicio se ejecuta con `mvn spring-boot:run` (o desde el IDE) levantando su contexto sobre H2 en memoria y un RabbitMQ local para el bus de eventos `talki.events`. La **configuración de despliegue cloud** —estrategia de contenerización, perfiles de entorno y topología objetivo— se diseñó y documentó en este Sprint en la sección 5.2.4 (Software Deployment Configuration), dejando establecido el camino hacia la nube.
+
+> La **materialización** de ese diseño —contenerización multi-stage, perfil `prod` con PostgreSQL *database-per-service* y despliegue público en **Railway** con los 8 servicios **Online**— constituyó el objetivo central del Sprint 2, cuya evidencia se documenta en la sección 5.3.2.6. El Sprint 1 dejó la configuración lista; el Sprint 2 la ejecutó.
+
+#### 5.3.1.7. Team Collaboration Insights during Sprint
+
+Durante el Sprint 1, el equipo colaboró a través de GitHub sobre los cuatro mono-repos backend, bajo la organización `upc-pre-202601-si657-7940-thropic`, aplicando GitFlow con Pull Requests revisados y Conventional Commits (sección 5.2.2). La distribución de roles fue:
+
+| Integrante | Usuario GitHub | Rol principal en el Sprint 1 | Contribución |
+|---|---|---|---|
+| **Tumi Oliden, Manuel Ignacio** | `Manuel2224` | Scaffolding / Engagement | Inicializó los cuatro mono-repos y la estructura por capas de los 8 servicios (T01); implementó las proyecciones CQRS de `progress` y `gamification` con sus consumidores y tests (T05). |
+| **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / DDD / Calidad | Lideró la refactorización a DDD + CQRS + ACL en `session-service`, la alineación del pipeline con Gemini Live (eliminación de `transcription-service`), el `GlobalExceptionHandler` (RF-05), la suite de 128 unit tests y la documentación OpenAPI por servicio (T03, T04, T06, T07); revisó y mergeó los Pull Requests del Sprint. |
+| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend / Requisitos | Especificación de User Stories y criterios de aceptación (Capítulo III) que alimentaron el backlog; preparación de las vistas Angular reprogramadas a Sprints posteriores. |
+
+El historial de commits de cada repositorio (autor, mensaje Conventional Commits y fecha) evidencia las contribuciones del período 08/05–12/05/2026, visibles en las capturas de *Insights de colaboración* de la sección 5.3.2.7, que recogen tanto los commits del Sprint 1 (implementación) como los del Sprint 2 (despliegue) de cada repo.
+
+> _Insight del Sprint._ Concentrar la refactorización a DDD en un revisor único (Alejandro) sobre la base inicial levantada por Manuel permitió mantener consistencia en la aplicación de los patrones tácticos a través de los ocho servicios; cada refactorización entró por Pull Request revisado, dejando trazabilidad de la decisión de diseño en el historial de `main`.
+
+#### 5.3.1.8. Kanban Board
+
+El estado del backlog al cierre del Sprint 1 (entrega TP1) se gestionó en el tablero público de **GitHub Projects v2** del equipo, donde las 28 User Stories del producto se distribuyen entre los estados *Todo → In Progress → Review → Done*:
+
+🔗 **Tablero público:** <https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1>
+
+| Estado | Cantidad | Lectura al cierre del Sprint 1 |
+|---|---|---|
+| **Done** | 2 | Ciclo de autenticación (`identity-service`) y núcleo de sesión (`session-service`) implementados y probados. |
+| **Review** | 3 | Pipeline de análisis (`filler-detection`, `scoring`) y engagement (`progress`, `gamification`) en revisión de PR. |
+| **In Progress** | 6 | Lógica de dominio backend cubierta por tests; pendiente integración end-to-end y despliegue. |
+| **Todo** | 17 | Vistas Angular, despliegue cloud, `scenario-catalog-service` y `media-service`, planificados para Sprints posteriores. |
+
+Con el núcleo backend implementado y probado, el Sprint 1 dejó el producto listo para su **despliegue cloud**, objetivo que abordó el Sprint 2 a continuación.
 
 ### 5.3.2. Sprint 2
 
