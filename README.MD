@@ -106,6 +106,7 @@
 | 2.40 | 07/06/2026 | Alejandro | Se completa la **Execution Evidence del Sprint 2 (5.3.2.4)** con la interacción real de los Web Services vía **Postman** (Cloud Agent) contra las URLs productivas de Railway: cinco capturas con su respuesta real (registro `POST /v1/auth/register` → 201, login `POST /v1/auth/login` → 200 con JWT, listado de sesiones `GET /v1/sessions` → 200 con el `user` proyectado, health `GET /actuator/health` → 200 UP y contrato `GET /v3/api-docs` → 200), y se versiona la colección en `postman/Talki-Backend-Sprint2.postman_collection.json`. El "pendiente Sprint 3" se reduce solo al video de demostración. Esta evidencia validó en producción la **Saga por coreografía** del evento `user.registered` (identity-service publica → session-service proyecta el `AppUser` local), eslabón que habilita la creación y consulta de sesiones bajo *database-per-service* |
 | 2.41 | 07/06/2026 | Alejandro | Se finaliza el **Kanban Board del Sprint 2 (5.3.2.8)**: la subsección, que ya contenía el tablero público de GitHub Projects v2, la captura del board al cierre y la tabla de estados (Done 4, Review 4, In Progress 10, Todo 10), deja de estar marcada como diferida. Se elimina el marcador "→ (Avance 3)" del título de la sección y de su entrada en el Tabla de Contenidos (con el anchor corregido a `#5328-kanban-board`), reflejando que la evidencia del Sprint 2 queda íntegramente completada en este entregable |
 | 2.42 | 07/06/2026 | Alejandro, Gael, Manuel | Actualización del **Student Outcome** (Criterios 1 y 2): se incorpora la columna **AV3** para los tres integrantes en ambos criterios, documentando las contribuciones del Avance 3 (despliegue cloud en Railway) —evidencia del Sprint Review y reestructuración del Capítulo V (Alejandro), planificación de la integración del frontend Angular reprogramada al Sprint 3 (Gael) y contenerización multi-stage + perfil `prod` con PostgreSQL *database-per-service* + estandarización de RabbitMQ (Manuel)— más el enunciado AV3 de las Conclusiones generales de cada criterio. Adicionalmente se **reducen** las entradas más extensas (AV2 y TP1, en especial las de Alejandro) condensándolas al nivel de densidad del resto de celdas sin perder la trazabilidad a secciones y artefactos |
+| 2.44 | 15/06/2026 | Gael | Se agrega la **sección 5.3.3 Sprint 3** (Frontend ⇄ Cloud Backend) con sus ocho subsecciones de Sprint Review: Sprint Backlog 3 con tabla HTML de work-items (T01–T10), Development Evidence (repo `talki-frontend`, 3 commits), Testing Suite Evidence (build Next.js con type-check + lint verde), Execution Evidence (flujo end-to-end verificado vía BFF contra producción + hallazgos de RabbitMQ no compartido y Gemini Live no expuesto), Microservices Documentation Evidence (traza vista→endpoint), Software Deployment Evidence (publicación del repo), Team Collaboration Insights y Kanban Board (diferido a Avance 4). Se documenta el cliente web en **Next.js 16 + BFF con JWT en cookie `httpOnly`** que resuelve el CORS de los microservicios. Se actualiza el TOC con las entradas 5.3.3.1–5.3.3.8 |
 | 2.43 | 07/06/2026 | Alejandro | Corrección estructural de **4.3 ADD Iterations** y consolidación de **Anexos → Links**: (a) se agrega el encabezado faltante **4.3.1.7 Analysis of Current Design and Review Iteration Goal (Kanban Board)** en la Iteration 1 —su contenido (Kanban Board, vista consolidada y conclusión) estaba embebido en 4.3.1.6, dejando roto el enlace del TOC—; (b) se renombran los encabezados **4.3.1.6 y 4.3.2.6** a "Sketch Views **(C4 & UML)** and Record Design Decisions" para que coincidan con sus anclas del TOC; (c) se reescribe la sección Anexos → Links pasando de 3 a 21 enlaces ordenados por categoría (organización y 7 repositorios de código, tablero público de GitHub Projects v2, 8 URLs de Swagger UI en producción sobre Railway, 3 dominios `talki.lat` y grabaciones de entrevistas). Se confirma que las iteraciones ADD (0, 1 y 2) están completas en contenido: el MVP académico documenta dos iteraciones de refinamiento conforme al método ADD 3.0, por lo que no procede agregar iteraciones adicionales |
 
 <div style="page-break-after: always;"></div>
@@ -207,6 +208,15 @@
          - [5.3.2.6. Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
          - [5.3.2.7. Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
          - [5.3.2.8. Kanban Board](#5328-kanban-board)
+      - [5.3.3. Sprint 3](#533-sprint-3)
+         - [5.3.3.1. Sprint Backlog 3](#5331-sprint-backlog-3)
+         - [5.3.3.2. Development Evidence for Sprint Review](#5332-development-evidence-for-sprint-review)
+         - [5.3.3.3. Testing Suite Evidence for Sprint Review](#5333-testing-suite-evidence-for-sprint-review)
+         - [5.3.3.4. Execution Evidence for Sprint Review](#5334-execution-evidence-for-sprint-review)
+         - [5.3.3.5. Microservices Documentation Evidence for Sprint Review](#5335-microservices-documentation-evidence-for-sprint-review)
+         - [5.3.3.6. Software Deployment Evidence for Sprint Review](#5336-software-deployment-evidence-for-sprint-review)
+         - [5.3.3.7. Team Collaboration Insights during Sprint](#5337-team-collaboration-insights-during-sprint)
+         - [5.3.3.8. Kanban Board](#5338-kanban-board)
    - [5.4. Microservices Deployment](#54-microservices-deployment)
       - [5.4.0. Opciones de Deployment Evaluadas](#540-opciones-de-deployment-evaluadas)
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
@@ -4829,6 +4839,264 @@ Cada tarjeta del tablero es un **issue real de GitHub** vinculado a su repositor
 | **Todo** | 10 | Landing (`landing-page`), exportación y catálogo de escenarios, reprogramados al Sprint 3. |
 
 Con el backend desplegado y accesible públicamente, el camino crítico del Sprint 3 queda despejado para mover las historias de *In Progress* a *Done* a medida que el frontend Angular consuma las APIs productivas verificadas en la sección 5.3.2.4.
+
+<div style="page-break-after: always;"></div>
+
+### 5.3.3. Sprint 3
+
+> **Nota de implementación.** El frontend planificado en Sprints previos como cliente *Angular* se materializó finalmente con **Next.js 16 (React 19, App Router) + TypeScript + Tailwind CSS 4 + shadcn/ui**. El equipo optó por este stack por su modelo de *Route Handlers* del lado servidor, que permite implementar una capa **BFF (Backend-for-Frontend)** sin servicios adicionales: el cliente resuelve así el **CORS** ausente en los microservicios y mantiene el **JWT fuera del JavaScript del navegador** (cookie `httpOnly`). El repositorio es público: <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>.
+
+#### 5.3.3.1. Sprint Backlog 3
+
+| Sprint 3 | **Integración del cliente web contra las APIs productivas (Frontend ⇄ Cloud Backend)** |
+|---|---|
+| **Sprint 3 Goal** | Materializar el cliente web de Talki (`talki-frontend`) consumiendo las **ocho APIs productivas desplegadas en Railway** durante el Sprint 2, implementando las vistas del producto —autenticación, sesiones de práctica, *Live Coach*, dashboard de progreso y ranking— sobre una arquitectura **BFF (Backend-for-Frontend)** con *Route Handlers* de Next.js que resuelve el CORS de los microservicios y gestiona el ciclo de vida del **JWT en una cookie `httpOnly`**. El *streaming* de feedback en vivo con Gemini (WebSocket) y los microservicios `scenario-catalog-service` y `media-service` se mantienen reprogramados, por depender de capacidades aún no expuestas en el despliegue. |
+| **Sprint 3 Velocity** | 39 |
+| **Sum of Story Points** | 39 |
+
+> **Nota de continuidad.** El backend desplegado y accesible públicamente al cierre del Sprint 2 (sección 5.3.2.4) es el prerrequisito que habilita este Sprint: las vistas del cliente web consumen directamente las URLs productivas de Railway, sin necesidad de levantar el backend en local. La capa BFF del frontend adjunta el `Authorization: Bearer <JWT>` a las llamadas salientes, de modo que el token nunca se expone al navegador.
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Sprint #</th>
+      <th colspan="6">Sprint 3</th>
+    </tr>
+    <tr>
+      <th colspan="2">User Story</th>
+      <th colspan="6">Work-Item / Task</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Estimations (Hours)</th>
+      <th>Assigned To</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto (transversal a todas las US)</td>
+      <td>T01</td>
+      <td>Scaffolding del cliente web</td>
+      <td>Inicializar <code>talki-frontend</code> con <strong>Next.js 16</strong> (App Router) + TypeScript + Tailwind CSS 4 + <strong>shadcn/ui</strong>; configurar el mapa de servicios y las variables de entorno (<code>.env</code>) del lado servidor.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto</td>
+      <td>T02</td>
+      <td>Capa BFF (Backend-for-Frontend)</td>
+      <td>Implementar <em>Route Handlers</em>: proxy genérico <code>/api/gateway/&lt;servicio&gt;</code> hacia los 8 microservicios y endpoints <code>/api/auth</code> (login, register, logout, me) que setean/leen el <strong>JWT en cookie <code>httpOnly</code></strong>. Resuelve el CORS ausente en el backend.</td>
+      <td>8</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto</td>
+      <td>T03</td>
+      <td>Cliente HTTP tipado + protección de rutas</td>
+      <td>Definir los DTOs por servicio y funciones tipadas que llaman al BFF; decodificar el <code>userId</code> del JWT; <em>middleware/proxy</em> de Next que protege las rutas privadas y redirige a <code>/login</code>.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05, US06</td>
+      <td>Registro y autenticación de cuenta</td>
+      <td>T04</td>
+      <td>Vistas de autenticación</td>
+      <td>Pantallas de <strong>login</strong> y <strong>registro</strong> contra <code>identity-service</code> (<code>/v1/auth/login</code>, <code>/v1/auth/register</code>), con inicio de sesión automático tras el registro.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US10, US13</td>
+      <td>Gestionar sesiones de práctica y feedback</td>
+      <td>T05</td>
+      <td>Vista de Sesiones</td>
+      <td>Lista, creación, detalle, finalización y feedback de sesiones contra <code>session-service</code> (<code>/v1/sessions</code> y subrecursos), con manejo de los estados <code>DRAFT → RECORDING → PROCESSING</code>.</td>
+      <td>8</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US12</td>
+      <td>Iniciar sesión de práctica en vivo</td>
+      <td>T06</td>
+      <td>Vista Live Coach</td>
+      <td>Listado de modos (<code>/v1/coach/modes</code>) y finalización de sesión en vivo (<code>/v1/coach/&#123;id&#125;/finalize</code>) contra <code>live-coach-service</code>, que publica el evento <code>session.live.finalized</code>.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US20, US22</td>
+      <td>Visualizar progreso y ranking</td>
+      <td>T07</td>
+      <td>Dashboard de progreso + Ranking</td>
+      <td>Dashboard de métricas contra <code>progress-service</code> (<code>/v1/progress/dashboard</code>) y leaderboard/rachas contra <code>gamification-service</code> (<code>/v1/gamification/*</code>), más el estado de salud de <code>filler</code> y <code>scoring</code>.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto</td>
+      <td>T08</td>
+      <td>Publicación y verificación end-to-end</td>
+      <td>Publicar el repositorio <code>talki-frontend</code> y verificar el flujo extremo a extremo (registro → login → crear sesión → dashboard) contra las APIs productivas de Railway.</td>
+      <td>3</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US12</td>
+      <td>Feedback en vivo durante la práctica</td>
+      <td>T09</td>
+      <td>Streaming de feedback con Gemini Live</td>
+      <td>Conectar la vista de práctica a un WebSocket bidireccional para el feedback en vivo de Gemini. <em>(Reprogramada — el endpoint WebSocket de Gemini Live no está expuesto en el despliegue actual de <code>live-coach-service</code>.)</em></td>
+      <td>13</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>To-Do</td>
+    </tr>
+    <tr>
+      <td>US11</td>
+      <td>Seleccionar escenario de práctica</td>
+      <td>T10</td>
+      <td>scenario-catalog-service + media-service</td>
+      <td>Implementar los microservicios pendientes (catálogo de escenarios peruanos y media). <em>(Reprogramadas desde el Sprint 2.)</em></td>
+      <td>13</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>To-Do</td>
+    </tr>
+  </tbody>
+</table>
+
+#### 5.3.3.2. Development Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>
+
+El trabajo del Sprint 3 se concentró en un nuevo repositorio, `talki-frontend`, que aloja el cliente web del producto. Los commits listados materializan los work-items T01–T08: el *scaffolding* del proyecto con la capa BFF y la UI conectada a los ocho microservicios (T01–T07), la documentación de las URLs productivas de Railway en el `.env.example` y el ajuste de experiencia de usuario (tema, navegación lateral y correcciones de los formularios). Todos los commits corresponden al período del Sprint 3 (15/06/2026).
+
+| Repository | Branch | Commit Id | Commit Message | Work-Item | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-frontend | main | 57c07e5 | feat: scaffold talki-frontend (Next.js 16) con BFF y UI conectada a los 8 microservicios | T01–T07 | 15/06/2026 |
+| talki-frontend | main | 495495f | docs: documentar URLs de backends deployados en Railway en .env.example | T08 | 15/06/2026 |
+| talki-frontend | main | 894a7fd | feat: tema blanco fijo, sidebar estilo ChatGPT y fixes de UX | T01, T04, T05 | 15/06/2026 |
+
+> La estructura del cliente separa con claridad las responsabilidades: `src/app/api/*` (capa BFF: `auth` y `gateway`), `src/lib/api/*` (DTOs y cliente tipado por servicio), `src/lib/config.ts` (mapa servicio → URL, solo del lado servidor) y `src/app/(app)/*` (vistas protegidas). El token JWT nunca se persiste en `localStorage`: vive en una cookie `httpOnly` que solo el servidor del BFF lee.
+
+#### 5.3.3.3. Testing Suite Evidence for Sprint Review
+
+La verificación de calidad del cliente web en este Sprint se apoya en el **build de producción de Next.js** (`pnpm build`), que ejecuta la **comprobación de tipos de TypeScript** y el **lint de ESLint** sobre todo el proyecto: todas las rutas (estáticas y dinámicas) compilan sin errores ni advertencias de tipo. Las suites de pruebas automatizadas del frontend (componentes y end-to-end) se reprograman, al igual que los niveles 2–4 del backend ya documentados en el Sprint 2.
+
+| Nivel de prueba | Estado al cierre del Sprint 3 | Evidencia |
+|---|---|---|
+| Type-check + Lint del cliente web | ✅ Verde | `pnpm build` (Next.js 16): verificación de tipos TS + ESLint, 14 rutas compiladas sin errores |
+| Verificación funcional end-to-end (manual) | ✅ Verde | Flujo registro → login → crear sesión → dashboard ejercitado vía el BFF contra producción (ver 5.3.3.4) |
+| Unit/Component tests del cliente (Vitest/RTL) | 🟡 Reprogramado | Pendiente para el siguiente Sprint |
+| E2E del cliente (Playwright) | 🟡 Reprogramado | Pendiente para el siguiente Sprint |
+| Nivel 1 — Unit Tests backend (JUnit 5 + Mockito) | ✅ 128 / 128 verdes | Heredado y estable desde el Sprint 1/2 (5.1.1) |
+| Niveles 2–4 backend (Testcontainers / Cucumber / Pact) | 🟡 Reprogramado | Documentado en 5.1.1 y 5.3.2.3 |
+
+#### 5.3.3.4. Execution Evidence for Sprint Review
+
+Al cierre del Sprint 3, el cliente web `talki-frontend` ejecuta **localmente consumiendo las APIs productivas de Railway** (sin backend local): la capa BFF actúa como pasarela y autentica cada llamada con el JWT de la cookie. El flujo extremo a extremo se **verificó en vivo contra producción** a través de los endpoints del propio cliente (`/api/auth/*` y `/api/gateway/*`), con las siguientes respuestas reales:
+
+| # | Acción (a través del BFF del cliente) | Microservicio productivo | Resultado |
+|---|---|---|---|
+| 1 | `POST /api/auth/register` (registro + auto-login, setea cookie JWT) | `identity-service` | ✅ 200 — usuario creado |
+| 2 | `GET /api/auth/me` (sesión activa desde la cookie) | — (BFF) | ✅ 200 — `{ userId, email }` |
+| 3 | `GET /api/gateway/coach/v1/coach/modes` | `live-coach-service` | ✅ 200 — modos disponibles |
+| 4 | `POST /api/gateway/session/v1/sessions` (requiere JWT) | `session-service` | ✅ 201 — sesión creada |
+| 5 | `GET /api/gateway/session/v1/sessions?userId=…` | `session-service` | ✅ 200 — listado |
+| 6 | `GET /api/gateway/progress/v1/progress/dashboard?userId=…` | `progress-service` | ✅ 200 — dashboard |
+
+> La verificación confirma que la capa BFF **propaga correctamente el JWT**: el `session-service` exige autenticación y respondió 201/200 a las llamadas enrutadas con el token de la cookie. El cliente también renderiza el dashboard de progreso, el ranking y los modos del *Live Coach* contra los servicios reales.
+
+**Capturas de la ejecución del cliente web** (tema claro, navegación lateral estilo *workspace*):
+
+> _[COMPLETAR: captura de la pantalla de **login** en tema claro — sugerido `assets/images/frontend/01-login.png`]._
+>
+> _[COMPLETAR: captura del **dashboard** con métricas de progreso y estado de servicios — sugerido `assets/images/frontend/02-dashboard.png`]._
+>
+> _[COMPLETAR: captura de la vista **Live Coach** y de la **lista de sesiones** con la barra lateral — sugerido `assets/images/frontend/03-coach-sessions.png`]._
+
+> **Hallazgo de integración (para el equipo de backend).** Aunque `live-coach-service` acepta y publica el evento `session.live.finalized` (HTTP 202 verificado), las vistas de `progress-service` y `gamification-service` permanecen en cero tras finalizar prácticas: la cadena asíncrona `fillers → scoring → progress/gamification` **no se refleja en producción**. La causa más probable es que los microservicios desplegados **no comparten un único broker RabbitMQ** (cada mono-repo declara su propio servicio `rabbitmq` en su `docker-compose`), por lo que el evento publicado por un servicio no llega a los consumidores de otro. Queda como pendiente de infraestructura: apuntar las variables `RABBITMQ_*` de los ocho servicios a un **broker compartido** (p. ej. CloudAMQP) en Railway.
+
+> **Pendiente de producto.** El *feedback de la exposición en vivo* (Gemini Live) requiere el canal WebSocket bidireccional de `live-coach-service`, no expuesto en el despliegue actual; por eso el cliente publica el evento de finalización pero aún no recibe el feedback conversacional en tiempo real (work-item T09, reprogramado).
+
+#### 5.3.3.5. Microservices Documentation Evidence for Sprint Review
+
+El cliente web consume los contratos **OpenAPI 3** documentados en el Sprint 2 (sección 5.3.2.5), ahora desde la capa BFF. La siguiente tabla traza, por **vista del cliente**, el microservicio y los endpoints productivos que consume:
+
+| Vista del cliente | Microservicio | Endpoint(s) consumido(s) | Verbo |
+|---|---|---|---|
+| Login / Registro | `identity-service` | `/v1/auth/login`, `/v1/auth/register` | POST |
+| Sesiones (lista/crear) | `session-service` | `/v1/sessions` | GET / POST |
+| Detalle de sesión | `session-service` | `/v1/sessions/{id}`, `/v1/sessions/{id}/finalize` | GET / POST |
+| Feedback de sesión | `session-service` | `/v1/sessions/{id}/feedbacks` | GET / POST |
+| Live Coach | `live-coach-service` | `/v1/coach/modes`, `/v1/coach/{id}/finalize` | GET / POST |
+| Dashboard | `progress-service` | `/v1/progress/dashboard?userId` | GET |
+| Ranking / Rachas | `gamification-service` | `/v1/gamification/leaderboard`, `/v1/gamification/streaks/{userId}` | GET |
+| Estado de servicios | `filler-detection-service`, `scoring-service` | `/health`, `/v1/scores/health` | GET |
+
+> El cliente no inventa rutas: cada llamada corresponde a un endpoint publicado en la spec `/v3/api-docs` de las URLs productivas listadas en 5.3.2.4. Los servicios `filler-detection` y `scoring` son **event-driven** (solo exponen *health*), de modo que el cliente refleja su estado pero no los invoca directamente para análisis: ese trabajo viaja por RabbitMQ.
+
+#### 5.3.3.6. Software Deployment Evidence for Sprint Review
+
+El entregable de despliegue del Sprint 3 es la **publicación del repositorio `talki-frontend`** en la organización del equipo, con la configuración lista para correr contra el backend productivo:
+
+🔗 **Repositorio:** <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>
+
+| # | Paso | Detalle | Work-Item |
+|---|---|---|---|
+| 1 | Inicialización | Proyecto Next.js 16 (App Router) + TypeScript + Tailwind 4 + shadcn/ui, con `pnpm`. | T01 |
+| 2 | Configuración de entorno | `.env.example` documenta las URLs **locales** y las **productivas de Railway**; el `.env.local` apunta por defecto a producción. Las URLs solo se usan del lado servidor (BFF). | T02, T08 |
+| 3 | Capa BFF | *Route Handlers* `/api/gateway` y `/api/auth`; el JWT viaja en cookie `httpOnly`, resolviendo el CORS de los microservicios. | T02 |
+| 4 | Build de producción | `pnpm build` genera el bundle optimizado (14 rutas) con type-check + lint en verde. | T03 |
+| 5 | Publicación | Repositorio creado y *pusheado* a `main`; tres commits del Sprint (5.3.3.2). | T08 |
+
+**Puesta en marcha (local contra backend productivo):**
+
+```bash
+cp .env.example .env.local   # ya apunta a las URLs de Railway
+pnpm install
+pnpm dev                     # http://localhost:3000
+```
+
+> El diseño BFF deja el cliente **listo para desplegar en Vercel** (o cualquier host de Next.js) configurando las mismas variables `TALKI_*_URL` como *environment variables* del proyecto. El despliegue público del frontend en Vercel queda como siguiente paso. _[COMPLETAR: URL pública del cliente web una vez desplegado en Vercel]._
+
+#### 5.3.3.7. Team Collaboration Insights during Sprint
+
+Durante el Sprint 3, el trabajo se concentró en el nuevo repositorio `talki-frontend`, con **Eduardo Gael Rivera Sosa** (`gael-rs`) como responsable del cliente web y su integración contra las APIs productivas. La siguiente tabla resume los roles del Sprint:
+
+| Integrante | Usuario GitHub | Rol principal en el Sprint 3 | Contribución |
+|---|---|---|---|
+| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend / Integración | Desarrolló `talki-frontend` (Next.js): capa BFF con JWT en cookie `httpOnly`, cliente tipado y las vistas de autenticación, sesiones, *Live Coach*, dashboard y ranking; verificación end-to-end contra producción (T01–T08). |
+| **Tumi Oliden, Manuel Ignacio** | `Manuel2224` | DevOps / Backend | Soporte de la plataforma desplegada en Railway consumida por el cliente; microservicios `scenario-catalog-service` y `media-service` reprogramados (T10). |
+| **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / Calidad | Mantenimiento de los contratos OpenAPI y la suite de 128 unit tests que respaldan las APIs consumidas por el cliente. |
+
+> _[COMPLETAR: grafo de **Contributors** (Insights → Contributors) del repositorio `talki-frontend` — sugerido `assets/images/collaboration/contributors-frontend.png`]._
+
+> _Insight del Sprint._ La arquitectura **BFF** resultó la decisión clave del Sprint: al enrutar todas las llamadas por *Route Handlers* del lado servidor, el cliente consume el backend productivo **sin tocar la configuración de CORS de los ocho microservicios** y mantiene el JWT fuera del alcance del JavaScript del navegador. Esto desacopla el avance del frontend de cambios en el backend y deja el cliente desplegable en Vercel con solo variables de entorno.
+
+#### 5.3.3.8. Kanban Board
+
+> **Nota.** El cierre del tablero correspondiente al Sprint 3 se reporta como parte del **Avance 4**, según la rúbrica del curso. Se documentará aquí el estado del backlog (*Todo → In Progress → Review → Done*) con la captura del tablero al cierre del Sprint.
+
+🔗 **Tablero público:** <https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1>
+
+> _[COMPLETAR (Avance 4): captura del Kanban Board de GitHub Projects v2 al cierre del Sprint 3 y la tabla de conteo por estado — sugerido `assets/images/collaboration/project-board-view3.png`]._
 
 <div style="page-break-after: always;"></div>
 
