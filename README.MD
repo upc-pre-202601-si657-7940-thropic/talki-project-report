@@ -107,6 +107,8 @@
 | 2.41 | 07/06/2026 | Alejandro | Se finaliza el **Kanban Board del Sprint 2 (5.3.2.8)**: la subsección, que ya contenía el tablero público de GitHub Projects v2, la captura del board al cierre y la tabla de estados (Done 4, Review 4, In Progress 10, Todo 10), deja de estar marcada como diferida. Se elimina el marcador "→ (Avance 3)" del título de la sección y de su entrada en el Tabla de Contenidos (con el anchor corregido a `#5328-kanban-board`), reflejando que la evidencia del Sprint 2 queda íntegramente completada en este entregable |
 | 2.42 | 07/06/2026 | Alejandro, Gael, Manuel | Actualización del **Student Outcome** (Criterios 1 y 2): se incorpora la columna **AV3** para los tres integrantes en ambos criterios, documentando las contribuciones del Avance 3 (despliegue cloud en Railway) —evidencia del Sprint Review y reestructuración del Capítulo V (Alejandro), planificación de la integración del frontend Angular reprogramada al Sprint 3 (Gael) y contenerización multi-stage + perfil `prod` con PostgreSQL *database-per-service* + estandarización de RabbitMQ (Manuel)— más el enunciado AV3 de las Conclusiones generales de cada criterio. Adicionalmente se **reducen** las entradas más extensas (AV2 y TP1, en especial las de Alejandro) condensándolas al nivel de densidad del resto de celdas sin perder la trazabilidad a secciones y artefactos |
 | 2.43 | 07/06/2026 | Alejandro | Corrección estructural de **4.3 ADD Iterations** y consolidación de **Anexos → Links**: (a) se agrega el encabezado faltante **4.3.1.7 Analysis of Current Design and Review Iteration Goal (Kanban Board)** en la Iteration 1 —su contenido (Kanban Board, vista consolidada y conclusión) estaba embebido en 4.3.1.6, dejando roto el enlace del TOC—; (b) se renombran los encabezados **4.3.1.6 y 4.3.2.6** a "Sketch Views **(C4 & UML)** and Record Design Decisions" para que coincidan con sus anclas del TOC; (c) se reescribe la sección Anexos → Links pasando de 3 a 21 enlaces ordenados por categoría (organización y 7 repositorios de código, tablero público de GitHub Projects v2, 8 URLs de Swagger UI en producción sobre Railway, 3 dominios `talki.lat` y grabaciones de entrevistas). Se confirma que las iteraciones ADD (0, 1 y 2) están completas en contenido: el MVP académico documenta dos iteraciones de refinamiento conforme al método ADD 3.0, por lo que no procede agregar iteraciones adicionales |
+| 2.44 | 15/06/2026 | Gael | Se agrega la **sección 5.3.3 Sprint 3** (Frontend ⇄ Cloud Backend) con sus ocho subsecciones de Sprint Review: Sprint Backlog 3 con tabla HTML de work-items (T01–T13: T01–T08 *Done* del cliente web, T09–T13 *To-Do* reprogramados del Sprint 2 —grabación/feedback en vivo, scenario-catalog/media, landing, exportación, gestión de cuenta— mapeados a los IDs/títulos reales del Product Backlog 3.2), Development Evidence (repo `talki-frontend`, 3 commits), Testing Suite Evidence (build Next.js con type-check + lint verde), Execution Evidence (flujo end-to-end verificado vía BFF contra producción + hallazgos de RabbitMQ no compartido y Gemini Live no expuesto), Microservices Documentation Evidence (traza vista→endpoint), Software Deployment Evidence (publicación del repo), Team Collaboration Insights y Kanban Board (diferido a Avance 4). Se documenta el cliente web en **Next.js 16 + BFF con JWT en cookie `httpOnly`** que resuelve el CORS de los microservicios. Se actualiza el TOC con las entradas 5.3.3.1–5.3.3.8 |
+| 2.45 | 15/06/2026 | Gael | Actualización del **Student Outcome** (Criterios 1 y 2) con la columna **AV4**: se documenta la contribución individual de **Rivera Sosa, Eduardo Gael** en ambos criterios (integración del cliente web `talki-frontend` con arquitectura BFF, JWT en cookie `httpOnly` y verificación end-to-end contra producción) y se redacta el enunciado **general del equipo** de AV4 en la columna de Conclusiones de cada criterio |
 
 <div style="page-break-after: always;"></div>
 
@@ -207,6 +209,15 @@
          - [5.3.2.6. Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
          - [5.3.2.7. Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
          - [5.3.2.8. Kanban Board](#5328-kanban-board)
+      - [5.3.3. Sprint 3](#533-sprint-3)
+         - [5.3.3.1. Sprint Backlog 3](#5331-sprint-backlog-3)
+         - [5.3.3.2. Development Evidence for Sprint Review](#5332-development-evidence-for-sprint-review)
+         - [5.3.3.3. Testing Suite Evidence for Sprint Review](#5333-testing-suite-evidence-for-sprint-review)
+         - [5.3.3.4. Execution Evidence for Sprint Review](#5334-execution-evidence-for-sprint-review)
+         - [5.3.3.5. Microservices Documentation Evidence for Sprint Review](#5335-microservices-documentation-evidence-for-sprint-review)
+         - [5.3.3.6. Software Deployment Evidence for Sprint Review](#5336-software-deployment-evidence-for-sprint-review)
+         - [5.3.3.7. Team Collaboration Insights during Sprint](#5337-team-collaboration-insights-during-sprint)
+         - [5.3.3.8. Kanban Board](#5338-kanban-board)
    - [5.4. Microservices Deployment](#54-microservices-deployment)
       - [5.4.0. Opciones de Deployment Evaluadas](#540-opciones-de-deployment-evaluadas)
       - [5.4.1. Cloud Architecture Diagram](#541-cloud-architecture-diagram)
@@ -236,10 +247,10 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
     <tr>
       <td rowspan="3"><strong>Criterio 1: ABET-EAC - Student Outcome 3<br><br>Capacidad para comunicar efectivamente con una amplia gama de audiencias.</strong></td>
       <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Redacté la descripción de la startup Thropic y el producto Talki (sección 1.1.1), definí la propuesta de nombre del producto (1.2.1) y elaboré los segmentos objetivo con sus aspectos demográficos, geográficos y psicográficos (1.3), comunicando de forma clara el problema y la propuesta de valor a distintas audiencias.<br><br><b>AV2:</b> Redacté la sección 4.3 ADD Iterations con dos iteraciones completas del método Attribute-Driven Design (Núcleo de Sesión y Pipeline de Análisis Asincrónico; Identidad, Seguridad, Engagement y Observabilidad), comunicando el proceso iterativo mediante un Architectural Design Backlog trazable a los drivers, diagramas C4 de Nivel 3, diagramas UML de secuencia, una Software Element View y un Decision Log (DD-01 a DD-18), adaptando el formato a audiencias técnicas y académicas.<br><br><b>TP1:</b> Comuniqué la alineación entre la documentación arquitectónica y la implementación del backend en la sección 5.1.4 (refactorizaciones RF-01 a RF-05) y consolidé el Registro de Versiones (2.20 a 2.31) para dar trazabilidad temporal a las correcciones de coherencia. Redacté las adiciones de los PR #29 y #30 que cierran piezas operativas del informe: 5.4.0 (Opciones de Deployment), 5.4.3 (Logs y Monitoreo), 5.2.5 (SonarCloud) y la reescritura por servicio de 4.1.5 con trece diagramas Mermaid y los endpoints OpenAPI/REST integrados en 5.3.2.5.<br><br><b>AV3:</b> Comuniqué el cierre del Avance 3 redactando las subsecciones de evidencia del Sprint Review del Sprint 2 (5.3.2.4 a 5.3.2.8): las ocho URLs de Swagger UI en producción verificadas con HTTP 200, las capturas de la interacción real vía Postman contra Railway, el panel de despliegue y el Kanban Board de cierre. Reestructuré el Capítulo V para alinear su numeración con el statement del curso y mantuve el Registro de Versiones (2.34 a 2.41), comunicando al docente la trazabilidad completa del despliegue cloud.</td>
-      <td rowspan="3"><b>AV1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.<br><br><b>AV2:</b> El equipo comunicó de manera efectiva el diseño arquitectónico de Talki en el Capítulo IV combinando narrativa técnica, diagramas C4 (contexto, contenedores y componentes), diagramas entidad-relación, tablas de drivers con identificadores trazables y matrices de tácticas por atributo de calidad, adaptando el formato a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> El equipo comunicó la transición del diseño arquitectónico (Capítulo IV) a la implementación operativa (Capítulo V) mediante tablas de pruebas unitarias por servicio (5.1.1), tablas de patrones aplicados con referencia al código real (5.1.2), tabla de mono-repos con asignación de puertos por microservicio (5.2.2), descripción del despliegue cloud por proveedor (5.4) y un Registro de Versiones que documenta cronológicamente las decisiones de alineamiento, garantizando que cualquier afirmación del informe se pueda verificar contra el código publicado en la organización GitHub del proyecto.<br><br><b>AV3:</b> El equipo comunicó de forma efectiva el cierre del despliegue cloud (Avance 3) con evidencia verificable y reproducible: las ocho URLs productivas de Swagger UI con HTTP 200, las capturas de la interacción real vía Postman contra Railway, el panel de despliegue con los servicios Online y el Kanban Board de cierre, sostenido todo por un Registro de Versiones que permite a audiencias técnicas y académicas verificar cada afirmación contra el producto en ejecución.</td>
+      <td rowspan="3"><b>AV1:</b> El equipo logró estructurar y comunicar de manera efectiva la propuesta de valor de Talki a través de los capítulos I, II y III del informe. Cada integrante contribuyó a transmitir el problema, la solución y los requerimientos con claridad para audiencias académicas y técnicas, empleando formatos visuales, narrativos y tabulares adecuados a cada sección.<br><br><b>AV2:</b> El equipo comunicó de manera efectiva el diseño arquitectónico de Talki en el Capítulo IV combinando narrativa técnica, diagramas C4 (contexto, contenedores y componentes), diagramas entidad-relación, tablas de drivers con identificadores trazables y matrices de tácticas por atributo de calidad, adaptando el formato a audiencias técnicas del equipo de desarrollo y a evaluadores académicos del curso.<br><br><b>TP1:</b> El equipo comunicó la transición del diseño arquitectónico (Capítulo IV) a la implementación operativa (Capítulo V) mediante tablas de pruebas unitarias por servicio (5.1.1), tablas de patrones aplicados con referencia al código real (5.1.2), tabla de mono-repos con asignación de puertos por microservicio (5.2.2), descripción del despliegue cloud por proveedor (5.4) y un Registro de Versiones que documenta cronológicamente las decisiones de alineamiento, garantizando que cualquier afirmación del informe se pueda verificar contra el código publicado en la organización GitHub del proyecto.<br><br><b>AV3:</b> El equipo comunicó de forma efectiva el cierre del despliegue cloud (Avance 3) con evidencia verificable y reproducible: las ocho URLs productivas de Swagger UI con HTTP 200, las capturas de la interacción real vía Postman contra Railway, el panel de despliegue con los servicios Online y el Kanban Board de cierre, sostenido todo por un Registro de Versiones que permite a audiencias técnicas y académicas verificar cada afirmación contra el producto en ejecución.<br><br><b>AV4:</b> El equipo comunicó de forma efectiva el cierre de la integración del cliente web (Avance 4) mediante la sección 5.3.3 del informe: el Sprint Backlog 3 trazable a las User Stories reales del Product Backlog, la evidencia de desarrollo del repositorio `talki-frontend`, la verificación extremo a extremo del flujo contra las APIs productivas y la traza vista→servicio→endpoint, sostenido por un Registro de Versiones que permite a audiencias técnicas y académicas verificar cada afirmación contra el cliente web y el backend en ejecución.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.<br><br><b>TP1:</b> Redacté las secciones 5.1.1 a 5.2.4 del Capítulo V comunicando la operativa de implementación del backend mediante tablas de niveles de pruebas (Nivel 1 unitarias, Nivel 2 integración con Testcontainers, Nivel 3 BDD con Cucumber, Nivel 4 contract testing con Pact), tablas de patrones de framework Spring por capa hexagonal, descripción del toolchain del equipo con veintiocho herramientas seleccionadas (incluyendo SonarCloud sumada en TP1) y catorce convenciones de estilo de código por lenguaje, adaptando el formato a evaluadores académicos del curso y al equipo de desarrollo que toma las decisiones operativas día a día.<br><br><b>AV3:</b> Documenté la planificación de la integración del frontend Angular contra el backend desplegado, comunicando al equipo los contratos REST a consumir (endpoints OpenAPI verificados en 5.3.2.4 y 5.3.2.5) y el manejo del JWT emitido por `identity-service`; la implementación de las vistas se reprograma al Sprint 3 al depender de la plataforma cloud recién desplegada.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Elaboré los artefactos de especificación de requerimientos del Capítulo III (To-Be Scenario Mapping, User Stories con criterios de aceptación, Impact Map y Product Backlog priorizado), comunicando las necesidades del usuario y los requerimientos del sistema de forma estructurada y comprensible para audiencias técnicas y de negocio.<br><br><b>AV2:</b> Redacté los Architectural Drivers del Capítulo IV (sección 4.2): Design Purpose, Primary User Stories, Quality Attribute Scenarios, Constraints y Architectural Concerns, comunicando las decisiones de diseño y los criterios de calidad de forma trazable para audiencias técnicas del equipo y evaluadores académicos.<br><br><b>TP1:</b> Redacté las secciones 5.1.1 a 5.2.4 del Capítulo V comunicando la operativa de implementación del backend mediante tablas de niveles de pruebas (Nivel 1 unitarias, Nivel 2 integración con Testcontainers, Nivel 3 BDD con Cucumber, Nivel 4 contract testing con Pact), tablas de patrones de framework Spring por capa hexagonal, descripción del toolchain del equipo con veintiocho herramientas seleccionadas (incluyendo SonarCloud sumada en TP1) y catorce convenciones de estilo de código por lenguaje, adaptando el formato a evaluadores académicos del curso y al equipo de desarrollo que toma las decisiones operativas día a día.<br><br><b>AV3:</b> Documenté la planificación de la integración del frontend Next.js contra el backend desplegado, comunicando al equipo los contratos REST a consumir (endpoints OpenAPI verificados en 5.3.2.4 y 5.3.2.5) y el manejo del JWT emitido por `identity-service`; la implementación de las vistas se reprograma al Sprint 3 al depender de la plataforma cloud recién desplegada.<br><br><b>AV4:</b> Comuniqué la integración del cliente web con el backend productivo redactando la sección 5.3.3 (Sprint 3) del informe: el Sprint Backlog 3 con su tabla de work-items trazable a las User Stories reales del Product Backlog (sección 3.2), la Development Evidence del repositorio `talki-frontend`, la Execution Evidence con el flujo extremo a extremo verificado contra Railway y la traza vista→servicio→endpoint por microservicio, adaptando la evidencia a audiencias técnicas y académicas. Documenté además la arquitectura **BFF (Backend-for-Frontend)** y el manejo del JWT en cookie `httpOnly` como decisiones comunicables y reproducibles, y mantuve el Registro de Versiones (2.44) para dar trazabilidad al avance del cliente web.</td>
     </tr>
     <tr>
       <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Diseñé y ejecuté entrevistas con usuarios de ambos segmentos objetivo (sección 2.2) y desarrollé los artefactos de Needfinding (User Personas, User Task Matrix, Empathy Maps y As-is Scenario Mapping, sección 2.3), comunicando visualmente los hallazgos de investigación de usuario para informar el diseño de la solución.<br><br><b>AV2:</b> Redacté las secciones 4.1.1 a 4.1.7 del Capítulo IV, comunicando las decisiones de diseño arquitectónico mediante narrativa técnica estructurada, diagramas C4 de contexto, contenedores y componentes, un Context Map DDD, el diagrama de clases consolidado de los cinco bounded contexts con atributos y métodos representativos, el diagrama entidad-relación de los esquemas de base de datos por servicio, y tablas de patrones de diseño y tácticas arquitectónicas alineadas con los drivers del sistema, adaptando el nivel de abstracción a audiencias técnicas del equipo de desarrollo y evaluadores académicos.<br><br><b>TP1:</b> Documenté la implementación del `identity-service` y del `notification-service` mediante capturas de tests JUnit5+Mockito (`AuthServiceTest`, `JwtTokenProviderTest`, `ScoreNotificationConsumerTest`, `AchievementNotificationConsumerTest`) referenciadas en la tabla 5.1.1 del informe, comunicando al equipo y al docente la evidencia verificable del cumplimiento de la cobertura prometida (≥ 75 %) para los componentes de seguridad y notificación; coordiné con el equipo la asignación de capturas de pantalla del IDE para la sección 5.1.2 (Pattern Based Backend Application) siguiendo una matriz que asigna cada imagen al integrante dueño del repositorio correspondiente.<br><br><b>AV3:</b> Comuniqué la evidencia central del despliegue (5.3.2.6) mediante el panel de Railway con los ocho microservicios Online y sus cinco bases PostgreSQL, la tabla de pasos de despliegue (T01–T06) y el fragmento del `Dockerfile` multi-stage; redacté el Sprint Backlog 2 y el Development Evidence iniciales (5.3.2.1–5.3.2.3), comunicando la planificación de la iteración y los primeros commits de despliegue a audiencias técnicas y académicas.</td>
@@ -247,13 +258,13 @@ En el siguiente cuadro se describe las acciones realizadas y enunciados de concl
     <tr>
       <td rowspan="3"><strong>Criterio 2: ABET-EAC - Student Outcome 5<br><br>Capacidad para identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias de la ingeniería, ciencias básicas y matemáticas.</strong></td>
       <td><strong>Oroncoy Almeyda, Alejandro Daniel</strong><br><b>AV1:</b> Apliqué el framework 5W+2H para analizar y formular el problema de comunicación oral en universitarios peruanos (sección 1.2.2), identificando causas, actores, contexto e impacto cuantificado con citas académicas. Realicé el análisis competitivo comparando Talki con ELSA Speak, Speeko y Orai mediante matriz SWOT (sección 2.1), derivando estrategias de diferenciación basadas en evidencia (2.1.2).<br><br><b>AV2:</b> Apliqué el método Attribute-Driven Design (Wojcik et al., SEI 2006) para resolver el diseño iterativo e incremental de la arquitectura (sección 4.3), formulando dos iteraciones que descomponen el sistema a partir de drivers priorizados por matriz Importance × Difficulty, seleccionando conceptos de diseño (Event-Driven Architecture, Saga por coreografía, Strategy + Factory, Circuit Breaker, JWT RSA-256 con JWKS) frente a alternativas descartadas con justificación trazable, e instanciando 25 elementos arquitectónicos y 18 decisiones de diseño trazables a User Stories, QAS, Constraints y Concerns.<br><br><b>TP1:</b> Resolví la divergencia entre el diseño documentado y la implementación inicial refactorizando los cuatro mono-repos: eliminé el `transcription-service` (Whisper) al proveer Gemini Live el transcript nativo, reconecté `filler-detection-service` al evento `session.live.finalized`, propagué las métricas acústicas end-to-end hasta `ScoreCalculator` (eliminando los magic numbers) e implementé idempotencia at-least-once sobre la unique constraint de `session_id`. Apliqué DDD, CQRS y Anti-Corruption Layer, consolidé 128 unit tests (JUnit 5 + Mockito) e incorporé `springdoc-openapi 2.3.0` en los ocho microservicios mediante cuatro PRs, exponiendo `/v3/api-docs` y `/swagger-ui.html`.<br><br><b>AV3:</b> Resolví el problema de coherencia técnica del informe tras el despliegue corrigiendo la colisión de puertos en 5.2.2 (filler-detection 8087, progress 8089, gamification 8090) y alineando el estado real de ADB-10/ADB-11; e incorporé `spring-boot-starter-actuator` en los ocho microservicios (PRs talki-user-services#4, talki-session-services#5, talki-analysis-services#6, talki-engagement-services#4) para exponer `/actuator/health`, verificando la observabilidad en producción con respuesta `{"status":"UP"}` HTTP 200 en las ocho URLs de Railway.</td>
-      <td rowspan="3"><b>AV1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.<br><br><b>AV2:</b> El equipo aplicó principios de ingeniería de software para resolver el problema del diseño arquitectónico de Talki, descomponiendo la solución en bounded contexts mediante DDD, formulando drivers arquitectónicos medibles (Quality Attribute Scenarios, Constraints y Concerns) y seleccionando estilos, patrones y tácticas justificados a partir de los requerimientos del AV1, garantizando trazabilidad entre cada decisión técnica y su problema de origen.<br><br><b>TP1:</b> El equipo materializó la arquitectura del Capítulo IV en código Java + Spring Boot 3 funcionando: ocho microservicios desplegables en Railway con bases PostgreSQL gestionadas por Supabase, un bus de eventos RabbitMQ con exchange topic `talki.events` y Dead Letter Exchange `talki.dlx`, una librería compartida `talki-commons` con los contratos de eventos AMQP versionados, y una suite de pruebas unitarias verificable con `mvn test` (128/128 verdes) y documentación OpenAPI 3 publicada por cada microservicio mediante springdoc. El equipo aplicó principios reales de ingeniería de software (DDD, CQRS, ACL, Saga de coreografía, Outbox Pattern, Circuit Breaker, idempotencia at-least-once con unique constraint + manejo de excepciones de integridad) para resolver problemas no triviales como la propagación de métricas acústicas end-to-end sin pérdida de fidelidad, el aislamiento del modelo upstream del JWT mediante un ACL, y el cumplimiento *by-design* de la Ley 29733 al evitar toda persistencia del audio biométrico.<br><br><b>AV3:</b> El equipo resolvió el problema de ingeniería de llevar el backend a un entorno cloud-native productivo: contenerizó los ocho microservicios, externalizó la configuración en un perfil `prod` con PostgreSQL *database-per-service*, parametrizó puerto y mensajería por variables de entorno y verificó el resultado con health checks de Actuator y observabilidad en producción, dejando la plataforma backend desplegada y Online en Railway como base verificable para la integración del frontend en el Sprint 3.</td>
+      <td rowspan="3"><b>AV1:</b> El equipo identificó y formuló el problema central de Talki mediante herramientas de ingeniería de software (Lean UX, 5W+2H, análisis competitivo, investigación de usuarios), estableciendo las bases para el diseño de una solución técnica fundamentada en evidencia y orientada al usuario.<br><br><b>AV2:</b> El equipo aplicó principios de ingeniería de software para resolver el problema del diseño arquitectónico de Talki, descomponiendo la solución en bounded contexts mediante DDD, formulando drivers arquitectónicos medibles (Quality Attribute Scenarios, Constraints y Concerns) y seleccionando estilos, patrones y tácticas justificados a partir de los requerimientos del AV1, garantizando trazabilidad entre cada decisión técnica y su problema de origen.<br><br><b>TP1:</b> El equipo materializó la arquitectura del Capítulo IV en código Java + Spring Boot 3 funcionando: ocho microservicios desplegables en Railway con bases PostgreSQL gestionadas por Supabase, un bus de eventos RabbitMQ con exchange topic `talki.events` y Dead Letter Exchange `talki.dlx`, una librería compartida `talki-commons` con los contratos de eventos AMQP versionados, y una suite de pruebas unitarias verificable con `mvn test` (128/128 verdes) y documentación OpenAPI 3 publicada por cada microservicio mediante springdoc. El equipo aplicó principios reales de ingeniería de software (DDD, CQRS, ACL, Saga de coreografía, Outbox Pattern, Circuit Breaker, idempotencia at-least-once con unique constraint + manejo de excepciones de integridad) para resolver problemas no triviales como la propagación de métricas acústicas end-to-end sin pérdida de fidelidad, el aislamiento del modelo upstream del JWT mediante un ACL, y el cumplimiento *by-design* de la Ley 29733 al evitar toda persistencia del audio biométrico.<br><br><b>AV3:</b> El equipo resolvió el problema de ingeniería de llevar el backend a un entorno cloud-native productivo: contenerizó los ocho microservicios, externalizó la configuración en un perfil `prod` con PostgreSQL *database-per-service*, parametrizó puerto y mensajería por variables de entorno y verificó el resultado con health checks de Actuator y observabilidad en producción, dejando la plataforma backend desplegada y Online en Railway como base verificable para la integración del frontend en el Sprint 3.<br><br><b>AV4:</b> El equipo resolvió el problema de ingeniería de integrar un cliente web con un backend de microservicios distribuido y desplegado: implementó una arquitectura **BFF** que resuelve el CORS y custodia el JWT en una cookie `httpOnly`, consumió los contratos OpenAPI verificados de los ocho servicios productivos mediante un cliente HTTP tipado y validó el flujo extremo a extremo contra Railway, identificando y formulando los problemas de integración remanentes (broker RabbitMQ no compartido entre servicios desplegados y WebSocket de Gemini Live no expuesto) como trabajo de infraestructura para el siguiente Sprint.</td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.<br><br><b>AV2:</b> Formulé los drivers arquitectónicos de Talki (sección 4.2) traduciendo los requerimientos del Capítulo III en 12 Quality Attribute Scenarios medibles, 14 Constraints y 11 Architectural Concerns con identificadores trazables, aplicando principios de ingeniería de software para sustentar las decisiones de diseño en evidencia y criterios verificables.<br><br><b>TP1:</b> Resolví el problema de orquestar la sesión en tiempo real con Gemini Live implementando el `live-coach-service` con el patrón Strategy: definí la interfaz `SessionModeStrategy` y sus cuatro implementaciones (`QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy`) instanciadas por `SessionModeStrategyFactory` según el modo recibido, permitiendo agregar nuevos tipos de sesión sin modificar el orquestador (cumplimiento de QAS-07 y del Open/Closed Principle). Implementé el `session-service` aplicando arquitectura hexagonal con paquetes `domain/`, `application/` e `infrastructure/`, el agregado `Session` con transiciones de estado verificables (`DRAFT → RECORDING → PROCESSING → COMPLETED / ANALYSIS_PENDING`), la entidad `Feedback` con relación `@OneToMany` intra-BC y la separación CQRS de comandos y queries. Resolví además el problema de configuración del entorno cloud sobre Railway documentando los siete repositorios del proyecto en la sección 5.2.2 con sus puertos asignados (8080–8091, 8888) y diseñando el `docker-compose.dev.yml` por mono-repo para que cualquier integrante pueda levantar localmente el stack completo sin dependencias compartidas.<br><br><b>AV3:</b> Diseñé la estrategia de consumo del frontend Angular contra el backend desplegado, formulando la integración de las vistas con los endpoints REST productivos verificados (5.3.2.4–5.3.2.5) y el manejo del JWT de `identity-service`; la implementación de la vista de sesión en vivo (US12, T07) quedó reprogramada al Sprint 3 al depender de la plataforma cloud recién desplegada.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong><br><b>AV1:</b> Formulé los requerimientos funcionales de Talki mediante User Stories con criterios de aceptación y los organicé en un Product Backlog priorizado (Capítulo III), aplicando principios de ingeniería de requerimientos para traducir necesidades del usuario en especificaciones técnicas accionables.<br><br><b>AV2:</b> Formulé los drivers arquitectónicos de Talki (sección 4.2) traduciendo los requerimientos del Capítulo III en 12 Quality Attribute Scenarios medibles, 14 Constraints y 11 Architectural Concerns con identificadores trazables, aplicando principios de ingeniería de software para sustentar las decisiones de diseño en evidencia y criterios verificables.<br><br><b>TP1:</b> Resolví el problema de orquestar la sesión en tiempo real con Gemini Live implementando el `live-coach-service` con el patrón Strategy: definí la interfaz `SessionModeStrategy` y sus cuatro implementaciones (`QuickPracticeStrategy`, `InterviewStrategy`, `ThesisDefenseStrategy`, `ScenarioStrategy`) instanciadas por `SessionModeStrategyFactory` según el modo recibido, permitiendo agregar nuevos tipos de sesión sin modificar el orquestador (cumplimiento de QAS-07 y del Open/Closed Principle). Implementé el `session-service` aplicando arquitectura hexagonal con paquetes `domain/`, `application/` e `infrastructure/`, el agregado `Session` con transiciones de estado verificables (`DRAFT → RECORDING → PROCESSING → COMPLETED / ANALYSIS_PENDING`), la entidad `Feedback` con relación `@OneToMany` intra-BC y la separación CQRS de comandos y queries. Resolví además el problema de configuración del entorno cloud sobre Railway documentando los siete repositorios del proyecto en la sección 5.2.2 con sus puertos asignados (8080–8091, 8888) y diseñando el `docker-compose.dev.yml` por mono-repo para que cualquier integrante pueda levantar localmente el stack completo sin dependencias compartidas.<br><br><b>AV3:</b> Diseñé la estrategia de consumo del frontend Next.js contra el backend desplegado, formulando la integración de las vistas con los endpoints REST productivos verificados (5.3.2.4–5.3.2.5) y el manejo del JWT de `identity-service`; la implementación de la vista de sesión en vivo (US12, T07) quedó reprogramada al Sprint 3 al depender de la plataforma cloud recién desplegada.<br><br><b>AV4:</b> Resolví el problema de integrar el cliente web con los ocho microservicios desplegados implementando `talki-frontend` (Next.js 16) con una capa **BFF** mediante *Route Handlers*: un proxy `/api/gateway` que resuelve el **CORS** ausente en el backend y endpoints `/api/auth` que custodian el **JWT en una cookie `httpOnly`** (fuera del alcance del JavaScript del navegador), más un cliente HTTP tipado con los DTOs por servicio que decodifica el `userId` del JWT. Verifiqué el flujo extremo a extremo contra producción (registro → login → crear sesión → dashboard) e **identifiqué y formulé dos problemas de integración** pendientes para el equipo de backend: la cadena de eventos asíncrona no se refleja en producción (los servicios desplegados no comparten un único broker RabbitMQ) y el canal WebSocket de Gemini Live no está expuesto, planteando ambos como requisitos de infraestructura verificables.</td>
     </tr>
     <tr>
-      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.<br><br><b>AV2:</b> Resolví el problema del diseño conceptual de la arquitectura de Talki aplicando principios de Domain-Driven Design: descompuse el sistema en cinco bounded contexts (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics, Notification), definí sus mecanismos de integración mediante un Context Map, diseñé el modelo de clases por contexto incorporando los patrones Strategy, Factory Method, Repository y Observer justificados por los drivers del sistema, y modelé el esquema de base de datos relacional con decisiones de modelado fundamentadas en los requerimientos de consistencia transaccional y autonomía de cada servicio (secciones 4.1.1 a 4.1.7).<br><br><b>TP1:</b> Resolví el problema del ciclo de vida seguro del usuario implementando el `identity-service` con JWT RSA-256 asimétrico (par de claves pública/privada con JWKS público en `/.well-known/jwks.json`), bcrypt cost ≥ 12 para hashing de contraseñas, refresh token rotation almacenado de forma hasheada en BD y emisión de eventos `user.registered` consumidos por el `notification-service` para enviar el email de bienvenida. Implementé además los consumidores idempotentes del `notification-service` (`ScoreNotificationConsumer` para envío de push cuando el score está disponible y `AchievementNotificationConsumer` para logros desbloqueados), garantizando que la cadena de eventos del bus se cierre en el cliente Angular mediante un WebSocket persistente. Apliqué principios de Test-Driven Development sobre la lógica de seguridad y los consumidores construyendo tests unitarios con JUnit 5 + Mockito que verifican casos límite críticos (tokens JWT forjados por otro secret, tokens expirados, tokens vacíos, sub faltante en claims, descripciones de logro con caracteres especiales).<br><br><b>AV3:</b> Resolví el problema central del Sprint 2 —llevar los ocho microservicios a un entorno cloud productivo— aplicando contenerización multi-stage (build Maven que ejecuta los 128 unit tests + runtime `eclipse-temurin:17-jre-alpine`), un perfil `prod` con PostgreSQL gestionado *database-per-service*, binding dinámico del puerto vía la variable `PORT` de Railway y la estandarización de credenciales y virtual-host de RabbitMQ sobre el exchange `talki.events`, resolviendo de forma cohesiva la cadena de incidencias de un primer despliegue cloud hasta dejar los ocho servicios Online.</td>
+      <td><strong>Tumi Oliden, Manuel Ignacio</strong><br><b>AV1:</b> Apliqué técnicas de investigación cualitativa (entrevistas semi-estructuradas, empathy mapping, as-is scenario mapping) para identificar y analizar los problemas de comunicación oral de los dos segmentos objetivo (secciones 2.2 y 2.3), generando insights que fundamentan las decisiones de diseño de Talki.<br><br><b>AV2:</b> Resolví el problema del diseño conceptual de la arquitectura de Talki aplicando principios de Domain-Driven Design: descompuse el sistema en cinco bounded contexts (Identity & Access, Practice Session, Speech Analysis, Progress & Metrics, Notification), definí sus mecanismos de integración mediante un Context Map, diseñé el modelo de clases por contexto incorporando los patrones Strategy, Factory Method, Repository y Observer justificados por los drivers del sistema, y modelé el esquema de base de datos relacional con decisiones de modelado fundamentadas en los requerimientos de consistencia transaccional y autonomía de cada servicio (secciones 4.1.1 a 4.1.7).<br><br><b>TP1:</b> Resolví el problema del ciclo de vida seguro del usuario implementando el `identity-service` con JWT RSA-256 asimétrico (par de claves pública/privada con JWKS público en `/.well-known/jwks.json`), bcrypt cost ≥ 12 para hashing de contraseñas, refresh token rotation almacenado de forma hasheada en BD y emisión de eventos `user.registered` consumidos por el `notification-service` para enviar el email de bienvenida. Implementé además los consumidores idempotentes del `notification-service` (`ScoreNotificationConsumer` para envío de push cuando el score está disponible y `AchievementNotificationConsumer` para logros desbloqueados), garantizando que la cadena de eventos del bus se cierre en el cliente web mediante un WebSocket persistente. Apliqué principios de Test-Driven Development sobre la lógica de seguridad y los consumidores construyendo tests unitarios con JUnit 5 + Mockito que verifican casos límite críticos (tokens JWT forjados por otro secret, tokens expirados, tokens vacíos, sub faltante en claims, descripciones de logro con caracteres especiales).<br><br><b>AV3:</b> Resolví el problema central del Sprint 2 —llevar los ocho microservicios a un entorno cloud productivo— aplicando contenerización multi-stage (build Maven que ejecuta los 128 unit tests + runtime `eclipse-temurin:17-jre-alpine`), un perfil `prod` con PostgreSQL gestionado *database-per-service*, binding dinámico del puerto vía la variable `PORT` de Railway y la estandarización de credenciales y virtual-host de RabbitMQ sobre el exchange `talki.events`, resolviendo de forma cohesiva la cadena de incidencias de un primer despliegue cloud hasta dejar los ocho servicios Online.</td>
     </tr>
   </tbody>
 </table>
@@ -289,7 +300,7 @@ Talki es la solución principal de Thropic: una aplicación web que utiliza IA p
       <td><img src="assets/images/photos/alejandro-oroncoy.jpg" alt="Alejandro Oroncoy" width="200"></td>
     </tr>
     <tr>
-      <td><strong>Rivera Sosa, Eduardo Gael</strong> (U202312222)<br>Mi nombre es Gael Rivera, tengo 20 años y soy estudiante de Ingeniería de Software en el quinto ciclo. Me caracterizo por ser responsable y orientado a resultados, con habilidades de liderazgo que facilitan la comunicación y el trabajo colaborativo. Tengo conocimientos en desarrollo frontend con Angular y experiencia en modelado de bases de datos relacionales. Siempre estoy dispuesto a abordar desafíos y encontrar soluciones en equipo, y en Thropic asumo la especificación de requerimientos como base técnica del producto.</td>
+      <td><strong>Rivera Sosa, Eduardo Gael</strong> (U202312222)<br>Mi nombre es Gael Rivera, tengo 20 años y soy estudiante de Ingeniería de Software en el quinto ciclo. Me caracterizo por ser responsable y orientado a resultados, con habilidades de liderazgo que facilitan la comunicación y el trabajo colaborativo. Tengo conocimientos en desarrollo frontend con React y Next.js y experiencia en modelado de bases de datos relacionales. Siempre estoy dispuesto a abordar desafíos y encontrar soluciones en equipo, y en Thropic asumo la especificación de requerimientos como base técnica del producto.</td>
       <td><img src="assets/images/photos/eduardo-rivera.jpg" alt="Eduardo Rivera" width="200"></td>
     </tr>
     <tr>
@@ -1636,7 +1647,7 @@ Cada User Story se materializa como un *draft issue* del proyecto con título `[
 | **Review** | Pull Request abierto contra `develop` esperando revisión del equipo o validación end-to-end de la pirámide de pruebas (5.1.1). | Aprobación de la revisión y merge. |
 | **Done** | Merge a `develop` confirmado, suite de pruebas verde y verificación de los criterios de aceptación Given-When-Then de la sección 3.2. | — |
 
-La distribución actual del tablero refleja el estado real del producto al cierre del TP1 (12 de mayo de 2026): **4 User Stories en Done** (autenticación completa del `identity-service` con 15 unit tests verdes, incluyendo logout con revocación de refresh token), **4 en Review** (componentes backend del `session-service` y campos de personalización del `AppUser` listos para validación con el frontend), **10 en In Progress** (historias con backend operativo en `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service` pero pendientes de integración con el cliente Angular) y **10 en Todo** (landing page de Talki, exportación que depende del `media-service` aún no implementado, y recomendaciones que dependen del `scenario-catalog-service` pendiente). La tabla siguiente lista el backlog priorizado por MoSCoW; las prioridades y order numbers son los mismos que se reflejan en el tablero público.
+La distribución actual del tablero refleja el estado real del producto al cierre del TP1 (12 de mayo de 2026): **4 User Stories en Done** (autenticación completa del `identity-service` con 15 unit tests verdes, incluyendo logout con revocación de refresh token), **4 en Review** (componentes backend del `session-service` y campos de personalización del `AppUser` listos para validación con el frontend), **10 en In Progress** (historias con backend operativo en `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service` pero pendientes de integración con el cliente web) y **10 en Todo** (landing page de Talki, exportación que depende del `media-service` aún no implementado, y recomendaciones que dependen del `scenario-catalog-service` pendiente). La tabla siguiente lista el backlog priorizado por MoSCoW; las prioridades y order numbers son los mismos que se reflejan en el tablero público.
 
 <table>
   <thead>
@@ -1891,7 +1902,7 @@ Los siguientes principios guían todas las decisiones de diseño arquitectónico
 Cada servicio de Talki encapsula una única capacidad de negocio (autenticación, gestión de sesiones, transcripción, análisis de IA, progreso) y no comparte base de datos con otros servicios. Este principio minimiza el acoplamiento entre equipos y permite evolucionar cada capacidad de forma independiente sin afectar al resto del sistema.
 
 **P2 – Diseño orientado a la API (API-First).**
-Todo comportamiento del sistema se expone exclusivamente a través de contratos REST definidos antes de la implementación. El frontend Angular y cualquier cliente externo consumen única y exclusivamente las interfaces publicadas por el API Gateway, lo que garantiza que los cambios internos de un servicio no rompan a sus consumidores mientras el contrato se mantenga estable.
+Todo comportamiento del sistema se expone exclusivamente a través de contratos REST definidos antes de la implementación. El frontend Next.js y cualquier cliente externo consumen única y exclusivamente las interfaces publicadas por el API Gateway, lo que garantiza que los cambios internos de un servicio no rompan a sus consumidores mientras el contrato se mantenga estable.
 
 **P3 – Servicios sin estado (Stateless Services).**
 Los servicios del backend no almacenan estado de sesión de usuario en memoria. La identidad y el contexto de cada solicitud se transportan en el token JWT incluido en el encabezado HTTP. Este principio permite escalar horizontalmente cualquier servicio sin necesidad de sesiones pegajosas (sticky sessions) y simplifica la recuperación ante fallos.
@@ -1930,7 +1941,7 @@ El análisis post-sesión es una operación que no puede bloquear la respuesta a
 Un API Gateway centralizado actúa como punto de entrada único para todos los clientes del sistema. Responsabilidades delegadas al gateway: autenticación y validación de JWT, enrutamiento hacia microservicios internos, limitación de tasa (rate limiting), logging de accesos y transformación de respuestas. Este patrón evita que los clientes necesiten conocer la topología interna de los servicios y permite aplicar cross-cutting concerns en un solo lugar.
 
 **Backend for Frontend (BFF).**
-Dado que Talki opera actualmente como aplicación web (Angular), el API Gateway actúa también como BFF adaptando las respuestas de los microservicios al formato específico que la interfaz de usuario necesita, evitando múltiples roundtrips y reduciendo la complejidad en el cliente.
+Dado que Talki opera actualmente como aplicación web (Next.js), el API Gateway actúa también como BFF adaptando las respuestas de los microservicios al formato específico que la interfaz de usuario necesita, evitando múltiples roundtrips y reduciendo la complejidad en el cliente.
 
 **CQRS (Command Query Responsibility Segregation).**
 El `progress-service` separa los modelos de escritura (registro de métricas al finalizar una sesión) de los modelos de lectura (consulta de gráficos de progreso histórico). Las escrituras actualizan un almacén normalizado (PostgreSQL), mientras que las lecturas utilizan vistas materializadas optimizadas para las consultas de tendencias y comparaciones. Esta separación permite escalar las lecturas de forma independiente y evitar contención en escenarios donde un usuario consulta su historial mientras otro guarda una sesión nueva.
@@ -2364,7 +2375,7 @@ erDiagram
 
 ##### 8) `notification-service` — Notification
 
-Servicio **stateless consumer**: convierte eventos AMQP en notificaciones push al frontend Angular vía WebSocket. No persiste estado propio.
+Servicio **stateless consumer**: convierte eventos AMQP en notificaciones push al frontend Next.js vía WebSocket. No persiste estado propio.
 
 ```mermaid
 classDiagram
@@ -2384,7 +2395,7 @@ classDiagram
     AchievementNotificationConsumer --> NotificationPushService
 ```
 
-> _Database Diagram: **N/A**. El servicio no persiste estado; las notificaciones se entregan al cliente Angular vía WebSocket y, opcionalmente, vía proveedor de email externo (Resend/SendGrid)._
+> _Database Diagram: **N/A**. El servicio no persiste estado; las notificaciones se entregan al cliente web vía WebSocket y, opcionalmente, vía proveedor de email externo (Resend/SendGrid)._
 
 ---
 
@@ -2438,7 +2449,7 @@ Las tácticas arquitectónicas son decisiones de diseño concretas que permiten 
 |---|---|---|
 | **Procesamiento asíncrono** | Operaciones lentas fuera del path síncrono | El análisis de IA se ejecuta de forma asíncrona vía RabbitMQ. La respuesta al usuario en la acción "Finalizar sesión" es inmediata (< 500 ms); el feedback llega cuando el procesamiento termina. |
 | **Caché de datos frecuentes** | Almacenamiento en memoria de lecturas repetidas | Las métricas de progreso del usuario (consultadas en cada carga del dashboard) se cachean en Redis con TTL de 5 minutos, reduciendo la carga sobre la base de datos. |
-| **CDN para activos estáticos** | Distribución geográfica de la SPA | El bundle Angular se sirve desde un CDN (CloudFront / Cloudflare), reduciendo la latencia de carga inicial para usuarios en regiones fuera de Lima. |
+| **CDN para activos estáticos** | Distribución geográfica de la SPA | El bundle de Next.js se sirve desde un CDN (CloudFront / Cloudflare), reduciendo la latencia de carga inicial para usuarios en regiones fuera de Lima. |
 | **Conexiones persistentes (WebSocket)** | Comunicación push del servidor al cliente | El estado del análisis de IA se notifica al cliente mediante WebSocket desde el API Gateway, evitando el polling periódico y reduciendo el número de solicitudes HTTP. |
 | **Paginación en consultas de historial** | Limitar el volumen de datos por respuesta | Las consultas al `progress-service` para el historial de sesiones devuelven páginas de 20 elementos con cursor de paginación, evitando cargas completas de datos históricos. |
 
@@ -2706,7 +2717,7 @@ Los siguientes escenarios formalizan los atributos de calidad más críticos par
       <td>Usability (Onboarding del primer uso)</td>
       <td>Estudiante nuevo (User Persona 1, ciclo 1-5)</td>
       <td>Se registra y completa su primera sesión de práctica</td>
-      <td>Frontend Angular + flujo end-to-end</td>
+      <td>Frontend Next.js + flujo end-to-end</td>
       <td>Primer uso de la plataforma</td>
       <td>El sistema guía al usuario hasta recibir su primer feedback sin necesidad de soporte externo</td>
       <td>≥ 80% de los usuarios completan registro + sesión + lectura de feedback en ≤ 15 minutos durante las pruebas con usuarios reales.</td>
@@ -2739,7 +2750,7 @@ Las restricciones recogidas en esta sección no son negociables desde el diseño
     <tr>
       <td>C-02</td>
       <td>Stack tecnológico frontend</td>
-      <td>El cliente web debe construirse como SPA con <strong>Angular</strong>.</td>
+      <td>El cliente web debe construirse con <strong>Next.js</strong> (React).</td>
       <td>Restricción organizacional alineada con el currículum del curso y con la experiencia previa de los integrantes (perfil de Gael Rivera en Capítulo I).</td>
     </tr>
     <tr>
@@ -2940,7 +2951,7 @@ Antes de iniciar la descomposición ADD, el equipo aplica la lógica de QAW/QWA 
 |---|---|---|
 | Drivers funcionales | US09 Crear sesión, US12 práctica en vivo con IA, US14 finalizar sesión, US15 recibir feedback, US17 Voice Coach Score, US05-US08 gestión de cuenta | Son requisitos funcionales que fuerzan la descomposición del sistema en servicios concretos. Se eligieron por relevancia para el MVP y complejidad técnica. |
 | Drivers de atributos de calidad | QAS-01 latencia en vivo, QAS-02 respuesta al finalizar sesión, QAS-03 disponibilidad/degradación, QAS-05 seguridad, QAS-07 modificabilidad, QAS-09 escalabilidad, QAS-11 observabilidad | Representan los escenarios más críticos para que Talki sea usable y operable. Se priorizan por impacto en el usuario y riesgo técnico. |
-| Drivers de restricciones | C-01 Java 17 + Spring Boot 3, C-02 Angular, C-04 Docker, C-08 Supabase Storage, C-09 Ley 29733, C-13 API `/v1`, C-14 JWT + bcrypt | No se priorizan como funcionalidades, pero condicionan todas las decisiones arquitectónicas. |
+| Drivers de restricciones | C-01 Java 17 + Spring Boot 3, C-02 Next.js, C-04 Docker, C-08 Supabase Storage, C-09 Ley 29733, C-13 API `/v1`, C-14 JWT + bcrypt | No se priorizan como funcionalidades, pero condicionan todas las decisiones arquitectónicas. |
 | Architectural concerns | AC-02 desacoplamiento asincrónico, AC-06 dependencia de Gemini, AC-08 privacidad del audio, AC-09 calidad de transcripción, AC-11 trazabilidad de decisiones | Riesgos o preocupaciones que obligan a justificar decisiones como RabbitMQ, Circuit Breaker, no persistencia de audio y tracing distribuido. |
 
 La priorización inicial queda definida por la combinación **importancia para el negocio** y **dificultad técnica de implementación**:
@@ -2973,7 +2984,7 @@ La **Iteration 1** toma la vista de contexto de la Iteration 0 y hace *zoom* sob
 
 | ID | Decisión de Diseño | Estado | Driver(s) Relacionados |
 |---|---|---|---|
-| ADB-01 | Diseñar `live-coach-service` como proxy WebSocket bidireccional entre el cliente Angular y Gemini Live API, con cálculo en memoria de las métricas acústicas (WPM, silenceRatio, volumeRmsAvg) sobre los chunks de audio. El audio no se persiste (ver ADB-22). | Hecho | US12, QAS-01, AC-04, AC-09 |
+| ADB-01 | Diseñar `live-coach-service` como proxy WebSocket bidireccional entre el cliente web y Gemini Live API, con cálculo en memoria de las métricas acústicas (WPM, silenceRatio, volumeRmsAvg) sobre los chunks de audio. El audio no se persiste (ver ADB-22). | Hecho | US12, QAS-01, AC-04, AC-09 |
 | ADB-02 | Definir contrato `POST /v1/sessions` y `GET /v1/sessions/{id}` en `session-service` para crear y consultar sesiones con historial paginado. | Hecho | US09, US14, C-13 |
 | ADB-03 | Definir evento `session.live.finalized` en RabbitMQ; contrato: `event_id`, `event_type`, `occurred_at`, `trace_id`, `version`, `payload` (`session_id`, `user_id`, `mode`, `scenario_id`, `transcript_gemini`, `duration_seconds`, `academic_segment`, `words_per_minute`, `silence_ratio`, `volume_rms_avg`). | Hecho | US14, US15, AC-02 |
 | ADB-04 | Implementar `filler-detection-service` como consumidor directo de `session.live.finalized`: usa el campo `transcript_gemini` (ya generado por Gemini Live) para aplicar regex español (muletillas "este", "o sea", "eh", "básicamente") más modelo ONNX local; publica `fillers.analyzed`. | Hecho | US15, QAS-07, AC-09 |
@@ -3005,7 +3016,7 @@ La **Iteration 1** toma la vista de contexto de la Iteration 0 y hace *zoom* sob
 | | QAS-08 | Intercambiar proveedores de IA conversacional o LLM sin cambios de código. |
 | | QAS-09 | Bus de eventos sin degradación bajo carga nominal. |
 | Constraints | C-01 | Spring Boot 3 + Java 17. |
-| | C-02 | Angular 18 en el frontend. |
+| | C-02 | Next.js 16 (React) en el frontend. |
 | | C-04 | Docker + Docker Compose. |
 | | C-08 | Almacenamiento de objetos para materiales del usuario (audio no se persiste). |
 | | C-13 | API versionada bajo `/v1/`. |
@@ -3148,7 +3159,7 @@ flowchart TB
         GEMINI["Gemini Live API\n~600ms latencia"]
     end
 
-    Cliente["Cliente Angular"] -->|HTTPS / WSS| GW
+    Cliente["Cliente Web"] -->|HTTPS / WSS| GW
     GW --> SS
     GW --> LCS
     GW --> SC
@@ -3173,7 +3184,7 @@ flowchart TB
 ```mermaid
 sequenceDiagram
     autonumber
-    participant C as Cliente Angular
+    participant C as Cliente Web
     participant GW as API Gateway
     participant SS as session-service
     participant SC as scenario-catalog-service
@@ -3458,7 +3469,7 @@ sequenceDiagram
     participant GS as gamification-service
     participant PS as progress-service
     participant NS as notification-service
-    participant C as Cliente Angular
+    participant C as Cliente Web
 
     MQ->>GS: consume scoring.completed
     GS->>GS: actualizar streak (Redis)
@@ -3628,7 +3639,7 @@ Se definen contratos **Pact** entre consumidores y proveedores de API para detec
 
 | Consumidor | Proveedor | Contratos verificados |
 |---|---|---|
-| Angular SPA | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress`, `/v1/scores`, `/v1/gamification` |
+| Cliente web (Next.js) | API Gateway | Endpoints `/v1/sessions`, `/v1/auth`, `/v1/progress`, `/v1/scores`, `/v1/gamification` |
 | `filler-detection-service` | `live-coach-service` | Evento `session.live.finalized` con `transcript_gemini` (esquema AMQP) |
 | `scoring-service` | `filler-detection-service` | Evento `fillers.analyzed` (esquema AMQP) |
 | `progress-service` | `scoring-service` | Evento `scoring.completed` (esquema AMQP) |
@@ -3724,7 +3735,7 @@ live-coach-service         → publica session.live.finalized con transcript_gem
   gamification-service     → consume scoring.completed → evalúa streaks y logros,
                              publica achievement.unlocked (si aplica)
   notification-service     → consume scoring.completed y achievement.unlocked,
-                             envía push por WebSocket al cliente Angular
+                             envía push por WebSocket al cliente web
 ```
 
 Cada servicio es idempotente: reintenta el procesamiento del mismo evento hasta tres veces con backoff exponencial antes de enviarlo a la **Dead Letter Exchange (talki.dlx)** para inspección manual.
@@ -3814,7 +3825,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 **Refactorización.** Se introdujo el patrón **Saga por coreografía** sobre el exchange `talki.events` de RabbitMQ (documentado en 5.1.2). El `live-coach-service` calcula las métricas acústicas en memoria, publica `session.live.finalized` con el `transcript_gemini` ya generado por Gemini Live y libera el WebSocket inmediatamente; todo el pipeline post-sesión (`filler-detection-service` → `scoring-service` → `progress-service` + `gamification-service` + `notification-service`) procede de forma asíncrona con el patrón Outbox garantizando entrega at-least-once.
 
-**Resultado.** El cliente Angular recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente ≤ 1 s gracias a la eliminación del paso STT post-sesión), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
+**Resultado.** El cliente web recibe el cierre del WebSocket en ≤ 200 ms. Cuando el análisis completa (típicamente ≤ 1 s gracias a la eliminación del paso STT post-sesión), `notification-service` envía un push por WebSocket notificando que el score está disponible. Cumplimiento de QAS-02 verificado con pruebas de carga con k6 (100 sesiones concurrentes).
 
 ![SessionCommandServiceImplFinalize](assets/images/Backend/SessionCommandServiceImplFinalize.png)
 
@@ -3834,7 +3845,7 @@ static final ArchRule domainMustNotDependOnInfrastructure =
 
 **Refactorización.** Se centralizó el manejo de excepciones en un `GlobalExceptionHandler` anotado con `@RestControllerAdvice` por servicio, que mapea la jerarquía de excepciones de `talki-commons` (RF definidas en 5.1.3) al DTO `ApiErrorResponse` estándar con campos `code`, `message` y `timestamp`.
 
-**Beneficio.** Contratos de error predecibles para el frontend Angular. Simplificación de los controladores (eliminación de 340 líneas de boilerplate en el conjunto de servicios). Coherencia verificable con los contratos Pact definidos en 5.1.1.
+**Beneficio.** Contratos de error predecibles para el frontend Next.js. Simplificación de los controladores (eliminación de 340 líneas de boilerplate en el conjunto de servicios). Coherencia verificable con los contratos Pact definidos en 5.1.1.
 
 ![GlobalExceptionHandler](assets/images/Backend/GlobalExceptionHandler.png)
 
@@ -3852,7 +3863,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 | 2 | Diseño UX/UI | Figma | Wireframes, mockups y prototipos navegables del frontend y la landing (Capítulo III). | [figma.com](https://www.figma.com) |
 | 3 | Modelado de arquitectura | Structurizr DSL | Diagramas C4 (Contexto, Contenedor, Componente) versionados como código (Capítulo IV). | [structurizr.com](https://structurizr.com) |
 | 4 | IDEs y editores | IntelliJ IDEA Community | IDE principal para los ocho microservicios Java + Spring Boot. | [jetbrains.com/idea](https://www.jetbrains.com/idea/) |
-| 4 | IDEs y editores | WebStorm | IDE para el frontend Angular + TypeScript (`talki-frontend`). | [jetbrains.com/webstorm](https://www.jetbrains.com/webstorm/) |
+| 4 | IDEs y editores | WebStorm | IDE para el frontend Next.js + TypeScript (`talki-frontend`). | [jetbrains.com/webstorm](https://www.jetbrains.com/webstorm/) |
 | 4 | IDEs y editores | Visual Studio Code | Editor para la landing page y para edición rápida del informe Markdown. | [code.visualstudio.com](https://code.visualstudio.com) |
 | 5 | Control de versiones | Git | Sistema de control de versiones distribuido. | [git-scm.com](https://git-scm.com) |
 | 5 | Control de versiones | GitHub | Plataforma de hosting de los repositorios y registro de paquetes de la organización `upc-pre-202601-si657-7940-thropic` (publicación del módulo `talki-commons`). | [github.com](https://github.com) |
@@ -3873,7 +3884,7 @@ El entorno de desarrollo del producto Talki se compone de un *toolchain* unifica
 | 10 | CI/CD y despliegue | GitHub Actions | Orquestador de los *pipelines* de integración y entrega continua. | [github.com/features/actions](https://github.com/features/actions) |
 | 10 | CI/CD y despliegue | Docker | Contenerización de cada microservicio mediante `Dockerfile` versionado (`eclipse-temurin:17-jre-alpine`). | [docker.com](https://www.docker.com) |
 | 10 | CI/CD y despliegue | Docker Compose | Orquestación local de los microservicios y RabbitMQ vía `docker-compose.dev.yml` por mono-repo backend. | [docs.docker.com/compose](https://docs.docker.com/compose/) |
-| 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Angular. | [vercel.com](https://vercel.com) |
+| 10 | CI/CD y despliegue | Vercel | Plataforma de despliegue de la landing y del frontend Next.js. | [vercel.com](https://vercel.com) |
 | 10 | CI/CD y despliegue | Railway | Plataforma de despliegue de los ocho microservicios backend, RabbitMQ y bases de datos PostgreSQL gestionadas. | [railway.app](https://railway.app) |
 | 7 | Pruebas automatizadas | SonarCloud | *Quality gate* automático sobre cada Pull Request con reglas Reliability A, Security A, Maintainability A, Coverage ≥ 75 % y Duplication ≤ 3 % (ver detalle en 5.2.5). | [sonarcloud.io](https://sonarcloud.io) |
 
@@ -3890,7 +3901,7 @@ Cada integrante del equipo replica un entorno local idéntico mediante el siguie
 | Backend (microservicios) | `talki-commons` | Versión publicada en GitHub Packages | Librería interna con contratos de eventos AMQP, DTOs estándar (`ApiErrorResponse`, `PagedResponse<T>`), utilidades de seguridad JWT y configuración base de RabbitMQ + DLX (ver 5.1.3). Cada microservicio la declara como dependencia en su `pom.xml`. |
 | Frontend principal | Node.js | 20 LTS | Coincide con `actions/setup-node@v4` del *workflow* de CI/CD. |
 | Frontend principal | npm | 10.x | Gestor de paquetes; `package-lock.json` versionado y cacheado en CI. |
-| Frontend principal | Angular CLI | 17.x | Coincide con la versión del `package.json` del `talki-frontend`. |
+| Frontend principal | Next.js | 16.x | Coincide con la versión del `package.json` del `talki-frontend`. |
 | Landing | Node.js | 20 LTS | Solo necesario para el build estático y herramientas de linting. |
 | Contenedores | Docker Engine | 24+ | Requisito para levantar el `docker-compose.dev.yml` en local. |
 | Contenedores | Docker Compose | v2 | Plugin integrado a Docker Desktop; comando `docker compose up`. |
@@ -3916,7 +3927,7 @@ Para el frontend principal y la landing, el levantamiento es independiente y no 
 
 1. Clonar el repositorio (`talki-frontend` o `talki-landing`).
 2. Instalar Node 20 LTS.
-3. Ejecutar `npm install` y luego `npm run start` (Angular) o `npm run dev` (landing).
+3. Ejecutar `pnpm install` y luego `pnpm dev` (Next.js) o `npm run dev` (landing).
 4. Configurar el archivo `.env.local` a partir de `.env.example`, apuntando `API_BASE_URL` al API Gateway local o al *staging* en Railway.
 
 Esta configuración garantiza que cualquier integrante del equipo pueda reproducir el entorno completo en menos de quince minutos a partir de un clon limpio, sin depender de servicios cloud activos para el desarrollo y la prueba unitaria.
@@ -3998,7 +4009,7 @@ A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts
 |---|---|---|---|---|
 | `talki-project-report` | Documentación | Markdown | — | Informe académico del curso (este documento). |
 | `talki-landing` | Frontend | HTML / CSS / JavaScript | — | Landing page pública del producto. |
-| `talki-frontend` | Frontend | Angular 17 + TypeScript | — | Aplicación web principal de Talki. |
+| `talki-frontend` | Frontend | Next.js 16 + TypeScript | — | Aplicación web principal de Talki. |
 | `talki-user-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `identity-service` (8081), `notification-service` (8091) | Identity & Access BC + Notification BC. |
 | `talki-session-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `session-service` (8082), `live-coach-service` (8083), `scenario-catalog-service` (8084, sprint siguiente), `media-service` (8085, sprint siguiente) | Practice Session BC. |
 | `talki-analysis-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `filler-detection-service` (8087), `scoring-service` (8088) | Speech Analysis BC. |
@@ -4034,9 +4045,9 @@ Se sigue la [Google Java Style Guide](https://google.github.io/styleguide/javagu
 | Validación | Bean Validation (`@Valid`, `@NotNull`, `@Size`) en DTOs de entrada. |
 | Logging | SLF4J con niveles `INFO` para hitos de negocio, `WARN` para condiciones recuperables y `ERROR` para fallos. Sin `System.out.println`. |
 
-**TypeScript + Angular (frontend principal)**
+**TypeScript + Next.js / React (frontend principal)**
 
-Se sigue la [Angular Style Guide oficial](https://angular.dev/style-guide) y la [Airbnb JavaScript/TypeScript Style Guide](https://github.com/airbnb/javascript) en lo que aplique.
+Se siguen las [convenciones oficiales de React](https://react.dev/learn) y de [Next.js](https://nextjs.org/docs) junto con la [Airbnb JavaScript/TypeScript Style Guide](https://github.com/airbnb/javascript) en lo que aplique.
 
 | Aspecto | Convención |
 |---|---|
@@ -4158,8 +4169,8 @@ Vercel se conecta directamente al repositorio de GitHub mediante la integración
 | Repositorios cubiertos | `talki-landing` y `talki-frontend`. |
 | Trigger de Production Deployment | *Push* a la rama `main`. |
 | Trigger de Preview Deployment | *Push* a cualquier rama `feature/*` y *pull requests* hacia `develop`. |
-| Build command | `npm run build` (Angular CLI o build estático según el proyecto). |
-| Output directory | `dist/` para Angular; raíz del proyecto para la landing. |
+| Build command | `next build` / `npm run build` (Next.js o build estático según el proyecto). |
+| Output directory | `.next/` para Next.js; raíz del proyecto para la landing. |
 | Variables de entorno | `NEXT_PUBLIC_API_BASE_URL`, `TALKI_ENV` y otras claves no sensibles definidas en el panel de Vercel por entorno. |
 | Dominios | Dominio principal en producción (por definir); subdominios automáticos `*.vercel.app` para *previews*. |
 | Headers y caching | Configuración mediante `vercel.json` con cabeceras de seguridad (CSP, HSTS) y *cache-control* para assets estáticos. |
@@ -4215,7 +4226,7 @@ El equipo selecciona **[SonarCloud](https://sonarcloud.io)** —la versión SaaS
 
 1. **Gratuidad para proyectos open source** alojados en GitHub bajo organizaciones públicas (caso de `upc-pre-202601-si657-7940-thropic`), eliminando cualquier costo operativo durante la fase académica.
 2. **Integración nativa con GitHub Actions y con Pull Requests**: cada PR recibe automáticamente un *check* de SonarCloud que comenta en línea los issues encontrados y bloquea el merge si el *quality gate* falla, materializando la táctica de detección temprana del 4.1.7.
-3. **Cobertura multi-lenguaje en un solo dashboard**: analiza tanto Java + Spring Boot (los 8 microservicios) como TypeScript + Angular (`talki-frontend`) y HTML/CSS (`talki-landing`) sin requerir agentes separados, cumpliendo el principio P7 (consistencia transversal del toolchain).
+3. **Cobertura multi-lenguaje en un solo dashboard**: analiza tanto Java + Spring Boot (los 8 microservicios) como TypeScript + Next.js (`talki-frontend`) y HTML/CSS (`talki-landing`) sin requerir agentes separados, cumpliendo el principio P7 (consistencia transversal del toolchain).
 
 **Reglas principales del Quality Gate**
 
@@ -4439,7 +4450,7 @@ A continuación se muestran fragmentos del código en ejecución del `session-se
 ![session-service — SessionCommandServiceImpl (CQRS Command)](assets/images/Backend/SessionCommandServiceImpl.png)
 ![session-service — SessionController REST](assets/images/Backend/SessionController.png)
 
-> _Nota._ El despliegue **cloud** de estos servicios (ejecución pública en Railway con su Swagger UI accesible por internet) fue el objetivo del Sprint 2; su evidencia de ejecución en producción —incluida la interacción con los Web Services vía **Postman**— se documenta en la sección 5.3.2.4. Para el Sprint 3 queda pendiente la grabación del video de demostración end-to-end una vez integrado el frontend Angular.
+> _Nota._ El despliegue **cloud** de estos servicios (ejecución pública en Railway con su Swagger UI accesible por internet) fue el objetivo del Sprint 2; su evidencia de ejecución en producción —incluida la interacción con los Web Services vía **Postman**— se documenta en la sección 5.3.2.4. Para el Sprint 3 queda pendiente la grabación del video de demostración end-to-end una vez integrado el frontend Next.js.
 
 #### 5.3.1.5. Microservices Documentation Evidence for Sprint Review
 
@@ -4472,7 +4483,7 @@ Durante el Sprint 1, el equipo colaboró a través de GitHub sobre los cuatro mo
 |---|---|---|---|
 | **Tumi Oliden, Manuel Ignacio** | `Manuel2224` | Scaffolding / Engagement | Inicializó los cuatro mono-repos y la estructura por capas de los 8 servicios (T01); implementó las proyecciones CQRS de `progress` y `gamification` con sus consumidores y tests (T05). |
 | **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / DDD / Calidad | Lideró la refactorización a DDD + CQRS + ACL en `session-service`, la alineación del pipeline con Gemini Live (eliminación de `transcription-service`), el `GlobalExceptionHandler` (RF-05), la suite de 128 unit tests y la documentación OpenAPI por servicio (T03, T04, T06, T07); revisó y mergeó los Pull Requests del Sprint. |
-| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend / Requisitos | Especificación de User Stories y criterios de aceptación (Capítulo III) que alimentaron el backlog; preparación de las vistas Angular reprogramadas a Sprints posteriores. |
+| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend / Requisitos | Especificación de User Stories y criterios de aceptación (Capítulo III) que alimentaron el backlog; preparación de las vistas del cliente web reprogramadas a Sprints posteriores. |
 
 El historial de commits de cada repositorio (autor, mensaje Conventional Commits y fecha) evidencia las contribuciones del período 08/05–12/05/2026, visibles en las capturas de *Insights de colaboración* de la sección 5.3.2.7, que recogen tanto los commits del Sprint 1 (implementación) como los del Sprint 2 (despliegue) de cada repo.
 
@@ -4489,7 +4500,7 @@ El estado del backlog al cierre del Sprint 1 (entrega TP1) se gestionó en el ta
 | **Done** | 2 | Ciclo de autenticación (`identity-service`) y núcleo de sesión (`session-service`) implementados y probados. |
 | **Review** | 3 | Pipeline de análisis (`filler-detection`, `scoring`) y engagement (`progress`, `gamification`) en revisión de PR. |
 | **In Progress** | 6 | Lógica de dominio backend cubierta por tests; pendiente integración end-to-end y despliegue. |
-| **Todo** | 17 | Vistas Angular, despliegue cloud, `scenario-catalog-service` y `media-service`, planificados para Sprints posteriores. |
+| **Todo** | 17 | Vistas del cliente web, despliegue cloud, `scenario-catalog-service` y `media-service`, planificados para Sprints posteriores. |
 
 Con el núcleo backend implementado y probado, el Sprint 1 dejó el producto listo para su **despliegue cloud**, objetivo que abordó el Sprint 2 a continuación.
 
@@ -4499,11 +4510,11 @@ Con el núcleo backend implementado y probado, el Sprint 1 dejó el producto lis
 
 | Sprint 2 | **Despliegue cloud de los microservicios en Railway (Cloud-Native Deployment)** |
 |---|---|
-| **Sprint 2 Goal** | Llevar los ocho microservicios del producto Talki a un entorno cloud productivo sobre **Railway**, materializando la arquitectura *cloud-native* diseñada en el Capítulo IV: contenerizar cada servicio con un `Dockerfile` multi-stage, externalizar la configuración en un perfil `prod` con **PostgreSQL gestionado por servicio** (*database-per-service*), parametrizar el binding del puerto y las credenciales de RabbitMQ por variables de entorno de Railway, y verificar que cada servicio quede **Online** y accesible públicamente con su documentación OpenAPI expuesta. La integración del frontend Angular y el cierre de los microservicios `scenario-catalog-service` y `media-service` se reprograman al Sprint 3, una vez disponible la plataforma de backend desplegada. |
+| **Sprint 2 Goal** | Llevar los ocho microservicios del producto Talki a un entorno cloud productivo sobre **Railway**, materializando la arquitectura *cloud-native* diseñada en el Capítulo IV: contenerizar cada servicio con un `Dockerfile` multi-stage, externalizar la configuración en un perfil `prod` con **PostgreSQL gestionado por servicio** (*database-per-service*), parametrizar el binding del puerto y las credenciales de RabbitMQ por variables de entorno de Railway, y verificar que cada servicio quede **Online** y accesible públicamente con su documentación OpenAPI expuesta. La integración del frontend Next.js y el cierre de los microservicios `scenario-catalog-service` y `media-service` se reprograman al Sprint 3, una vez disponible la plataforma de backend desplegada. |
 | **Sprint 2 Velocity** | 42 |
 | **Sum of Story Points** | 42 |
 
-> **Nota de re-priorización.** El equipo decidió priorizar el **despliegue cloud del backend** sobre la integración del frontend, porque un backend desplegado y accesible públicamente es prerrequisito tanto para que el frontend Angular consuma APIs reales como para que el docente verifique el producto en ejecución. Las User Stories de las vistas Angular dependen de esta plataforma, por lo que adelantar el deployment desbloquea el camino crítico del Sprint 3.
+> **Nota de re-priorización.** El equipo decidió priorizar el **despliegue cloud del backend** sobre la integración del frontend, porque un backend desplegado y accesible públicamente es prerrequisito tanto para que el frontend Next.js consuma APIs reales como para que el docente verifique el producto en ejecución. Las User Stories de las vistas del cliente web dependen de esta plataforma, por lo que adelantar el deployment desbloquea el camino crítico del Sprint 3.
 
 <table>
   <thead>
@@ -4591,7 +4602,7 @@ Con el núcleo backend implementado y probado, el Sprint 1 dejó el producto lis
       <td>US12</td>
       <td>Iniciar grabación y transcripción en tiempo real</td>
       <td>T07</td>
-      <td>Vista Angular — Sesión en vivo</td>
+      <td>Vista del cliente web — Sesión en vivo</td>
       <td>Implementar la vista de grabación con WebSocket bidireccional hacia <code>live-coach-service</code>. <em>(Reprogramada a Sprint 3 — depende de la plataforma desplegada.)</em></td>
       <td>13</td>
       <td>Rivera Sosa, Eduardo Gael</td>
@@ -4696,7 +4707,7 @@ A continuación se presentan capturas de la ejecución real del `identity-servic
 
 > El listado de sesiones (operación 3) materializa la **Saga por coreografía** end-to-end: el registro en `identity-service` publica `user.registered` sobre el exchange `talki.events`, el `session-service` proyecta localmente al usuario (database-per-service) y, sobre esa proyección, crea y consulta las sesiones — todo verificado en vivo contra producción.
 
-> _Pendiente para el Sprint 3:_ grabación del **video de demostración** end-to-end (registro → sesión de práctica → feedback) una vez integrado el frontend Angular contra estas APIs productivas, que complementa la evidencia de Postman ya disponible.
+> _Pendiente para el Sprint 3:_ grabación del **video de demostración** end-to-end (registro → sesión de práctica → feedback) una vez integrado el frontend Next.js contra estas APIs productivas, que complementa la evidencia de Postman ya disponible.
 
 #### 5.3.2.5. Microservices Documentation Evidence for Sprint Review
 
@@ -4783,7 +4794,7 @@ Durante el Sprint 2, el equipo mantuvo una colaboración activa y constante a tr
 |---|---|---|---|
 | **Tumi Oliden, Manuel Ignacio** | `Manuel2224` / `Manuel Tumi` | DevOps / Cloud Deployment | Lideró el despliegue: Dockerfiles multi-stage, perfil `prod`, aprovisionamiento de Railway y PostgreSQL por servicio, estandarización de RabbitMQ (T01–T06). |
 | **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / Documentación | Implementación y pruebas de los microservicios consolidadas en el TP1 (suite de 128 unit tests), documentación OpenAPI por servicio, health checks Actuator y mantenimiento del informe. |
-| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend (Sprint 3) | Preparación de las vistas Angular y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
+| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend (Sprint 3) | Preparación de las vistas del cliente web y consumo de las APIs productivas, reprogramado al Sprint 3 una vez disponible la plataforma desplegada. |
 
 A continuación se presentan los grafos de **Contributors** de GitHub (*Insights → Contributors*) de cada repositorio intervenido durante el Sprint 2, donde se observa la cantidad de commits y de líneas añadidas/eliminadas por cada integrante a lo largo del proyecto:
 
@@ -4825,10 +4836,300 @@ Cada tarjeta del tablero es un **issue real de GitHub** vinculado a su repositor
 |---|---|---|
 | **Done** | 4 | Ciclo de autenticación (`identity-service`) completo y desplegado (issues cerrados: registro, login, recuperación de contraseña, cierre de sesión). |
 | **Review** | 4 | Componentes backend de sesión y personalización desplegados, listos para validación end-to-end. |
-| **In Progress** | 10 | Backend operativo en producción; pendiente la integración con el frontend Angular. |
+| **In Progress** | 10 | Backend operativo en producción; pendiente la integración con el frontend Next.js. |
 | **Todo** | 10 | Landing (`landing-page`), exportación y catálogo de escenarios, reprogramados al Sprint 3. |
 
-Con el backend desplegado y accesible públicamente, el camino crítico del Sprint 3 queda despejado para mover las historias de *In Progress* a *Done* a medida que el frontend Angular consuma las APIs productivas verificadas en la sección 5.3.2.4.
+Con el backend desplegado y accesible públicamente, el camino crítico del Sprint 3 queda despejado para mover las historias de *In Progress* a *Done* a medida que el frontend Next.js consuma las APIs productivas verificadas en la sección 5.3.2.4.
+
+<div style="page-break-after: always;"></div>
+
+### 5.3.3. Sprint 3
+
+> **Nota de implementación.** El frontend planificado en Sprints previos como cliente *Angular* se materializó finalmente con **Next.js 16 (React 19, App Router) + TypeScript + Tailwind CSS 4 + shadcn/ui**. El equipo optó por este stack por su modelo de *Route Handlers* del lado servidor, que permite implementar una capa **BFF (Backend-for-Frontend)** sin servicios adicionales: el cliente resuelve así el **CORS** ausente en los microservicios y mantiene el **JWT fuera del JavaScript del navegador** (cookie `httpOnly`). El repositorio es público: <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>.
+
+#### 5.3.3.1. Sprint Backlog 3
+
+| Sprint 3 | **Integración del cliente web contra las APIs productivas (Frontend ⇄ Cloud Backend)** |
+|---|---|
+| **Sprint 3 Goal** | Materializar el cliente web de Talki (`talki-frontend`) consumiendo las **ocho APIs productivas desplegadas en Railway** durante el Sprint 2, implementando las vistas del producto —autenticación, sesiones de práctica, *Live Coach*, dashboard de progreso y ranking— sobre una arquitectura **BFF (Backend-for-Frontend)** con *Route Handlers* de Next.js que resuelve el CORS de los microservicios y gestiona el ciclo de vida del **JWT en una cookie `httpOnly`**. Se arrastran como reprogramados los ítems que el Sprint 2 difirió a este Sprint: la **grabación/feedback en vivo con Gemini** (WebSocket), los microservicios `scenario-catalog-service` y `media-service`, la **landing page** y la **exportación de resultados**, por depender de capacidades aún no expuestas en el despliegue. |
+| **Sprint 3 Velocity** | 39 *(estimación referencial)* |
+| **Sum of Story Points** | 39 *(estimación referencial)* |
+
+> **Nota de continuidad.** El backend desplegado y accesible públicamente al cierre del Sprint 2 (sección 5.3.2.4) es el prerrequisito que habilita este Sprint: las vistas del cliente web consumen directamente las URLs productivas de Railway, sin necesidad de levantar el backend en local. La capa BFF del frontend adjunta el `Authorization: Bearer <JWT>` a las llamadas salientes, de modo que el token nunca se expone al navegador.
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Sprint #</th>
+      <th colspan="6">Sprint 3</th>
+    </tr>
+    <tr>
+      <th colspan="2">User Story</th>
+      <th colspan="6">Work-Item / Task</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Estimations (Hours)</th>
+      <th>Assigned To</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto (transversal)</td>
+      <td>T01</td>
+      <td>Scaffolding del cliente web</td>
+      <td>Inicializar <code>talki-frontend</code> con <strong>Next.js 16</strong> (App Router) + TypeScript + Tailwind CSS 4 + <strong>shadcn/ui</strong>; configurar el mapa de servicios y las variables de entorno (<code>.env</code>) del lado servidor.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto (transversal)</td>
+      <td>T02</td>
+      <td>Capa BFF (Backend-for-Frontend)</td>
+      <td>Implementar <em>Route Handlers</em>: proxy genérico <code>/api/gateway/&lt;servicio&gt;</code> hacia los 8 microservicios y endpoints <code>/api/auth</code> (login, register, logout, me) que setean/leen el <strong>JWT en cookie <code>httpOnly</code></strong>. Resuelve el CORS ausente en el backend.</td>
+      <td>8</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto (transversal)</td>
+      <td>T03</td>
+      <td>Cliente HTTP tipado + protección de rutas</td>
+      <td>Definir los DTOs por servicio y funciones tipadas que llaman al BFF; decodificar el <code>userId</code> del JWT; <em>middleware/proxy</em> de Next que protege las rutas privadas y redirige a <code>/login</code>.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05<br>US06<br>US28</td>
+      <td>Registro de cuenta nueva · Inicio de sesión · Cerrar sesión de usuario</td>
+      <td>T04</td>
+      <td>Vistas de autenticación y cierre de sesión</td>
+      <td>Pantallas de <strong>login</strong> y <strong>registro</strong> contra <code>identity-service</code> (<code>/v1/auth/login</code>, <code>/v1/auth/register</code>) con inicio de sesión automático tras el registro, y <strong>cierre de sesión</strong> desde el menú de cuenta de la barra lateral.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US09<br>US10<br>US14<br>US20</td>
+      <td>Crear nueva sesión de práctica · Seleccionar tipo de sesión · Finalizar sesión y guardar transcripción · Consultar historial de sesiones</td>
+      <td>T05</td>
+      <td>Vista de Sesiones (lista, detalle, feedback)</td>
+      <td>Crear sesión con selector de tipo, listar el historial (incluida la lista de recientes en la barra lateral), ver detalle, registrar feedback y finalizar contra <code>session-service</code> (<code>/v1/sessions</code> y subrecursos), respetando los estados <code>DRAFT → RECORDING → PROCESSING</code>.</td>
+      <td>8</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US11<br>US12</td>
+      <td>Configurar duración objetivo · Iniciar grabación y transcripción en tiempo real <em>(parcial)</em></td>
+      <td>T06</td>
+      <td>Vista Live Coach</td>
+      <td>Listado de modos (<code>/v1/coach/modes</code>), configuración de duración y finalización de la sesión en vivo (<code>/v1/coach/&#123;id&#125;/finalize</code>) contra <code>live-coach-service</code>, que publica <code>session.live.finalized</code>. <em>La grabación/transcripción en tiempo real (núcleo de US12) queda en T09.</em></td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US21</td>
+      <td>Ver progreso a lo largo del tiempo</td>
+      <td>T07</td>
+      <td>Dashboard de progreso + Ranking</td>
+      <td>Dashboard de métricas contra <code>progress-service</code> (<code>/v1/progress/dashboard</code>) y leaderboard/rachas contra <code>gamification-service</code> (<code>/v1/gamification/*</code>), más el estado de salud de <code>filler</code> y <code>scoring</code>.</td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US05–US28</td>
+      <td>Cliente web del producto (transversal)</td>
+      <td>T08</td>
+      <td>Publicación y verificación end-to-end</td>
+      <td>Publicar el repositorio <code>talki-frontend</code> y verificar el flujo extremo a extremo (registro → login → crear sesión → dashboard) contra las APIs productivas de Railway.</td>
+      <td>3</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>Done</td>
+    </tr>
+    <tr>
+      <td>US12<br>US13<br>US15</td>
+      <td>Iniciar grabación y transcripción en tiempo real · Pausar y reanudar grabación · Recibir feedback general de la IA</td>
+      <td>T09</td>
+      <td>Grabación en vivo + feedback con Gemini Live</td>
+      <td>Conectar la vista de práctica a un WebSocket bidireccional para grabación, transcripción y feedback en vivo de Gemini. <em>(Reprogramada — el WebSocket de Gemini Live no está expuesto en el despliegue actual de <code>live-coach-service</code>.)</em></td>
+      <td>13</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>To-Do</td>
+    </tr>
+    <tr>
+      <td>US10</td>
+      <td>Seleccionar tipo de sesión (catálogo de escenarios)</td>
+      <td>T10</td>
+      <td>scenario-catalog-service + media-service</td>
+      <td>Implementar los microservicios pendientes (catálogo de escenarios peruanos con <em>system prompts</em> y servicio de media). <em>(Reprogramadas desde el Sprint 2.)</em></td>
+      <td>13</td>
+      <td>Tumi Oliden, Manuel</td>
+      <td>To-Do</td>
+    </tr>
+    <tr>
+      <td>US01<br>US02<br>US03<br>US04</td>
+      <td>Visualizar beneficios · Ver planes y precios · Ver testimonios · Acceder a formulario de contacto</td>
+      <td>T11</td>
+      <td>Landing page</td>
+      <td>Implementar la <em>landing</em> pública del producto en el repositorio <code>landing-page</code>. <em>(Reprogramada desde el Sprint 2.)</em></td>
+      <td>8</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>To-Do</td>
+    </tr>
+    <tr>
+      <td>US27</td>
+      <td>Exportar transcripción y feedback</td>
+      <td>T12</td>
+      <td>Exportación de resultados</td>
+      <td>Exportar la transcripción y el feedback de una sesión desde el cliente web. <em>(Reprogramada desde el Sprint 2.)</em></td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>To-Do</td>
+    </tr>
+    <tr>
+      <td>US07<br>US08</td>
+      <td>Recuperación de contraseña · Edición de perfil de usuario</td>
+      <td>T13</td>
+      <td>Gestión de cuenta (perfil y contraseña)</td>
+      <td>Vistas de recuperación de contraseña y edición de perfil contra <code>identity-service</code>. <em>(Pendiente — sin UI todavía.)</em></td>
+      <td>5</td>
+      <td>Rivera Sosa, Eduardo Gael</td>
+      <td>To-Do</td>
+    </tr>
+  </tbody>
+</table>
+
+> _Nota sobre el backlog._ Las tareas **T01–T08** (estado *Done*) corresponden al cliente web efectivamente construido y verificado en este Sprint contra producción (secciones 5.3.3.2 y 5.3.3.4). Las tareas **T09–T13** (estado *To-Do*) recogen los ítems **reprogramados desde el Sprint 2** —grabación/feedback en vivo, `scenario-catalog-service`/`media-service`, landing page, exportación y gestión de cuenta (perfil/contraseña)—, varios de ellos bloqueados por capacidades aún no expuestas en el despliegue. Las **horas** y los **Story Points** son estimaciones referenciales sujetas a confirmación del equipo en el *planning*.
+
+#### 5.3.3.2. Development Evidence for Sprint Review
+
+URL del repositorio: <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>
+
+El trabajo del Sprint 3 se concentró en un nuevo repositorio, `talki-frontend`, que aloja el cliente web del producto. Los commits listados materializan los work-items T01–T08: el *scaffolding* del proyecto con la capa BFF y la UI conectada a los ocho microservicios (T01–T07), la documentación de las URLs productivas de Railway en el `.env.example` y el ajuste de experiencia de usuario (tema, navegación lateral y correcciones de los formularios). Todos los commits corresponden al período del Sprint 3 (15/06/2026).
+
+| Repository | Branch | Commit Id | Commit Message | Work-Item | Committed on (Date) |
+|---|---|---|---|---|---|
+| talki-frontend | main | 57c07e5 | feat: scaffold talki-frontend (Next.js 16) con BFF y UI conectada a los 8 microservicios | T01–T07 | 15/06/2026 |
+| talki-frontend | main | 495495f | docs: documentar URLs de backends deployados en Railway en .env.example | T08 | 15/06/2026 |
+| talki-frontend | main | 894a7fd | feat: tema blanco fijo, sidebar estilo ChatGPT y fixes de UX | T01, T04, T05 | 15/06/2026 |
+
+> La estructura del cliente separa con claridad las responsabilidades: `src/app/api/*` (capa BFF: `auth` y `gateway`), `src/lib/api/*` (DTOs y cliente tipado por servicio), `src/lib/config.ts` (mapa servicio → URL, solo del lado servidor) y `src/app/(app)/*` (vistas protegidas). El token JWT nunca se persiste en `localStorage`: vive en una cookie `httpOnly` que solo el servidor del BFF lee.
+
+#### 5.3.3.3. Testing Suite Evidence for Sprint Review
+
+La verificación de calidad del cliente web en este Sprint se apoya en el **build de producción de Next.js** (`pnpm build`), que ejecuta la **comprobación de tipos de TypeScript** y el **lint de ESLint** sobre todo el proyecto: todas las rutas (estáticas y dinámicas) compilan sin errores ni advertencias de tipo. Las suites de pruebas automatizadas del frontend (componentes y end-to-end) se reprograman, al igual que los niveles 2–4 del backend ya documentados en el Sprint 2.
+
+| Nivel de prueba | Estado al cierre del Sprint 3 | Evidencia |
+|---|---|---|
+| Type-check + Lint del cliente web | ✅ Verde | `pnpm build` (Next.js 16): verificación de tipos TS + ESLint, 14 rutas compiladas sin errores |
+| Verificación funcional end-to-end (manual) | ✅ Verde | Flujo registro → login → crear sesión → dashboard ejercitado vía el BFF contra producción (ver 5.3.3.4) |
+| Unit/Component tests del cliente (Vitest/RTL) | 🟡 Reprogramado | Pendiente para el siguiente Sprint |
+| E2E del cliente (Playwright) | 🟡 Reprogramado | Pendiente para el siguiente Sprint |
+| Nivel 1 — Unit Tests backend (JUnit 5 + Mockito) | ✅ 128 / 128 verdes | Heredado y estable desde el Sprint 1/2 (5.1.1) |
+| Niveles 2–4 backend (Testcontainers / Cucumber / Pact) | 🟡 Reprogramado | Documentado en 5.1.1 y 5.3.2.3 |
+
+#### 5.3.3.4. Execution Evidence for Sprint Review
+
+Al cierre del Sprint 3, el cliente web `talki-frontend` ejecuta **localmente consumiendo las APIs productivas de Railway** (sin backend local): la capa BFF actúa como pasarela y autentica cada llamada con el JWT de la cookie. El flujo extremo a extremo se **verificó en vivo contra producción** a través de los endpoints del propio cliente (`/api/auth/*` y `/api/gateway/*`), con las siguientes respuestas reales:
+
+| # | Acción (a través del BFF del cliente) | Microservicio productivo | Resultado |
+|---|---|---|---|
+| 1 | `POST /api/auth/register` (registro + auto-login, setea cookie JWT) | `identity-service` | ✅ 200 — usuario creado |
+| 2 | `GET /api/auth/me` (sesión activa desde la cookie) | — (BFF) | ✅ 200 — `{ userId, email }` |
+| 3 | `GET /api/gateway/coach/v1/coach/modes` | `live-coach-service` | ✅ 200 — modos disponibles |
+| 4 | `POST /api/gateway/session/v1/sessions` (requiere JWT) | `session-service` | ✅ 201 — sesión creada |
+| 5 | `GET /api/gateway/session/v1/sessions?userId=…` | `session-service` | ✅ 200 — listado |
+| 6 | `GET /api/gateway/progress/v1/progress/dashboard?userId=…` | `progress-service` | ✅ 200 — dashboard |
+
+> La verificación confirma que la capa BFF **propaga correctamente el JWT**: el `session-service` exige autenticación y respondió 201/200 a las llamadas enrutadas con el token de la cookie. El cliente también renderiza el dashboard de progreso, el ranking y los modos del *Live Coach* contra los servicios reales.
+
+**Capturas de la ejecución del cliente web** (tema claro, navegación lateral estilo *workspace*):
+
+> _[COMPLETAR: captura de la pantalla de **login** en tema claro — sugerido `assets/images/frontend/01-login.png`]._
+>
+> _[COMPLETAR: captura del **dashboard** con métricas de progreso y estado de servicios — sugerido `assets/images/frontend/02-dashboard.png`]._
+>
+> _[COMPLETAR: captura de la vista **Live Coach** y de la **lista de sesiones** con la barra lateral — sugerido `assets/images/frontend/03-coach-sessions.png`]._
+
+> **Hallazgo de integración (para el equipo de backend).** Aunque `live-coach-service` acepta y publica el evento `session.live.finalized` (HTTP 202 verificado), las vistas de `progress-service` y `gamification-service` permanecen en cero tras finalizar prácticas: la cadena asíncrona `fillers → scoring → progress/gamification` **no se refleja en producción**. La causa más probable es que los microservicios desplegados **no comparten un único broker RabbitMQ** (cada mono-repo declara su propio servicio `rabbitmq` en su `docker-compose`), por lo que el evento publicado por un servicio no llega a los consumidores de otro. Queda como pendiente de infraestructura: apuntar las variables `RABBITMQ_*` de los ocho servicios a un **broker compartido** (p. ej. CloudAMQP) en Railway.
+
+> **Pendiente de producto.** El *feedback de la exposición en vivo* (Gemini Live) requiere el canal WebSocket bidireccional de `live-coach-service`, no expuesto en el despliegue actual; por eso el cliente publica el evento de finalización pero aún no recibe el feedback conversacional en tiempo real (work-item T09, reprogramado).
+
+#### 5.3.3.5. Microservices Documentation Evidence for Sprint Review
+
+El cliente web consume los contratos **OpenAPI 3** documentados en el Sprint 2 (sección 5.3.2.5), ahora desde la capa BFF. La siguiente tabla traza, por **vista del cliente**, el microservicio y los endpoints productivos que consume:
+
+| Vista del cliente | Microservicio | Endpoint(s) consumido(s) | Verbo |
+|---|---|---|---|
+| Login / Registro | `identity-service` | `/v1/auth/login`, `/v1/auth/register` | POST |
+| Sesiones (lista/crear) | `session-service` | `/v1/sessions` | GET / POST |
+| Detalle de sesión | `session-service` | `/v1/sessions/{id}`, `/v1/sessions/{id}/finalize` | GET / POST |
+| Feedback de sesión | `session-service` | `/v1/sessions/{id}/feedbacks` | GET / POST |
+| Live Coach | `live-coach-service` | `/v1/coach/modes`, `/v1/coach/{id}/finalize` | GET / POST |
+| Dashboard | `progress-service` | `/v1/progress/dashboard?userId` | GET |
+| Ranking / Rachas | `gamification-service` | `/v1/gamification/leaderboard`, `/v1/gamification/streaks/{userId}` | GET |
+| Estado de servicios | `filler-detection-service`, `scoring-service` | `/health`, `/v1/scores/health` | GET |
+
+> El cliente no inventa rutas: cada llamada corresponde a un endpoint publicado en la spec `/v3/api-docs` de las URLs productivas listadas en 5.3.2.4. Los servicios `filler-detection` y `scoring` son **event-driven** (solo exponen *health*), de modo que el cliente refleja su estado pero no los invoca directamente para análisis: ese trabajo viaja por RabbitMQ.
+
+#### 5.3.3.6. Software Deployment Evidence for Sprint Review
+
+El entregable de despliegue del Sprint 3 es la **publicación del repositorio `talki-frontend`** en la organización del equipo, con la configuración lista para correr contra el backend productivo:
+
+🔗 **Repositorio:** <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>
+
+| # | Paso | Detalle | Work-Item |
+|---|---|---|---|
+| 1 | Inicialización | Proyecto Next.js 16 (App Router) + TypeScript + Tailwind 4 + shadcn/ui, con `pnpm`. | T01 |
+| 2 | Configuración de entorno | `.env.example` documenta las URLs **locales** y las **productivas de Railway**; el `.env.local` apunta por defecto a producción. Las URLs solo se usan del lado servidor (BFF). | T02, T08 |
+| 3 | Capa BFF | *Route Handlers* `/api/gateway` y `/api/auth`; el JWT viaja en cookie `httpOnly`, resolviendo el CORS de los microservicios. | T02 |
+| 4 | Build de producción | `pnpm build` genera el bundle optimizado (14 rutas) con type-check + lint en verde. | T03 |
+| 5 | Publicación | Repositorio creado y *pusheado* a `main`; tres commits del Sprint (5.3.3.2). | T08 |
+
+**Puesta en marcha (local contra backend productivo):**
+
+```bash
+cp .env.example .env.local   # ya apunta a las URLs de Railway
+pnpm install
+pnpm dev                     # http://localhost:3000
+```
+
+> El diseño BFF deja el cliente **listo para desplegar en Vercel** (o cualquier host de Next.js) configurando las mismas variables `TALKI_*_URL` como *environment variables* del proyecto. El despliegue público del frontend en Vercel queda como siguiente paso. _[COMPLETAR: URL pública del cliente web una vez desplegado en Vercel]._
+
+#### 5.3.3.7. Team Collaboration Insights during Sprint
+
+Durante el Sprint 3, el trabajo se concentró en el nuevo repositorio `talki-frontend`, con **Eduardo Gael Rivera Sosa** (`gael-rs`) como responsable del cliente web y su integración contra las APIs productivas. La siguiente tabla resume los roles del Sprint:
+
+| Integrante | Usuario GitHub | Rol principal en el Sprint 3 | Contribución |
+|---|---|---|---|
+| **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend / Integración | Desarrolló `talki-frontend` (Next.js): capa BFF con JWT en cookie `httpOnly`, cliente tipado y las vistas de autenticación, sesiones, *Live Coach*, dashboard y ranking; verificación end-to-end contra producción (T01–T08). |
+| **Tumi Oliden, Manuel Ignacio** | `Manuel2224` | DevOps / Backend | Soporte de la plataforma desplegada en Railway consumida por el cliente; microservicios `scenario-catalog-service` y `media-service` reprogramados (T10). |
+| **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / Calidad | Mantenimiento de los contratos OpenAPI y la suite de 128 unit tests que respaldan las APIs consumidas por el cliente. |
+
+> _[COMPLETAR: grafo de **Contributors** (Insights → Contributors) del repositorio `talki-frontend` — sugerido `assets/images/collaboration/contributors-frontend.png`]._
+
+> _Insight del Sprint._ La arquitectura **BFF** resultó la decisión clave del Sprint: al enrutar todas las llamadas por *Route Handlers* del lado servidor, el cliente consume el backend productivo **sin tocar la configuración de CORS de los ocho microservicios** y mantiene el JWT fuera del alcance del JavaScript del navegador. Esto desacopla el avance del frontend de cambios en el backend y deja el cliente desplegable en Vercel con solo variables de entorno.
+
+#### 5.3.3.8. Kanban Board
+
+> **Nota.** El cierre del tablero correspondiente al Sprint 3 se reporta como parte del **Avance 4**, según la rúbrica del curso. Se documentará aquí el estado del backlog (*Todo → In Progress → Review → Done*) con la captura del tablero al cierre del Sprint.
+
+🔗 **Tablero público:** <https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1>
+
+> _[COMPLETAR (Avance 4): captura del Kanban Board de GitHub Projects v2 al cierre del Sprint 3 y la tabla de conteo por estado — sugerido `assets/images/collaboration/project-board-view3.png`]._
 
 <div style="page-break-after: always;"></div>
 
@@ -4843,7 +5144,7 @@ Antes de seleccionar la infraestructura concreta del producto Talki, el equipo e
 | # | Modelo | Definición | Responsabilidad del equipo | Ejemplos del mercado | Adopción en Talki |
 |---|---|---|---|---|---|
 | 1 | **IaaS** — *Infrastructure as a Service* | El proveedor entrega máquinas virtuales, redes y almacenamiento crudos; el equipo administra el sistema operativo, el runtime y la aplicación. | Sistema operativo, parches de seguridad, runtime de Java/Node, balanceadores, networking, escalado manual. | AWS EC2, Google Compute Engine, Azure VM. | **Descartado.** Sobrecarga operativa incompatible con la restricción C-13 del Capítulo IV (capacidad limitada del equipo académico) y con el ciclo de TP1. |
-| 2 | **PaaS** — *Platform as a Service* | El proveedor administra la infraestructura, el runtime y el *autoscaling*; el equipo solo aporta el código y la configuración. | Código fuente, variables de entorno, dependencias declaradas. | Railway, Vercel, Heroku, Google App Engine, Fly.io. | **Adoptado para los 8 microservicios backend + frontend + landing.** Railway aloja Java + Spring Boot, RabbitMQ y bases PostgreSQL; Vercel aloja Angular + landing estática. Cumple QAS-09 (despliegue continuo) y permite *rolling updates* sin tiempo de inactividad observable. |
+| 2 | **PaaS** — *Platform as a Service* | El proveedor administra la infraestructura, el runtime y el *autoscaling*; el equipo solo aporta el código y la configuración. | Código fuente, variables de entorno, dependencias declaradas. | Railway, Vercel, Heroku, Google App Engine, Fly.io. | **Adoptado para los 8 microservicios backend + frontend + landing.** Railway aloja Java + Spring Boot, RabbitMQ y bases PostgreSQL; Vercel aloja Next.js + landing estática. Cumple QAS-09 (despliegue continuo) y permite *rolling updates* sin tiempo de inactividad observable. |
 | 3 | **SaaS / BaaS** — *Software / Backend as a Service* | El proveedor entrega un servicio terminado vía API; el equipo consume funcionalidad sin administrar código del backend del servicio. | Únicamente las credenciales de acceso y la integración cliente. | Supabase Storage, Upstash Redis, Google Gemini Live API, Resend, SendGrid. | **Adoptado para capacidades transversales.** Supabase Storage gestiona materiales del usuario (CV, plantillas) con presigned URLs sin operar buckets propios; Upstash Redis provee el caché de scoring y *rate limiting*; Gemini Live API entrega el `transcript_gemini` en tiempo real evitando un *transcription-service* propio (DD-15, ADB-22, Ley 29733). |
 | 4 | **FaaS / Serverless / Edge** — *Function as a Service* | El proveedor ejecuta funciones cortas bajo demanda con escalado a cero; el equipo escribe únicamente la función. | Lógica de la función y *trigger* (HTTP, eventos). | Vercel Edge Functions, AWS Lambda, Cloudflare Workers, Google Cloud Functions. | **Adoptado parcialmente para el edge del frontend.** Vercel Edge Network distribuye los assets estáticos de `talki-landing` y `talki-frontend` con CDN global y caché por región; los microservicios Java se mantienen en PaaS por incompatibilidad de tiempos de *cold start* del JVM con FaaS para los flujos de QAS-02 (≤ 500 ms P95). |
 
@@ -4881,7 +5182,7 @@ La arquitectura cloud de Talki sigue una topología de **microservicios desplega
 | Capa | Componente desplegado | Plataforma | Tecnología | Acceso |
 |---|---|---|---|---|
 | Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.lat`) |
-| Edge / CDN | `talki-frontend` | Vercel | Angular + TypeScript | Público (`https://app.talki.lat`) |
+| Edge / CDN | `talki-frontend` | Vercel | Next.js + TypeScript | Público (`https://app.talki.lat`) |
 | API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.lat`) |
 | Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
 | Servicios | `session-service` | Railway | Java + Spring Boot | Privado (red interna) |
@@ -5029,7 +5330,7 @@ Al cierre del Trabajo Parcial 1 (TP1), el equipo formalizó la base operativa de
 
 - **Toolchain del equipo consolidado.** La sección 5.2.1 documenta diez categorías y veintiocho herramientas seleccionadas (GitHub Projects v2, Figma, Structurizr, IntelliJ IDEA, WebStorm, VS Code, Hoppscotch, JUnit 5 + Mockito + Spring Boot Test, Testcontainers, Cucumber 7, Pact + Pact Broker, ArchUnit, k6, Swagger, Spring Cloud Config, Spring Boot Actuator, Zipkin + Spring Sleuth, SonarCloud, GitHub Actions, Docker, Docker Compose, Vercel, Railway, entre otras), cada una con propósito explícito, enlace oficial y trazabilidad a la suite de pruebas y patrones del 5.1.
 - **Gestión de código fuente normada.** La sección 5.2.2 establece GitFlow como modelo de ramificación, una convención de mensajes de commit con prefijos (`feat`, `fix`, `docs`, etc.), un flujo formal de Pull Request y *code review*, versionamiento semántico y la estructura de siete repositorios (uno de documentación, uno de landing, uno de frontend y cuatro mono-repos backend que agrupan ocho microservicios) alineada con los cinco *Bounded Contexts* del Capítulo IV.
-- **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), Angular + TypeScript (Angular Style Guide oficial), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
+- **Convenciones de estilo de código por lenguaje.** La sección 5.2.3 fija las guías de referencia para Java + Spring Boot (Google Java Style Guide), TypeScript + Next.js/React (convenciones oficiales de React y Next.js), HTML/CSS/JavaScript (Google + BEM), SQL, Gherkin en español y Markdown, garantizando uniformidad de estilo entre integrantes desde el primer commit.
 - **Despliegue cloud diseñado y trazable.** Las secciones 5.2.4 y 5.4 describen el *pipeline* CI/CD en GitHub Actions, la separación de entornos por GitFlow, el despliegue del frontend y la landing en Vercel, los ocho microservicios en Railway con *database-per-service* y un *broker* RabbitMQ compartido, la gestión de secretos por plataforma, la estrategia de DNS sobre el dominio `talki.lat` (adquirido por el equipo Thropic durante el TP1), la observabilidad con Zipkin + Spring Sleuth y Spring Boot Actuator, y un modelo de costos contenido bajo planes gratuitos durante la validación del MVP.
 
 Adicionalmente, durante el ciclo de alineamiento previo a la entrega final, el equipo ejecutó una refactorización integral del backend para que la implementación coincida exactamente con el diseño documentado en los Capítulos IV y V. Los logros concretos son:
@@ -5037,7 +5338,7 @@ Adicionalmente, durante el ciclo de alineamiento previo a la entrega final, el e
 - **Pipeline alineado con Gemini Live nativo.** Se eliminó el servicio intermedio `transcription-service` (Whisper STT) y se reconectó `filler-detection-service` directamente al evento `session.live.finalized`, que ahora viaja con `transcript_gemini`, `words_per_minute`, `silence_ratio` y `volume_rms_avg` calculados en memoria por `live-coach-service`. El tiempo del pipeline post-sesión bajó de ~45 s (con STT) a ≤ 1 s, el costo operativo de ~USD 82/mes a ~USD 72/mes, y se eliminó toda persistencia de audio (DD-15 / ADB-22 cumplidos *by-design*).
 - **Patrones de diseño aplicados en código.** Se materializaron los patrones declarados en el Capítulo IV: DDD (entidades `AppUser`, `Session`, `Feedback`, `ScoreResult`, `UserProgress`, `UserStreak`), CQRS (`SessionCommandService` + `SessionQueryService` en `session-service`, vistas materializadas en `progress-service`), ACL (`SessionContextFacade` traduciendo JWT claims al modelo local), Saga por coreografía sobre RabbitMQ, Outbox Pattern e idempotencia at-least-once con manejo robusto de `DataIntegrityViolationException` sobre la unique constraint de `session_id`.
 - **Suite de tests unitarios completa.** Cada microservicio cuenta con tests JUnit 5 + Mockito + AssertJ que cubren happy path, edge cases e invariantes de dominio. Los hitos son: `identity-service` (15 tests: AuthService + JwtTokenProvider con casos de tokens forjados/expirados), `session-service` (27 tests: Command/Query services, ACL Facade, transiciones de estado del agregado `Session`), `live-coach-service` (13 tests: Orchestrator + Factory + 4 strategies), `filler-detection-service` (11 tests), `scoring-service` (33 tests: `ScoreCalculator`, `VoiceScore` con invariantes 0-100, race condition de idempotencia, `GlobalExceptionHandler` con DTOs `ApiErrorResponse`), `progress-service` (9 tests), `gamification-service` (13 tests: streaks, achievements, XP), `notification-service` (7 tests). Total: **128 unit tests pasando en los 8 microservicios** (`mvn test` verde).
-- **API Reference documentada con OpenAPI 3 en los 8 microservicios.** La evidencia de documentación del Sprint (sección 5.3.2.5) materializa `springdoc-openapi 2.3.0` en `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service`, publicando la spec en `/v3/api-docs` y la UI interactiva en `/swagger-ui.html` por servicio. Cada microservicio expone su contrato REST de forma autocontenida, consumible por el frontend Angular y por los contratos Pact del Nivel 4 de la pirámide de pruebas sin necesidad de documentación externa que pueda desactualizarse.
+- **API Reference documentada con OpenAPI 3 en los 8 microservicios.** La evidencia de documentación del Sprint (sección 5.3.2.5) materializa `springdoc-openapi 2.3.0` en `identity-service`, `notification-service`, `session-service`, `live-coach-service`, `filler-detection-service`, `scoring-service`, `progress-service` y `gamification-service`, publicando la spec en `/v3/api-docs` y la UI interactiva en `/swagger-ui.html` por servicio. Cada microservicio expone su contrato REST de forma autocontenida, consumible por el frontend Next.js y por los contratos Pact del Nivel 4 de la pirámide de pruebas sin necesidad de documentación externa que pueda desactualizarse.
 - **Modelo del producto trazable por microservicio.** La sección 4.1.5 incorpora una tabla resumen del modelo por servicio (bounded context, agregado raíz, entidades, tablas, eventos pub/sub) y trece diagramas Mermaid embebidos (Class + ER por servicio, renderizados nativamente en GitHub) que permiten a cualquier integrante del equipo o lector del informe entender el alcance de cada servicio de forma aislada, sin depender de un único diagrama consolidado que se desactualiza con cada refactor.
 - **Coherencia documento-código verificada.** Cada clase listada en la tabla 5.1.1 (Nivel 1 de pruebas) tiene test correspondiente y verificable; cada Decision Log entry (DD-01 a DD-18) tiene una sola decisión consistente entre las secciones del documento; el Architectural Design Backlog (ADB-01 a ADB-22) no tiene huecos ni referencias rotas; los conteos de microservicios, eventos, puertos y dimensiones del Voice Coach Score son idénticos en el informe y en el código.
 
@@ -5046,7 +5347,13 @@ Al cierre del Avance 3 (Sprint 2), el equipo materializó la arquitectura *cloud
 - **Backend desplegado y Online en Railway.** Los ocho microservicios de negocio quedaron contenerizados con un `Dockerfile` multi-stage por servicio (build con Maven que ejecuta los 128 unit tests + runtime `eclipse-temurin:17-jre-alpine`) y desplegados sobre Railway, cada uno con su URL pública verificada con respuesta HTTP 200 en `/v3/api-docs` y `/swagger-ui.html` (sección 5.3.2.4). El despliegue confirma de forma tangible la decisión **PaaS** documentada en 5.4.0.
 - **Database-per-service en producción.** Se aprovisionó una instancia **PostgreSQL gestionada por Railway** para cada uno de los cinco microservicios con estado (`identity`, `session`, `scoring`, `progress`, `gamification`), con volumen persistente, mientras que los tres servicios stateless (`notification`, `live-coach`, `filler-detection`) operan sin esquema propio, materializando el principio P4 (Database per Service) del Capítulo IV.
 - **Observabilidad operativa verificada.** Se incorporó `spring-boot-starter-actuator` en los ocho servicios: el endpoint `/actuator/health` responde `{"status":"UP"}` con HTTP 200 en producción y es consultado por Railway para el reinicio automático ante fallos, cumpliendo la táctica *Monitor* (4.1.7) y el escenario QAS-11. El manejo global de excepciones (RF-05) también quedó verificado en vivo: el `scoring-service` responde con el DTO `ApiErrorResponse` en lugar de un stacktrace.
-- **Re-priorización ágil documentada.** El equipo adelantó el despliegue cloud sobre la integración del frontend al detectar que un backend desplegado es prerrequisito del consumo de APIs por el cliente Angular; la sección 5.3.2.1 documenta esta decisión de re-priorización y reprograma el frontend y los microservicios `scenario-catalog-service` y `media-service` al Sprint 3.
+- **Re-priorización ágil documentada.** El equipo adelantó el despliegue cloud sobre la integración del frontend al detectar que un backend desplegado es prerrequisito del consumo de APIs por el cliente web; la sección 5.3.2.1 documenta esta decisión de re-priorización y reprograma el frontend y los microservicios `scenario-catalog-service` y `media-service` al Sprint 3.
+
+Al cierre del Avance 4 (Sprint 3), el equipo integró el cliente web de Talki contra el backend productivo, materializando las vistas del producto sobre la plataforma desplegada en el Avance 3. Los principales logros son:
+
+- **Cliente web conectado a las ocho APIs productivas.** Se construyó `talki-frontend` con **Next.js 16** (App Router) + TypeScript + Tailwind CSS 4 + shadcn/ui, implementando las vistas de autenticación, sesiones de práctica, *Live Coach*, dashboard de progreso y ranking, todas consumiendo directamente las URLs productivas de Railway verificadas en el Sprint 2 (sección 5.3.3).
+- **Arquitectura BFF que resuelve el CORS y protege el JWT.** Se implementó una capa *Backend-for-Frontend* con *Route Handlers* de Next.js: un proxy `/api/gateway` hacia los microservicios —que resuelve el CORS ausente en el backend— y endpoints `/api/auth` que custodian el JWT en una cookie `httpOnly`, manteniendo el token fuera del alcance del JavaScript del navegador. El flujo extremo a extremo (registro → login → crear sesión → dashboard) se verificó en vivo contra producción.
+- **Hallazgos de integración formulados como trabajo de infraestructura.** La integración reveló dos brechas del despliegue: la cadena de eventos asíncrona (`fillers → scoring → progress/gamification`) no se refleja en producción porque los microservicios desplegados no comparten un único broker RabbitMQ, y el canal WebSocket de Gemini Live no está expuesto para el feedback en vivo; ambos quedaron documentados en 5.3.3.4 como requisitos del siguiente sprint.
 
 ## Recomendaciones
 
@@ -5056,12 +5363,18 @@ El equipo identifica las siguientes líneas de trabajo prioritarias para dar con
 - **Integrar el cliente real de Gemini Live en `live-coach-service`.** El servicio actual orquesta correctamente las strategies y publica el evento con `transcript_gemini` y métricas acústicas, pero el cliente WebSocket bidireccional contra `gemini-2.0-flash-live-001` aún está representado por un stub académico que recibe el transcript como parámetro. Conectar el cliente real con los buffers de audio del frontend cierra el último gap entre el diseño y la operación de producción.
 - **Formalizar las migraciones de esquema en producción con Flyway o Liquibase.** El perfil `prod` desplegado en el Sprint 2 ya usa PostgreSQL gestionado por Railway con `ddl-auto: update`. El siguiente paso es endurecer el control de esquema migrando a `ddl-auto: validate` con scripts de migración versionados (Flyway o Liquibase), de modo que cada cambio de esquema (`identity`, `sessions`, `scoring`, `progress`, `gamification`) quede trazado y sea reproducible entre entornos.
 - **Implementar tests de integración con Testcontainers (Nivel 2).** El Nivel 1 (unit tests) ya está al 100 %; el Nivel 2 está documentado en la tabla 5.1.1 pero falta materializarse en código. Levantar contenedores efímeros de PostgreSQL 15, RabbitMQ 3 y Redis para verificar la cadena `session.live.finalized` → `fillers.analyzed` → `scoring.completed` → vistas CQRS es el siguiente paso lógico para subir el nivel de confianza del pipeline asíncrono ahora que el backend ya está desplegado en producción.
-- **Construir el frontend Angular contra los contratos REST y AMQP ya implementados.** Los endpoints (`POST /v1/sessions`, `POST /v1/coach/{id}/finalize`, `GET /v1/progress/dashboard`, etc.) y el WebSocket de notificaciones (`WSS /v1/notifications/stream`) están listos del lado backend; el frontend debe consumirlos respetando los DTOs publicados en `talki-commons`.
+- **Construir el frontend Next.js contra los contratos REST y AMQP ya implementados.** Los endpoints (`POST /v1/sessions`, `POST /v1/coach/{id}/finalize`, `GET /v1/progress/dashboard`, etc.) y el WebSocket de notificaciones (`WSS /v1/notifications/stream`) están listos del lado backend; el frontend debe consumirlos respetando los DTOs publicados en `talki-commons`.
 - **Generar el diagrama formal de arquitectura cloud.** Construir la versión visual referida en 5.4.1 con íconos oficiales de Vercel, Railway, Supabase, Upstash y Google Cloud (en Lucidchart, draw.io o Excalidraw) y publicarla en `assets/images/cloud-architecture.png` para completar la evidencia visual del despliegue.
 - **Completar las evidencias visuales del código pendientes en 5.1.2.** Los screenshots del IDE para cada patrón implementado (repositorios JPA, fachada ACL, servicios CQRS, entidades de dominio, refactors RF-01 a RF-05) deben generarse de forma sistemática (capturas etiquetadas con el nombre exacto de la clase Java) para ser incrustadas en la sección 5.1.2 e ilustrar al lector la materialización concreta de los patrones declarados en el Capítulo IV.
 - **Configurar Spotless / Checkstyle y los linters frontend en el pipeline de CI.** Las convenciones del 5.2.3 hoy dependen de la disciplina manual; automatizarlas evita drift entre integrantes y mantiene el estilo del repositorio homogéneo sin requerir code reviews dedicados a formato.
 - **Configurar los registros DNS de `talki.lat` (dominio ya adquirido por el equipo Thropic).** El dominio raíz está reservado; queda pendiente configurar en Cloudflare los registros `CNAME` para `app.talki.lat` (Vercel — frontend), `api.talki.lat` (Railway — API Gateway) y `*.preview.talki.lat` (Vercel Previews por *pull request*), y emitir los certificados TLS automáticos de cada plataforma. Hacerlo antes del despliegue evita esperar por propagación DNS al momento de salir a producción.
 - **Aplicar Behavior-Driven Development (BDD) sobre los criterios de aceptación del Capítulo III.** Los User Stories tienen criterios Given-When-Then formulados; convertirlos en pruebas Cucumber 7 cierra el Nivel 3 de la pirámide (5.1.1) y mantiene trazabilidad explícita requerimientos → código → pruebas.
+
+Tras la integración del cliente web en el Avance 4 (Sprint 3), se suman las siguientes recomendaciones:
+
+- **Unificar los microservicios desplegados en un único broker RabbitMQ.** El cliente confirmó que `live-coach-service` publica `session.live.finalized` (HTTP 202), pero las vistas de progreso y gamificación permanecen en cero: cada mono-repo declara su propio servicio `rabbitmq` en su `docker-compose`, por lo que en Railway los eventos no cruzan entre servicios. Apuntar las variables `RABBITMQ_*` de los ocho servicios a un broker compartido (p. ej. CloudAMQP) restablece la cadena de análisis end-to-end `fillers → scoring → progress/gamification`.
+- **Exponer el WebSocket de Gemini Live en `live-coach-service` y consumirlo desde el cliente.** Para que el usuario reciba el feedback de su exposición en tiempo real (US12 / US15), el servicio debe exponer el canal bidireccional de audio/transcripción y la vista de práctica del frontend debe conectarse a él (work-item T09, reprogramado en 5.3.3.1).
+- **Desplegar `talki-frontend` en Vercel.** El diseño BFF deja el cliente listo para producción configurando las variables `TALKI_*_URL` como *environment variables*; publicarlo en `app.talki.lat` completa la cadena de despliegue del producto y habilita la demostración end-to-end (registro → práctica → feedback) contra las APIs reales.
 
 # Video About-The-Team
 
@@ -5110,7 +5423,7 @@ Todos los repositorios pertenecen a la organización del equipo Thropic (`upc-pr
 | 1 | Organización GitHub | Organización del equipo Thropic (SI657 sección 7940), que agrupa todos los repositorios y el registro de paquetes (`talki-commons`). | https://github.com/upc-pre-202601-si657-7940-thropic |
 | 2 | `talki-project-report` | Repositorio del informe del proyecto de Talki (este documento). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-project-report |
 | 3 | `talki-landing` | Landing page pública del producto (HTML/CSS/JS, desplegada en Vercel). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-landing |
-| 4 | `talki-frontend` | Aplicación web principal de Talki (Angular 17 + TypeScript, desplegada en Vercel). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend |
+| 4 | `talki-frontend` | Aplicación web principal de Talki — cliente **Next.js 16** (App Router) + TypeScript + Tailwind + shadcn/ui con capa **BFF** (JWT en cookie `httpOnly`) que consume las ocho APIs productivas en Railway (Avance 4 / Sprint 3). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend |
 | 5 | `talki-user-services` | Mono-repo backend: `identity-service` (8081) + `notification-service` (8091). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-user-services |
 | 6 | `talki-session-services` | Mono-repo backend: `session-service` (8082) + `live-coach-service` (8083) + `scenario-catalog-service` y `media-service` (Sprint 3). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-session-services |
 | 7 | `talki-analysis-services` | Mono-repo backend: `filler-detection-service` (8087) + `scoring-service` (8088). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-analysis-services |
