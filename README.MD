@@ -5122,8 +5122,13 @@ El cliente web `talki-frontend` quedó **desplegado en producción sobre Vercel*
 | 6 | Despliegue en Vercel | Proyecto `grupo-desarollo-web-fulltstack/talki-frontend` desplegado a *Production* (estado **Ready**); alias público `https://talki-frontend.vercel.app`. | T08 |
 
 <p align="center">
+  <img src="assets/images/frontend/06-vercel-overview.png" width="860" alt="Panel de Vercel con el Production Deployment de talki-frontend" /><br/>
+  <em>Figura 5.3.3.6-a. Panel de <strong>Vercel</strong> (proyecto <code>talki-frontend</code>, team <code>grupo-desarollo-web-fulltstack</code>) mostrando el <strong>Production Deployment</strong> activo del cliente web, con el deployment <code>talki-frontend-avc26fb4e-grupo-desarollo-web-fulltstack.vercel.app</code> y la previsualización de la pantalla de inicio de sesión.</em>
+</p>
+
+<p align="center">
   <img src="assets/images/frontend/05-vercel-dashboard.png" width="820" alt="Cliente web Talki desplegado en Vercel" /><br/>
-  <em>Figura 5.3.3.6-a. Cliente web servido desde <strong><code>https://talki-frontend.vercel.app</code></strong> (Vercel), tras iniciar sesión en producción: el dashboard se renderiza consumiendo las APIs de Railway vía el BFF, con el panel <em>Estado de los servicios</em> en <code>UP</code>.</em>
+  <em>Figura 5.3.3.6-b. Cliente web servido desde <strong><code>https://talki-frontend.vercel.app</code></strong> (Vercel), tras iniciar sesión en producción: el dashboard se renderiza consumiendo las APIs de Railway vía el BFF, con el panel <em>Estado de los servicios</em> en <code>UP</code>.</em>
 </p>
 
 **Puesta en marcha (local contra backend productivo):**
