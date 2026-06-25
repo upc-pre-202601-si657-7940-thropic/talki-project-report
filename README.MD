@@ -110,6 +110,10 @@
 | 2.44 | 15/06/2026 | Gael | Se agrega la **sección 5.3.3 Sprint 3** (Frontend ⇄ Cloud Backend) con sus ocho subsecciones de Sprint Review: Sprint Backlog 3 con tabla HTML de work-items (T01–T13: T01–T08 *Done* del cliente web, T09–T13 *To-Do* reprogramados del Sprint 2 —grabación/feedback en vivo, scenario-catalog/media, landing, exportación, gestión de cuenta— mapeados a los IDs/títulos reales del Product Backlog 3.2), Development Evidence (repo `talki-frontend`, 3 commits), Testing Suite Evidence (build Next.js con type-check + lint verde), Execution Evidence (flujo end-to-end verificado vía BFF contra producción + hallazgos de RabbitMQ no compartido y Gemini Live no expuesto), Microservices Documentation Evidence (traza vista→endpoint), Software Deployment Evidence (publicación del repo), Team Collaboration Insights y Kanban Board (diferido a Avance 4). Se documenta el cliente web en **Next.js 16 + BFF con JWT en cookie `httpOnly`** que resuelve el CORS de los microservicios. Se actualiza el TOC con las entradas 5.3.3.1–5.3.3.8 |
 | 2.45 | 15/06/2026 | Gael | Actualización del **Student Outcome** (Criterios 1 y 2) con la columna **AV4**: se documenta la contribución individual de **Rivera Sosa, Eduardo Gael** en ambos criterios (integración del cliente web `talki-frontend` con arquitectura BFF, JWT en cookie `httpOnly` y verificación end-to-end contra producción) y se redacta el enunciado **general del equipo** de AV4 en la columna de Conclusiones de cada criterio |
 | 2.46 | 17/06/2026 | Manuel | Incorporación de la contribución de infraestructura del Sprint 3 por **Tumi Oliden, Manuel Ignacio**: (a) actualización de **5.3.3.1 Sprint Backlog 3** — T10 (`scenario-catalog-service` puerto 8084 y `media-service` puerto 8085) con especificación técnica de contratos de API, dependencias de infraestructura (Upstash Redis TTL 1 h y bucket de almacenamiento) y deuda explícita hacia el Sprint 4; (b) ampliación de **5.3.3.7 Team Collaboration Insights** con el detalle del rol de infraestructura Railway del Sprint 3 —monitoreo de los 8 servicios Online durante la integración del cliente web, verificación de los endpoints productivos contra el BFF y documentación de las dos brechas de infraestructura identificadas: broker RabbitMQ no compartido entre mono-repos (cadena asíncrona `fillers → scoring → progress/gamification` rota en producción) y WebSocket de Gemini Live no expuesto en `live-coach-service`—; (c) corrección de la tabla de **5.3.3.3 Testing Suite Evidence** para reflejar que el build de producción Next.js 16.2.9 (React 19) compila **14 rutas** sin errores |
+| 2.47 | 25/06/2026 | Alejandro | Desarrollo de las subsecciones de evidencia **5.3.3.4, 5.3.3.5 y 5.3.3.6** del Sprint 3 por **Oroncoy Almeyda, Alejandro Daniel**, con verificación en vivo del cliente `talki-frontend` corrido localmente contra las ocho APIs productivas de Railway (usuario de prueba `userId 13`): (a) **5.3.3.4 Execution Evidence** con la tabla de respuestas reales del flujo registro→dashboard→crear sesión→Live Coach (incluye `POST /v1/sessions`→201 y `GET /v1/coach/modes`→200) y cuatro capturas reales del cliente (login, dashboard, Live Coach y lista de sesiones); (b) **arreglo de código** del *health check* del dashboard (PR `talki-frontend#1`): el cliente consultaba `filler-detection-service` en `GET /health` (404 en producción) — se unifican ambos health checks sobre el `/actuator/health` estándar de los servicios event-driven, de modo que el panel *Estado de los servicios* muestra `filler-detection-service: UP` y `scoring-service: UP`; (c) **5.3.3.5** corrige la fila de *Estado de servicios* a `/actuator/health` y precisa que los servicios de análisis no exponen REST de dominio; (d) **5.3.3.6 Software Deployment Evidence** se completa con el **despliegue real del cliente web en Vercel** (alias público <https://talki-frontend.vercel.app>, proyecto `grupo-desarollo-web-fulltstack/talki-frontend`, estado *Ready*): se cargaron las ocho `TALKI_*_URL` + `TALKI_SESSION_COOKIE` como *Environment Variables* y se verificó el flujo login→dashboard en vivo sobre la URL pública (panel de servicios en `UP`), cerrando la cadena *cloud-native* backend (Railway) + cliente (Vercel). Se versionan las capturas en `assets/images/frontend/` (incluye `05-vercel-dashboard.png`) |
+| 2.48 | 25/06/2026 | Alejandro | **Revisión de coherencia del Sprint 3** tras el despliegue en Vercel: (a) se añade la captura `06-vercel-overview.png` del panel *Production Deployment* de Vercel como Figura 5.3.3.6-a (la del dashboard pasa a 5.3.3.6-b); (b) en **5.3.3.4** se cruza la ejecución local con la URL pública de Vercel (el flujo es reproducible en <https://talki-frontend.vercel.app>, sección 5.3.3.6) y se reformula el *Hallazgo de integración* para enunciarlo como **dependencia arquitectónica** (broker RabbitMQ compartido) sin afirmar códigos de respuesta no verificados directamente; (c) se actualiza la fila de **Oroncoy Almeyda, Alejandro** en la tabla de colaboración **5.3.3.7** para reflejar su aporte real del Sprint (evidencia 5.3.3.4–5.3.3.6, fix del *health check* PR `talki-frontend#1` y despliegue en Vercel) en lugar de la descripción heredada del Sprint anterior |
+| 2.49 | 25/06/2026 | Alejandro | Se corrigen en **5.2.4 Software Deployment Configuration** las **variables de entorno reales** del frontend en Vercel: la tabla de configuración de Vercel y el apartado de *Vercel Environment Variables* sustituyen los nombres genéricos heredados (`NEXT_PUBLIC_API_BASE_URL`, `TALKI_ENV`) por los efectivamente cargados en el proyecto `talki-frontend` (target *Production*): las ocho `TALKI_*_URL` apuntando a Railway + `TALKI_SESSION_COOKIE`, aclarando que son consumidas solo por el BFF del lado servidor (sin prefijo `NEXT_PUBLIC_`, no expuestas al navegador). Estos nombres se actualizarán si la configuración del despliegue cambia |
+| 2.50 | 25/06/2026 | Alejandro | Se unifica el nombre del repositorio de la **landing page** a `landing-page` (antes `talki-landing`) en las 10 referencias del informe (secciones 5.2.2, 5.2.4, 5.4 y anexos de despliegue), alineándolo con el work-item **T11** del Sprint Backlog 3. Nota: el repositorio `landing-page` y su dominio `talki.lat` corresponden a trabajo **reprogramado (To-Do)**; sus referencias en las secciones de configuración describen el estado **planificado** hasta que la landing se cree y despliegue |
 
 <div style="page-break-after: always;"></div>
 
@@ -3926,7 +3930,7 @@ Cada uno de los cuatro mono-repos backend (`talki-user-services`, `talki-session
 
 Para el frontend principal y la landing, el levantamiento es independiente y no requiere Docker:
 
-1. Clonar el repositorio (`talki-frontend` o `talki-landing`).
+1. Clonar el repositorio (`talki-frontend` o `landing-page`).
 2. Instalar Node 20 LTS.
 3. Ejecutar `pnpm install` y luego `pnpm dev` (Next.js) o `npm run dev` (landing).
 4. Configurar el archivo `.env.local` a partir de `.env.example`, apuntando `API_BASE_URL` al API Gateway local o al *staging* en Railway.
@@ -4009,7 +4013,7 @@ A partir de la arquitectura definida en el Capítulo IV (cinco *bounded contexts
 | Repositorio | Tipo | Stack | Microservicios contenidos (puerto local) | Bounded Context / Rol |
 |---|---|---|---|---|
 | `talki-project-report` | Documentación | Markdown | — | Informe académico del curso (este documento). |
-| `talki-landing` | Frontend | HTML / CSS / JavaScript | — | Landing page pública del producto. |
+| `landing-page` | Frontend | HTML / CSS / JavaScript | — | Landing page pública del producto. |
 | `talki-frontend` | Frontend | Next.js 16 + TypeScript | — | Aplicación web principal de Talki. |
 | `talki-user-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `identity-service` (8081), `notification-service` (8091) | Identity & Access BC + Notification BC. |
 | `talki-session-services` | Backend (mono-repo) | Java 17 + Spring Boot 3.2 | `session-service` (8082), `live-coach-service` (8083), `scenario-catalog-service` (8084, sprint siguiente), `media-service` (8085, sprint siguiente) | Practice Session BC. |
@@ -4167,12 +4171,12 @@ Vercel se conecta directamente al repositorio de GitHub mediante la integración
 
 | Aspecto | Configuración |
 |---|---|
-| Repositorios cubiertos | `talki-landing` y `talki-frontend`. |
+| Repositorios cubiertos | `landing-page` y `talki-frontend`. |
 | Trigger de Production Deployment | *Push* a la rama `main`. |
 | Trigger de Preview Deployment | *Push* a cualquier rama `feature/*` y *pull requests* hacia `develop`. |
 | Build command | `next build` / `npm run build` (Next.js o build estático según el proyecto). |
 | Output directory | `.next/` para Next.js; raíz del proyecto para la landing. |
-| Variables de entorno | `NEXT_PUBLIC_API_BASE_URL`, `TALKI_ENV` y otras claves no sensibles definidas en el panel de Vercel por entorno. |
+| Variables de entorno | **Solo del lado servidor (BFF)** — el navegador nunca las ve. En `talki-frontend` (target *Production*) están definidas las ocho URLs de los microservicios (`TALKI_IDENTITY_URL`, `TALKI_SESSION_URL`, `TALKI_COACH_URL`, `TALKI_FILLER_URL`, `TALKI_SCORING_URL`, `TALKI_PROGRESS_URL`, `TALKI_GAMIFICATION_URL`, `TALKI_NOTIFICATION_URL`) apuntando a las URLs productivas de Railway, más `TALKI_SESSION_COOKIE` (nombre de la cookie `httpOnly` del JWT). |
 | Dominios | Dominio principal en producción (por definir); subdominios automáticos `*.vercel.app` para *previews*. |
 | Headers y caching | Configuración mediante `vercel.json` con cabeceras de seguridad (CSP, HSTS) y *cache-control* para assets estáticos. |
 
@@ -4199,7 +4203,7 @@ Railway aloja los ocho microservicios backend, el *broker* RabbitMQ compartido y
 Todas las credenciales y *secrets* se administran fuera del repositorio Git y se inyectan en tiempo de despliegue mediante los mecanismos nativos de cada plataforma:
 
 - **GitHub Secrets**: tokens de despliegue, claves de API y credenciales de servicios externos requeridas por los *workflows* de CI/CD.
-- **Vercel Environment Variables**: configuración del frontend y la landing por entorno (Production / Preview / Development).
+- **Vercel Environment Variables**: configuración del frontend y la landing por entorno (Production / Preview / Development). En `talki-frontend` son las ocho `TALKI_*_URL` (→ Railway) y `TALKI_SESSION_COOKIE`, todas consumidas únicamente por los *Route Handlers* del BFF del lado servidor; ninguna lleva el prefijo `NEXT_PUBLIC_`, por lo que no se exponen al bundle del navegador.
 - **Railway Variables**: configuración de cada microservicio backend y de sus bases de datos por entorno.
 - **Repositorio Git**: nunca se commitean archivos `.env` ni claves; el `.gitignore` incluye `.env`, `.env.*` y `*.pem`. Cada repositorio incluye un archivo `.env.example` con los nombres de variables requeridas y valores ficticios.
 
@@ -4227,7 +4231,7 @@ El equipo selecciona **[SonarCloud](https://sonarcloud.io)** —la versión SaaS
 
 1. **Gratuidad para proyectos open source** alojados en GitHub bajo organizaciones públicas (caso de `upc-pre-202601-si657-7940-thropic`), eliminando cualquier costo operativo durante la fase académica.
 2. **Integración nativa con GitHub Actions y con Pull Requests**: cada PR recibe automáticamente un *check* de SonarCloud que comenta en línea los issues encontrados y bloquea el merge si el *quality gate* falla, materializando la táctica de detección temprana del 4.1.7.
-3. **Cobertura multi-lenguaje en un solo dashboard**: analiza tanto Java + Spring Boot (los 8 microservicios) como TypeScript + Next.js (`talki-frontend`) y HTML/CSS (`talki-landing`) sin requerir agentes separados, cumpliendo el principio P7 (consistencia transversal del toolchain).
+3. **Cobertura multi-lenguaje en un solo dashboard**: analiza tanto Java + Spring Boot (los 8 microservicios) como TypeScript + Next.js (`talki-frontend`) y HTML/CSS (`landing-page`) sin requerir agentes separados, cumpliendo el principio P7 (consistencia transversal del toolchain).
 
 **Reglas principales del Quality Gate**
 
@@ -5044,28 +5048,46 @@ La verificación de calidad del cliente web en este Sprint se apoya en el **buil
 
 #### 5.3.3.4. Execution Evidence for Sprint Review
 
-Al cierre del Sprint 3, el cliente web `talki-frontend` ejecuta **localmente consumiendo las APIs productivas de Railway** (sin backend local): la capa BFF actúa como pasarela y autentica cada llamada con el JWT de la cookie. El flujo extremo a extremo se **verificó en vivo contra producción** a través de los endpoints del propio cliente (`/api/auth/*` y `/api/gateway/*`), con las siguientes respuestas reales:
+Al cierre del Sprint 3, el cliente web `talki-frontend` ejecuta **localmente consumiendo las APIs productivas de Railway** (sin backend local): la capa BFF actúa como pasarela y autentica cada llamada con el JWT de la cookie. El flujo extremo a extremo se **verificó en vivo contra producción** (25/06/2026) a través de los endpoints del propio cliente (`/api/auth/*` y `/api/gateway/*`). La siguiente tabla recoge las **respuestas reales** observadas en la pestaña *Network* del navegador al ejercitar el flujo *registro → dashboard → crear sesión → Live Coach* con el usuario de prueba `alejo.demo.av4@upc.edu.pe` (al que el `identity-service` asignó `userId 13`):
 
 | # | Acción (a través del BFF del cliente) | Microservicio productivo | Resultado |
 |---|---|---|---|
-| 1 | `POST /api/auth/register` (registro + auto-login, setea cookie JWT) | `identity-service` | ✅ 200 — usuario creado |
-| 2 | `GET /api/auth/me` (sesión activa desde la cookie) | — (BFF) | ✅ 200 — `{ userId, email }` |
-| 3 | `GET /api/gateway/coach/v1/coach/modes` | `live-coach-service` | ✅ 200 — modos disponibles |
-| 4 | `POST /api/gateway/session/v1/sessions` (requiere JWT) | `session-service` | ✅ 201 — sesión creada |
-| 5 | `GET /api/gateway/session/v1/sessions?userId=…` | `session-service` | ✅ 200 — listado |
-| 6 | `GET /api/gateway/progress/v1/progress/dashboard?userId=…` | `progress-service` | ✅ 200 — dashboard |
+| 1 | `POST /api/auth/register` (registro + auto-login, setea cookie JWT) | `identity-service` | ✅ 200 — usuario creado (`userId 13`) |
+| 2 | `GET /api/gateway/session/v1/sessions?userId=13` | `session-service` | ✅ 200 — listado |
+| 3 | `GET /api/gateway/progress/v1/progress/dashboard?userId=13` | `progress-service` | ✅ 200 — dashboard |
+| 4 | `GET /api/gateway/gamification/v1/gamification/streaks/13` | `gamification-service` | ✅ 200 — rachas / XP |
+| 5 | `GET /api/gateway/filler/actuator/health` | `filler-detection-service` | ✅ 200 — `UP` |
+| 6 | `GET /api/gateway/scoring/actuator/health` | `scoring-service` | ✅ 200 — `UP` |
+| 7 | `POST /api/gateway/session/v1/sessions` (tipo `thesis_defense`, requiere JWT) | `session-service` | ✅ 201 — sesión creada (`id 4`) |
+| 8 | `GET /api/gateway/coach/v1/coach/modes` | `live-coach-service` | ✅ 200 — 4 modos renderizados |
 
-> La verificación confirma que la capa BFF **propaga correctamente el JWT**: el `session-service` exige autenticación y respondió 201/200 a las llamadas enrutadas con el token de la cookie. El cliente también renderiza el dashboard de progreso, el ranking y los modos del *Live Coach* contra los servicios reales.
+> La verificación confirma que la capa BFF **propaga correctamente el JWT**: el `session-service` exige autenticación y respondió 201/200 a las llamadas enrutadas con el token de la cookie `httpOnly`. El cliente renderiza el dashboard de progreso, el panel de estado de servicios y los modos del *Live Coach* contra los servicios reales en producción. El mismo flujo es **reproducible sobre la URL pública** del cliente desplegado en Vercel —<https://talki-frontend.vercel.app>— cuya evidencia de despliegue se documenta en la sección 5.3.3.6.
 
-**Capturas de la ejecución del cliente web** (tema claro, navegación lateral estilo *workspace*):
+**Capturas de la ejecución del cliente web** (corrido localmente contra las APIs productivas de Railway):
 
-> _[COMPLETAR: captura de la pantalla de **login** en tema claro — sugerido `assets/images/frontend/01-login.png`]._
->
-> _[COMPLETAR: captura del **dashboard** con métricas de progreso y estado de servicios — sugerido `assets/images/frontend/02-dashboard.png`]._
->
-> _[COMPLETAR: captura de la vista **Live Coach** y de la **lista de sesiones** con la barra lateral — sugerido `assets/images/frontend/03-coach-sessions.png`]._
+<p align="center">
+  <img src="assets/images/frontend/01-login.png" width="420" alt="Pantalla de inicio de sesión de Talki" /><br/>
+  <em>Figura 5.3.3.4-a. Pantalla de <strong>inicio de sesión</strong> del cliente web (tema claro).</em>
+</p>
 
-> **Hallazgo de integración (para el equipo de backend).** Aunque `live-coach-service` acepta y publica el evento `session.live.finalized` (HTTP 202 verificado), las vistas de `progress-service` y `gamification-service` permanecen en cero tras finalizar prácticas: la cadena asíncrona `fillers → scoring → progress/gamification` **no se refleja en producción**. La causa más probable es que los microservicios desplegados **no comparten un único broker RabbitMQ** (cada mono-repo declara su propio servicio `rabbitmq` en su `docker-compose`), por lo que el evento publicado por un servicio no llega a los consumidores de otro. Queda como pendiente de infraestructura: apuntar las variables `RABBITMQ_*` de los ocho servicios a un **broker compartido** (p. ej. CloudAMQP) en Railway.
+<p align="center">
+  <img src="assets/images/frontend/02-dashboard.png" width="780" alt="Dashboard de progreso con estado de servicios" /><br/>
+  <em>Figura 5.3.3.4-b. <strong>Dashboard</strong> del usuario recién registrado: métricas de progreso en cero y panel <em>Estado de los servicios</em> con <code>filler-detection-service: UP</code> y <code>scoring-service: UP</code> consultados en vivo contra producción.</em>
+</p>
+
+<p align="center">
+  <img src="assets/images/frontend/03-coach.png" width="780" alt="Vista Live Coach con los modos de práctica" /><br/>
+  <em>Figura 5.3.3.4-c. Vista <strong>Live Coach</strong>: los cuatro modos (<code>quick_practice</code>, <code>interview</code>, <code>thesis_defense</code>, <code>scenario</code>) provienen de <code>GET /v1/coach/modes</code> del <code>live-coach-service</code> productivo.</em>
+</p>
+
+<p align="center">
+  <img src="assets/images/frontend/04-sessions.png" width="780" alt="Lista de sesiones con la sesión creada" /><br/>
+  <em>Figura 5.3.3.4-d. Lista de <strong>sesiones</strong> tras crear en producción la sesión <em>«Sustentación de tesis — práctica AV4»</em> (<code>thesis_defense</code>, estado <em>Borrador</em>), retornada por <code>POST /v1/sessions</code> → 201.</em>
+</p>
+
+> **Corrección aplicada durante el Sprint (health checks).** La primera verificación reveló que el panel *Estado de los servicios* solo mostraba `scoring-service`: el cliente consultaba el `filler-detection-service` en `GET /health`, ruta inexistente que devolvía **404** en producción. Ambos servicios de análisis son **event-driven** (no exponen REST de dominio) y su único endpoint de salud es el **`/actuator/health` estándar de Spring** habilitado en los ocho microservicios desde el Sprint 2. Se corrigió el cliente para que ambos health checks consulten `/actuator/health` (PR [`talki-frontend#1`](https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend/pull/1)); tras el fix, el panel muestra **ambos servicios `UP`** (Figura 5.3.3.4-b), como confirman las filas 5 y 6 de la tabla anterior.
+
+> **Hallazgo de integración (para el equipo de backend).** La cadena de análisis asíncrona (`session.live.finalized` → `fillers → scoring → progress/gamification`) **depende de que los ocho microservicios compartan un único broker RabbitMQ**. En el despliegue actual cada mono-repo declara su propio servicio `rabbitmq` en su `docker-compose`, por lo que un evento publicado por un servicio no alcanzaría a los consumidores de otro mono-repo; en consecuencia, las métricas de `progress-service` y `gamification-service` no llegarían a poblarse a partir de prácticas finalizadas. Queda como pendiente de infraestructura: apuntar las variables `RABBITMQ_*` de los ocho servicios a un **broker compartido** (p. ej. CloudAMQP) en Railway.
 
 > **Pendiente de producto.** El *feedback de la exposición en vivo* (Gemini Live) requiere el canal WebSocket bidireccional de `live-coach-service`, no expuesto en el despliegue actual; por eso el cliente publica el evento de finalización pero aún no recibe el feedback conversacional en tiempo real (work-item T09, reprogramado).
 
@@ -5082,33 +5104,45 @@ El cliente web consume los contratos **OpenAPI 3** documentados en el Sprint 2 (
 | Live Coach | `live-coach-service` | `/v1/coach/modes`, `/v1/coach/{id}/finalize` | GET / POST |
 | Dashboard | `progress-service` | `/v1/progress/dashboard?userId` | GET |
 | Ranking / Rachas | `gamification-service` | `/v1/gamification/leaderboard`, `/v1/gamification/streaks/{userId}` | GET |
-| Estado de servicios | `filler-detection-service`, `scoring-service` | `/health`, `/v1/scores/health` | GET |
+| Estado de servicios | `filler-detection-service`, `scoring-service` | `/actuator/health` | GET |
 
-> El cliente no inventa rutas: cada llamada corresponde a un endpoint publicado en la spec `/v3/api-docs` de las URLs productivas listadas en 5.3.2.4. Los servicios `filler-detection` y `scoring` son **event-driven** (solo exponen *health*), de modo que el cliente refleja su estado pero no los invoca directamente para análisis: ese trabajo viaja por RabbitMQ.
+> El cliente no inventa rutas: cada llamada corresponde a un endpoint publicado en la spec `/v3/api-docs` de las URLs productivas listadas en 5.3.2.4. Los servicios `filler-detection` y `scoring` son **event-driven**: no exponen REST de dominio (su `/v3/api-docs` no declara *paths* propios), por lo que el cliente refleja su **estado de salud** vía el endpoint estándar `/actuator/health` —habilitado en los ocho microservicios desde el Sprint 2— pero no los invoca para análisis: ese trabajo viaja por RabbitMQ (`session.live.finalized` → `fillers.analyzed` → `scoring`). Esta es la razón del fix de health checks documentado en 5.3.3.4.
 
 #### 5.3.3.6. Software Deployment Evidence for Sprint Review
 
-El entregable de despliegue del Sprint 3 es la **publicación del repositorio `talki-frontend`** en la organización del equipo, con la configuración lista para correr contra el backend productivo:
+El cliente web `talki-frontend` quedó **desplegado en producción sobre Vercel** (PaaS para aplicaciones Next.js), consumiendo las ocho APIs productivas de Railway a través de su capa BFF. Esto completa la cadena de despliegue *cloud-native* del producto: **backend en Railway** (Sprint 2, sección 5.3.2.6) + **cliente web en Vercel** (este Sprint).
 
+🔗 **Cliente web (producción):** <https://talki-frontend.vercel.app>
 🔗 **Repositorio:** <https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend>
 
 | # | Paso | Detalle | Work-Item |
 |---|---|---|---|
 | 1 | Inicialización | Proyecto Next.js 16 (App Router) + TypeScript + Tailwind 4 + shadcn/ui, con `pnpm`. | T01 |
-| 2 | Configuración de entorno | `.env.example` documenta las URLs **locales** y las **productivas de Railway**; el `.env.local` apunta por defecto a producción. Las URLs solo se usan del lado servidor (BFF). | T02, T08 |
-| 3 | Capa BFF | *Route Handlers* `/api/gateway` y `/api/auth`; el JWT viaja en cookie `httpOnly`, resolviendo el CORS de los microservicios. | T02 |
-| 4 | Build de producción | `pnpm build` genera el bundle optimizado (14 rutas) con type-check + lint en verde. | T03 |
-| 5 | Publicación | Repositorio creado y *pusheado* a `main`; tres commits del Sprint (5.3.3.2). | T08 |
+| 2 | Configuración de entorno | `.env.example` documenta las URLs **locales** y las **productivas de Railway**; las URLs solo se usan del lado servidor (BFF). En Vercel se cargan las ocho `TALKI_*_URL` + `TALKI_SESSION_COOKIE` como *Environment Variables* (target *Production*). | T02, T08 |
+| 3 | Capa BFF | *Route Handlers* `/api/gateway` y `/api/auth`; el JWT viaja en cookie `httpOnly`, resolviendo el CORS de los microservicios sin tocar su configuración. | T02 |
+| 4 | Build de producción | `pnpm build` genera el bundle optimizado (14 rutas) con type-check + lint en verde, tanto en local como en el *build* de Vercel. | T03 |
+| 5 | Verificación contra producción | Flujo extremo a extremo verificado (5.3.3.4) y corregido el *health check* del panel de servicios (PR [`talki-frontend#1`](https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend/pull/1)). | T04 |
+| 6 | Despliegue en Vercel | Proyecto `grupo-desarollo-web-fulltstack/talki-frontend` desplegado a *Production* (estado **Ready**); alias público `https://talki-frontend.vercel.app`. | T08 |
+
+<p align="center">
+  <img src="assets/images/frontend/06-vercel-overview.png" width="860" alt="Panel de Vercel con el Production Deployment de talki-frontend" /><br/>
+  <em>Figura 5.3.3.6-a. Panel de <strong>Vercel</strong> (proyecto <code>talki-frontend</code>, team <code>grupo-desarollo-web-fulltstack</code>) mostrando el <strong>Production Deployment</strong> activo del cliente web, con el deployment <code>talki-frontend-avc26fb4e-grupo-desarollo-web-fulltstack.vercel.app</code> y la previsualización de la pantalla de inicio de sesión.</em>
+</p>
+
+<p align="center">
+  <img src="assets/images/frontend/05-vercel-dashboard.png" width="820" alt="Cliente web Talki desplegado en Vercel" /><br/>
+  <em>Figura 5.3.3.6-b. Cliente web servido desde <strong><code>https://talki-frontend.vercel.app</code></strong> (Vercel), tras iniciar sesión en producción: el dashboard se renderiza consumiendo las APIs de Railway vía el BFF, con el panel <em>Estado de los servicios</em> en <code>UP</code>.</em>
+</p>
 
 **Puesta en marcha (local contra backend productivo):**
 
 ```bash
-cp .env.example .env.local   # ya apunta a las URLs de Railway
+cp .env.example .env.local   # luego reemplaza las URLs por las productivas de Railway
 pnpm install
-pnpm dev                     # http://localhost:3000
+pnpm dev                     # http://localhost:3000 (o el primer puerto libre)
 ```
 
-> El diseño BFF deja el cliente **listo para desplegar en Vercel** (o cualquier host de Next.js) configurando las mismas variables `TALKI_*_URL` como *environment variables* del proyecto. El despliegue público del frontend en Vercel queda como siguiente paso. _[COMPLETAR: URL pública del cliente web una vez desplegado en Vercel]._
+> Al vivir todas las llamadas detrás de los *Route Handlers* del lado servidor, el despliegue en Vercel solo requirió definir las variables `TALKI_*_URL` como *Environment Variables* del proyecto, **sin ningún cambio de CORS** en los ocho microservicios. El login, la creación de sesiones y el panel de estado de servicios se verificaron en vivo sobre la URL pública (Figura 5.3.3.6-a).
 
 #### 5.3.3.7. Team Collaboration Insights during Sprint
 
@@ -5118,7 +5152,7 @@ Durante el Sprint 3, el trabajo se concentró en el nuevo repositorio `talki-fro
 |---|---|---|---|
 | **Rivera Sosa, Eduardo Gael** | `gael-rs` | Frontend / Integración | Desarrolló `talki-frontend` (Next.js): capa BFF con JWT en cookie `httpOnly`, cliente tipado y las vistas de autenticación, sesiones, *Live Coach*, dashboard y ranking; verificación end-to-end contra producción (T01–T08). |
 | **Tumi Oliden, Manuel Ignacio** | `Manuel2224` | DevOps / Infraestructura | Monitoreo y soporte de los 8 servicios Online en Railway durante la fase de integración del cliente web: verificó que las URLs productivas respondían correctamente al BFF (health checks, endpoints de autenticación y sesiones), documentó las **dos brechas de infraestructura** detectadas en la integración —(1) broker RabbitMQ no compartido entre mono-repos (cadena `fillers → scoring → progress/gamification` rota en producción) y (2) WebSocket de Gemini Live no expuesto en `live-coach-service`— y especificó el diseño técnico de los microservicios **T10** (`scenario-catalog-service` puerto 8084 con catálogo de escenarios peruanos + Upstash Redis, y `media-service` puerto 8085 con presigned URLs) pendientes de implementación para el Sprint 4. |
-| **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Backend / Calidad | Mantenimiento de los contratos OpenAPI y la suite de 128 unit tests que respaldan las APIs consumidas por el cliente. |
+| **Oroncoy Almeyda, Alejandro Daniel** | `Alejandro Oroncoy` | Evidencia / Fix / Deploy | Redactó la evidencia de *Sprint Review* **5.3.3.4–5.3.3.6** (Execution, Documentation y Deployment) verificando el flujo end-to-end del cliente en vivo contra producción; **corrigió el *health check* del dashboard** (PR [`talki-frontend#1`](https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend/pull/1), unificado sobre `/actuator/health`) y **desplegó el cliente web en Vercel** (<https://talki-frontend.vercel.app>). Mantiene además los contratos OpenAPI y la suite de 128 unit tests que respaldan las APIs consumidas. |
 
 > _[COMPLETAR: grafo de **Contributors** (Insights → Contributors) del repositorio `talki-frontend` — sugerido `assets/images/collaboration/contributors-frontend.png`]._
 
@@ -5147,7 +5181,7 @@ Antes de seleccionar la infraestructura concreta del producto Talki, el equipo e
 | 1 | **IaaS** — *Infrastructure as a Service* | El proveedor entrega máquinas virtuales, redes y almacenamiento crudos; el equipo administra el sistema operativo, el runtime y la aplicación. | Sistema operativo, parches de seguridad, runtime de Java/Node, balanceadores, networking, escalado manual. | AWS EC2, Google Compute Engine, Azure VM. | **Descartado.** Sobrecarga operativa incompatible con la restricción C-13 del Capítulo IV (capacidad limitada del equipo académico) y con el ciclo de TP1. |
 | 2 | **PaaS** — *Platform as a Service* | El proveedor administra la infraestructura, el runtime y el *autoscaling*; el equipo solo aporta el código y la configuración. | Código fuente, variables de entorno, dependencias declaradas. | Railway, Vercel, Heroku, Google App Engine, Fly.io. | **Adoptado para los 8 microservicios backend + frontend + landing.** Railway aloja Java + Spring Boot, RabbitMQ y bases PostgreSQL; Vercel aloja Next.js + landing estática. Cumple QAS-09 (despliegue continuo) y permite *rolling updates* sin tiempo de inactividad observable. |
 | 3 | **SaaS / BaaS** — *Software / Backend as a Service* | El proveedor entrega un servicio terminado vía API; el equipo consume funcionalidad sin administrar código del backend del servicio. | Únicamente las credenciales de acceso y la integración cliente. | Supabase Storage, Upstash Redis, Google Gemini Live API, Resend, SendGrid. | **Adoptado para capacidades transversales.** Supabase Storage gestiona materiales del usuario (CV, plantillas) con presigned URLs sin operar buckets propios; Upstash Redis provee el caché de scoring y *rate limiting*; Gemini Live API entrega el `transcript_gemini` en tiempo real evitando un *transcription-service* propio (DD-15, ADB-22, Ley 29733). |
-| 4 | **FaaS / Serverless / Edge** — *Function as a Service* | El proveedor ejecuta funciones cortas bajo demanda con escalado a cero; el equipo escribe únicamente la función. | Lógica de la función y *trigger* (HTTP, eventos). | Vercel Edge Functions, AWS Lambda, Cloudflare Workers, Google Cloud Functions. | **Adoptado parcialmente para el edge del frontend.** Vercel Edge Network distribuye los assets estáticos de `talki-landing` y `talki-frontend` con CDN global y caché por región; los microservicios Java se mantienen en PaaS por incompatibilidad de tiempos de *cold start* del JVM con FaaS para los flujos de QAS-02 (≤ 500 ms P95). |
+| 4 | **FaaS / Serverless / Edge** — *Function as a Service* | El proveedor ejecuta funciones cortas bajo demanda con escalado a cero; el equipo escribe únicamente la función. | Lógica de la función y *trigger* (HTTP, eventos). | Vercel Edge Functions, AWS Lambda, Cloudflare Workers, Google Cloud Functions. | **Adoptado parcialmente para el edge del frontend.** Vercel Edge Network distribuye los assets estáticos de `landing-page` y `talki-frontend` con CDN global y caché por región; los microservicios Java se mantienen en PaaS por incompatibilidad de tiempos de *cold start* del JVM con FaaS para los flujos de QAS-02 (≤ 500 ms P95). |
 
 **Justificación de la combinación.** Talki adopta una arquitectura híbrida **PaaS + SaaS/BaaS + Edge/FaaS** en lugar de un único modelo, por las siguientes razones trazables a los drivers:
 
@@ -5182,7 +5216,7 @@ La arquitectura cloud de Talki sigue una topología de **microservicios desplega
 
 | Capa | Componente desplegado | Plataforma | Tecnología | Acceso |
 |---|---|---|---|---|
-| Edge / CDN | `talki-landing` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.lat`) |
+| Edge / CDN | `landing-page` | Vercel | HTML + CSS + JavaScript | Público (`https://talki.lat`) |
 | Edge / CDN | `talki-frontend` | Vercel | Next.js + TypeScript | Público (`https://app.talki.lat`) |
 | API Gateway | API Gateway / BFF | Railway | Spring Cloud Gateway | Público (`https://api.talki.lat`) |
 | Servicios | `identity-service` | Railway | Java + Spring Boot | Privado (red interna) |
@@ -5203,7 +5237,7 @@ La arquitectura cloud de Talki sigue una topología de **microservicios desplega
 
 El siguiente listado representa los flujos de comunicación entre los componentes desplegados, complementando la tabla anterior:
 
-1. El **usuario final** accede a `talki-landing` y a `talki-frontend` desde su navegador, ambos servidos por la red CDN global de Vercel.
+1. El **usuario final** accede a `landing-page` y a `talki-frontend` desde su navegador, ambos servidos por la red CDN global de Vercel.
 2. El **frontend** consume exclusivamente el **API Gateway** público de Railway mediante HTTPS, autenticando cada solicitud con un *bearer token* JWT emitido por el `identity-service`.
 3. El **API Gateway** enruta las solicitudes a los microservicios correspondientes a través de la red privada interna de Railway, sin exposición pública.
 4. Cada **microservicio** se conecta exclusivamente a **su propia base de datos PostgreSQL** (patrón *database-per-service*), prohibiendo accesos cruzados.
@@ -5221,7 +5255,7 @@ Esta subsección describe los aspectos operacionales del despliegue de la arquit
 
 | Dominio | Apunta a | Propósito |
 |---|---|---|
-| `talki.lat` | Vercel (`talki-landing`) | Landing pública del producto. |
+| `talki.lat` | Vercel (`landing-page`) | Landing pública del producto. |
 | `app.talki.lat` | Vercel (`talki-frontend`) | Aplicación web principal autenticada. |
 | `api.talki.lat` | Railway (API Gateway) | Endpoint público de la API REST. |
 | `*.preview.talki.lat` | Vercel Previews | Subdominios automáticos por *pull request* para validación. |
@@ -5423,7 +5457,7 @@ Todos los repositorios pertenecen a la organización del equipo Thropic (`upc-pr
 |---|-------------|-------------|-----|
 | 1 | Organización GitHub | Organización del equipo Thropic (SI657 sección 7940), que agrupa todos los repositorios y el registro de paquetes (`talki-commons`). | https://github.com/upc-pre-202601-si657-7940-thropic |
 | 2 | `talki-project-report` | Repositorio del informe del proyecto de Talki (este documento). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-project-report |
-| 3 | `talki-landing` | Landing page pública del producto (HTML/CSS/JS, desplegada en Vercel). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-landing |
+| 3 | `landing-page` | Landing page pública del producto (HTML/CSS/JS, desplegada en Vercel). | https://github.com/upc-pre-202601-si657-7940-thropic/landing-page |
 | 4 | `talki-frontend` | Aplicación web principal de Talki — cliente **Next.js 16** (App Router) + TypeScript + Tailwind + shadcn/ui con capa **BFF** (JWT en cookie `httpOnly`) que consume las ocho APIs productivas en Railway (Avance 4 / Sprint 3). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend |
 | 5 | `talki-user-services` | Mono-repo backend: `identity-service` (8081) + `notification-service` (8091). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-user-services |
 | 6 | `talki-session-services` | Mono-repo backend: `session-service` (8082) + `live-coach-service` (8083) + `scenario-catalog-service` y `media-service` (Sprint 3). | https://github.com/upc-pre-202601-si657-7940-thropic/talki-session-services |
@@ -5455,7 +5489,7 @@ Las ocho URLs fueron verificadas con respuesta HTTP 200 el 07/06/2026 (sección 
 
 | # | Dominio | Destino | URL |
 |---|---------|---------|-----|
-| 18 | `talki.lat` | Landing pública (Vercel · `talki-landing`). | https://talki.lat |
+| 18 | `talki.lat` | Landing pública (Vercel · `landing-page`). | https://talki.lat |
 | 19 | `app.talki.lat` | Aplicación web autenticada (Vercel · `talki-frontend`). | https://app.talki.lat |
 | 20 | `api.talki.lat` | Endpoint público de la API REST (Railway · API Gateway). | https://api.talki.lat |
 
