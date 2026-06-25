@@ -110,6 +110,7 @@
 | 2.44 | 15/06/2026 | Gael | Se agrega la **sección 5.3.3 Sprint 3** (Frontend ⇄ Cloud Backend) con sus ocho subsecciones de Sprint Review: Sprint Backlog 3 con tabla HTML de work-items (T01–T13: T01–T08 *Done* del cliente web, T09–T13 *To-Do* reprogramados del Sprint 2 —grabación/feedback en vivo, scenario-catalog/media, landing, exportación, gestión de cuenta— mapeados a los IDs/títulos reales del Product Backlog 3.2), Development Evidence (repo `talki-frontend`, 3 commits), Testing Suite Evidence (build Next.js con type-check + lint verde), Execution Evidence (flujo end-to-end verificado vía BFF contra producción + hallazgos de RabbitMQ no compartido y Gemini Live no expuesto), Microservices Documentation Evidence (traza vista→endpoint), Software Deployment Evidence (publicación del repo), Team Collaboration Insights y Kanban Board (diferido a Avance 4). Se documenta el cliente web en **Next.js 16 + BFF con JWT en cookie `httpOnly`** que resuelve el CORS de los microservicios. Se actualiza el TOC con las entradas 5.3.3.1–5.3.3.8 |
 | 2.45 | 15/06/2026 | Gael | Actualización del **Student Outcome** (Criterios 1 y 2) con la columna **AV4**: se documenta la contribución individual de **Rivera Sosa, Eduardo Gael** en ambos criterios (integración del cliente web `talki-frontend` con arquitectura BFF, JWT en cookie `httpOnly` y verificación end-to-end contra producción) y se redacta el enunciado **general del equipo** de AV4 en la columna de Conclusiones de cada criterio |
 | 2.46 | 17/06/2026 | Manuel | Incorporación de la contribución de infraestructura del Sprint 3 por **Tumi Oliden, Manuel Ignacio**: (a) actualización de **5.3.3.1 Sprint Backlog 3** — T10 (`scenario-catalog-service` puerto 8084 y `media-service` puerto 8085) con especificación técnica de contratos de API, dependencias de infraestructura (Upstash Redis TTL 1 h y bucket de almacenamiento) y deuda explícita hacia el Sprint 4; (b) ampliación de **5.3.3.7 Team Collaboration Insights** con el detalle del rol de infraestructura Railway del Sprint 3 —monitoreo de los 8 servicios Online durante la integración del cliente web, verificación de los endpoints productivos contra el BFF y documentación de las dos brechas de infraestructura identificadas: broker RabbitMQ no compartido entre mono-repos (cadena asíncrona `fillers → scoring → progress/gamification` rota en producción) y WebSocket de Gemini Live no expuesto en `live-coach-service`—; (c) corrección de la tabla de **5.3.3.3 Testing Suite Evidence** para reflejar que el build de producción Next.js 16.2.9 (React 19) compila **14 rutas** sin errores |
+| 2.47 | 25/06/2026 | Alejandro | Desarrollo de las subsecciones de evidencia **5.3.3.4, 5.3.3.5 y 5.3.3.6** del Sprint 3 por **Oroncoy Almeyda, Alejandro Daniel**, con verificación en vivo del cliente `talki-frontend` corrido localmente contra las ocho APIs productivas de Railway (usuario de prueba `userId 13`): (a) **5.3.3.4 Execution Evidence** con la tabla de respuestas reales del flujo registro→dashboard→crear sesión→Live Coach (incluye `POST /v1/sessions`→201 y `GET /v1/coach/modes`→200) y cuatro capturas reales del cliente (login, dashboard, Live Coach y lista de sesiones); (b) **arreglo de código** del *health check* del dashboard (PR `talki-frontend#1`): el cliente consultaba `filler-detection-service` en `GET /health` (404 en producción) — se unifican ambos health checks sobre el `/actuator/health` estándar de los servicios event-driven, de modo que el panel *Estado de los servicios* muestra `filler-detection-service: UP` y `scoring-service: UP`; (c) **5.3.3.5** corrige la fila de *Estado de servicios* a `/actuator/health` y precisa que los servicios de análisis no exponen REST de dominio; (d) **5.3.3.6** añade el paso de verificación contra producción y el fix. Se versionan las capturas en `assets/images/frontend/` |
 
 <div style="page-break-after: always;"></div>
 
@@ -5044,26 +5045,44 @@ La verificación de calidad del cliente web en este Sprint se apoya en el **buil
 
 #### 5.3.3.4. Execution Evidence for Sprint Review
 
-Al cierre del Sprint 3, el cliente web `talki-frontend` ejecuta **localmente consumiendo las APIs productivas de Railway** (sin backend local): la capa BFF actúa como pasarela y autentica cada llamada con el JWT de la cookie. El flujo extremo a extremo se **verificó en vivo contra producción** a través de los endpoints del propio cliente (`/api/auth/*` y `/api/gateway/*`), con las siguientes respuestas reales:
+Al cierre del Sprint 3, el cliente web `talki-frontend` ejecuta **localmente consumiendo las APIs productivas de Railway** (sin backend local): la capa BFF actúa como pasarela y autentica cada llamada con el JWT de la cookie. El flujo extremo a extremo se **verificó en vivo contra producción** (25/06/2026) a través de los endpoints del propio cliente (`/api/auth/*` y `/api/gateway/*`). La siguiente tabla recoge las **respuestas reales** observadas en la pestaña *Network* del navegador al ejercitar el flujo *registro → dashboard → crear sesión → Live Coach* con el usuario de prueba `alejo.demo.av4@upc.edu.pe` (al que el `identity-service` asignó `userId 13`):
 
 | # | Acción (a través del BFF del cliente) | Microservicio productivo | Resultado |
 |---|---|---|---|
-| 1 | `POST /api/auth/register` (registro + auto-login, setea cookie JWT) | `identity-service` | ✅ 200 — usuario creado |
-| 2 | `GET /api/auth/me` (sesión activa desde la cookie) | — (BFF) | ✅ 200 — `{ userId, email }` |
-| 3 | `GET /api/gateway/coach/v1/coach/modes` | `live-coach-service` | ✅ 200 — modos disponibles |
-| 4 | `POST /api/gateway/session/v1/sessions` (requiere JWT) | `session-service` | ✅ 201 — sesión creada |
-| 5 | `GET /api/gateway/session/v1/sessions?userId=…` | `session-service` | ✅ 200 — listado |
-| 6 | `GET /api/gateway/progress/v1/progress/dashboard?userId=…` | `progress-service` | ✅ 200 — dashboard |
+| 1 | `POST /api/auth/register` (registro + auto-login, setea cookie JWT) | `identity-service` | ✅ 200 — usuario creado (`userId 13`) |
+| 2 | `GET /api/gateway/session/v1/sessions?userId=13` | `session-service` | ✅ 200 — listado |
+| 3 | `GET /api/gateway/progress/v1/progress/dashboard?userId=13` | `progress-service` | ✅ 200 — dashboard |
+| 4 | `GET /api/gateway/gamification/v1/gamification/streaks/13` | `gamification-service` | ✅ 200 — rachas / XP |
+| 5 | `GET /api/gateway/filler/actuator/health` | `filler-detection-service` | ✅ 200 — `UP` |
+| 6 | `GET /api/gateway/scoring/actuator/health` | `scoring-service` | ✅ 200 — `UP` |
+| 7 | `POST /api/gateway/session/v1/sessions` (tipo `thesis_defense`, requiere JWT) | `session-service` | ✅ 201 — sesión creada (`id 4`) |
+| 8 | `GET /api/gateway/coach/v1/coach/modes` | `live-coach-service` | ✅ 200 — 4 modos renderizados |
 
-> La verificación confirma que la capa BFF **propaga correctamente el JWT**: el `session-service` exige autenticación y respondió 201/200 a las llamadas enrutadas con el token de la cookie. El cliente también renderiza el dashboard de progreso, el ranking y los modos del *Live Coach* contra los servicios reales.
+> La verificación confirma que la capa BFF **propaga correctamente el JWT**: el `session-service` exige autenticación y respondió 201/200 a las llamadas enrutadas con el token de la cookie `httpOnly`. El cliente renderiza el dashboard de progreso, el panel de estado de servicios y los modos del *Live Coach* contra los servicios reales en producción.
 
-**Capturas de la ejecución del cliente web** (tema claro, navegación lateral estilo *workspace*):
+**Capturas de la ejecución del cliente web** (corrido localmente contra las APIs productivas de Railway):
 
-> _[COMPLETAR: captura de la pantalla de **login** en tema claro — sugerido `assets/images/frontend/01-login.png`]._
->
-> _[COMPLETAR: captura del **dashboard** con métricas de progreso y estado de servicios — sugerido `assets/images/frontend/02-dashboard.png`]._
->
-> _[COMPLETAR: captura de la vista **Live Coach** y de la **lista de sesiones** con la barra lateral — sugerido `assets/images/frontend/03-coach-sessions.png`]._
+<p align="center">
+  <img src="assets/images/frontend/01-login.png" width="420" alt="Pantalla de inicio de sesión de Talki" /><br/>
+  <em>Figura 5.3.3.4-a. Pantalla de <strong>inicio de sesión</strong> del cliente web (tema claro).</em>
+</p>
+
+<p align="center">
+  <img src="assets/images/frontend/02-dashboard.png" width="780" alt="Dashboard de progreso con estado de servicios" /><br/>
+  <em>Figura 5.3.3.4-b. <strong>Dashboard</strong> del usuario recién registrado: métricas de progreso en cero y panel <em>Estado de los servicios</em> con <code>filler-detection-service: UP</code> y <code>scoring-service: UP</code> consultados en vivo contra producción.</em>
+</p>
+
+<p align="center">
+  <img src="assets/images/frontend/03-coach.png" width="780" alt="Vista Live Coach con los modos de práctica" /><br/>
+  <em>Figura 5.3.3.4-c. Vista <strong>Live Coach</strong>: los cuatro modos (<code>quick_practice</code>, <code>interview</code>, <code>thesis_defense</code>, <code>scenario</code>) provienen de <code>GET /v1/coach/modes</code> del <code>live-coach-service</code> productivo.</em>
+</p>
+
+<p align="center">
+  <img src="assets/images/frontend/04-sessions.png" width="780" alt="Lista de sesiones con la sesión creada" /><br/>
+  <em>Figura 5.3.3.4-d. Lista de <strong>sesiones</strong> tras crear en producción la sesión <em>«Sustentación de tesis — práctica AV4»</em> (<code>thesis_defense</code>, estado <em>Borrador</em>), retornada por <code>POST /v1/sessions</code> → 201.</em>
+</p>
+
+> **Corrección aplicada durante el Sprint (health checks).** La primera verificación reveló que el panel *Estado de los servicios* solo mostraba `scoring-service`: el cliente consultaba el `filler-detection-service` en `GET /health`, ruta inexistente que devolvía **404** en producción. Ambos servicios de análisis son **event-driven** (no exponen REST de dominio) y su único endpoint de salud es el **`/actuator/health` estándar de Spring** habilitado en los ocho microservicios desde el Sprint 2. Se corrigió el cliente para que ambos health checks consulten `/actuator/health` (PR [`talki-frontend#1`](https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend/pull/1)); tras el fix, el panel muestra **ambos servicios `UP`** (Figura 5.3.3.4-b), como confirman las filas 5 y 6 de la tabla anterior.
 
 > **Hallazgo de integración (para el equipo de backend).** Aunque `live-coach-service` acepta y publica el evento `session.live.finalized` (HTTP 202 verificado), las vistas de `progress-service` y `gamification-service` permanecen en cero tras finalizar prácticas: la cadena asíncrona `fillers → scoring → progress/gamification` **no se refleja en producción**. La causa más probable es que los microservicios desplegados **no comparten un único broker RabbitMQ** (cada mono-repo declara su propio servicio `rabbitmq` en su `docker-compose`), por lo que el evento publicado por un servicio no llega a los consumidores de otro. Queda como pendiente de infraestructura: apuntar las variables `RABBITMQ_*` de los ocho servicios a un **broker compartido** (p. ej. CloudAMQP) en Railway.
 
@@ -5082,9 +5101,9 @@ El cliente web consume los contratos **OpenAPI 3** documentados en el Sprint 2 (
 | Live Coach | `live-coach-service` | `/v1/coach/modes`, `/v1/coach/{id}/finalize` | GET / POST |
 | Dashboard | `progress-service` | `/v1/progress/dashboard?userId` | GET |
 | Ranking / Rachas | `gamification-service` | `/v1/gamification/leaderboard`, `/v1/gamification/streaks/{userId}` | GET |
-| Estado de servicios | `filler-detection-service`, `scoring-service` | `/health`, `/v1/scores/health` | GET |
+| Estado de servicios | `filler-detection-service`, `scoring-service` | `/actuator/health` | GET |
 
-> El cliente no inventa rutas: cada llamada corresponde a un endpoint publicado en la spec `/v3/api-docs` de las URLs productivas listadas en 5.3.2.4. Los servicios `filler-detection` y `scoring` son **event-driven** (solo exponen *health*), de modo que el cliente refleja su estado pero no los invoca directamente para análisis: ese trabajo viaja por RabbitMQ.
+> El cliente no inventa rutas: cada llamada corresponde a un endpoint publicado en la spec `/v3/api-docs` de las URLs productivas listadas en 5.3.2.4. Los servicios `filler-detection` y `scoring` son **event-driven**: no exponen REST de dominio (su `/v3/api-docs` no declara *paths* propios), por lo que el cliente refleja su **estado de salud** vía el endpoint estándar `/actuator/health` —habilitado en los ocho microservicios desde el Sprint 2— pero no los invoca para análisis: ese trabajo viaja por RabbitMQ (`session.live.finalized` → `fillers.analyzed` → `scoring`). Esta es la razón del fix de health checks documentado en 5.3.3.4.
 
 #### 5.3.3.6. Software Deployment Evidence for Sprint Review
 
@@ -5098,17 +5117,18 @@ El entregable de despliegue del Sprint 3 es la **publicación del repositorio `t
 | 2 | Configuración de entorno | `.env.example` documenta las URLs **locales** y las **productivas de Railway**; el `.env.local` apunta por defecto a producción. Las URLs solo se usan del lado servidor (BFF). | T02, T08 |
 | 3 | Capa BFF | *Route Handlers* `/api/gateway` y `/api/auth`; el JWT viaja en cookie `httpOnly`, resolviendo el CORS de los microservicios. | T02 |
 | 4 | Build de producción | `pnpm build` genera el bundle optimizado (14 rutas) con type-check + lint en verde. | T03 |
-| 5 | Publicación | Repositorio creado y *pusheado* a `main`; tres commits del Sprint (5.3.3.2). | T08 |
+| 5 | Verificación contra producción | Cliente corrido localmente contra las ocho URLs de Railway; flujo extremo a extremo verificado (5.3.3.4) y corregido el *health check* del panel de servicios (PR [`talki-frontend#1`](https://github.com/upc-pre-202601-si657-7940-thropic/talki-frontend/pull/1)). | T04 |
+| 6 | Publicación | Repositorio creado y *pusheado* a `main`; commits del Sprint (5.3.3.2). | T08 |
 
 **Puesta en marcha (local contra backend productivo):**
 
 ```bash
-cp .env.example .env.local   # ya apunta a las URLs de Railway
+cp .env.example .env.local   # luego reemplaza las URLs por las productivas de Railway
 pnpm install
-pnpm dev                     # http://localhost:3000
+pnpm dev                     # http://localhost:3000 (o el primer puerto libre)
 ```
 
-> El diseño BFF deja el cliente **listo para desplegar en Vercel** (o cualquier host de Next.js) configurando las mismas variables `TALKI_*_URL` como *environment variables* del proyecto. El despliegue público del frontend en Vercel queda como siguiente paso. _[COMPLETAR: URL pública del cliente web una vez desplegado en Vercel]._
+> El diseño BFF deja el cliente **listo para desplegar en Vercel** (o cualquier host de Next.js) configurando las mismas variables `TALKI_*_URL` como *environment variables* del proyecto: al vivir todas las llamadas detrás de los *Route Handlers* del lado servidor, no se requiere ningún cambio de CORS en los ocho microservicios. El despliegue público del frontend en Vercel queda como siguiente paso. _[COMPLETAR: URL pública del cliente web una vez desplegado en Vercel]._
 
 #### 5.3.3.7. Team Collaboration Insights during Sprint
 
