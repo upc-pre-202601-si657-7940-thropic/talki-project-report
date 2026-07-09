@@ -5458,6 +5458,8 @@ Al cierre del **Trabajo Final** del curso SI657, el equipo identifica las siguie
 
 El equipo Thropic presenta en esta sección el material audiovisual de presentación del grupo y la demostración del producto Talki al cierre del curso.
 
+🔗 **Material audiovisual About The Team (Google Drive):** <https://drive.google.com/drive/folders/1HIh19k5gLn2AQNXX2IQU__xKiP6yHwsR?usp=sharing>
+
 - **Perfiles del equipo.** Las biografías, fotografías y roles de cada integrante se documentan en la sección **1.1.2** del informe.
 - **Demostración del producto (end-to-end).** El cliente web desplegado en producción permite reproducir el flujo registro → login → crear sesión → grabar práctica → **feedback del coach IA** documentado en **5.3.3.4** (Figuras 5.3.3.4-e a 5.3.3.4-g) y **5.3.3.6**:
 
@@ -5552,8 +5554,14 @@ Las ocho URLs fueron verificadas con respuesta HTTP 200 el 07/06/2026 (sección 
 | 21 | Cliente web `talki-frontend` desplegado en Vercel (Production Deployment verificado en 5.3.3.6). | https://talki-frontend.vercel.app |
 | 22 | Tablero Kanban público al cierre del último sprint (5.3.3.8). | https://github.com/orgs/upc-pre-202601-si657-7940-thropic/projects/1 |
 
-### F. Recursos de investigación y diseño
+### F. Video About-The-Team
 
 | # | Descripción | URL |
 |---|-------------|-----|
-| 23 | Grabaciones de entrevistas a usuarios de ambos segmentos (sección 2.2). | https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view |
+| 23 | Carpeta **About The Team** en Google Drive (presentación del equipo y material audiovisual del Trabajo Final). | https://drive.google.com/drive/folders/1HIh19k5gLn2AQNXX2IQU__xKiP6yHwsR?usp=sharing |
+
+### G. Recursos de investigación y diseño
+
+| # | Descripción | URL |
+|---|-------------|-----|
+| 24 | Grabaciones de entrevistas a usuarios de ambos segmentos (sección 2.2). | https://drive.google.com/file/d/10J3cMAzuvoZMY6HTzRomq5vosujsAai4/view |
