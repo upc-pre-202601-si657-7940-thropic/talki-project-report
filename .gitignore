@@ -26,3 +26,5 @@ assets/images/screenshots/*.html
 # Temporales
 *.tmp
 *.log
+.gstack/
+node_modules/
